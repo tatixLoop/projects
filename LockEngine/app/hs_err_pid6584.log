@@ -1,0 +1,359 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 42729472 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2756), pid=6584, tid=3061771072
+#
+# JRE version:  (7.0_79-b15) (build )
+# Java VM: Java HotSpot(TM) Server VM (24.79-b02 mixed mode linux-x86 )
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0xb6607800):  JavaThread "Unknown thread" [_thread_in_vm, id=6610, stack(0xb679e000,0xb67ef000)]
+
+Stack: [0xb679e000,0xb67ef000],  sp=0xb67edb20,  free space=318k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0x7eab16]  VMError::report_and_die()+0x1a6
+V  [libjvm.so+0x33e222]  report_vm_out_of_memory(char const*, int, unsigned int, char const*)+0x72
+V  [libjvm.so+0x686a41]  os::Linux::commit_memory_impl(char*, unsigned int, bool)+0xe1
+V  [libjvm.so+0x686f08]  os::pd_commit_memory(char*, unsigned int, unsigned int, bool)+0x28
+V  [libjvm.so+0x68064c]  os::commit_memory(char*, unsigned int, unsigned int, bool)+0x2c
+V  [libjvm.so+0x6eae98]  PSVirtualSpace::expand_by(unsigned int)+0x48
+V  [libjvm.so+0x6dcc9d]  PSOldGen::initialize(ReservedSpace, unsigned int, char const*, int)+0x7d
+V  [libjvm.so+0x187df6]  AdjoiningGenerations::AdjoiningGenerations(ReservedSpace, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int)+0x2a6
+V  [libjvm.so+0x6a65c4]  ParallelScavengeHeap::initialize()+0x3b4
+V  [libjvm.so+0x7bd6b4]  Universe::initialize_heap()+0xa4
+V  [libjvm.so+0x7bece5]  universe_init()+0x55
+V  [libjvm.so+0x4518d5]  init_globals()+0x55
+V  [libjvm.so+0x7a78b0]  Threads::create_vm(JavaVMInitArgs*, bool*)+0x200
+V  [libjvm.so+0x4c469c]  JNI_CreateJavaVM+0x5c
+C  [libjli.so+0x2668]  JavaMain+0x98
+C  [libpthread.so.0+0x6f70]  start_thread+0xd0
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0xb6607800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=6610, stack(0xb679e000,0xb67ef000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+08048000-08049000 r-xp 00000000 00:18 592627     /home/jithin/jdk1.7.0_79/bin/java
+08049000-0804a000 rw-p 00000000 00:18 592627     /home/jithin/jdk1.7.0_79/bin/java
+093b3000-093d4000 rw-p 00000000 00:00 0          [heap]
+6f31f000-6f494000 rw-p 00000000 00:00 0 
+6f494000-6f49f000 rw-p 00000000 00:00 0 
+6f49f000-6f53f000 rw-p 00000000 00:00 0 
+6f53f000-6f540000 rw-p 00000000 00:00 0 
+6f540000-73540000 rw-p 00000000 00:00 0 
+75be4000-75e00000 rw-p 00000000 00:00 0 
+75e00000-9dfc0000 rw-p 00000000 00:00 0 
+9dfc0000-9f440000 rw-p 00000000 00:00 0 
+9f440000-b3540000 rw-p 00000000 00:00 0 
+b3540000-b3549000 rw-p 00000000 00:00 0 
+b3549000-b3600000 rw-p 00000000 00:00 0 
+b3600000-b3840000 rwxp 00000000 00:00 0 
+b3840000-b6621000 rw-p 00000000 00:00 0 
+b6621000-b6700000 ---p 00000000 00:00 0 
+b670d000-b6724000 r-xp 00000000 00:18 593114     /home/jithin/jdk1.7.0_79/jre/lib/i386/libzip.so
+b6724000-b6725000 rw-p 00017000 00:18 593114     /home/jithin/jdk1.7.0_79/jre/lib/i386/libzip.so
+b6725000-b6730000 r-xp 00000000 08:05 4078733    /lib/i386-linux-gnu/libnss_files-2.19.so
+b6730000-b6731000 r--p 0000a000 08:05 4078733    /lib/i386-linux-gnu/libnss_files-2.19.so
+b6731000-b6732000 rw-p 0000b000 08:05 4078733    /lib/i386-linux-gnu/libnss_files-2.19.so
+b6732000-b673c000 r-xp 00000000 08:05 4064346    /lib/i386-linux-gnu/libnss_nis-2.19.so
+b673c000-b673d000 r--p 00009000 08:05 4064346    /lib/i386-linux-gnu/libnss_nis-2.19.so
+b673d000-b673e000 rw-p 0000a000 08:05 4064346    /lib/i386-linux-gnu/libnss_nis-2.19.so
+b673e000-b6753000 r-xp 00000000 08:05 4064375    /lib/i386-linux-gnu/libnsl-2.19.so
+b6753000-b6754000 r--p 00015000 08:05 4064375    /lib/i386-linux-gnu/libnsl-2.19.so
+b6754000-b6755000 rw-p 00016000 08:05 4064375    /lib/i386-linux-gnu/libnsl-2.19.so
+b6755000-b6757000 rw-p 00000000 00:00 0 
+b6769000-b6771000 rw-s 00000000 08:05 4981910    /tmp/hsperfdata_jithin/6584
+b6771000-b6794000 r-xp 00000000 00:18 593079     /home/jithin/jdk1.7.0_79/jre/lib/i386/libjava.so
+b6794000-b6795000 rw-p 00023000 00:18 593079     /home/jithin/jdk1.7.0_79/jre/lib/i386/libjava.so
+b6795000-b679c000 r-xp 00000000 08:05 4078734    /lib/i386-linux-gnu/librt-2.19.so
+b679c000-b679d000 r--p 00006000 08:05 4078734    /lib/i386-linux-gnu/librt-2.19.so
+b679d000-b679e000 rw-p 00007000 08:05 4078734    /lib/i386-linux-gnu/librt-2.19.so
+b679e000-b67a1000 ---p 00000000 00:00 0 
+b67a1000-b67ef000 rw-p 00000000 00:00 0          [stack:6610]
+b67ef000-b6833000 r-xp 00000000 08:05 4078724    /lib/i386-linux-gnu/libm-2.19.so
+b6833000-b6834000 r--p 00043000 08:05 4078724    /lib/i386-linux-gnu/libm-2.19.so
+b6834000-b6835000 rw-p 00044000 08:05 4078724    /lib/i386-linux-gnu/libm-2.19.so
+b6835000-b70bc000 r-xp 00000000 00:18 593113     /home/jithin/jdk1.7.0_79/jre/lib/i386/server/libjvm.so
+b70bc000-b7121000 rw-p 00886000 00:18 593113     /home/jithin/jdk1.7.0_79/jre/lib/i386/server/libjvm.so
+b7121000-b7544000 rw-p 00000000 00:00 0 
+b7544000-b76ec000 r-xp 00000000 08:05 4064251    /lib/i386-linux-gnu/libc-2.19.so
+b76ec000-b76ee000 r--p 001a8000 08:05 4064251    /lib/i386-linux-gnu/libc-2.19.so
+b76ee000-b76ef000 rw-p 001aa000 08:05 4064251    /lib/i386-linux-gnu/libc-2.19.so
+b76ef000-b76f2000 rw-p 00000000 00:00 0 
+b76f2000-b76f5000 r-xp 00000000 08:05 4064305    /lib/i386-linux-gnu/libdl-2.19.so
+b76f5000-b76f6000 r--p 00002000 08:05 4064305    /lib/i386-linux-gnu/libdl-2.19.so
+b76f6000-b76f7000 rw-p 00003000 08:05 4064305    /lib/i386-linux-gnu/libdl-2.19.so
+b76f7000-b76f8000 rw-p 00000000 00:00 0 
+b76f8000-b770b000 r-xp 00000000 00:18 591428     /home/jithin/jdk1.7.0_79/lib/i386/jli/libjli.so
+b770b000-b770c000 rw-p 00012000 00:18 591428     /home/jithin/jdk1.7.0_79/lib/i386/jli/libjli.so
+b770c000-b7724000 r-xp 00000000 08:05 4078729    /lib/i386-linux-gnu/libpthread-2.19.so
+b7724000-b7725000 r--p 00018000 08:05 4078729    /lib/i386-linux-gnu/libpthread-2.19.so
+b7725000-b7726000 rw-p 00019000 08:05 4078729    /lib/i386-linux-gnu/libpthread-2.19.so
+b7726000-b7729000 rw-p 00000000 00:00 0 
+b7729000-b772b000 rw-p 00000000 00:00 0 
+b772b000-b7732000 r-xp 00000000 08:05 4078725    /lib/i386-linux-gnu/libnss_compat-2.19.so
+b7732000-b7733000 r--p 00006000 08:05 4078725    /lib/i386-linux-gnu/libnss_compat-2.19.so
+b7733000-b7734000 rw-p 00007000 08:05 4078725    /lib/i386-linux-gnu/libnss_compat-2.19.so
+b7734000-b7735000 rw-p 00000000 00:00 0 
+b7735000-b7736000 r--p 00000000 00:00 0 
+b7736000-b7741000 r-xp 00000000 00:18 593062     /home/jithin/jdk1.7.0_79/jre/lib/i386/libverify.so
+b7741000-b7742000 rw-p 0000b000 00:18 593062     /home/jithin/jdk1.7.0_79/jre/lib/i386/libverify.so
+b7742000-b7744000 rw-p 00000000 00:00 0 
+b7744000-b7745000 r-xp 00000000 00:00 0          [vdso]
+b7745000-b7765000 r-xp 00000000 08:05 4064326    /lib/i386-linux-gnu/ld-2.19.so
+b7765000-b7766000 r--p 0001f000 08:05 4064326    /lib/i386-linux-gnu/ld-2.19.so
+b7766000-b7767000 rw-p 00020000 08:05 4064326    /lib/i386-linux-gnu/ld-2.19.so
+bfa57000-bfa58000 rwxp 00000000 00:00 0 
+bfa8a000-bfaab000 rw-p 00000000 00:00 0          [stack]
+
+VM Arguments:
+jvm_args: -Djava.awt.headless=true -Xmx1024M -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant 
+java_command: com.android.dx.command.Main --dex --num-threads=4 --output /home/jithin/AndroidStudioProjects/LockEngine/app/build/intermediates/pre-dexed/debug/classes_1cc45b1fa39114ab1dffab0d3a0775cee07fad52.jar /home/jithin/AndroidStudioProjects/LockEngine/app/build/intermediates/incremental-classes/debug/classes.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/jithin/adt-bundle-linux-x86-20140702/sdk/platform-tools:/home/jithin/scripts:/home/jithin/adt-bundle-linux-x86-20140702/eclipse:/home/jithin/android-ndk-r9/:/home/jithin/code/binaries/
+LD_LIBRARY_PATH=.:
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x7eb620], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0x7eb620], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGFPE: [libjvm.so+0x6835c0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGPIPE: [libjvm.so+0x6835c0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGXFSZ: [libjvm.so+0x6835c0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGILL: [libjvm.so+0x6835c0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x684dc0], sa_mask[0]=0x00000004, sa_flags=0x10000004
+SIGHUP: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGINT: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGTERM: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGQUIT: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+
+
+---------------  S Y S T E M  ---------------
+
+OS:jessie/sid
+
+uname:Linux 3.13.0-63-generic #103-Ubuntu SMP Fri Aug 14 21:43:30 UTC 2015 i686
+libc:glibc 2.19 NPTL 2.19 
+rlimit: STACK 8192k, CORE 0k, NPROC 31169, NOFILE 4096, AS infinity
+load average:4.71 3.52 2.70
+
+/proc/meminfo:
+MemTotal:        4016436 kB
+MemFree:          236856 kB
+Buffers:            1736 kB
+Cached:          1016336 kB
+SwapCached:            0 kB
+Active:          2658008 kB
+Inactive:        1003688 kB
+Active(anon):    2646880 kB
+Inactive(anon):   991220 kB
+Active(file):      11128 kB
+Inactive(file):    12468 kB
+Unevictable:         188 kB
+Mlocked:             188 kB
+HighTotal:       3166156 kB
+HighFree:          80376 kB
+LowTotal:         850280 kB
+LowFree:          156480 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Dirty:                52 kB
+Writeback:             0 kB
+AnonPages:       2644120 kB
+Mapped:           696580 kB
+Shmem:            994216 kB
+Slab:              57420 kB
+SReclaimable:      24440 kB
+SUnreclaim:        32980 kB
+KernelStack:        5912 kB
+PageTables:        22804 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     2008216 kB
+Committed_AS:   10681376 kB
+VmallocTotal:     122880 kB
+VmallocUsed:       67608 kB
+VmallocChunk:      46908 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:    856064 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       38904 kB
+DirectMap2M:      872448 kB
+
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 58 stepping 9, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, erms, ht, tsc, tscinvbit, tscinv
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i3-3217U CPU @ 1.80GHz
+stepping	: 9
+microcode	: 0x15
+cpu MHz		: 1801.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx rdtscp lm constant_tsc arch_perfmon pebs bts xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx f16c lahf_lm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase smep erms
+bogomips	: 3591.91
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i3-3217U CPU @ 1.80GHz
+stepping	: 9
+microcode	: 0x15
+cpu MHz		: 1801.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 2
+initial apicid	: 2
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx rdtscp lm constant_tsc arch_perfmon pebs bts xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx f16c lahf_lm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase smep erms
+bogomips	: 3591.91
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i3-3217U CPU @ 1.80GHz
+stepping	: 9
+microcode	: 0x15
+cpu MHz		: 1801.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx rdtscp lm constant_tsc arch_perfmon pebs bts xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx f16c lahf_lm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase smep erms
+bogomips	: 3591.91
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 58
+model name	: Intel(R) Core(TM) i3-3217U CPU @ 1.80GHz
+stepping	: 9
+microcode	: 0x15
+cpu MHz		: 1801.000
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 3
+initial apicid	: 3
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx rdtscp lm constant_tsc arch_perfmon pebs bts xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer xsave avx f16c lahf_lm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase smep erms
+bogomips	: 3591.91
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 4016436k(236856k free), swap 0k(0k free)
+
+vm_info: Java HotSpot(TM) Server VM (24.79-b02) for linux-x86 JRE (1.7.0_79-b15), built on Apr 10 2015 11:52:49 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Tue Jan 19 23:29:46 2016
+elapsed time: 0 seconds
+

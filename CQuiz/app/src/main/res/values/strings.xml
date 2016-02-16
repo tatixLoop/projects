@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">C Quiz</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="developer_info">Developed by jaApps</string>
+    <string name="q_no">q.no</string>
+    <string name="question">question comes here</string>
+    <string name="option_a">option a</string>
+    <string name="option_b">option b</string>
+    <string name="option_c">option c</string>
+    <string name="option_d">option d</string>
+    <string name="check_answer">CHECK ANSWER</string>
+    <string name="desc">images to diplay the option buttons</string>
+    <string name="quizfile">data/quizfile.xml</string>
+    <string name="get_next_question">NEXT QUESTION</string>
+    <string name="info_txt">Information about this question is not available.</string>
+    <string name="ad_Unit_ID">ca-app-pub-2498468757920270/9669739346</string>
+    <string name="ad_Unit_ID_interstitial">ca-app-pub-2498468757920270/2146472540</string>
+
+</resources>
