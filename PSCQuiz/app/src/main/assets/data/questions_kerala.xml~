@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>5</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+
+        <catagory>5</catagory>
+
+        <no>1</no>
+
+        <q>Which district of Kerala has been declared as the first district in India having ‘meaningful financial inclusion’?</q>
+
+        <optiona>Kannur</optiona>
+
+        <optionb>Ernakulam</optionb>
+
+        <optionc>Kollam</optionc>
+
+        <optiond>Palakkad</optiond>
+
+        <ans>1</ans>
+    </question>
+
+    <question>
+    <catagory>5</catagory>
+
+        <no>2</no>
+
+        <q>Where Kerala Forest Research Institute is located?</q>
+
+        <optiona>Peechi</optiona>
+
+        <optionb>Thalassery</optionb>
+
+        <optionc>Kottayam</optionc>
+
+        <optiond>Sivagiri</optiond>
+
+        <ans>2</ans>
+    </question>
+    <question>
+
+        <catagory>5</catagory>
+
+        <no>3</no>
+
+        <q>How many times Mahatma Ghandi visited Kerala?</q>
+
+        <optiona>2</optiona>
+
+        <optionb>6</optionb>
+
+        <optionc>5</optionc>
+
+        <optiond>3</optiond>
+
+        <ans></ans>
+    </question>
+
+
+</questions>

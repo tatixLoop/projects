@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>9</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+
+        <catagory>9</catagory>
+
+        <no>1</no>
+
+        <q>In M.S word ctrl+w is used for :</q>
+
+        <optiona>Update the current web page</optiona>
+
+        <optionb>Open the print dialogue box</optionb>
+
+        <optionc>Open a new window</optionc>
+
+        <optiond>Close current window</optiond>
+
+        <ans>4</ans>
+    </question>
+
+    <question>
+    <catagory>9</catagory>
+
+        <no>2</no>
+
+        <q>Graphics of word processor?</q>
+
+        <optiona>Clip art</optiona>
+
+        <optionb>Peripheral</optionb>
+
+        <optionc>Highlight</optionc>
+
+        <optiond>Execute</optiond>
+
+        <ans>1</ans>
+    </question>
+    <question>
+
+        <catagory>9</catagory>
+
+        <no>3</no>
+
+        <q>Drop cap means ?</q>
+
+        <optiona>Small case</optiona>
+
+        <optionb>All caps</optionb>
+
+        <optionc>Title case</optionc>
+
+        <optiond>None of these</optiond>
+
+        <ans>1</ans>
+    </question>
+<question>
+
+        <catagory>9</catagory>
+
+        <no>4</no>
+
+        <q>Father of Internet ?</q>
+
+        <optiona>Vint Cerf</optiona>
+
+        <optionb>Charles Babage</optionb>
+
+        <optionc>Alen Turing</optionc>
+
+        <optiond>William Gibson	</optiond>
+
+        <ans></ans>
+    </question>
+    
+</questions>

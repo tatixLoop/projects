@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>0</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+
+        <catagory>0</catagory>
+
+        <no>1</no>
+
+        <q>49 : 56 = n : 48, Solved for n?</q>
+
+        <optiona>42</optiona>
+
+        <optionb>45</optionb>
+
+        <optionc>25</optionc>
+
+        <optiond>30</optiond>
+
+        <ans>1</ans>
+    </question>
+
+  <question>
+
+        <catagory>0</catagory>
+
+        <no>2</no>
+
+        <q>Which of the following numbers is divisible by 24 ?</q>
+
+        <optiona>15824</optiona>
+
+        <optionb>14824</optionb>
+
+        <optionc>13824</optionc>
+
+        <optiond>12824</optiond>
+
+        <ans>3</ans>
+    </question>
+ <question>
+
+        <catagory>0</catagory>
+
+        <no>3</no>
+
+        <q>if a/4 = b/5 = c/7 , then (a+b+c)/a = </q>
+
+        <optiona>4</optiona>
+
+        <optionb>5</optionb>
+
+        <optionc>7</optionc>
+
+        <optiond>16</optiond>
+
+        <ans>1</ans>
+    </question>
+ <question>
+
+        <catagory>0</catagory>
+
+        <no>4</no>
+
+        <q>A student multiplied a number by 4/5 instead of 5/4. The percentage error is :</q>
+
+        <optiona>45%</optiona>
+
+        <optionb>36%</optionb>
+
+        <optionc>60%</optionc>
+
+        <optiond>64%</optiond>
+
+        <ans>2</ans>
+    </question>
+ <question>
+
+        <catagory>0</catagory>
+
+        <no>5</no>
+
+        <q>The number of marble slabs of 25 cm x 25 cm required to pave the floor of a square room of side 10 meters is:</q>
+
+        <optiona>1600</optiona>
+
+        <optionb>1000</optionb>
+
+        <optionc>2000</optionc>
+
+        <optiond>2500</optiond>
+
+        <ans>1</ans>
+    </question>
+ <question>
+
+        <catagory>0</catagory>
+
+        <no>6</no>
+
+        <q>40% of a number is added to 120, then the result is double of the number. What is the number ?</q>
+
+        <optiona>100</optiona>
+
+        <optionb>240</optionb>
+
+        <optionc>150</optionc>
+
+        <optiond>75</optiond>
+
+        <ans>4</ans>
+    </question>
+ <question>
+
+        <catagory>0</catagory>
+
+        <no>7</no>
+
+        <q>A and B can do work in 10 days. B and C can do it in 12 days. C and can do it in 15 days. If A, B and C work together, they will complete the work in:</q>
+
+        <optiona>15 days</optiona>
+
+        <optionb>8 days</optionb>
+
+        <optionc>10 days</optionc>
+
+        <optiond>12 days</optiond>
+
+        <ans>2</ans>
+    </question>
+ <question>
+
+        <catagory>0</catagory>
+
+        <no>8</no>
+
+        <q>The prices of a table and a chair are in the ratio 4:1. The cost of 2 tables and 8 chairs is Rs. 400, the cost of a table is:</q>
+
+        <optiona>Rs.25</optiona>
+
+        <optionb>Rs.100</optionb>
+
+        <optionc>Rs.75</optionc>
+
+        <optiond>Rs.50</optiond>
+
+        <ans>2</ans>
+    </question>
+
+
+
+<!-- 
+    <question>
+
+        <catagory>0</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+</questions>

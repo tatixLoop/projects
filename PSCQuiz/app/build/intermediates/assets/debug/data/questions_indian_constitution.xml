@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>6</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+
+        <catagory>6</catagory>
+
+        <no>1</no>
+
+        <q>lower house of Indian Parlament:</q>
+
+        <optiona>Lokasabha</optiona>
+
+        <optionb>Rajyasabha</optionb>
+
+        <optionc>House of common</optionc>
+
+        <optiond>Senate</optiond>
+
+        <ans>2</ans>
+    </question>
+
+    <question>
+    <catagory>6</catagory>
+
+        <no>2</no>
+
+        <q>Who inaugarated Indian Parliament ?</q>
+
+        <optiona>Lord Mountbatten</optiona>
+	
+        <optionb>Lord Irwin</optionb>
+
+        <optionc>Lord Mayo</optionc>
+
+        <optiond>Lord Curzon</optiond>
+
+        <ans>3</ans>
+    </question>
+    
+</questions>

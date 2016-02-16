@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>8</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+
+        <catagory>8</catagory>
+
+        <no>1</no>
+
+        <q>The total number of villages in Kerala ?</q>
+
+        <optiona>1820</optiona>
+
+        <optionb>1420</optionb>
+
+        <optionc>145ksdjhfkjh ksdhfkj hksjdhfk jhskjdhf kjshdfkj hskdjf ksjhdfkj shkdjhf kshdjf hksdjhf kjshdfk hkdhf ksjdhf2</optionc>
+
+        <optiond>991</optiond>
+
+        <ans>1</ans>
+    </question>
+
+  
+</questions>

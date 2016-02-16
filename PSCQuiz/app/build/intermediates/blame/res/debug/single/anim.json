@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/anim/translate_left_to_right.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/anim/translate_left_to_right.xml"
+    },
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/anim/zoomout.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/anim/zoomout.xml"
+    },
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/anim/translate_right_to_left.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/anim/translate_right_to_left.xml"
+    },
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/anim/zoomin.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/anim/zoomin.xml"
+    },
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/anim/fade_in.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/anim/fade_in.xml"
+    }
+]

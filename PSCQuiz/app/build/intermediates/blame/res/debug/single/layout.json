@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/layout/activity_splash.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/layout/activity_splash.xml"
+    },
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/layout/activity_quiz.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/layout/activity_quiz.xml"
+    },
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/layout/activity_psc_quiz.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/layout/activity_psc_quiz.xml"
+    },
+    {
+        "merged": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/build/intermediates/res/merged/debug/layout/activity_info.xml",
+        "source": "/home/jithin/AndroidStudioProjects/PSCQuiz/app/src/main/res/layout/activity_info.xml"
+    }
+]

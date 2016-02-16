@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>7</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+    <catagory>7</catagory>
+
+        <no>1</no>
+
+        <q>As this is the english related question paper, we will be asking you a lot of question in english. We will provide a passage for you and ask you read it completely and after that we will provide a set of question which you have to answer after reading the passage. /nAnother type of question will be we will ask you a word and you have to find the meaning of that word. Following question are of that type. \n\nGENIAL ?</q>
+
+        <optiona>Generous</optiona>
+
+        <optionb>Wonderful</optionb>
+
+        <optionc>Liberal</optionc>
+
+        <optiond>Friendly and Cheerful</optiond>
+
+        <ans>4</ans>
+    </question>
+
+    <question>
+
+        <catagory>7</catagory>
+
+        <no>2</no>
+
+        <q>RESCIND ?</q>
+
+        <optiona>Reunite</optiona>
+
+        <optionb>Repeal</optionb>
+
+        <optionc>Reserve</optionc>
+
+        <optiond>Reproach</optiond>
+
+        <ans>2</ans>
+    </question>
+
+    <question>
+
+        <catagory>7</catagory>
+
+        <no>3</no>
+
+        <q>REVAMP ?</q>
+
+        <optiona>Retreat</optiona>
+
+        <optionb>Reconstruct</optionb>
+
+        <optionc>Retrial</optionc>
+
+        <optiond>Retrace</optiond>
+
+        <ans>2</ans>
+    </question>
+    
+</questions>

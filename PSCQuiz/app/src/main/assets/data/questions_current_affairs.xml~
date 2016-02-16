@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>3</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+
+        <catagory>3</catagory>
+
+        <no>3</no>
+
+        <q>Who is the exponent of 'Swach Bharath' ?</q>
+
+        <optiona>Pranab Mukherji</optiona>
+
+        <optionb>Narendra Modi</optionb>
+
+        <optionc>Manmohan singh</optionc>
+
+        <optiond>Narasimha Rao</optiond>
+
+        <ans>2</ans>
+    </question>
+
+    <question>
+    <catagory>3</catagory>
+
+        <no>2</no>
+
+        <q>Who is Indian Prime Minister ?</q>
+
+        <optiona>Pranab Mukherji</optiona>
+
+        <optionb>Narendra Modi</optionb>
+
+        <optionc>Manmohan singh</optionc>
+
+        <optiond>Sonia Gandhi</optiond>
+
+        <ans>2</ans>
+    </question>
+    
+</questions>

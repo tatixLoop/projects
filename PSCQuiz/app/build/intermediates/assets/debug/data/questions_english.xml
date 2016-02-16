@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>7</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+    <catagory>7</catagory>
+
+        <no>1</no>
+
+        <q>GENIAL ?</q>
+
+        <optiona>Generous</optiona>
+
+        <optionb>Wonderful</optionb>
+
+        <optionc>Liberal</optionc>
+
+        <optiond>Friendly and Cheerful</optiond>
+
+        <ans>4</ans>
+    </question>
+
+    <question>
+
+        <catagory>7</catagory>
+
+        <no>2</no>
+
+        <q>RESCIND ?</q>
+
+        <optiona>Reunite</optiona>
+
+        <optionb>Repeal</optionb>
+
+        <optionc>Reserve</optionc>
+
+        <optiond>Reproach</optiond>
+
+        <ans>2</ans>
+    </question>
+
+    <question>
+
+        <catagory>7</catagory>
+
+        <no>3</no>
+
+        <q>REVAMP ?</q>
+
+        <optiona>Retreat</optiona>
+
+        <optionb>Reconstruct</optionb>
+
+        <optionc>Retrial</optionc>
+
+        <optiond>Retrace</optiond>
+
+        <ans>2</ans>
+    </question>
+    
+</questions>

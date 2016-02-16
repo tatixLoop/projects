@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    <question>
+
+        <catagory>1</catagory>
+
+        <no></no>
+
+        <q></q>
+
+        <optiona></optiona>
+
+        <optionb></optionb>
+
+        <optionc></optionc>
+
+        <optiond></optiond>
+
+        <ans></ans>
+    </question>
+
+
+ -->
+<questions>
+
+    <question>
+
+        <catagory>1</catagory>
+
+        <no>1</no>
+
+        <q>Select the best alternative. Seismography : Earthquake : : Taseometer : ?</q>
+
+        <optiona>Landslides</optiona>
+
+        <optionb>Strains</optionb>
+
+        <optionc>Resistance</optionc>
+
+        <optiond>Volcanos</optiond>
+
+        <ans>1</ans>
+    </question>
+
+    
+</questions>
