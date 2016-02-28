@@ -196,6 +196,7 @@
         </RelativeLayout>
     </ScrollView>
 
+    <!--
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
@@ -208,5 +209,6 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/ad_Unit_ID" >
     </com.google.android.gms.ads.AdView>
+    -->
 
 </RelativeLayout>

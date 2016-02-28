@@ -23,10 +23,13 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+/*
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+*/
 
 class Questions
 {
@@ -87,7 +90,7 @@ public class QuizActivity extends Activity {
 	public Animation animRightToLeft;
 
 	//adds
-	private InterstitialAd interstitial;
+	//private InterstitialAd interstitial;
 	public int clicks;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -346,13 +349,13 @@ public class QuizActivity extends Activity {
 					clicks++;
 
 					if(clicks %10 == 0){
-						AdRequest newAdReq = new AdRequest.Builder()
+		/*				AdRequest newAdReq = new AdRequest.Builder()
 						.addTestDevice("548C643D6A36F2D96EE1BD44A4CB5794")
 						.build();
 
 						// Load ads into Interstitial Ads
 						interstitial.loadAd(newAdReq);
-
+*/
 					}
 
 				}
@@ -548,7 +551,7 @@ public class QuizActivity extends Activity {
 		displayQuestion();
 		//ADDS
 		// Prepare the Interstitial Ad
-		interstitial = new InterstitialAd(QuizActivity.this);
+	/*	interstitial = new InterstitialAd(QuizActivity.this);
 		// Insert the Ad Unit ID
 		interstitial.setAdUnitId(getResources().getString(R.string.ad_Unit_ID_interstitial));
 
@@ -569,9 +572,9 @@ public class QuizActivity extends Activity {
 				// Call displayInterstitial() function
 				displayInterstitial();
 			}
-		});
+		});*/
 	}
-	public void displayInterstitial() {
+	/*public void displayInterstitial() {
 		// If Ads are loaded, show Interstitial else show nothing.
 		Log.d("JITZ","interstitials ?");
 		if (interstitial.isLoaded()) {
@@ -579,7 +582,7 @@ public class QuizActivity extends Activity {
 			interstitial.show();
 		}
 	}
-
+*/
 	public void screenTouch(View v, MotionEvent event){
 
 		switch(event.getAction())
