@@ -108,7 +108,11 @@ public class UStats {
                 if(listHasPackage == false)
                 {
                     packages[nSize] = name;
-                    //Log.d("JKS","NEW APP LAUNCHED IS " + name);
+                    Log.d("JKS","NEW APP LAUNCHED IS " + name);
+                    if(MainActivity.checkLockedList(name)) {
+                        Log.d("JKS","lock result is true; launch lock screen");
+                        MainActivity.launchLockScreen();
+                    }
                     nSize++;
                 }
             }

@@ -136,14 +136,18 @@ public class MainActivity extends AppCompatActivity {
         // get the list of application to be locked
         //return true if the appName is present in the list
         Log.d("JKS","Check if " + appName + " has to be locked");
-        if(appName.equals("com.whatsapp"))
 
+        for(int i = 0; i < lockAppIndex; i++)
         {
-            Log.d("JKS", appName +" has to be locked");
-            return true;
+
+            if(appName.equals((lockedApps[i])))
+            {
+                Log.d("JKS", appName +" has to be locked");
+                return true;
+            }
         }
 
-        else Log.d("JKS", "Not locking "+ appName);
+
 
         return false;
     }
@@ -155,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
-    String ppcast_launch_activity = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,144 +235,15 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
 
-                    String prevActivity = null;
-                    int phonelaunched = 0,phoneclosed =0;
-                    int phonelaunches = 1;
-                    String[] activePackages;
                     boolean run = true;
 
                     do {
 
                         sleep(1000);
-                        Log.d("JKS","lockEngine is running");
+                     //   Log.d("JKS","lockEngine is running");
                         UStats.printCurrentUsageStatus(MainActivity.this);
 
 
-                        //ATTEMPT 6
-                        /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                            Log.d("JKS","Lolipop");
-                            UsageStatsManager usm = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);
-                            long time = System.currentTimeMillis();
-                            List<UsageStats> appList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
-                                    time - 1000 * 1000, time);
-                            Log.d("JKS", "APplist size = " + appList.size()); //JITHIN GOT SIZE AS A NUMER(34) had to confirm it
-                            if (appList != null && appList.size() > 0) {
-                                SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
-                                for (UsageStats usageStats : appList) {
-                                    mySortedMap.put(usageStats.getLastTimeUsed(),
-                                            usageStats);
-                                }
-                                if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                                    String currentApp = mySortedMap.get(
-                                            mySortedMap.lastKey()).getPackageName();
-                                    Log.d("JKS ","other handling error ? ! ?");
-                                }
-                            }
-                        } else {
-                            ActivityManager am = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
-                            List<ActivityManager.RunningAppProcessInfo> tasks = am.getRunningAppProcesses();
-                            String currentApp = tasks.get(0).processName;
-                        }*/
-//ATTEMPT 5
-                      /*  if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-                        //    Log.d("JKS","ANdroid version is more than kitkat");
-                            activePackages = getActivePackages();
-                        } else {
-                            Log.d("JKS","ANdroid version is less than kitkat");
-                            activePackages = getActivePackagesCompat();
-                        }
-                        if (activePackages != null) {
-                            for (String activePackage : activePackages) {
-                                if (activePackage.equals("com.google.android.calendar")) {
-                                    //Calendar app is launched, do something
-                                    Log.d("JKS","Launched calender");
-                                }
-                                else
-                                    Log.d("JKS","package = "+ activePackage);
-                            }
-                        }*/
-                        //ATTEMPT 4
-
-
-/*
-
-                        ActivityManager am = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
-                        List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
-
-                        Log.d("JKS"," size of runningAPp List " +runningAppProcessInfo.size());
-*/
-
-
-//ATTEMPT 3
-/*
-                        Process mLogcatClear = null;
-                        try
-                        {
-                            Process mLogcatProc = null;
-                            BufferedReader reader = null;
-
-                            mLogcatProc = Runtime.getRuntime().exec(new String[]{"logcat","-d"});
-
-                            reader = new BufferedReader(new InputStreamReader(mLogcatProc.getInputStream()));
-
-                            String line;
-                            final StringBuilder log = new StringBuilder();
-                            String separator = System.getProperty("line.separator");
-
-                            while ((line = reader.readLine()) != null)
-                            {
-                                log.append(line);
-                               // Log.d("JKS",line.toString());
-                                Log.d("JKS",line);
-                                if(line.contains("Activity_launch_request"))
-                                {
-                                    Log.d("JKS","app launch reqest for " + line);
-                                }
-                                log.append(separator);
-                            }
-                            String w = log.toString();
-
-                        }
-                        catch (Exception e)
-                        {
-                           Log.d("JKS","EXCEPTTION");
-                            e.printStackTrace();
-                        }
-
-                        try {
-                            Process mLogcatProcClear = Runtime.getRuntime().exec(new String[]{"logcat", "-c"});
-                        }catch (IOException e)
-                        {
-                            e.printStackTrace();
-                        }
-                        */
-
-                      //  Log.d("JKS","lock Engine is running");
-
-
-                        //ATTEMPT 1
-
-     /*                   int numberOfTasks = 1;
-                        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                        //Get some number of running tasks and grab the first one.  getRunningTasks returns newest to oldest
-                        ActivityManager.RunningTaskInfo task = am.getRunningTasks(numberOfTasks).get(0);
-//                        List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
-
-  //                      String currentRunningActivityName = taskInfo.get(0).topActivity.getClassName();
-                        if(task.topActivity != null) {
-                            String currentRunningActivityName = task.topActivity.getClassName();
-                            if(prevActivity != currentRunningActivityName) {
-                                Log.d("JKS", "Launched " + currentRunningActivityName);
-                            }
-                            prevActivity = currentRunningActivityName;
-                        }
-
-                        List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
-
-                        String currentRunningActivityName = taskInfo.get(0).topActivity.getClassName();
-                        Log.d("JKS","Current activity = "+ currentRunningActivityName);
-
-*/
                     }while(run);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -379,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-//        thread.start();
+        thread.start();
         //******************************************************************************************
         //******************************************************************************************
 
