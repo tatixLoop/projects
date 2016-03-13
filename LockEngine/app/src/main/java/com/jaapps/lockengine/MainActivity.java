@@ -56,48 +56,6 @@ import java.util.TreeMap;
 import android.widget.RelativeLayout.LayoutParams;
 
 
-/*
-
-public class DetectCalendarLaunchRunnable implements Runnable {
-
-    @Override
-    public void run() {
-        String[] activePackages;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-            activePackages = getActivePackages();
-        } else {
-            activePackages = getActivePackagesCompat();
-        }
-        if (activePackages != null) {
-            for (String activePackage : activePackages) {
-                if (activePackage.equals("com.google.android.calendar")) {
-                    //Calendar app is launched, do something
-                }
-            }
-        }
-        mHandler.postDelayed(this, 1000);
-    }
-
-    String[] getActivePackagesCompat() {
-        final List<ActivityManager.RunningTaskInfo> taskInfo = mActivityManager.getRunningTasks(1);
-        final ComponentName componentName = taskInfo.get(0).topActivity;
-        final String[] activePackages = new String[1];
-        activePackages[0] = componentName.getPackageName();
-        return activePackages;
-    }
-
-    String[] getActivePackages() {
-        final Set<String> activePackages = new HashSet<String>();
-        final List<ActivityManager.RunningAppProcessInfo> processInfos = mActivityManager.getRunningAppProcesses();
-        for (ActivityManager.RunningAppProcessInfo processInfo : processInfos) {
-            if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                activePackages.addAll(Arrays.asList(processInfo.pkgList));
-            }
-        }
-        return activePackages.toArray(new String[activePackages.size()]);
-    }
-}
-*/
 
 public class MainActivity extends AppCompatActivity {
 
@@ -115,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     static String[] mappName;
     static String[] mPackageName;
     static String[] lockedApps;
+    static int []isLocked;
+    static long [] appCheckTime;
     static int lockAppIndex;
     static Integer[] imageId;
     static Integer[] lockStatus;
@@ -123,14 +83,30 @@ public class MainActivity extends AppCompatActivity {
     static SQLiteDatabase db;
 
     static ListView appList;
-    public static void launchLockScreen() {
+    public static void launchLockScreen(String appName) {
         Log.d("JKS","Launch lock screen from here");
         Intent myIntent = new Intent(mContext, FullscreenLockActivity.class);
-        myIntent.putExtra("key","APP NAME IS APP"); //Optional parameters
+        myIntent.putExtra("key",appName); //Optional parameters
         mContext.startActivity(myIntent);
         //lockScreen();
 
     }
+
+    public static  void unlockApp(String appName)
+    {
+
+        for(int i = 0; i < lockAppIndex; i++)
+        {
+
+            if(appName.equals((lockedApps[i])))
+            {
+                isLocked[i] = 0;
+                Log.d("JKS","Unlock "+appName);
+                return;
+            }
+        }
+    }
+
     public static boolean checkLockedList(String appName)
     {
         // get the list of application to be locked
@@ -142,8 +118,23 @@ public class MainActivity extends AppCompatActivity {
 
             if(appName.equals((lockedApps[i])))
             {
-                Log.d("JKS", appName +" has to be locked");
-                return true;
+
+                long timeDiff = (System.currentTimeMillis()  - appCheckTime[i]);
+
+                appCheckTime[i] = System.currentTimeMillis();
+
+                if(timeDiff < 5000) {
+
+                    Log.d("JKS","Recently "+ appName +" app was running ("+timeDiff +")");
+                    return false;
+                }
+
+                if(isLocked[i] == 0) {
+                    isLocked[i] = 1;
+                    Log.d("JKS",appName + " has to be locked");
+                    return true;
+                }
+                else return  false;
             }
         }
 
@@ -204,6 +195,8 @@ public class MainActivity extends AppCompatActivity {
             size = c.getCount() * 50;
 
             lockedApps = new String[size];
+            isLocked  = new int[size];
+            appCheckTime = new long[size];
             if(c.getCount()==0)
             {
                 Log.d("JKS", "No apps are marked for locking");
@@ -212,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("JKS", "got " + c.getCount() + " entries in tileLockDatabase");
                 while (c.moveToNext()) {
                     lockedApps[lockAppIndex] = c.getString(0);
+                    isLocked[lockAppIndex] = 0;
+                    appCheckTime[lockAppIndex] = System.currentTimeMillis();
                     lockAppIndex++;
                 }
             }
@@ -221,28 +216,32 @@ public class MainActivity extends AppCompatActivity {
             Log.d("JKS ","Caughe exception in sql code");
         }
 
+
+
+        if(isAccessibilityEnabled())
+        {
+            Log.d("JKS","Accessibility enabled for LockEngine");
+        }else {
+            Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            startActivityForResult(intent, 0);
+        }
+
+
         Thread thread = new Thread() {
             @Override
             public void run() {
 
-                if(isAccessibilityEnabled())
-                {
-                 Log.d("JKS","Accessibility enabled for LockEngine");
-                }else {
-                    Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                    startActivityForResult(intent, 0);
-                }
 
                 try {
 
                     boolean run = true;
 
                     do {
-
+                        if(isAccessibilityEnabled()) {
+                            MyAccessibilityService.setMyContext(MainActivity.this);
+                            run = false;
+                        }
                         sleep(1000);
-                     //   Log.d("JKS","lockEngine is running");
-                        UStats.printCurrentUsageStatus(MainActivity.this);
-
 
                     }while(run);
                 } catch (InterruptedException e) {
@@ -250,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (RuntimeException r){
                     r.printStackTrace();
                 }
-            }
+                }
         };
 
         thread.start();

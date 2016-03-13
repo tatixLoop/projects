@@ -1,13 +1,18 @@
 package com.jaapps.lockengine;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -84,6 +89,14 @@ public class FullscreenLockActivity extends AppCompatActivity {
         }
     };
 
+
+    public static  String lockedApp ;
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.unlockApp(lockedApp);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +107,25 @@ public class FullscreenLockActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("key");
+        Log.d("JKS","app data received is "+ name );
+
+        try {
+            final PackageManager pm = getPackageManager();
+            Drawable icon = pm.getApplicationIcon(name);
+            ImageView img_icon = (ImageView) findViewById(R.id.img_icon);
+            img_icon.setImageDrawable(icon);
+
+
+            //imageView.setImageResource(imageId[position]);
+        } catch (Exception ex)
+        {
+            Log.d("JKS","Exceptions CAUGHT");
+        }
+
+        lockedApp = name;
      //   mVisible = true;
        // mControlsView = findViewById(R.id.fullscreen_content_controls);
 
@@ -115,9 +147,12 @@ public class FullscreenLockActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Perform action on click
                 finish();
+                MainActivity.unlockApp(lockedApp);
             }
         });
     }
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

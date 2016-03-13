@@ -35,7 +35,7 @@ public class UStats {
         Log.d("JKS", "Range start:" + dateFormat.format(startTime) );
         Log.d("JKS", "Range end:" + dateFormat.format(endTime));
 
-        UsageEvents uEvents = usm.queryEvents(startTime,endTime);
+        UsageEvents uEvents = usm.queryEvents(startTime, endTime);
         while (uEvents.hasNextEvent()){
             UsageEvents.Event e = new UsageEvents.Event();
             uEvents.getNextEvent(e);
@@ -65,16 +65,23 @@ public class UStats {
 
         for (UsageStats u : usageStatsList) {
             String name = u.getPackageName();
-            if((System.currentTimeMillis() - u.getLastTimeUsed() )< 1000 ) {
-                Log.d("JKS", "PACKAGE NAME = " + name + " LastUsed " + u.getLastTimeUsed() + " CUrrent time = " + System.currentTimeMillis());
-                if(MainActivity.checkLockedList(name)) {
+            long timeDiff = (System.currentTimeMillis() - u.getLastTimeUsed());
+            //if( )< 1000 ) {
+            if((timeDiff)< 3000 ) {
+                Log.d("JKS", "PACKAGE NAME = " + name +
+                             " LastUsed " + u.getLastTimeUsed() +
+                             " CUrrent time = " + System.currentTimeMillis() +
+                             " TIme difference = "+timeDiff);
+                if(MainActivity.checkLockedList(name)  ) {
                     Log.d("JKS","lock result is true; launch lock screen");
-                    MainActivity.launchLockScreen();
+                    MainActivity.launchLockScreen(name);
                 }
-
-
             }
+            else
+                Log.d("JKS","app "+name + " timediff "+timeDiff );
+
         }
+        Log.d("JKS","       ");
             if(allocatedSize == 0) {
             allocatedSize = 1000;
             packages = new String[1000];
@@ -111,7 +118,7 @@ public class UStats {
                     Log.d("JKS","NEW APP LAUNCHED IS " + name);
                     if(MainActivity.checkLockedList(name)) {
                         Log.d("JKS","lock result is true; launch lock screen");
-                        MainActivity.launchLockScreen();
+                        MainActivity.launchLockScreen(name);
                     }
                     nSize++;
                 }
