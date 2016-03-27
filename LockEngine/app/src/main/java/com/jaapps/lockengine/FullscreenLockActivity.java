@@ -119,6 +119,12 @@ public class FullscreenLockActivity extends AppCompatActivity {
 
     }
     @Override
+    public void onBackPressed() {
+
+        Log.d("JKS","back button pressed and nothing happend");
+        return;
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -133,7 +139,7 @@ public class FullscreenLockActivity extends AppCompatActivity {
 
         String name = intent.getStringExtra("key");
         gName =name;
-        Log.d("JKS","app data received is "+ name );
+        Log.d("JKS", "app data received is "+ name );
         MainActivity.lockApp(name);
         try {
             final PackageManager pm = getPackageManager();
