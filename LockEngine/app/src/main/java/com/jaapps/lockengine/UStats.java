@@ -77,8 +77,8 @@ public class UStats {
                     MainActivity.launchLockScreen(name);
                 }
             }
-            else
-                Log.d("JKS","app "+name + " timediff "+timeDiff );
+         //   else
+         //       Log.d("JKS","app "+name + " timediff "+timeDiff );
 
         }
         Log.d("JKS","       ");

@@ -84,9 +84,12 @@ public class MainActivity extends AppCompatActivity {
 
     static ListView appList;
     public static void launchLockScreen(String appName) {
-        Log.d("JKS","Launch lock screen from here");
+        Log.d("JKS", "Launch lock screen from here");
         Intent myIntent = new Intent(mContext, FullscreenLockActivity.class);
         myIntent.putExtra("key",appName); //Optional parameters
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
+                Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+                Intent.FLAG_ACTIVITY_NO_HISTORY );
         mContext.startActivity(myIntent);
         //lockScreen();
 
@@ -101,10 +104,44 @@ public class MainActivity extends AppCompatActivity {
             if(appName.equals((lockedApps[i])))
             {
                 isLocked[i] = 0;
+                appCheckTime[i]= System.currentTimeMillis();
                 Log.d("JKS","Unlock "+appName);
                 return;
             }
         }
+    }
+
+    public static  void lockApp(String appName)
+    {
+
+        for(int i = 0; i < lockAppIndex; i++)
+        {
+
+            if(appName.equals((lockedApps[i])))
+            {
+                isLocked[i] = 1;
+                Log.d("JKS","lock "+appName);
+                return;
+            }
+        }
+    }
+
+    public static  boolean getAppStatus(String appName)
+    {
+
+        for(int i = 0; i < lockAppIndex; i++)
+        {
+
+            if(appName.equals((lockedApps[i])))
+            {
+                if(isLocked[i] == 0)
+                    return false;
+                else
+                    return true;
+            }
+        }
+        return false;
+
     }
 
     public static boolean checkLockedList(String appName)
@@ -123,18 +160,21 @@ public class MainActivity extends AppCompatActivity {
 
                 appCheckTime[i] = System.currentTimeMillis();
 
-                if(timeDiff < 5000) {
+                if(timeDiff < 15000) {
 
                     Log.d("JKS","Recently "+ appName +" app was running ("+timeDiff +")");
                     return false;
                 }
 
                 if(isLocked[i] == 0) {
-                    isLocked[i] = 1;
+
                     Log.d("JKS",appName + " has to be locked");
                     return true;
                 }
-                else return  false;
+                else {
+                    Log.d("JKS",appName +" is already locked so not locking");
+                    return false;
+                }
             }
         }
 
@@ -157,10 +197,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mContext = this;
-
         mActivity = MainActivity.this;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -171,16 +209,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Check if permission enabled for usage stats
-
-        
-
         if (UStats.getUsageStatsList(this).isEmpty()){
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
         }
-
-        //******************************************************************************************
-        //******************************************************************************************
 
         try{
 
@@ -192,11 +224,12 @@ public class MainActivity extends AppCompatActivity {
             if(c.getCount() == 0)
                 size = 100;
             else
-            size = c.getCount() * 50;
+                size = c.getCount() * 50;
 
             lockedApps = new String[size];
             isLocked  = new int[size];
             appCheckTime = new long[size];
+
             if(c.getCount()==0)
             {
                 Log.d("JKS", "No apps are marked for locking");
@@ -213,10 +246,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
         catch (Exception ex) {
-            Log.d("JKS ","Caughe exception in sql code");
+            Log.d("JKS ","Caught exception in sql code");
         }
-
-
 
         if(isAccessibilityEnabled())
         {
@@ -226,20 +257,17 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 0);
         }
 
-
+        /* thread to update the context to accessibility class */
         Thread thread = new Thread() {
             @Override
             public void run() {
-
-
                 try {
-
                     boolean run = true;
-
                     do {
                         if(isAccessibilityEnabled()) {
                             MyAccessibilityService.setMyContext(MainActivity.this);
                             run = false;
+                            MyAccessibilityService.startLockingThread();
                         }
                         sleep(1000);
 
@@ -249,14 +277,11 @@ public class MainActivity extends AppCompatActivity {
                 } catch (RuntimeException r){
                     r.printStackTrace();
                 }
-                }
+                Log.d("JKS","Thread exits");
+            }
         };
 
         thread.start();
-        //******************************************************************************************
-        //******************************************************************************************
-
-
 
         final PackageManager pm = getPackageManager();
 
@@ -268,11 +293,11 @@ public class MainActivity extends AppCompatActivity {
                 appReadyToLock++;
         }
 
-        mappName = new String[appReadyToLock];
-        imageId = new Integer[appReadyToLock];
-        lockStatus = new Integer[appReadyToLock];
-        drwArray = new Drawable[appReadyToLock];
-        appCount = 0;
+        mappName     = new String[appReadyToLock];
+        imageId      = new Integer[appReadyToLock];
+        lockStatus   = new Integer[appReadyToLock];
+        drwArray     = new Drawable[appReadyToLock];
+        appCount     = 0;
         mPackageName = new String[appReadyToLock];
 
         for (ApplicationInfo packageInfo : packages) {
@@ -281,14 +306,15 @@ public class MainActivity extends AppCompatActivity {
             // Log.d("JKS", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
             if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
             {
-
-                Drawable icon = pm.getApplicationIcon(packageInfo);
-                mappName[appCount] = pm.getApplicationLabel(packageInfo).toString();
+                Drawable icon          = pm.getApplicationIcon(packageInfo);
+                mappName[appCount]     = pm.getApplicationLabel(packageInfo).toString();
                 mPackageName[appCount] = packageInfo.packageName;
-                imageId[appCount] = appCount;
-                lockStatus[appCount] = 0;
-                drwArray[appCount] = icon;
+                imageId[appCount]      = appCount;
+                lockStatus[appCount]   = 0;
+                drwArray[appCount]     = icon;
+
                 for (int i = 0; i < lockAppIndex; i++) {
+
                     if (lockedApps[i].equals(packageInfo.packageName)) {
                         lockStatus[appCount] = 1;
                         break;
@@ -299,19 +325,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         Log.d("JKS","total list item count = "+appCount);
-       // Log.d("JKS","appname "+Arrays.toString(mappName));
-
-        //=====================================================================================================
-
-
     }
 
     public static void loadAppList() {
 
-       /* customList adapter = new
-                customList(mActivity, mappName, imageId);
-*/
-                customList adapter = new
+        customList adapter = new
                 customList(mActivity, mappName, imageId,drwArray,lockStatus,appCount);
 
         appList.setAdapter(adapter);
@@ -320,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-               // Toast.makeText(mActivity, "You Clicked at " +mPackageName[+ position], Toast.LENGTH_SHORT).show();
+
                 TextView txV = (TextView)view.findViewById(R.id.txt);
                 ImageView img_lock = (ImageView)view.findViewById(R.id.img_lock_state);
 
@@ -366,12 +384,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
 
     }
+
     public static boolean addAppToLockedList(String appName)
     {
         lockedApps[lockAppIndex] = appName;
         lockAppIndex++;
         return true;
     }
+
     public boolean isAccessibilityEnabled(){
         int accessibilityEnabled = 0;
         final String LIGHTFLOW_ACCESSIBILITY_SERVICE = "com.jaapps.lockengine/com.jaapps.lockengine.MyAccessibilityService";

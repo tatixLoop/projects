@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import java.util.jar.Manifest;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -38,6 +40,7 @@ public class FullscreenLockActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    public  String gName;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -98,6 +101,24 @@ public class FullscreenLockActivity extends AppCompatActivity {
         MainActivity.unlockApp(lockedApp);
     }
     @Override
+    protected void onStop(){
+        super.onStop();
+
+        Intent intent = new Intent(this, FullscreenLockActivity.class);
+        if(MainActivity.getAppStatus(lockedApp)) {
+
+
+            Log.d("JKS", "Reloading lockscreen for " + gName);
+            intent.putExtra("key", gName); //Optional parameters
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
+                            Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+                            Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            startActivity(intent);
+        }
+
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -109,9 +130,11 @@ public class FullscreenLockActivity extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        String name = intent.getStringExtra("key");
-        Log.d("JKS","app data received is "+ name );
 
+        String name = intent.getStringExtra("key");
+        gName =name;
+        Log.d("JKS","app data received is "+ name );
+        MainActivity.lockApp(name);
         try {
             final PackageManager pm = getPackageManager();
             Drawable icon = pm.getApplicationIcon(name);
