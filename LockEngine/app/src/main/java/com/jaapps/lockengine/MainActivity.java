@@ -79,17 +79,24 @@ public class MainActivity extends AppCompatActivity {
     static Integer[] imageId;
     static Integer[] lockStatus;
     static Drawable[] drwArray;
-    static int appCount;
-    static SQLiteDatabase db;
+    static int appCount = 0;
+    static SQLiteDatabase mdb;
 
     static ListView appList;
+
+    public static void setAppCtx(Context appCtx)
+    {
+        mContext = appCtx;
+    }
     public static void launchLockScreen(String appName) {
         Log.d("JKS", "Launch lock screen from here");
         Intent myIntent = new Intent(mContext, FullscreenLockActivity.class);
         myIntent.putExtra("key",appName); //Optional parameters
         myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
                 Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-                Intent.FLAG_ACTIVITY_NO_HISTORY );
+                Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_TASK
+        );
         mContext.startActivity(myIntent);
         //lockScreen();
 
@@ -144,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public static boolean checkLockedList(String appName)
     {
         // get the list of application to be locked
@@ -183,6 +191,84 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    public static void loadAllApplications(PackageManager pm,SQLiteDatabase db, Cursor c)
+    {
+
+        //final PackageManager pm = getPackageManager();
+        mdb = db;
+
+        if(appCount==0) {
+
+            try {
+
+
+                lockAppIndex = 0;
+                int size = 0;
+                if (c.getCount() == 0)
+                    size = 100;
+                else
+                    size = c.getCount() * 50;
+
+                lockedApps = new String[size];
+                isLocked = new int[size];
+                appCheckTime = new long[size];
+
+                if (c.getCount() == 0) {
+                    Log.d("JKS", "No apps are marked for locking");
+                } else {
+                    Log.d("JKS", "got " + c.getCount() + " entries in tileLockDatabase");
+                    while (c.moveToNext()) {
+                        lockedApps[lockAppIndex] = c.getString(0);
+                        isLocked[lockAppIndex] = 0;
+                        appCheckTime[lockAppIndex] = System.currentTimeMillis();
+                        lockAppIndex++;
+                    }
+                }
+
+            } catch (Exception ex) {
+                Log.d("JKS ", "Caught exception in sql code");
+            }
+
+
+            //get a list of installed apps.
+            List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+            int appReadyToLock = 0;
+            for (ApplicationInfo packageInfo : packages) {
+                if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
+                    appReadyToLock++;
+            }
+
+            mappName = new String[appReadyToLock];
+            imageId = new Integer[appReadyToLock];
+            lockStatus = new Integer[appReadyToLock];
+            drwArray = new Drawable[appReadyToLock];
+            appCount = 0;
+            mPackageName = new String[appReadyToLock];
+
+            for (ApplicationInfo packageInfo : packages) {
+
+                if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                    Drawable icon = pm.getApplicationIcon(packageInfo);
+                    mappName[appCount] = pm.getApplicationLabel(packageInfo).toString();
+                    mPackageName[appCount] = packageInfo.packageName;
+                    imageId[appCount] = appCount;
+                    lockStatus[appCount] = 0;
+                    drwArray[appCount] = icon;
+
+                    for (int i = 0; i < lockAppIndex; i++) {
+
+                        if (lockedApps[i].equals(packageInfo.packageName)) {
+                            lockStatus[appCount] = 1;
+                            break;
+                        }
+                    }
+
+                    appCount++;
+                }
+            }
+        }
+        Log.d("JKS","total list item count = "+appCount);
+    }
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -214,40 +300,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-        try{
-
-            db = openOrCreateDatabase("tileLockDB", Context.MODE_PRIVATE, null);
-            db.execSQL("CREATE TABLE IF NOT EXISTS tileLockApps(package VARCHAR);");
-            Cursor c=db.rawQuery("SELECT * FROM tileLockApps", null);
-            lockAppIndex = 0;
-            int size = 0;
-            if(c.getCount() == 0)
-                size = 100;
-            else
-                size = c.getCount() * 50;
-
-            lockedApps = new String[size];
-            isLocked  = new int[size];
-            appCheckTime = new long[size];
-
-            if(c.getCount()==0)
-            {
-                Log.d("JKS", "No apps are marked for locking");
-            }
-            else {
-                Log.d("JKS", "got " + c.getCount() + " entries in tileLockDatabase");
-                while (c.moveToNext()) {
-                    lockedApps[lockAppIndex] = c.getString(0);
-                    isLocked[lockAppIndex] = 0;
-                    appCheckTime[lockAppIndex] = System.currentTimeMillis();
-                    lockAppIndex++;
-                }
-            }
-
-        }
-        catch (Exception ex) {
-            Log.d("JKS ","Caught exception in sql code");
-        }
 
         if(isAccessibilityEnabled())
         {
@@ -257,78 +309,93 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(intent, 0);
         }
 
-        /* thread to update the context to accessibility class */
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    boolean run = true;
-                    do {
-                        if(isAccessibilityEnabled()) {
-                            MyAccessibilityService.setMyContext(MainActivity.this);
-                            run = false;
-                            MyAccessibilityService.startLockingThread();
-                        }
-                        sleep(1000);
+        if(appCount == 0) {
+            try{
 
-                    }while(run);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (RuntimeException r){
-                    r.printStackTrace();
+                mdb = openOrCreateDatabase("tileLockDB", Context.MODE_PRIVATE, null);
+                mdb.execSQL("CREATE TABLE IF NOT EXISTS tileLockApps(package VARCHAR);");
+                Cursor c=mdb.rawQuery("SELECT * FROM tileLockApps", null);
+                lockAppIndex = 0;
+                int size = 0;
+                if(c.getCount() == 0)
+                    size = 100;
+                else
+                    size = c.getCount() * 50;
+
+                lockedApps = new String[size];
+                isLocked  = new int[size];
+                appCheckTime = new long[size];
+
+                if(c.getCount()==0)
+                {
+                    Log.d("JKS", "No apps are marked for locking");
                 }
-                Log.d("JKS","Thread exits");
-            }
-        };
-
-        thread.start();
-
-        final PackageManager pm = getPackageManager();
-
-        //get a list of installed apps.
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        int appReadyToLock = 0;
-        for (ApplicationInfo packageInfo : packages) {
-            if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
-                appReadyToLock++;
-        }
-
-        mappName     = new String[appReadyToLock];
-        imageId      = new Integer[appReadyToLock];
-        lockStatus   = new Integer[appReadyToLock];
-        drwArray     = new Drawable[appReadyToLock];
-        appCount     = 0;
-        mPackageName = new String[appReadyToLock];
-
-        for (ApplicationInfo packageInfo : packages) {
-            // Log.d("JKS", "Installed package :" + packageInfo.packageName);
-            // Log.d("JKS", "Source dir : " + packageInfo.sourceDir);
-            // Log.d("JKS", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
-            if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
-            {
-                Drawable icon          = pm.getApplicationIcon(packageInfo);
-                mappName[appCount]     = pm.getApplicationLabel(packageInfo).toString();
-                mPackageName[appCount] = packageInfo.packageName;
-                imageId[appCount]      = appCount;
-                lockStatus[appCount]   = 0;
-                drwArray[appCount]     = icon;
-
-                for (int i = 0; i < lockAppIndex; i++) {
-
-                    if (lockedApps[i].equals(packageInfo.packageName)) {
-                        lockStatus[appCount] = 1;
-                        break;
+                else {
+                    Log.d("JKS", "got " + c.getCount() + " entries in tileLockDatabase");
+                    while (c.moveToNext()) {
+                        lockedApps[lockAppIndex] = c.getString(0);
+                        isLocked[lockAppIndex] = 0;
+                        appCheckTime[lockAppIndex] = System.currentTimeMillis();
+                        lockAppIndex++;
                     }
                 }
 
-                appCount++;
             }
+            catch (Exception ex) {
+                Log.d("JKS ","Caught exception in sql code");
+            }
+
+            final PackageManager pm = getPackageManager();
+
+            //get a list of installed apps.
+            List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+            int appReadyToLock = 0;
+            for (ApplicationInfo packageInfo : packages) {
+                if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
+                    appReadyToLock++;
+            }
+
+            mappName     = new String[appReadyToLock];
+            imageId      = new Integer[appReadyToLock];
+            lockStatus   = new Integer[appReadyToLock];
+            drwArray     = new Drawable[appReadyToLock];
+            appCount     = 0;
+            mPackageName = new String[appReadyToLock];
+
+            for (ApplicationInfo packageInfo : packages) {
+                // Log.d("JKS", "Installed package :" + packageInfo.packageName);
+                // Log.d("JKS", "Source dir : " + packageInfo.sourceDir);
+                // Log.d("JKS", "Launch Activity :" + pm.getLaunchIntentForPackage(packageInfo.packageName));
+                if ((packageInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
+                {
+                    Drawable icon          = pm.getApplicationIcon(packageInfo);
+                    mappName[appCount]     = pm.getApplicationLabel(packageInfo).toString();
+                    mPackageName[appCount] = packageInfo.packageName;
+                    imageId[appCount]      = appCount;
+                    lockStatus[appCount]   = 0;
+                    drwArray[appCount]     = icon;
+
+                    for (int i = 0; i < lockAppIndex; i++) {
+
+                        if (lockedApps[i].equals(packageInfo.packageName)) {
+                            lockStatus[appCount] = 1;
+                            break;
+                        }
+                    }
+
+                    appCount++;
+                }
+            }
+            Log.d("JKS","total list item count = "+appCount);
+
+
         }
-        Log.d("JKS","total list item count = "+appCount);
+
     }
 
     public static void loadAppList() {
 
+        Log.d("JKS","for Loading apList appCount = "+appCount);
         customList adapter = new
                 customList(mActivity, mappName, imageId,drwArray,lockStatus,appCount);
 
@@ -344,13 +411,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if(!isAppLocked(mPackageName[+ position])) {
-                    db.execSQL("INSERT INTO tileLockApps VALUES('" + mPackageName[+position] + "')");
+                    mdb.execSQL("INSERT INTO tileLockApps VALUES('" + mPackageName[+position] + "')");
                     img_lock.setImageResource(R.drawable.lock_state);
                     addAppToLockedList( mPackageName[+position]);
                     lockStatus[+position] = 1;
                 }
                 else{
-                    db.execSQL("DELETE FROM tileLockApps WHERE package ='"+ mPackageName[+position]+"'");
+                    mdb.execSQL("DELETE FROM tileLockApps WHERE package ='"+ mPackageName[+position]+"'");
                     img_lock.setImageResource(R.drawable.unlock_state);
                     removeAppFromLockedList( mPackageName[+position]);
                     lockStatus[+position] = 0;
