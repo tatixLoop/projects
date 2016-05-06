@@ -9,8 +9,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,11 +46,13 @@ public class MainActivityLockScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mContext = this;
+        mActivity = MainActivityLockScreen.this;
+
         setContentView(R.layout.activity_main_activity_lock_screen);
         setTitle("Tatix App Security");
 
-        /* get the status from database TODO*/
-        appSecurity = false;
         /* adding button listners */
         Button btnLockSel = (Button) findViewById(R.id.btn_selectLock);
         Button btnappsel = (Button) findViewById(R.id.btn_selectApps);
@@ -59,6 +63,12 @@ public class MainActivityLockScreen extends AppCompatActivity {
 
                 mdb = openOrCreateDatabase("tileLockDB", Context.MODE_PRIVATE, null);
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS tileLockApps(package VARCHAR);");
+                mdb.execSQL("CREATE TABLE IF NOT EXISTS lockStatus(status int);");
+                Cursor c2=mdb.rawQuery("SELECT * FROM lockStatus", null);
+                if(c2.getCount() == 0) {
+                    mdb.execSQL("INSERT INTO lockStatus VALUES('0')");
+                    Log.d("JKS","Inserting first element");
+                }
                 Cursor c=mdb.rawQuery("SELECT * FROM tileLockApps", null);
                 lockAppIndex = 0;
                 int size = 0;
@@ -131,10 +141,25 @@ public class MainActivityLockScreen extends AppCompatActivity {
                     appCount++;
                 }
             }
-            Log.d("JKS","total list item count = "+appCount);
+            Log.d("JKS", "total list item count = " + appCount);
 
 
         }
+
+
+        ImageView lockStatImage = (ImageView) findViewById(R.id.img_status);
+        TextView txtAppStat = (TextView) findViewById(R.id.txtView_secureStat);
+        if (getSecurityStatus() == true) {
+
+            btntoggle.setText("Disable app security");
+            lockStatImage.setImageResource(R.drawable.applocksecure);
+            txtAppStat.setText("Your apps are secure");
+        } else {
+            btntoggle.setText("Enable App Security");
+            txtAppStat.setText("Your Apps are not secure");
+            lockStatImage.setImageResource(R.drawable.applocknotsecure);
+        }
+
 
         btntoggle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,19 +168,17 @@ public class MainActivityLockScreen extends AppCompatActivity {
                 ImageView lockStatImage = (ImageView) findViewById(R.id.img_status);
                 Button btnLockSel = (Button) findViewById(R.id.btn_securityToggle);
                 TextView txtAppStat = (TextView) findViewById(R.id.txtView_secureStat);
-                if (appSecurity == false) {
-                    appSecurity = true;
+                if (getSecurityStatus() == false) {
+                    setSecurityStatus(true);
 
                     btnLockSel.setText("Disable app security");
                     lockStatImage.setImageResource(R.drawable.applocksecure);
                     txtAppStat.setText("Your apps are secure");
-                    /* TODO update database */
                 } else {
                     btnLockSel.setText("Enable App Security");
                     txtAppStat.setText("Your Apps are not secure");
-                    appSecurity = false;
+                    setSecurityStatus(false);
                     lockStatImage.setImageResource(R.drawable.applocknotsecure);
-                    /* TODO update database */
                 }
             }
         });
@@ -176,19 +199,34 @@ public class MainActivityLockScreen extends AppCompatActivity {
                         ImageView lockStatImage = (ImageView) findViewById(R.id.img_status);
                         Button btnLockSel = (Button) findViewById(R.id.btn_securityToggle);
                         TextView txtAppStat = (TextView) findViewById(R.id.txtView_secureStat);
-                        if (appSecurity == false) {
-                            appSecurity = true;
 
+                        if (getSecurityStatus() == false) {
+                            setSecurityStatus(true);
+
+                            //GIVE PERMISSIONS
+
+                            //Check if permission enabled for usage stats
+                            if (UStats.getUsageStatsList(mContext).isEmpty()){
+                                Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+                                startActivity(intent);
+                            }
+
+
+                            if(isAccessibilityEnabled())
+                            {
+                                Log.d("JKS","Accessibility enabled for LockEngine");
+                            }else {
+                                Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                                startActivityForResult(intent, 0);
+                            }
                             btnLockSel.setText("Disable app security");
                             lockStatImage.setImageResource(R.drawable.applocksecure);
                             txtAppStat.setText("Your apps are secure");
-                    /* TODO update database */
                         } else {
                             btnLockSel.setText("Enable App Security");
                             txtAppStat.setText("Your Apps are not secure");
-                            appSecurity = false;
+                            setSecurityStatus(false);
                             lockStatImage.setImageResource(R.drawable.applocknotsecure);
-                    /* TODO update database */
                         }
                     case MotionEvent.ACTION_CANCEL: {
                         Button view = (Button) v;
@@ -212,12 +250,7 @@ public class MainActivityLockScreen extends AppCompatActivity {
                         break;
                     }
                     case MotionEvent.ACTION_UP:
-                        // Your action here on button click
-                        Toast.makeText(getApplicationContext(), "App selection is yet to implement",
-                                Toast.LENGTH_SHORT).show();
-
                         Intent intent = new Intent(MainActivityLockScreen.this, AppLisintingActivity.class);
-
                         startActivity(intent);
                     case MotionEvent.ACTION_CANCEL: {
                         Button view = (Button) v;
@@ -255,6 +288,43 @@ public class MainActivityLockScreen extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    public static boolean getSecurityStatus()
+    {
+        Cursor c=mdb.rawQuery("SELECT * FROM lockStatus", null);
+
+        if(c.getCount() == 0)
+        {
+            return false;
+        }
+        else {
+            while (c.moveToNext()) {
+                if(c.getInt(0) == 1)
+                {
+                    return true;
+                }
+                else if(c.getInt(0) == 0)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean setSecurityStatus(boolean value)
+    {
+        if(value == true)
+        {
+            mdb.execSQL("UPDATE lockStatus SET status=1;");
+        }
+        if(value == false)
+        {
+            mdb.execSQL("UPDATE lockStatus SET status=0;");
+        }
+        return true;
     }
 
     public static void loadAllApplications(PackageManager pm,SQLiteDatabase db, Cursor c)
@@ -365,5 +435,141 @@ public class MainActivityLockScreen extends AppCompatActivity {
         }
         return true;
 
+    }
+
+    public static boolean checkLockedList(String appName)
+    {
+        // get the list of application to be locked
+        //return true if the appName is present in the list
+        Log.d("JKS","Check if " + appName + " has to be locked");
+
+        for(int i = 0; i < lockAppIndex; i++)
+        {
+
+            if(appName.equals((lockedApps[i])))
+            {
+
+                long timeDiff = (System.currentTimeMillis()  - appCheckTime[i]);
+
+                appCheckTime[i] = System.currentTimeMillis();
+
+                if(timeDiff < 15000) {
+
+                    Log.d("JKS","Recently "+ appName +" app was running ("+timeDiff +")");
+                    return false;
+                }
+
+                if(isLocked[i] == 0) {
+
+                    Log.d("JKS",appName + " has to be locked");
+                    return true;
+                }
+                else {
+                    Log.d("JKS",appName +" is already locked so not locking");
+                    return false;
+                }
+            }
+        }
+
+
+
+        return false;
+    }
+    public static void launchLockScreen(String appName) {
+        Log.d("JKS", "Launch lock screen from here");
+        Intent myIntent = new Intent(mContext, FullscreenLockActivity.class);
+        myIntent.putExtra("key",appName); //Optional parameters
+        myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
+                        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+                        Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+        );
+        mContext.startActivity(myIntent);
+        //lockScreen();
+
+    }
+    public static void setAppCtx(Context appCtx)
+    {
+        mContext = appCtx;
+    }
+
+    public static  void unlockApp(String appName)
+    {
+
+        for(int i = 0; i < lockAppIndex; i++)
+        {
+
+            if(appName.equals((lockedApps[i])))
+            {
+                isLocked[i] = 0;
+                appCheckTime[i]= System.currentTimeMillis();
+                Log.d("JKS","Unlock "+appName);
+                return;
+            }
+        }
+    }
+
+    public static  void lockApp(String appName)
+    {
+
+        for(int i = 0; i < lockAppIndex; i++)
+        {
+
+            if(appName.equals((lockedApps[i])))
+            {
+                isLocked[i] = 1;
+                Log.d("JKS","lock "+appName);
+                return;
+            }
+        }
+    }
+
+    public static  boolean getAppStatus(String appName)
+    {
+
+        for(int i = 0; i < lockAppIndex; i++)
+        {
+
+            if(appName.equals((lockedApps[i])))
+            {
+                if(isLocked[i] == 0)
+                    return false;
+                else
+                    return true;
+            }
+        }
+        return false;
+
+    }
+    public boolean isAccessibilityEnabled(){
+        int accessibilityEnabled = 0;
+        final String LIGHTFLOW_ACCESSIBILITY_SERVICE = "com.jaapps.lockengine/com.jaapps.lockengine.MyAccessibilityService";
+        boolean accessibilityFound = false;
+        try {
+            accessibilityEnabled = Settings.Secure.getInt(this.getContentResolver(),android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
+
+        } catch (Settings.SettingNotFoundException e) {
+            Log.d("JKS", "Error finding setting, default accessibility to not found: " + e.getMessage());
+        }
+
+        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+
+        if (accessibilityEnabled==1){
+
+            String settingValue = Settings.Secure.getString(getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+
+            if (settingValue != null) {
+                TextUtils.SimpleStringSplitter splitter = mStringColonSplitter;
+                splitter.setString(settingValue);
+                while (splitter.hasNext()) {
+                    String accessabilityService = splitter.next();
+                    Log.d("JKS", "Setting: " + accessabilityService);
+                    if (accessabilityService.equalsIgnoreCase(LIGHTFLOW_ACCESSIBILITY_SERVICE)){
+                        return true;
+                    }
+                }
+            }
+        }
+        return accessibilityFound;
     }
 }
