@@ -64,6 +64,9 @@ public class MainActivityLockScreen extends AppCompatActivity {
                 mdb = openOrCreateDatabase("tileLockDB", Context.MODE_PRIVATE, null);
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS tileLockApps(package VARCHAR);");
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS lockStatus(status int);");
+                mdb.execSQL("CREATE TABLE IF NOT EXISTS lockType(lockId int,enabled int);");
+                mdb.execSQL("CREATE TABLE IF NOT EXISTS unlockKey(lockId int,key int);");
+                mdb.execSQL("INSERT INTO lockType VALUES('0','0')");
                 Cursor c2=mdb.rawQuery("SELECT * FROM lockStatus", null);
                 if(c2.getCount() == 0) {
                     mdb.execSQL("INSERT INTO lockStatus VALUES('0')");
@@ -275,9 +278,8 @@ public class MainActivityLockScreen extends AppCompatActivity {
                         break;
                     }
                     case MotionEvent.ACTION_UP:
-                        // Your action here on button click
-                        Toast.makeText(getApplicationContext(), "lock selection is yet to implement",
-                                Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivityLockScreen.this, LockSelectionActivity.class);
+                        startActivity(intent);
                     case MotionEvent.ACTION_CANCEL: {
                         Button view = (Button) v;
                         view.getBackground().clearColorFilter();

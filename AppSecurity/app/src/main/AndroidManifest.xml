@@ -26,7 +26,8 @@
             android:name=".AppLisintingActivity"
             android:label="@string/title_activity_app_lisinting"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".FullscreenLockActivity"></activity>
+        <activity android:name=".FullscreenLockActivity" />
+
         <service
             android:name=".MyAccessibilityService"
             android:label="@string/accessibility_service_label"
@@ -39,6 +40,8 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
+
+        <activity android:name=".LockSelectionActivity"></activity>
     </application>
 
 </manifest>
