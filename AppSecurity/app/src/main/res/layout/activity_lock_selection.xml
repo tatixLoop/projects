@@ -7,6 +7,43 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/lockselbg"
     tools:context="com.appsecurity.tatix.appsecurity.LockSelectionActivity">
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/numlock"
+        android:id="@+id/btn_lockNumber" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_lockTiles"
+        android:background="@drawable/invisible_tiles"
+        android:layout_above="@+id/textViewNumLock"
+        android:layout_alignEnd="@+id/textViewTiles" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Number Lock"
+        android:textSize="20sp"
+        android:id="@+id/textViewNumLock"
+        android:layout_below="@+id/btn_lockNumber"
+        android:textColor="#ffffff"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invisible Tiles"
+        android:id="@+id/textViewTiles"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:layout_below="@+id/btn_lockTiles"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

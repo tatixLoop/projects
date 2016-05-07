@@ -66,7 +66,14 @@ public class MainActivityLockScreen extends AppCompatActivity {
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS lockStatus(status int);");
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS lockType(lockId int,enabled int);");
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS unlockKey(lockId int,key int);");
-                mdb.execSQL("INSERT INTO lockType VALUES('0','0')");
+                // add lock type to database;; this is required before adding any new type of lock
+                Cursor c3=mdb.rawQuery("SELECT * FROM lockType", null);
+                if(c3.getCount() == 0)
+                {
+                    mdb.execSQL("INSERT INTO lockType VALUES('0','0')");
+                    mdb.execSQL("INSERT INTO lockType VALUES('1','0')");
+                }
+
                 Cursor c2=mdb.rawQuery("SELECT * FROM lockStatus", null);
                 if(c2.getCount() == 0) {
                     mdb.execSQL("INSERT INTO lockStatus VALUES('0')");
@@ -144,7 +151,7 @@ public class MainActivityLockScreen extends AppCompatActivity {
                     appCount++;
                 }
             }
-            Log.d("JKS", "total list item count = " + appCount);
+                Log.d("JKS", "total list item count = " + appCount);
 
 
         }
