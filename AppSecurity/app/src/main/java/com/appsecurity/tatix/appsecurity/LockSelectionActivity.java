@@ -1,5 +1,6 @@
 package com.appsecurity.tatix.appsecurity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
@@ -56,8 +57,10 @@ public class LockSelectionActivity extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.selectednumlock);
                         Button btn_tiles = (Button) findViewById(R.id.btn_lockTiles);
                         btn_tiles.setBackgroundResource(R.drawable.invisible_tiles);
-                        MainActivityLockScreen.mdb.execSQL("UPDATE lockType SET enabled=1 WHERE lockId=0");
-                        MainActivityLockScreen.mdb.execSQL("UPDATE lockType SET enabled=0 WHERE lockId<>0");
+
+                        Intent intent = new Intent(LockSelectionActivity.this, NumberLockActivity.class);
+                        intent.putExtra("key","setKey");
+                        startActivity(intent);
                         break;
                     }
                     case MotionEvent.ACTION_CANCEL: {
