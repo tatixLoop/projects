@@ -2,6 +2,7 @@ package com.appsecurity.tatix.menzworld;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,8 @@ public class ReportActivity extends AppCompatActivity {
         day = cal.get(Calendar.DAY_OF_MONTH);
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
+        txtToDate = (TextView)findViewById(R.id.txt_toDate);
+        txtFrmDate = (TextView)findViewById(R.id.txt_fromDate);
 
         Button btnFrom = (Button)findViewById(R.id.btn_fromDate);
         Button btnTo = (Button)findViewById(R.id.btn_toDate);
@@ -67,8 +70,19 @@ public class ReportActivity extends AppCompatActivity {
                             Log.d("JKS","Please set the dates properly");
                             return;
                         }
+                        String querry = "SELECT * FROM billTable WHERE billDate >= Datetime('"+strFromDate+"') AND billDate <= Datetime('"+strToDate+"')";
+
+                        Log.d("JKS","Querry = "+querry);
+
+                        Cursor c2 = MainActivity.mdb.rawQuery(querry, null);
+                        Log.d("JKS", "Get " + c2.getCount());
 
 
+                        if(c2.getCount() != 0) {
+                            while (c2.moveToNext()) {
+                                Log.d("JKS","Data billid= "+c2.getString(0)+" refId ="+c2.getString(1)+" discount ="+c2.getString(2)+" date = "+c2.getString(3));
+                            }
+                        }
                     }
                 });
 
@@ -93,7 +107,14 @@ public class ReportActivity extends AppCompatActivity {
             Log.d("JKS", "" + (selectedDay + " / " + (selectedMonth + 1) + " / "
                     + selectedYear));
 
-            strFromDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 00:00:00";
+            if(selectedMonth+1 <10)
+            {
+                strFromDate = selectedYear + "-0" + (selectedMonth + 1) + "-" + selectedDay + " 00:00:00";
+
+            }
+            else {
+                strFromDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 00:00:00";
+            }
             txtFrmDate.setText(strFromDate);
             flagSelFromDate = true;
         }
@@ -104,7 +125,14 @@ public class ReportActivity extends AppCompatActivity {
                               int selectedMonth, int selectedDay) {
             Log.d("JKS", "" + (selectedDay + " / " + (selectedMonth + 1) + " / "
                     + selectedYear));
-            strToDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 23:59:59";
+            if(selectedMonth+1 <10)
+            {
+                strToDate = selectedYear + "-0" + (selectedMonth + 1) + "-" + selectedDay + " 23:59:59";
+            }
+                else
+            {
+                strToDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 23:59:59";
+            }
             txtToDate.setText(strToDate);
             getFlagSelToDate = true;
         }
