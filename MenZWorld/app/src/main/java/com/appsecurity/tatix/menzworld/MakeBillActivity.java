@@ -122,7 +122,7 @@ public class MakeBillActivity extends AppCompatActivity {
                 int serialNum = Integer.parseInt(txt_serial.getText().toString());
 
 
-                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,stockId FROM stockData WHERE serialNumber='" + serialNum + "'", null);
+                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId FROM stockData WHERE serialNumber='" + serialNum + "'", null);
 
 
 

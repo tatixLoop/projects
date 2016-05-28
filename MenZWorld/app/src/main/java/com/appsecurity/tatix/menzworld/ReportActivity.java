@@ -77,12 +77,43 @@ public class ReportActivity extends AppCompatActivity {
                         Cursor c2 = MainActivity.mdb.rawQuery(querry, null);
                         Log.d("JKS", "Get " + c2.getCount());
 
+                        int totalItems = 0;
+                        int totalDiscount = 0;
+                        int totalMoneyReceived = 0;
+                        int totalActualCost = 0;
+                        int totalProfit = 0;
 
                         if(c2.getCount() != 0) {
                             while (c2.moveToNext()) {
                                 Log.d("JKS","Data billid= "+c2.getString(0)+" refId ="+c2.getString(1)+" discount ="+c2.getString(2)+" date = "+c2.getString(3));
+                                totalDiscount += Integer.parseInt(c2.getString(2));
+                                String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+c2.getString(1);
+                                Log.d("JKS","GetStockIdQuerry = "+getStockIdQuerry);
+                                Cursor c3 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
+
+                                if(c3.getCount() != 0)
+                                {
+                                    totalItems += c3.getCount();
+                                    while (c3.moveToNext()) {
+                                        Log.d("JKS","StockId = "+c3.getString(0));
+                                        String getProductDataQuerry = "SELECT serialNumber,item,price,selling_price FROM stockData WHERE stockId="+c3.getString(0);
+                                        Log.d("JKS","getProductDataQuerry = "+getProductDataQuerry);
+                                        Cursor c4 = MainActivity.mdb.rawQuery(getProductDataQuerry, null);
+
+                                        if(c4.getCount() != 0)
+                                        {
+                                            while (c4.moveToNext()) {
+                                                Log.d("JKS","slno= "+c4.getString(0)+ " item ="+c4.getString(1)+ " price ="+c4.getString(2)+" sel price ="+c4.getString(3));
+                                                totalMoneyReceived += Integer.parseInt(c4.getString(3));
+                                                totalActualCost += Integer.parseInt(c4.getString(2));
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
+                        Log.d("JKS","TotalItems sold = " + totalItems + " Total Money Received = "+totalMoneyReceived+
+                                " Total ACtualCost = " +totalActualCost + " Discount = "+totalDiscount+" Profit = "+(totalMoneyReceived-totalActualCost-totalDiscount));
                     }
                 });
 

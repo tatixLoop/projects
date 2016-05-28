@@ -71,7 +71,7 @@ public class BillActivity extends AppCompatActivity {
         if(c2.getCount() != 0) {
             while(c2.moveToNext()){
 
-                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,stockId FROM stockData WHERE stockId='" + c2.getInt(0) + "'", null);
+                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId FROM stockData WHERE stockId='" + c2.getInt(0) + "'", null);
                 Log.d("JKS","stock Id = "+c2.getInt(0));
                 if(c3.getCount() != 0) {
                     while (c3.moveToNext()) {

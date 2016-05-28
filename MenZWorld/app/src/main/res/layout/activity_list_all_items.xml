@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView12"
-        android:layout_alignEnd="@+id/textView14"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="40dp"
+        android:layout_alignParentEnd="true">
 
     </ListView>
 
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:text="item     "
         android:id="@+id/textView11"
-        android:layout_above="@+id/list_all"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/textView12" />
 
     <TextView
@@ -41,17 +41,18 @@
         android:layout_height="wrap_content"
         android:text="Price    "
         android:id="@+id/textView13"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/textView15"
-        android:layout_marginEnd="19dp" />
+        android:layout_above="@+id/list_all"
+        android:layout_toEndOf="@+id/textView11"
+        android:layout_marginStart="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="no of items"
+        android:text="quantity"
         android:id="@+id/textView14"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/list_all"
+        android:layout_toEndOf="@+id/textView15"
+        android:layout_marginStart="24dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,7 +60,6 @@
         android:text="Selling Price"
         android:id="@+id/textView15"
         android:layout_above="@+id/list_all"
-        android:layout_toStartOf="@+id/textView14"
-        android:layout_marginEnd="22dp" />
+        android:layout_toEndOf="@+id/textView13" />
 
 </RelativeLayout>
