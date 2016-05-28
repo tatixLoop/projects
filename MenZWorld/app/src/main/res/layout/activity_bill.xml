@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.appsecurity.tatix.menzworld.BillActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bill No:"
+        android:id="@+id/textView9"
+        android:layout_marginStart="38dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-1"
+        android:id="@+id/txt_billNo"
+        android:layout_alignTop="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9"
+        android:layout_marginStart="28dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:"
+        android:id="@+id/textView18"
+        android:layout_below="@+id/textView9"
+        android:layout_alignStart="@+id/textView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="03-05-1991"
+        android:id="@+id/txt_dateB"
+        android:layout_below="@+id/txt_billNo"
+        android:layout_alignStart="@+id/txt_billNo" />
+
+
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tbl_bill"
+        android:stretchColumns="0,1,2"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:layout_below="@+id/txt_dateB"
+        android:layout_above="@+id/textView19"
+        android:layout_marginEnd="37dp">
+        <TableRow
+            android:layout_width="fill_parent">
+            <TextView
+
+                android:gravity="left"
+                android:text="ITEM CODE"
+                />
+            <TextView
+
+                android:gravity="left"
+                android:text="ITEM "
+                />
+
+            <TextView
+
+                android:gravity="left"
+                android:text="PRICE"
+                />
+        </TableRow>
+    </TableLayout>
+
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total"
+        android:id="@+id/textView19"
+        android:layout_above="@+id/textView20"
+        android:layout_toEndOf="@+id/textView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="discount"
+        android:id="@+id/textView20"
+        android:layout_marginBottom="17dp"
+        android:layout_above="@+id/textView21"
+        android:layout_toEndOf="@+id/textView9" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grant TOTAL"
+        android:id="@+id/textView21"
+        android:layout_alignBaseline="@+id/txt_bill_grant"
+        android:layout_alignBottom="@+id/txt_bill_grant"
+        android:layout_alignStart="@+id/textView19" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txt_bill_total"
+        android:layout_below="@+id/tbl_bill"
+        android:layout_alignStart="@+id/txt_bill_discount" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txt_bill_discount"
+        android:layout_below="@+id/txt_bill_total"
+        android:layout_alignStart="@+id/txt_bill_grant" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/txt_bill_grant"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/txt_dateB"
+        android:layout_marginBottom="37dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/btn_ok_bill"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
