@@ -88,7 +88,7 @@ public class MakeBillActivity extends AppCompatActivity {
                             itemsSold = c3.getInt(0);
                         }
 
-                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold + 1)+" WHERE billData WHERE stockId="+c2.getInt(0);
+                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold + 1)+" WHERE stockId="+c2.getInt(0);
                         Log.d("JKS","update Querry = "+updateQuerry);
                         MainActivity.mdb.execSQL(updateQuerry);
                     }
@@ -148,7 +148,7 @@ public class MakeBillActivity extends AppCompatActivity {
                 int serialNum = Integer.parseInt(txt_serial.getText().toString());
 
 
-                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId FROM stockData WHERE serialNumber='" + serialNum + "'", null);
+                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold FROM stockData WHERE serialNumber='" + serialNum + "'", null);
 
 
 
@@ -159,6 +159,16 @@ public class MakeBillActivity extends AppCompatActivity {
 
                     Log.d("JKS", " scan Result");
                     while (c3.moveToNext()) {
+                        int totalItems = c3.getInt(4);
+                        int itemsSold = c3.getInt(5);
+                        if(itemsSold>=totalItems)
+                        {
+                            Log.d("JKS","Soldall items "+itemsSold+">="+totalItems);
+                            txt_serial.setText("");
+                            Toast.makeText(getBaseContext(), "This item is out of stock",
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
                         Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2)+" stockId ="+c3.getInt(3));
                         insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+MainActivity.billRefId+","+c3.getInt(3)+");";

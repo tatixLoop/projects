@@ -22,11 +22,24 @@
             android:layout_marginLeft="20dp"
             />
         <TextView
+            android:id="@+id/selling_rpice"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            />
+        <TextView
             android:id="@+id/noOfItems"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
             />
+        <TextView
+            android:id="@+id/soldItems"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            />
+
     </TableRow>
 
 </TableLayout>

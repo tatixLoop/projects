@@ -22,10 +22,12 @@ public class ListAllItems extends AppCompatActivity {
         String [] serialNo;
         String [] itemType;
         String [] price;
+        String [] sellingPrice;
         String [] noOfItems;
+        String [] soldItems;
         int nCount = 0;
 
-        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems FROM stockData", null);
+        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold FROM stockData", null);
 
         nCount = c.getCount();
         if(nCount != 0)
@@ -34,6 +36,9 @@ public class ListAllItems extends AppCompatActivity {
             itemType = new String[nCount];
             price = new String[nCount];
             noOfItems = new String[nCount];
+            soldItems = new  String[nCount];
+            sellingPrice = new  String[nCount];
+
             int index = 0;
 
             while (c.moveToNext()) {
@@ -85,15 +90,17 @@ public class ListAllItems extends AppCompatActivity {
 
                 price[index] = c.getString(2);
                 noOfItems[index] = c.getString(3);
+                sellingPrice[index] = c.getString(4);
+                soldItems[index]= c.getString(5);
 
-                Log.d("JKS",""+c.getString(0)+" ," +c.getString(1)+" ,"+c.getString(2)+" ,"+c.getString(3));
+                Log.d("JKS",""+c.getString(0)+" ," +c.getString(1)+" ,"+c.getString(2)+" ,"+c.getString(3)+" ,"+c.getString(4)+" ,"+c.getString(5));
 
                 index++;
             }
 
 
             customListAll adapter = new
-                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,nCount);
+                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,soldItems,nCount);
 
             if(adapter == null)
                 Log.d("JKS","adapter is nulll");

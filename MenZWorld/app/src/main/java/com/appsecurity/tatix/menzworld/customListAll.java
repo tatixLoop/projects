@@ -23,16 +23,20 @@ public class customListAll extends ArrayAdapter<String>{
     private String[] itemType;
     private String[] price;
     private String[] stockNoOfItem;
+    private String[] sellingPrice;
+    private String[] soldItems;
 
 
     public customListAll(Activity context,
-                      String[] serialNo,  String[] itemType, String[] price, String[] stockNoOfItem, int noOfItem) {
+                      String[] serialNo,  String[] itemType, String[] price, String[] stockNoOfItem,String[] sellingPrice, String[] soldItems, int noOfItem) {
         super(context, R.layout.list_all_single, serialNo);
         this.context = context;
         this.serialNo = serialNo;
         this.itemType = itemType;
         this.price = price;
         this.stockNoOfItem = stockNoOfItem;
+        this.sellingPrice = sellingPrice;
+        this.soldItems = soldItems;
         this.maxItem = noOfItem;
 
     }
@@ -50,11 +54,15 @@ public class customListAll extends ArrayAdapter<String>{
         TextView item = (TextView) rowView.findViewById(R.id.item);
         TextView txtPrice = (TextView) rowView.findViewById(R.id.price);
         TextView noOfItems = (TextView) rowView.findViewById(R.id.noOfItems);
+        TextView txt_sellingPrice = (TextView) rowView.findViewById(R.id.selling_rpice);
+        TextView txtsoldItems = (TextView) rowView.findViewById(R.id.soldItems);
 
         slno.setText(serialNo[position]);
         item.setText(itemType[position]);
         txtPrice.setText(price[position]);
         noOfItems.setText(stockNoOfItem[position]);
+        txt_sellingPrice.setText(sellingPrice[position]);
+        txtsoldItems.setText(soldItems[position]);
 
 
         return rowView;
