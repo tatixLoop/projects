@@ -68,6 +68,32 @@ public class MakeBillActivity extends AppCompatActivity {
                     billId = c.getInt(0);
                 }
 
+                String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+refId;
+                Log.d("JKS"," select querry = "+getStockIdQuerry);
+
+                Cursor c2 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
+                Log.d("JKS","Get "+c2.getCount());
+
+
+                if(c2.getCount() == 1) {
+                    while(c2.moveToNext())
+                    {
+                        Log.d("JKS","stockId = "+c2.getInt(0));
+                        int itemsSold = 0;
+                        String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c2.getInt(0);
+                        Cursor c3 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
+                        if(c3.getCount() == 1) {
+                            c3.moveToNext();
+                            Log.d("JKS", "Items Sold = " + c3.getInt(0));
+                            itemsSold = c3.getInt(0);
+                        }
+
+                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold + 1)+" WHERE billData WHERE stockId="+c2.getInt(0);
+                        Log.d("JKS","update Querry = "+updateQuerry);
+                        MainActivity.mdb.execSQL(updateQuerry);
+                    }
+                }
+
                 intent.putExtra("billno", billId);
                 intent.putExtra("date",dateTime);
                 intent.putExtra("discount",discount);

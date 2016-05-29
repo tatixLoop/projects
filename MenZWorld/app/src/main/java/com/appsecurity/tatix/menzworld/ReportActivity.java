@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -40,6 +42,20 @@ public class ReportActivity extends AppCompatActivity {
         year = cal.get(Calendar.YEAR);
         txtToDate = (TextView)findViewById(R.id.txt_toDate);
         txtFrmDate = (TextView)findViewById(R.id.txt_fromDate);
+
+        TextView txtitems = (TextView)findViewById(R.id.txt_report_noItems);
+        TextView txtCost = (TextView)findViewById(R.id.txt_report_totalSell);
+        TextView txtActual = (TextView)findViewById(R.id.txt_reports_costOfProducts);
+        TextView txtProfit = (TextView)findViewById(R.id.txt_report_profit);
+        TextView txtDiscount = (TextView)findViewById(R.id.txt_reports_discounts);
+
+        txtitems.setText("");
+        txtCost.setText("");
+        txtActual.setText("");
+        txtProfit.setText("");
+        txtToDate.setText("");
+        txtFrmDate.setText("");
+        txtDiscount.setText("");
 
         Button btnFrom = (Button)findViewById(R.id.btn_fromDate);
         Button btnTo = (Button)findViewById(R.id.btn_toDate);
@@ -82,7 +98,8 @@ public class ReportActivity extends AppCompatActivity {
                         int totalMoneyReceived = 0;
                         int totalActualCost = 0;
                         int totalProfit = 0;
-
+                        TableLayout tl = (TableLayout) findViewById(R.id.tbl_report);
+                        tl.removeAllViews();
                         if(c2.getCount() != 0) {
                             while (c2.moveToNext()) {
                                 Log.d("JKS","Data billid= "+c2.getString(0)+" refId ="+c2.getString(1)+" discount ="+c2.getString(2)+" date = "+c2.getString(3));
@@ -90,6 +107,12 @@ public class ReportActivity extends AppCompatActivity {
                                 String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+c2.getString(1);
                                 Log.d("JKS","GetStockIdQuerry = "+getStockIdQuerry);
                                 Cursor c3 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
+
+                                TableRow tr1 = new TableRow(ReportActivity.this);
+                                TextView textview = new TextView(ReportActivity.this);
+                                textview.setText("Bill id:  "+c2.getString(0));
+                                tr1.addView(textview);
+                                tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
                                 if(c3.getCount() != 0)
                                 {
@@ -100,18 +123,63 @@ public class ReportActivity extends AppCompatActivity {
                                         Log.d("JKS","getProductDataQuerry = "+getProductDataQuerry);
                                         Cursor c4 = MainActivity.mdb.rawQuery(getProductDataQuerry, null);
 
+                                        TableRow tr3 = new TableRow(ReportActivity.this);
+                                        TextView textview4 = new TextView(ReportActivity.this);
+                                        textview4.setText(" ");
+                                        tr3.addView(textview4);
+                                        tl.addView(tr3, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                                         if(c4.getCount() != 0)
                                         {
                                             while (c4.moveToNext()) {
                                                 Log.d("JKS","slno= "+c4.getString(0)+ " item ="+c4.getString(1)+ " price ="+c4.getString(2)+" sel price ="+c4.getString(3));
                                                 totalMoneyReceived += Integer.parseInt(c4.getString(3));
                                                 totalActualCost += Integer.parseInt(c4.getString(2));
+
+                                                TableRow tr2 = new TableRow(ReportActivity.this);
+                                                TextView textview1 = new TextView(ReportActivity.this);
+                                                TextView textview2 = new TextView(ReportActivity.this);
+                                                TextView textview3 = new TextView(ReportActivity.this);
+                                                textview1.setText(c4.getString(0));
+                                                switch (c4.getInt(1)) {
+                                                    case 0:textview2.setText("SHIRT"); break;
+                                                    case 1:textview2.setText("JEANS");break;
+                                                    case 2:textview2.setText("OTHERS");break;
+                                                    case 3:textview2.setText("PANTS");break;
+                                                    case 4:textview2.setText("T-SHIRT");break;
+                                                    case 5:textview2.setText("BELT");break;
+                                                    case 6:textview2.setText("INNER");break;
+                                                    case 7:textview2.setText("SHORTS");break;
+                                                    case 8:textview2.setText("WALLET");break;
+                                                    case 9:textview2.setText("OTHERS");break;
+                                                    default:textview2.setText("OTHERS");
+                                                }
+                                                textview3.setText(c4.getString(3));
+                                                tr2.addView(textview1);
+                                                tr2.addView(textview2);
+                                                tr2.addView(textview3);
+                                                tl.addView(tr2, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                                             }
+                                            TableRow tr4 = new TableRow(ReportActivity.this);
+                                            TextView textview5 = new TextView(ReportActivity.this);
+                                            textview5.setText(" ");
+                                            tr4.addView(textview5);
+                                            tl.addView(tr4, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                                         }
                                     }
                                 }
                             }
                         }
+                        TextView txtitems = (TextView)findViewById(R.id.txt_report_noItems);
+                        TextView txtCost = (TextView)findViewById(R.id.txt_report_totalSell);
+                        TextView txtActual = (TextView)findViewById(R.id.txt_reports_costOfProducts);
+                        TextView txtProfit = (TextView)findViewById(R.id.txt_report_profit);
+                        TextView txtDiscount = (TextView)findViewById(R.id.txt_reports_discounts);
+
+                        txtitems.setText(""+totalItems);
+                        txtCost.setText(""+totalMoneyReceived);
+                        txtActual.setText(""+totalActualCost);
+                        txtDiscount.setText(""+totalDiscount);
+                        txtProfit.setText(""+(totalMoneyReceived-totalActualCost-totalDiscount));
                         Log.d("JKS","TotalItems sold = " + totalItems + " Total Money Received = "+totalMoneyReceived+
                                 " Total ACtualCost = " +totalActualCost + " Discount = "+totalDiscount+" Profit = "+(totalMoneyReceived-totalActualCost-totalDiscount));
                     }
@@ -140,11 +208,17 @@ public class ReportActivity extends AppCompatActivity {
 
             if(selectedMonth+1 <10)
             {
-                strFromDate = selectedYear + "-0" + (selectedMonth + 1) + "-" + selectedDay + " 00:00:00";
+                if(selectedDay <10)
+                    strFromDate = selectedYear + "-0" + (selectedMonth + 1) + "-0" + selectedDay + " 00:00:00";
+                else
+                    strFromDate = selectedYear + "-0" + (selectedMonth + 1) + "-" + selectedDay + " 00:00:00";
 
             }
             else {
-                strFromDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 00:00:00";
+                if(selectedDay <10)
+                    strFromDate = selectedYear + "-" + (selectedMonth + 1) + "-0" + selectedDay + " 00:00:00";
+                else
+                    strFromDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 00:00:00";
             }
             txtFrmDate.setText(strFromDate);
             flagSelFromDate = true;
@@ -158,11 +232,17 @@ public class ReportActivity extends AppCompatActivity {
                     + selectedYear));
             if(selectedMonth+1 <10)
             {
-                strToDate = selectedYear + "-0" + (selectedMonth + 1) + "-" + selectedDay + " 23:59:59";
+                if(selectedDay<10)
+                strToDate = selectedYear + "-0" + (selectedMonth + 1) + "-0" + selectedDay + " 23:59:59";
+                else
+                    strToDate = selectedYear + "-0" + (selectedMonth + 1) + "-" + selectedDay + " 23:59:59";
             }
                 else
             {
-                strToDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 23:59:59";
+                if(selectedDay<10)
+                    strToDate = selectedYear + "-" + (selectedMonth + 1) + "-0" + selectedDay + " 23:59:59";
+                else
+                    strToDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay + " 23:59:59";
             }
             txtToDate.setText(strToDate);
             getFlagSelToDate = true;

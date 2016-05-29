@@ -30,9 +30,8 @@
         android:layout_height="wrap_content"
         android:text="VIEW REPORT"
         android:id="@+id/btn_view_report"
-        android:paddingTop="20sp"
         android:layout_below="@+id/txt_fromDate"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,4 +48,126 @@
         android:id="@+id/txt_toDate"
         android:layout_below="@+id/btn_toDate"
         android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No of Items Sold         :"
+        android:id="@+id/textView22"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/btn_view_report"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Money received :"
+        android:id="@+id/textView23"
+        android:layout_below="@+id/textView22" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Cost of Product :"
+        android:id="@+id/textView24"
+        android:layout_below="@+id/txt_report_totalSell"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txt_report_noItems"
+        android:layout_alignTop="@+id/textView22"
+        android:layout_alignEnd="@+id/btn_view_report" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txt_report_totalSell"
+        android:layout_alignBottom="@+id/textView23"
+        android:layout_alignStart="@+id/txt_report_noItems" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txt_reports_costOfProducts"
+        android:layout_alignBottom="@+id/textView24"
+        android:layout_alignStart="@+id/txt_report_totalSell" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Profit                   :"
+        android:id="@+id/textView28"
+        android:layout_below="@+id/textView24"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txt_report_profit"
+        android:layout_alignBaseline="@+id/textView28"
+        android:layout_alignBottom="@+id/textView28"
+        android:layout_alignStart="@+id/txt_reports_costOfProducts" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:fillViewport="true"
+        android:layout_below="@+id/textView28"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="29dp"
+        android:layout_marginBottom="20dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tbl_report"
+        android:stretchColumns="0,1,2"
+        android:layout_below="@+id/textView28"
+        android:layout_alignParentEnd="true">
+        <!--<TableRow
+            android:layout_width="fill_parent">
+            <TextView
+
+                android:gravity="left"
+                android:text="ITEM CODE"
+                />
+            <TextView
+
+                android:gravity="left"
+                android:text="ITEM "
+                />
+
+            <TextView
+
+                android:gravity="left"
+                android:text="PRICE"
+                />
+        </TableRow>-->
+    </TableLayout>
+    </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Discounts given :"
+        android:id="@+id/textView25"
+        android:layout_below="@+id/textView24"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txt_reports_discounts"
+        android:layout_above="@+id/txt_report_profit"
+        android:layout_alignStart="@+id/txt_report_profit" />
+
 </RelativeLayout>
