@@ -64,7 +64,7 @@ public class AddItemActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int item = 0;
+                int item = -1;
                 int price = 0;
                 int sellingPrice = 0;
                 int soldPrice = 0;
@@ -91,12 +91,26 @@ public class AddItemActivity extends AppCompatActivity {
 
                 MainActivity.serialNumber ++;
 
+                Log.d("JKS","Check1");
+                if(item == -1 || txt_price.getText().toString().matches("") ||
+                        txt_selprice.getText().toString().matches("") ||
+                        txt_numItems.getText().toString().matches(""))
+                {
+                    Log.d("JKS", "Please enter details of the item");
+                    Toast.makeText(getBaseContext(), "Please enter details of the item",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 price = Integer.parseInt( txt_price.getText().toString() );
                 sellingPrice = Integer.parseInt( txt_selprice.getText().toString() );
                 noOfItems = Integer.parseInt(txt_numItems.getText().toString());
                 TextView barcode = (TextView)findViewById(R.id.txt_barcode);
+                Log.d("JKS","Check1");
 
                 BigInteger barcode_int = new BigInteger(barcode.getText().toString(),10);
+                Log.d("JKS","Check1");
+
 
                 Log.d("JKS", "barcode in int is " + barcode_int);
 
@@ -349,11 +363,18 @@ public class AddItemActivity extends AppCompatActivity {
             Log.d("JKS","scan fmt ! " + scanFormat);
             TextView barcode = (TextView)findViewById(R.id.txt_barcode);
             barcode.setText(scanContent);
+            if(barcode.getText().toString().matches(""))
+            {
+                Log.d("JKS","Nothing scaned");
+                barcode.setText("000000000000");
+            }
 
         }else{
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
+            TextView barcode = (TextView)findViewById(R.id.txt_barcode);
+            barcode.setText("00000000000");
         }
     }
 }

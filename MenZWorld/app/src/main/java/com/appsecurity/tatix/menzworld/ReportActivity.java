@@ -27,6 +27,12 @@ public class ReportActivity extends AppCompatActivity {
     TextView txtFrmDate;
     TextView txtToDate;
 
+    TextView head_1;
+    TextView head_2;
+    TextView head_3;
+    TextView head_4;
+    TextView head_5;
+
     Boolean flagSelFromDate = false;
     Boolean getFlagSelToDate = false;
 
@@ -48,6 +54,19 @@ public class ReportActivity extends AppCompatActivity {
         TextView txtActual = (TextView)findViewById(R.id.txt_reports_costOfProducts);
         TextView txtProfit = (TextView)findViewById(R.id.txt_report_profit);
         TextView txtDiscount = (TextView)findViewById(R.id.txt_reports_discounts);
+
+        head_1 = (TextView)findViewById(R.id.textView22);
+        head_2 = (TextView)findViewById(R.id.textView23);
+        head_3 = (TextView)findViewById(R.id.textView24);
+        head_4 = (TextView)findViewById(R.id.textView25);
+        head_5 = (TextView)findViewById(R.id.textView28);
+
+        head_1.setVisibility(View.GONE);
+        head_2.setVisibility(View.GONE);
+        head_3.setVisibility(View.GONE);
+        head_4.setVisibility(View.GONE);
+        head_5.setVisibility(View.GONE);
+
 
         txtitems.setText("");
         txtCost.setText("");
@@ -101,6 +120,12 @@ public class ReportActivity extends AppCompatActivity {
                         TableLayout tl = (TableLayout) findViewById(R.id.tbl_report);
                         tl.removeAllViews();
                         if(c2.getCount() != 0) {
+                            head_1.setVisibility(View.VISIBLE);
+                            head_2.setVisibility(View.VISIBLE);
+                            head_3.setVisibility(View.VISIBLE);
+                            head_4.setVisibility(View.VISIBLE);
+                            head_5.setVisibility(View.VISIBLE);
+
                             while (c2.moveToNext()) {
                                 Log.d("JKS","Data billid= "+c2.getString(0)+" refId ="+c2.getString(1)+" discount ="+c2.getString(2)+" date = "+c2.getString(3));
                                 totalDiscount += Integer.parseInt(c2.getString(2));

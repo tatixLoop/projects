@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -22,13 +23,16 @@ public class MakeBillActivity extends AppCompatActivity {
 
     int total = 0;
     Context ctx ;
-    public String insertQuerry = "INSERT INTO billData (refId,stockId) values (null,null);";
+    int itemCount = 0;
+
+    public String insertQuerry = "INSERT INTO billData (refId,stockId) values (null, null);";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_bill);
 
+        itemCount = 0;
         total = 0;
         ctx = MakeBillActivity.this;
         insertQuerry="";
@@ -42,6 +46,12 @@ public class MakeBillActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 EditText editDiscount = (EditText)findViewById(R.id.edit_discount);
+
+                if(itemCount ==0)
+                {
+                    Toast.makeText(getBaseContext(),"Please select products",Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 int refId = MainActivity.billRefId;
                 int discount = Integer.parseInt(editDiscount.getText().toString());
@@ -145,11 +155,19 @@ public class MakeBillActivity extends AppCompatActivity {
 
                 EditText txt_serial = (EditText) findViewById(R.id.edit_serial);
 
+                if(txt_serial.getText().toString().matches(""))
+                {
+                    Toast.makeText(getBaseContext(), "Scan barcode of product or enter serial number",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 int serialNum = Integer.parseInt(txt_serial.getText().toString());
 
 
                 Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold FROM stockData WHERE serialNumber='" + serialNum + "'", null);
-
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(txt_serial.getWindowToken(), 0);
 
 
                 TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
@@ -170,6 +188,7 @@ public class MakeBillActivity extends AppCompatActivity {
                             return;
                         }
 
+                        itemCount++;
                         Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2)+" stockId ="+c3.getInt(3));
                         insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+MainActivity.billRefId+","+c3.getInt(3)+");";
                         MainActivity.mdb.execSQL(insertQuerry);
@@ -183,48 +202,17 @@ public class MakeBillActivity extends AppCompatActivity {
 
 
                         switch (c3.getInt(1)) {
-                            case 0:
-
-                                textview2.setText("SHIRT");
-                                break;
-                            case 1:
-
-                                textview2.setText("JEANS");
-                                break;
-                            case 2:
-
-                                textview2.setText("OTHERS");
-                                break;
-                            case 3:
-
-                                textview2.setText("PANTS");
-                                break;
-                            case 4:
-
-                                textview2.setText("T-SHIRT");
-                                break;
-                            case 5:
-
-                                textview2.setText("BELT");
-                                break;
-                            case 6:
-
-                                textview2.setText("INNER");
-                                break;
-                            case 7:
-
-                                textview2.setText("SHORTS");
-                                break;
-                            case 8:
-
-                                textview2.setText("WALLET");
-                                break;
-                            case 9:
-
-                                textview2.setText("OTHERS");
-                                break;
-                            default:
-                                textview2.setText("OTHERS");
+                            case 0:textview2.setText("SHIRT  ");break;
+                            case 1:textview2.setText("JEANS  ");break;
+                            case 2:textview2.setText("OTHERS ");break;
+                            case 3:textview2.setText("PANTS  ");break;
+                            case 4:textview2.setText("T-SHIRT");break;
+                            case 5:textview2.setText("BELT   ");break;
+                            case 6:textview2.setText("INNER  ");break;
+                            case 7:textview2.setText("SHORTS ");break;
+                            case 8:textview2.setText("WALLET ");break;
+                            case 9:textview2.setText("OTHERS ");break;
+                            default:textview2.setText("OTHERS ");
                         }
 
                         textview3.setText(c3.getString(2));
@@ -234,7 +222,6 @@ public class MakeBillActivity extends AppCompatActivity {
 
 
                         tr1.addView(textview);
-
                         tr1.addView(textview2);
                         tr1.addView(textview3);
                         tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
@@ -249,7 +236,6 @@ public class MakeBillActivity extends AppCompatActivity {
                             Log.d("JKS", "barcodeId = " + c4.getString(0) + " item = " + c4.getInt(1) + " price = " + c4.getInt(2) + " selling price" + c4.getInt(3) + " solding price = " + c4.getInt(4));
                         }
                     }
-
                 }
                 txt_serial.setText("");
             }
@@ -282,50 +268,19 @@ public class MakeBillActivity extends AppCompatActivity {
                     TextView textview3 = new TextView(ctx);
                     textview.setText(c3.getString(0));
 
-
+                    itemCount++;
                     switch (c3.getInt(1)) {
-                        case 0:
-
-                            textview2.setText("SHIRT");
-                            break;
-                        case 1:
-
-                            textview2.setText("JEANS");
-                            break;
-                        case 2:
-
-                            textview2.setText("OTHERS");
-                            break;
-                        case 3:
-
-                            textview2.setText("PANTS");
-                            break;
-                        case 4:
-
-                            textview2.setText("T-SHIRT");
-                            break;
-                        case 5:
-
-                            textview2.setText("BELT");
-                            break;
-                        case 6:
-
-                            textview2.setText("INNER");
-                            break;
-                        case 7:
-
-                            textview2.setText("SHORTS");
-                            break;
-                        case 8:
-
-                            textview2.setText("WALLET");
-                            break;
-                        case 9:
-
-                            textview2.setText("OTHERS");
-                            break;
-                        default:
-                            textview2.setText("OTHERS");
+                        case 0:textview2.setText("SHIRT  ");break;
+                        case 1:textview2.setText("JEANS  ");break;
+                        case 2:textview2.setText("OTHERS ");break;
+                        case 3:textview2.setText("PANTS  ");break;
+                        case 4:textview2.setText("T-SHIRT");break;
+                        case 5:textview2.setText("BELT   ");break;
+                        case 6:textview2.setText("INNER  ");break;
+                        case 7:textview2.setText("SHORTS ");break;
+                        case 8:textview2.setText("WALLET ");break;
+                        case 9:textview2.setText("OTHERS ");break;
+                        default:textview2.setText("OTHERS ");
                     }
 
                     textview3.setText(c3.getString(2));
@@ -333,9 +288,7 @@ public class MakeBillActivity extends AppCompatActivity {
                     TextView txt_total = (TextView) findViewById(R.id.txt_total);
                     txt_total.setText("RS: " + total);
 
-
                     tr1.addView(textview);
-
                     tr1.addView(textview2);
                     tr1.addView(textview3);
                     tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
