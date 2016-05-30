@@ -24,7 +24,15 @@
         <activity android:name=".ShowSerial" />
         <activity android:name=".BillActivity" />
         <activity android:name=".ViewBillActivity" />
-        <activity android:name=".ReportActivity"></activity>
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ActivityChangePassword"></activity>
     </application>
 
 </manifest>

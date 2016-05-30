@@ -42,28 +42,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mdb = openOrCreateDatabase("menZworldDB", Context.MODE_PRIVATE, null);
-        
-        mdb.execSQL("CREATE TABLE IF NOT EXISTS stockData(stockId INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                                                            " serialNumber INTEGER NOT NULL,"+
-                                                            " barcodeId bigint,"+
-                                                            " item INTEGER NOT NULL,"+
-                                                            " price INTEGER NOT NULL,"+
-                                                            " selling_price INTEGER NOT NULL,"+
-                                                            " noOfItems INTEGER NOT NULL,"+
-                                                            " itemsSold INTEGER,"+
-                                                            " stockDate DATETIME NOT NULL);");
-
-/*        mdb.execSQL("CREATE TABLE IF NOT EXISTS billData(refId INTEGER REFERENCES billData(refId) ,"+
-                                                        " stockId INTEGER REFERENCES stockData(stockId));");*/
-
-        mdb.execSQL("CREATE TABLE IF NOT EXISTS billData(billrefId INTEGER ,"+
-                                                         " stockRefId INTEGER);");
-
-        mdb.execSQL("CREATE TABLE IF NOT EXISTS billTable(billId INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                                                          " refId INTEGER NOT NULL,"+
-                                                          " discount INTEGER,"+
-                                                          " billDate DATETIME NOT NULL);");
 
         Cursor c = mdb.rawQuery("SELECT MAX(serialNumber) FROM stockData", null);
         if(c.getCount() == 1) {
