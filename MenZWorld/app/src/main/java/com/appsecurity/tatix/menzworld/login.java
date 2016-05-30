@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +18,17 @@ public class login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
+
 
         MainActivity.mdb = openOrCreateDatabase("menZworldDB", Context.MODE_PRIVATE, null);
 
+        if(MainActivity.mdb == null)
+        Log.d("JKS ","open dbfailed");
+        else
+            Log.d("JKS ", "open db success :)");
         MainActivity.mdb.execSQL("CREATE TABLE IF NOT EXISTS stockData(stockId INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 " serialNumber INTEGER NOT NULL,"+
                 " barcodeId bigint,"+
@@ -81,6 +90,7 @@ public class login extends AppCompatActivity {
 
                         Intent intent = new Intent(login.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                 });
 

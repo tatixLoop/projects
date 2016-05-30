@@ -121,5 +121,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button btn_change_pass = (Button)findViewById(R.id.btn_change_password);
+        btn_change_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, ActivityChangePassword.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
