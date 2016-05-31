@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d("JKS ", "Largest serial number entered is " + c.getInt(0));
             serialNumber = c.getInt(0);
         }
-        else Log.d("JKS","errror in findingout max serialnum");
+        else serialNumber = 999;
+        if(serialNumber <= 999) serialNumber = 999;
 
         Cursor c2 = mdb.rawQuery("SELECT MAX(refId) FROM billTable", null);
         if(c2.getCount() == 1) {
