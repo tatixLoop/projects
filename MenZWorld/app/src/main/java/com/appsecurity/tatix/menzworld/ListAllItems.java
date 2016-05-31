@@ -28,7 +28,7 @@ public class ListAllItems extends AppCompatActivity {
         String [] soldItems;
         int nCount = 0;
 
-        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold FROM stockData WHERE noOfItems<itemsSold", null);
+        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold FROM stockData WHERE noOfItems>itemsSold", null);
 
         nCount = c.getCount();
         if(nCount != 0)

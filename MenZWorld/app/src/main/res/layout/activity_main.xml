@@ -39,7 +39,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="VIEW ALL ITEMS"
+                android:text="ITEMS IN STOCK"
                 android:id="@+id/btn_database"
                 android:layout_below="@+id/btn_scan"
                 android:layout_alignParentStart="true"
