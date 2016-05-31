@@ -17,6 +17,7 @@ public class ListAllItems extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_list_all_items);
 
         String [] serialNo;
@@ -27,7 +28,7 @@ public class ListAllItems extends AppCompatActivity {
         String [] soldItems;
         int nCount = 0;
 
-        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold FROM stockData", null);
+        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold FROM stockData WHERE noOfItems<itemsSold", null);
 
         nCount = c.getCount();
         if(nCount != 0)
@@ -44,48 +45,17 @@ public class ListAllItems extends AppCompatActivity {
             while (c.moveToNext()) {
                 serialNo[index] = c.getString(0);
                 switch (c.getInt(1)) {
-                    case 0:
-
-                        itemType[index] = ("SHIRT");
-                        break;
-                    case 1:
-
-                        itemType[index] = ("JEANS");
-                        break;
-                    case 2:
-
-                        itemType[index] = ("OTHERS");
-                        break;
-                    case 3:
-
-                        itemType[index] = ("PANTS");
-                        break;
-                    case 4:
-
-                        itemType[index] = ("T-SHIRT");
-                        break;
-                    case 5:
-
-                        itemType[index] = ("BELT");
-                        break;
-                    case 6:
-
-                        itemType[index] = ("INNER");
-                        break;
-                    case 7:
-
-                        itemType[index] = ("SHORTS");
-                        break;
-                    case 8:
-
-                        itemType[index] = ("WALLET");
-                        break;
-                    case 9:
-
-                        itemType[index] = ("OTHERS");
-                        break;
-                    default:
-                        itemType[index] = ("OTHERS");
+                    case 0:itemType[index] = ("SHIRT   ");break;
+                    case 1:itemType[index] = ("JEANS   ");break;
+                    case 2:itemType[index] = ("OTHERS  ");break;
+                    case 3:itemType[index] = ("PANTS   ");break;
+                    case 4:itemType[index] = ("T-SHIRT ");break;
+                    case 5:itemType[index] = ("BELT    ");break;
+                    case 6:itemType[index] = ("INNER   ");break;
+                    case 7:itemType[index] = ("SHORTS  ");break;
+                    case 8:itemType[index] = ("WALLET  ");break;
+                    case 9:itemType[index] = ("OTHERS  ");break;
+                    default:itemType[index] = ("OTHERS ");
                 }
 
                 price[index] = c.getString(2);

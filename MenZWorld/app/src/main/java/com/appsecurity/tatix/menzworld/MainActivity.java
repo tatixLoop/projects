@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
         Cursor c = mdb.rawQuery("SELECT MAX(serialNumber) FROM stockData", null);

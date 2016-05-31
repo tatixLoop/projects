@@ -3,11 +3,13 @@ package com.appsecurity.tatix.menzworld;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +22,12 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_login);
 
+        setContentView(R.layout.activity_login);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
 
         MainActivity.mdb = openOrCreateDatabase("menZworldDB", Context.MODE_PRIVATE, null);
 

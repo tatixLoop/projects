@@ -16,6 +16,7 @@ public class ActivityChangePassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_activity_change_password);
 
         Button btnChange = (Button)findViewById(R.id.btn_change_password);

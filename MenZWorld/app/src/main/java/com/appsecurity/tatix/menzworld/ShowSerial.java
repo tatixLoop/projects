@@ -12,6 +12,7 @@ public class ShowSerial extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_show_serial);
         TextView txtSerial  = (TextView)findViewById(R.id.txt_serialNumber);
 

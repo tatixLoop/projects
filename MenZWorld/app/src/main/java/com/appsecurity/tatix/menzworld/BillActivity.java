@@ -17,6 +17,7 @@ public class BillActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_bill);
         int total = 0;
         int discount = 0;

@@ -30,6 +30,7 @@ public class MakeBillActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_make_bill);
 
         itemCount = 0;
