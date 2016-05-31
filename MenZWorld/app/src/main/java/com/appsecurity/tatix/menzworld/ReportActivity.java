@@ -136,24 +136,25 @@ public class ReportActivity extends AppCompatActivity {
 
                                 TableRow tr1 = new TableRow(ReportActivity.this);
                                 TextView textview = new TextView(ReportActivity.this);
-                                textview.setText("Bill id:  "+c2.getString(0));
+                                textview.setText("Bill id:  " + c2.getString(0));
                                 tr1.addView(textview);
                                 tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                                TableRow tr3 = new TableRow(ReportActivity.this);
+                                TextView textview4 = new TextView(ReportActivity.this);
+                                textview4.setText(" ");
+                                tr3.addView(textview4);
+                                tl.addView(tr3, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
                                 if(c3.getCount() != 0)
                                 {
                                     totalItems += c3.getCount();
                                     while (c3.moveToNext()) {
-                                        Log.d("JKS","StockId = "+c3.getString(0));
+                                        Log.d("JKS", "StockId = " + c3.getString(0));
                                         String getProductDataQuerry = "SELECT serialNumber,item,price,selling_price FROM stockData WHERE stockId="+c3.getString(0);
-                                        Log.d("JKS","getProductDataQuerry = "+getProductDataQuerry);
+                                        Log.d("JKS", "getProductDataQuerry = " + getProductDataQuerry);
                                         Cursor c4 = MainActivity.mdb.rawQuery(getProductDataQuerry, null);
 
-                                        TableRow tr3 = new TableRow(ReportActivity.this);
-                                        TextView textview4 = new TextView(ReportActivity.this);
-                                        textview4.setText(" ");
-                                        tr3.addView(textview4);
-                                        tl.addView(tr3, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
                                         if(c4.getCount() != 0)
                                         {
                                             while (c4.moveToNext()) {
@@ -185,13 +186,14 @@ public class ReportActivity extends AppCompatActivity {
                                                 tr2.addView(textview3);
                                                 tl.addView(tr2, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                                             }
-                                            TableRow tr4 = new TableRow(ReportActivity.this);
-                                            TextView textview5 = new TextView(ReportActivity.this);
-                                            textview5.setText(" ");
-                                            tr4.addView(textview5);
-                                            tl.addView(tr4, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
                                         }
                                     }
+                                    TableRow tr4 = new TableRow(ReportActivity.this);
+                                    TextView textview5 = new TextView(ReportActivity.this);
+                                    textview5.setText(" ");
+                                    tr4.addView(textview5);
+                                    tl.addView(tr4, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                                 }
                             }
                         }
