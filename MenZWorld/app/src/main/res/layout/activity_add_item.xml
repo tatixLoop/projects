@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/login_bg"
     tools:context="com.appsecurity.tatix.menzworld.AddItemActivity">
 
     <TextView
@@ -15,7 +16,8 @@
         android:text="Select Item"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/chk_jeans" />
+        android:layout_alignStart="@+id/chk_others"
+        android:textColor="#8b8a8a" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -23,7 +25,9 @@
         android:text="Shirt"
         android:id="@+id/chk_shirt"
         android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:buttonTint="#ffffff" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -31,7 +35,9 @@
         android:text="Jeans"
         android:id="@+id/chk_jeans"
         android:layout_below="@+id/chk_tshirt"
-        android:layout_alignEnd="@+id/chk_tshirt" />
+        android:layout_alignEnd="@+id/chk_tshirt"
+        android:textColor="#ffffff"
+        android:buttonTint="#ffffff" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -39,7 +45,9 @@
         android:text="Other"
         android:id="@+id/chk_others"
         android:layout_below="@+id/chk_pants"
-        android:layout_alignEnd="@+id/chk_pants" />
+        android:layout_alignEnd="@+id/chk_pants"
+        android:textColor="#ffffff"
+        android:buttonTint="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,41 +56,45 @@
         android:id="@+id/textView3"
         android:layout_marginTop="39dp"
         android:layout_below="@+id/chk_others"
-        android:layout_alignStart="@+id/chk_others" />
+        android:layout_alignStart="@+id/chk_others"
+        android:textColor="#ffffff" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/txt_price"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/chk_jeans"
-        android:inputType="number" />
+        android:inputType="number"
+        android:background="#ffffff"
+        android:layout_above="@+id/textView6"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selling Price"
+        android:text="SELLING PRICE"
         android:id="@+id/textView4"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/textView3" />
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_alignEnd="@+id/chk_jeans" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/txt_selprice"
+        android:inputType="number"
+        android:background="#ffffff"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/textView4"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/txt_price"
-        android:inputType="number" />
+        android:layout_alignEnd="@+id/chk_shorts" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SCAN BARCODE"
         android:id="@+id/btn_barcode"
-        android:layout_above="@+id/txt_barcode"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/txt_numItems"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="32dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -90,23 +102,28 @@
         android:text="SAVE DATA"
         android:id="@+id/btn_save"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toEndOf="@+id/btn_barcode" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00000000"
         android:id="@+id/txt_barcode"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView2" />
+        android:textColor="#ffffff"
+        android:layout_below="@+id/btn_barcode"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_marginTop="13dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="T-shirt"
         android:id="@+id/chk_tshirt"
-        android:layout_below="@+id/textView2"
-        android:layout_toEndOf="@+id/textView4" />
+        android:textColor="#ffffff"
+        android:layout_above="@+id/chk_pants"
+        android:layout_toEndOf="@+id/chk_inner"
+        android:layout_marginStart="29dp"
+        android:buttonTint="#ffffff" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -114,7 +131,9 @@
         android:text="Pants"
         android:id="@+id/chk_pants"
         android:layout_below="@+id/chk_shirt"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:buttonTint="#ffffff" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -122,7 +141,9 @@
         android:text="Shorts"
         android:id="@+id/chk_shorts"
         android:layout_below="@+id/chk_jeans"
-        android:layout_alignStart="@+id/chk_jeans" />
+        android:layout_alignStart="@+id/chk_jeans"
+        android:textColor="#ffffff"
+        android:buttonTint="#ffffff" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -130,15 +151,19 @@
         android:text="InnerWear"
         android:id="@+id/chk_inner"
         android:layout_above="@+id/chk_shorts"
-        android:layout_alignStart="@+id/chk_belt" />
+        android:layout_alignStart="@+id/chk_belt"
+        android:textColor="#ffffff"
+        android:buttonTint="#ffffff" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Belt"
         android:id="@+id/chk_belt"
+        android:textColor="#ffffff"
         android:layout_above="@+id/chk_inner"
-        android:layout_toStartOf="@+id/btn_save" />
+        android:layout_toEndOf="@+id/textView6"
+        android:buttonTint="#ffffff" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -146,7 +171,9 @@
         android:text="Wallets"
         android:id="@+id/chk_wallets"
         android:layout_below="@+id/chk_inner"
-        android:layout_alignStart="@+id/chk_inner" />
+        android:layout_alignStart="@+id/chk_inner"
+        android:textColor="#ffffff"
+        android:buttonTint="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -155,15 +182,17 @@
         android:id="@+id/textView6"
         android:layout_below="@+id/txt_selprice"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp" />
+        android:layout_marginTop="37dp"
+        android:textColor="#ffffff" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:id="@+id/txt_numItems"
-        android:layout_below="@+id/textView6"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/chk_others"
         android:text="1"
-        android:inputType="number" />
+        android:inputType="number"
+        android:background="#ffffff"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

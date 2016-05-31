@@ -3,6 +3,7 @@ package com.appsecurity.tatix.menzworld;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -86,25 +87,6 @@ public class MakeBillActivity extends AppCompatActivity {
                 Log.d("JKS","Get "+c2.getCount());
 
 
-                if(c2.getCount() == 1) {
-                    while(c2.moveToNext())
-                    {
-                        Log.d("JKS","stockId = "+c2.getInt(0));
-                        int itemsSold = 0;
-                        String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c2.getInt(0);
-                        Cursor c3 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                        if(c3.getCount() == 1) {
-                            c3.moveToNext();
-                            Log.d("JKS", "Items Sold = " + c3.getInt(0));
-                            itemsSold = c3.getInt(0);
-                        }
-
-                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold + 1)+" WHERE stockId="+c2.getInt(0);
-                        Log.d("JKS","update Querry = "+updateQuerry);
-                        MainActivity.mdb.execSQL(updateQuerry);
-                    }
-                }
-
                 intent.putExtra("billno", billId);
                 intent.putExtra("date",dateTime);
                 intent.putExtra("discount",discount);
@@ -141,6 +123,28 @@ public class MakeBillActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+MainActivity.billRefId;
+                Cursor c2 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
+                Log.d("JKS", "Get " + c2.getCount());
+
+
+                if(c2.getCount() != 0) {
+                    while (c2.moveToNext()) {
+                        int itemsSold_q = 0;
+                        String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c2.getInt(0);
+                        Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
+                        if(c4.getCount() == 1) {
+                            c4.moveToNext();
+                            Log.d("JKS", "Items Sold = " + c4.getInt(0));
+                            itemsSold_q = c4.getInt(0);
+                        }
+                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q - 1)+" WHERE stockId="+c2.getInt(0);
+                        Log.d("JKS","update Querry = "+updateQuerry);
+                        MainActivity.mdb.execSQL(updateQuerry);
+                    }
+                }
 
                 insertQuerry = " DELETE FROM billData  WHERE billrefId ="+MainActivity.billRefId;
                 MainActivity.mdb.execSQL(insertQuerry);
@@ -196,9 +200,24 @@ public class MakeBillActivity extends AppCompatActivity {
                         Log.d("JKS", "Ins Query = " + insertQuerry);
                         insertQuerry ="";
 
+                        int itemsSold_q = 0;
+                        String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c3.getInt(3);
+                        Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
+                        if(c4.getCount() == 1) {
+                            c4.moveToNext();
+                            Log.d("JKS", "Items Sold = " + c4.getInt(0));
+                            itemsSold_q = c4.getInt(0);
+                        }
+                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q + 1)+" WHERE stockId="+c3.getInt(3);
+                        Log.d("JKS","update Querry = "+updateQuerry);
+                        MainActivity.mdb.execSQL(updateQuerry);
+
                         TextView textview = new TextView(ctx);
                         TextView textview2 = new TextView(ctx);
                         TextView textview3 = new TextView(ctx);
+                        textview.setTextColor(Color.parseColor("#FFFFFF"));
+                        textview2.setTextColor(Color.parseColor("#FFFFFF"));
+                        textview3.setTextColor(Color.parseColor("#FFFFFF"));
                         textview.setText(c3.getString(0));
 
 

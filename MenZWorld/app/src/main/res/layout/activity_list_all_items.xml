@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:text="item     "
         android:id="@+id/textView11"
+        android:layout_marginStart="32dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/textView12" />
 
@@ -42,24 +43,32 @@
         android:text="Price    "
         android:id="@+id/textView13"
         android:layout_above="@+id/list_all"
-        android:layout_toEndOf="@+id/textView11"
-        android:layout_marginStart="16dp" />
+        android:layout_toEndOf="@+id/textView11" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="quantity"
+        android:text="Total "
         android:id="@+id/textView14"
+        android:layout_marginStart="15dp"
         android:layout_above="@+id/list_all"
-        android:layout_toEndOf="@+id/textView15"
-        android:layout_marginStart="24dp" />
+        android:layout_toEndOf="@+id/textView15" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selling Price"
+        android:text="Retail"
         android:id="@+id/textView15"
         android:layout_above="@+id/list_all"
         android:layout_toEndOf="@+id/textView13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Available"
+        android:id="@+id/textView30"
+        android:layout_above="@+id/list_all"
+        android:layout_toEndOf="@+id/textView14"
+        android:layout_marginStart="22dp" />
 
 </RelativeLayout>

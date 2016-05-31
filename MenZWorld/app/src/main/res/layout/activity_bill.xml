@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/login_bg"
     tools:context="com.appsecurity.tatix.menzworld.BillActivity">
 
     <TextView
@@ -16,7 +17,8 @@
         android:id="@+id/textView9"
         android:layout_marginStart="38dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,7 +27,8 @@
         android:id="@+id/txt_billNo"
         android:layout_alignTop="@+id/textView9"
         android:layout_toEndOf="@+id/textView9"
-        android:layout_marginStart="28dp" />
+        android:layout_marginStart="28dp"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,7 +36,8 @@
         android:text="Date:"
         android:id="@+id/textView18"
         android:layout_below="@+id/textView9"
-        android:layout_alignStart="@+id/textView9" />
+        android:layout_alignStart="@+id/textView9"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +45,8 @@
         android:text="03-05-1991"
         android:id="@+id/txt_dateB"
         android:layout_below="@+id/txt_billNo"
-        android:layout_alignStart="@+id/txt_billNo" />
+        android:layout_alignStart="@+id/txt_billNo"
+        android:textColor="#ffffff" />
 
 
 
@@ -62,17 +67,20 @@
 
                 android:gravity="left"
                 android:text="ITEM CODE"
+                android:textColor="#ffffff"
                 />
             <TextView
 
                 android:gravity="left"
                 android:text="ITEM "
+                android:textColor="#ffffff"
                 />
 
             <TextView
 
                 android:gravity="left"
                 android:text="PRICE"
+                android:textColor="#ffffff"
                 />
         </TableRow>
     </TableLayout>
@@ -88,7 +96,8 @@
         android:text="Total"
         android:id="@+id/textView19"
         android:layout_above="@+id/textView20"
-        android:layout_toEndOf="@+id/textView9" />
+        android:layout_toEndOf="@+id/textView9"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,7 +106,8 @@
         android:id="@+id/textView20"
         android:layout_marginBottom="17dp"
         android:layout_above="@+id/textView21"
-        android:layout_toEndOf="@+id/textView9" />
+        android:layout_toEndOf="@+id/textView9"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -106,7 +116,8 @@
         android:id="@+id/textView21"
         android:layout_alignBaseline="@+id/txt_bill_grant"
         android:layout_alignBottom="@+id/txt_bill_grant"
-        android:layout_alignStart="@+id/textView19" />
+        android:layout_alignStart="@+id/textView19"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -114,7 +125,8 @@
         android:text="New Text"
         android:id="@+id/txt_bill_total"
         android:layout_below="@+id/tbl_bill"
-        android:layout_alignStart="@+id/txt_bill_discount" />
+        android:layout_alignStart="@+id/txt_bill_discount"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,7 +134,8 @@
         android:text="New Text"
         android:id="@+id/txt_bill_discount"
         android:layout_below="@+id/txt_bill_total"
-        android:layout_alignStart="@+id/txt_bill_grant" />
+        android:layout_alignStart="@+id/txt_bill_grant"
+        android:textColor="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -131,7 +144,8 @@
         android:id="@+id/txt_bill_grant"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/txt_dateB"
-        android:layout_marginBottom="37dp" />
+        android:layout_marginBottom="37dp"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"

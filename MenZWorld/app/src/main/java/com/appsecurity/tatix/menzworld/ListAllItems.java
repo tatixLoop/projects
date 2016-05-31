@@ -63,7 +63,7 @@ public class ListAllItems extends AppCompatActivity {
                 sellingPrice[index] = c.getString(4);
                 soldItems[index]= c.getString(5);
 
-                Log.d("JKS",""+c.getString(0)+" ," +c.getString(1)+" ,"+c.getString(2)+" ,"+c.getString(3)+" ,"+c.getString(4)+" ,"+c.getString(5));
+               // Log.d("JKS",""+c.getString(0)+" ," +c.getString(1)+" ,"+c.getString(2)+" ,"+c.getString(3)+" ,"+c.getString(4)+" ,"+c.getString(5));
 
                 index++;
             }
@@ -72,10 +72,6 @@ public class ListAllItems extends AppCompatActivity {
             customListAll adapter = new
                     customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,soldItems,nCount);
 
-            if(adapter == null)
-                Log.d("JKS","adapter is nulll");
-            else
-            Log.d("JKS","lets get it on :)");
 
             stockList = (ListView)findViewById(R.id.list_all);
             stockList.setAdapter(adapter);

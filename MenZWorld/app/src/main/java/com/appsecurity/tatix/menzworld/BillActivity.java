@@ -2,6 +2,7 @@ package com.appsecurity.tatix.menzworld;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,6 +84,9 @@ public class BillActivity extends AppCompatActivity {
                         TextView textview = new TextView(BillActivity.this);
                         TextView textview2 = new TextView(BillActivity.this);
                         TextView textview3 = new TextView(BillActivity.this);
+                        textview.setTextColor(Color.parseColor("#FFFFFF"));
+                        textview2.setTextColor(Color.parseColor("#FFFFFF"));
+                        textview3.setTextColor(Color.parseColor("#FFFFFF"));
                         textview.setText(c3.getString(0));
 
 

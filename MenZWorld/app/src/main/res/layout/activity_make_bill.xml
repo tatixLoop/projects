@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/login_bg"
     tools:context="com.appsecurity.tatix.menzworld.MakeBillActivity">
 
     <Button
@@ -16,12 +17,20 @@
         android:id="@+id/btn_scan_item"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
-    <TableLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/textView7"
+        android:paddingTop="70dp"
+        android:layout_toStartOf="@+id/txt_total"
+        android:layout_above="@+id/textView"
+        android:id="@+id/scrollView">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         android:id="@+id/tbl_bill"
         android:stretchColumns="0,1,2"
-        android:paddingTop="70dp"
         android:paddingBottom="70dp"
         android:layout_below="@+id/textView7"
         android:layout_toStartOf="@+id/txt_total"
@@ -32,28 +41,34 @@
 
                 android:gravity="left"
                 android:text="ITEM CODE"
+                android:textColor="#ffffff"
                 />
             <TextView
 
                 android:gravity="left"
                 android:text="ITEM "
+                android:textColor="#ffffff"
                 />
 
             <TextView
 
                 android:gravity="left"
                 android:text="PRICE"
+                android:textColor="#ffffff"
                 />
         </TableRow>
     </TableLayout>
+    </ScrollView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TOTAL"
         android:id="@+id/textView"
-        android:layout_marginBottom="67dp"
-        android:layout_above="@+id/btn_gen_bill"
-        android:layout_centerHorizontal="true" />
+        android:textColor="#ffffff"
+        android:layout_above="@+id/edit_discount"
+        android:layout_toEndOf="@+id/btn_scan_item"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +76,8 @@
         android:text="0"
         android:id="@+id/txt_total"
         android:layout_alignBottom="@+id/textView"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"
@@ -76,8 +92,9 @@
         android:layout_height="wrap_content"
         android:text="Generate Bill"
         android:id="@+id/btn_gen_bill"
-        android:layout_alignTop="@+id/btn_cancel_bill"
-        android:layout_alignEnd="@+id/txt_total" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/edit_discount"
+        android:layout_toEndOf="@+id/textView8" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -85,7 +102,8 @@
         android:text="Or Enter Serial Number:"
         android:id="@+id/textView7"
         android:layout_below="@+id/btn_scan_item"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -96,7 +114,8 @@
         android:layout_toStartOf="@+id/btn_gen_bill"
         android:layout_alignEnd="@+id/textView"
         android:ems="4"
-        android:inputType="number" />
+        android:inputType="number"
+        android:background="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"
@@ -107,52 +126,55 @@
         android:layout_alignParentEnd="true" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
         android:id="@+id/edit_discount"
-        android:layout_above="@+id/textView8"
-        android:layout_below="@+id/txt_total"
         android:numeric="integer"
         android:inputType="number"
-        android:layout_alignEnd="@+id/tbl_bill"
-        android:layout_toEndOf="@+id/btn_scan_item"
         android:text="0"
-        android:textSize="20dp" />
+        android:textSize="15dp"
+        android:background="#ffffff"
+        android:layout_alignBaseline="@+id/textView10"
+        android:layout_alignBottom="@+id/textView10"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Grant Total"
         android:id="@+id/textView8"
-        android:layout_above="@+id/btn_cancel_bill"
-        android:layout_toStartOf="@+id/btn_gen_bill" />
+        android:textColor="#ffffff"
+        android:layout_alignTop="@+id/txt_grant_total"
+        android:layout_alignStart="@+id/textView10" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:id="@+id/txt_grant_total"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
         android:layout_above="@+id/btn_gen_bill"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/btn_gen_bill"
+        android:layout_marginBottom="14dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Discount"
         android:id="@+id/textView10"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="15dp"
         android:layout_above="@+id/textView8"
-        android:layout_toLeftOf="@id/edit_discount"
-        android:layout_alignParentStart="true" />
+        android:layout_alignStart="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CALCULATE"
         android:id="@+id/btn_calculate"
-        android:layout_toRightOf="@+id/btn_cancel_bill"
-        android:layout_toLeftOf="@+id/btn_gen_bill"
-        android:layout_below="@id/textView8"
-         />
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/btn_cancel_bill" />
 
 
 </RelativeLayout>

@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/login_bg"
     tools:context="com.appsecurity.tatix.menzworld.ShowSerial">
 
     <TextView
@@ -16,7 +17,8 @@
         android:id="@+id/txt_serialNumber"
         android:layout_centerVertical="true"
         android:textSize="40dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,5 +36,6 @@
         android:id="@+id/textView5"
         android:layout_above="@+id/txt_serialNumber"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp"
+        android:textColor="#ffffff" />
 </RelativeLayout>

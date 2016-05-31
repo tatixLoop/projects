@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Create Bill"
                 android:id="@+id/btn_scan"
@@ -29,7 +29,7 @@
                 android:layout_alignParentStart="true" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="Add Item"
                 android:id="@+id/btn_addItem"
@@ -37,7 +37,7 @@
                 android:layout_alignParentStart="true" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="ITEMS IN STOCK"
                 android:id="@+id/btn_database"
@@ -46,7 +46,7 @@
                 android:layout_marginTop="33dp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="BackUp / Restore"
                 android:id="@+id/btn_bkup"
@@ -55,7 +55,7 @@
                 android:layout_marginTop="25dp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="See Bill"
                 android:id="@+id/btn_viewBill"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="33dp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="REPORTS"
                 android:id="@+id/btn_reports"
@@ -73,7 +73,7 @@
                 android:layout_marginTop="34dp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="CHANGE PASSWORD"
                 android:id="@+id/btn_change_password"
