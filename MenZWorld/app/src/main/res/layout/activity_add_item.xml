@@ -9,6 +9,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/login_bg"
     tools:context="com.appsecurity.tatix.menzworld.AddItemActivity">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:fillViewport="true"        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,7 +111,7 @@
         android:text="SAVE DATA"
         android:id="@+id/btn_save"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/btn_barcode" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -195,4 +204,7 @@
         android:layout_marginTop="13dp"
         android:layout_below="@+id/textView6"
         android:layout_alignParentStart="true" />
+        </RelativeLayout>
+    </ScrollView>
+
 </RelativeLayout>
