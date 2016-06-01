@@ -14,7 +14,8 @@
 
         </activity>
         <activity android:name=".AddItemActivity" />
-        <activity android:name=".MakeBillActivity" />
+        <activity android:name=".MakeBillActivity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".ListAllItems" />
         <activity android:name=".BackUpRestore" />
         <activity android:name=".ShowSerial" />
