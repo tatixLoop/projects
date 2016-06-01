@@ -32,9 +32,12 @@ public class ViewBillActivity extends AppCompatActivity {
         nCount = c.getCount();
         if(nCount != 0)
         {
-            date = new String[nCount];
-            billId = new String[nCount];
+            date = new String[nCount+1];
+            billId = new String[nCount+1];
             int index = 0;
+            date[index] ="DATE";
+            billId[index] ="BillID";
+            index++;
 
             while (c.moveToNext()) {
                 date[index] = c.getString(0);
@@ -57,6 +60,7 @@ public class ViewBillActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
+                    if(position ==0) return;
 
                     Log.d("JKS","position= "+billId[position]);
                     int billTblId = Integer.parseInt(billId[position]);

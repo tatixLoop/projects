@@ -9,30 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.appsecurity.tatix.menzworld.ViewBillActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date         "
-        android:id="@+id/textView16"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="44dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bill ID"
-        android:id="@+id/textView17"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="110dp" />
-
     <ListView
         android:id="@+id/list_bill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView12"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentEnd="true">
 
     </ListView>

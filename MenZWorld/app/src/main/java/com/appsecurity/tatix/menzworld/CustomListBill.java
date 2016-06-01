@@ -1,6 +1,7 @@
 package com.appsecurity.tatix.menzworld;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,10 @@ public class CustomListBill extends ArrayAdapter<String> {
         TextView txt_billdate = (TextView) rowView.findViewById(R.id.txt_vbilldate);
         TextView txt_billNo = (TextView) rowView.findViewById(R.id.txt_vbillNo);
 
+        if(position == 0) {
+            txt_billdate.setTypeface(null, Typeface.BOLD);
+            txt_billNo.setTypeface(null, Typeface.BOLD);
+        }
         txt_billdate.setText(date[position]);
         txt_billNo.setText(bill[position]);
 

@@ -33,14 +33,21 @@ public class ListAllItems extends AppCompatActivity {
         nCount = c.getCount();
         if(nCount != 0)
         {
-            serialNo = new String[nCount];
-            itemType = new String[nCount];
-            price = new String[nCount];
-            noOfItems = new String[nCount];
-            soldItems = new  String[nCount];
-            sellingPrice = new  String[nCount];
+            serialNo = new String[nCount+1];
+            itemType = new String[nCount+1];
+            price = new String[nCount+1];
+            noOfItems = new String[nCount+1];
+            soldItems = new  String[nCount+1];
+            sellingPrice = new  String[nCount+1];
 
             int index = 0;
+            serialNo[index] = "Sl no";
+            itemType[index] = "Item type";
+            price[index] = "Price";
+            noOfItems[index] = "Total";
+            sellingPrice[index] = "Retail";
+            soldItems[index]= "Available";
+            index++;
 
             while (c.moveToNext()) {
                 serialNo[index] = c.getString(0);

@@ -4,6 +4,7 @@ package com.appsecurity.tatix.menzworld;
  * Created by jithin on 5/25/2016.
  */
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +57,16 @@ public class customListAll extends ArrayAdapter<String>{
         TextView noOfItems = (TextView) rowView.findViewById(R.id.noOfItems);
         TextView txt_sellingPrice = (TextView) rowView.findViewById(R.id.selling_rpice);
         TextView txtsoldItems = (TextView) rowView.findViewById(R.id.soldItems);
+
+        if(position == 0)
+        {
+            slno.setTypeface(null, Typeface.BOLD);
+            item.setTypeface(null, Typeface.BOLD);
+            txtPrice.setTypeface(null, Typeface.BOLD);
+            noOfItems.setTypeface(null, Typeface.BOLD);
+            txt_sellingPrice.setTypeface(null, Typeface.BOLD);
+            txtsoldItems.setTypeface(null, Typeface.BOLD);
+        }
 
         slno.setText(serialNo[position]);
         item.setText(itemType[position]);
