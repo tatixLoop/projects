@@ -70,8 +70,6 @@ public class ListAllItems extends AppCompatActivity {
                 sellingPrice[index] = c.getString(4);
                 soldItems[index]= c.getString(5);
 
-               // Log.d("JKS",""+c.getString(0)+" ," +c.getString(1)+" ,"+c.getString(2)+" ,"+c.getString(3)+" ,"+c.getString(4)+" ,"+c.getString(5));
-
                 index++;
             }
 

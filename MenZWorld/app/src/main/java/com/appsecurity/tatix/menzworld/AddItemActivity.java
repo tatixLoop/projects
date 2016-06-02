@@ -92,12 +92,12 @@ public class AddItemActivity extends AppCompatActivity {
 
                 MainActivity.serialNumber ++;
 
-                Log.d("JKS","Check1");
+
                 if(item == -1 || txt_price.getText().toString().matches("") ||
                         txt_selprice.getText().toString().matches("") ||
                         txt_numItems.getText().toString().matches(""))
                 {
-                    Log.d("JKS", "Please enter details of the item");
+
                     Toast.makeText(getBaseContext(), "Please enter details of the item",
                             Toast.LENGTH_LONG).show();
                     return;
@@ -107,35 +107,16 @@ public class AddItemActivity extends AppCompatActivity {
                 sellingPrice = Integer.parseInt( txt_selprice.getText().toString() );
                 noOfItems = Integer.parseInt(txt_numItems.getText().toString());
                 TextView barcode = (TextView)findViewById(R.id.txt_barcode);
-                Log.d("JKS","Check1");
+
 
                 BigInteger barcode_int = new BigInteger(barcode.getText().toString(),10);
-                Log.d("JKS","Check1");
-
-
-                Log.d("JKS", "barcode in int is " + barcode_int);
-
-                Log.d("JKS","date is "+formatDateTime(AddItemActivity.this,"yyyy-MM-dd HH:mm:ss"));
-                Log.d("JKS","ANother date is "+getDateTime());
 
                 String querry =
                         "INSERT INTO stockData (serialNumber,barcodeId, item, price, selling_price, noOfItems,itemsSold,stockDate) values ("
                                                 +MainActivity.serialNumber +","+barcode_int+","+item +","+price+","+sellingPrice+","+noOfItems+",0"+",'"+getDateTime()+"')";
 
-                Log.d("JKS", "Querry = "+querry);
 
                 MainActivity.mdb.execSQL(querry);
-
-                Cursor c3 = MainActivity.mdb.rawQuery("SELECT * FROM stockData", null);
-
-                if(c3.getCount() != 0)
-                {
-                    while (c3.moveToNext()) {
-                        Log.d("JKS","barcodeId = "+c3.getString(0) + "item = "+c3.getInt(1)+"price = "+c3.getInt(2) +"selling price"+c3.getInt(3)+"solding price = "+c3.getInt(4) );
-                    }
-                }
-
-                Log.d("JKS", "Querry is " + querry);
 
                 Intent intent = new Intent(AddItemActivity.this, ShowSerial.class);
                 intent.putExtra("serial",MainActivity.serialNumber);
@@ -355,7 +336,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        Log.d("JKS", "scanning complete :)");
+
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();

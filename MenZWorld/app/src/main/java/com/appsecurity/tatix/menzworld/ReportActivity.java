@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -103,15 +104,14 @@ public class ReportActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         if(!flagSelFromDate || !getFlagSelToDate) {
-                            Log.d("JKS","Please set the dates properly");
+
+                            Toast.makeText(ReportActivity.this, "Please select the dates", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         String querry = "SELECT * FROM billTable WHERE billDate >= Datetime('"+strFromDate+"') AND billDate <= Datetime('"+strToDate+"')";
 
-                        Log.d("JKS","Querry = "+querry);
-
                         Cursor c2 = MainActivity.mdb.rawQuery(querry, null);
-                        Log.d("JKS", "Get " + c2.getCount());
+
 
                         int totalItems = 0;
                         int totalDiscount = 0;
@@ -128,10 +128,10 @@ public class ReportActivity extends AppCompatActivity {
                             head_5.setVisibility(View.VISIBLE);
 
                             while (c2.moveToNext()) {
-                                Log.d("JKS","Data billid= "+c2.getString(0)+" refId ="+c2.getString(1)+" discount ="+c2.getString(2)+" date = "+c2.getString(3));
+
                                 totalDiscount += Integer.parseInt(c2.getString(2));
                                 String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+c2.getString(1);
-                                Log.d("JKS","GetStockIdQuerry = "+getStockIdQuerry);
+
                                 Cursor c3 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
 
                                 TableRow tr1 = new TableRow(ReportActivity.this);
@@ -149,16 +149,16 @@ public class ReportActivity extends AppCompatActivity {
                                 {
                                     totalItems += c3.getCount();
                                     while (c3.moveToNext()) {
-                                        Log.d("JKS", "StockId = " + c3.getString(0));
+
                                         String getProductDataQuerry = "SELECT serialNumber,item,price,selling_price FROM stockData WHERE stockId="+c3.getString(0);
-                                        Log.d("JKS", "getProductDataQuerry = " + getProductDataQuerry);
+
                                         Cursor c4 = MainActivity.mdb.rawQuery(getProductDataQuerry, null);
 
 
                                         if(c4.getCount() != 0)
                                         {
                                             while (c4.moveToNext()) {
-                                                Log.d("JKS","slno= "+c4.getString(0)+ " item ="+c4.getString(1)+ " price ="+c4.getString(2)+" sel price ="+c4.getString(3));
+
                                                 totalMoneyReceived += Integer.parseInt(c4.getString(3));
                                                 totalActualCost += Integer.parseInt(c4.getString(2));
 
@@ -220,10 +220,10 @@ public class ReportActivity extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         if (id == 0) {
 
-            Log.d("JKS", "Set from date");
+
             return new DatePickerDialog(this, dateFromPickerListener, year, month, day);
         } else {
-            Log.d("JKS", "Set to date");
+
             return new DatePickerDialog(this, dateToPickerListener, year, month, day);
         }
     }
@@ -231,8 +231,7 @@ public class ReportActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener dateFromPickerListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-            Log.d("JKS", "" + (selectedDay + " / " + (selectedMonth + 1) + " / "
-                    + selectedYear));
+
 
             if(selectedMonth+1 <10)
             {
@@ -256,8 +255,7 @@ public class ReportActivity extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener dateToPickerListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-            Log.d("JKS", "" + (selectedDay + " / " + (selectedMonth + 1) + " / "
-                    + selectedYear));
+
             if(selectedMonth+1 <10)
             {
                 if(selectedDay<10)

@@ -68,7 +68,7 @@ public class BackUpRestore extends AppCompatActivity {
                     output.flush();
                     output.close();
                     fis.close();
-                    Log.d("JKS", "took back up of current database");
+
                     TextView txt_msg = (TextView)findViewById(R.id.txt_msg);
                     txt_msg.setText("back up done for current data to "+outFileName);
                 }

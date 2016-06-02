@@ -58,7 +58,7 @@ public class ActivityChangePassword extends AppCompatActivity {
                             Toast.makeText(getBaseContext(),"Entered Passwords doesn't match ",Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Log.d("JKS","UPDATE security SET password="+password.getText().toString()+"  WHERE userId=0");
+
                         MainActivity.mdb.execSQL("UPDATE security SET password=" + newPassword.getText().toString() + "  WHERE userId=0");
                         finish();
                         Toast.makeText(getBaseContext(),"Updated the password",Toast.LENGTH_SHORT).show();

@@ -268,24 +268,21 @@ public class MakeBillActivity extends AppCompatActivity {
             TableRow tr1 = new TableRow(ctx);
             if (c3.getCount() != 0) {
 
-
-                Log.d("JKS", " scan Result");
                 while (c3.moveToNext()) {
                     int totalItems = c3.getInt(4);
                     int itemsSold = c3.getInt(5);
                     if(itemsSold>=totalItems)
                     {
-                        Log.d("JKS","Soldall items "+itemsSold+">="+totalItems);
                         Toast.makeText(getBaseContext(), "This item is out of stock",
                                 Toast.LENGTH_LONG).show();
                         return;
                     }
 
                     itemCount++;
-                    Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2)+" stockId ="+c3.getInt(3));
+
                     insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+MainActivity.billRefId+","+c3.getInt(3)+");";
                     MainActivity.mdb.execSQL(insertQuerry);
-                    Log.d("JKS", "Ins Query = " + insertQuerry);
+
                     insertQuerry ="";
 
                     int itemsSold_q = 0;
@@ -293,11 +290,11 @@ public class MakeBillActivity extends AppCompatActivity {
                     Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
                     if(c4.getCount() == 1) {
                         c4.moveToNext();
-                        Log.d("JKS", "Items Sold = " + c4.getInt(0));
+
                         itemsSold_q = c4.getInt(0);
                     }
                     String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q + 1)+" WHERE stockId="+c3.getInt(3);
-                    Log.d("JKS","update Querry = "+updateQuerry);
+
                     MainActivity.mdb.execSQL(updateQuerry);
 
                     TextView textview = new TextView(ctx);

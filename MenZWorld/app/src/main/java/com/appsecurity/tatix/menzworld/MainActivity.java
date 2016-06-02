@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor c = mdb.rawQuery("SELECT MAX(serialNumber) FROM stockData", null);
         if(c.getCount() == 1) {
             c.moveToNext();
-            Log.d("JKS ", "Largest serial number entered is " + c.getInt(0));
+
             serialNumber = c.getInt(0);
         }
         else serialNumber = 999;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor c2 = mdb.rawQuery("SELECT MAX(refId) FROM billTable", null);
         if(c2.getCount() == 1) {
             c2.moveToNext();
-            Log.d("JKS ", "Largest refId number entered is " + c2.getInt(0));
+
             billRefId = c2.getInt(0) + 1;
         }
         else billRefId = 1;

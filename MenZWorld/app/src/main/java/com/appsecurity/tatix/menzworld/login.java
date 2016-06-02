@@ -31,10 +31,6 @@ public class login extends AppCompatActivity {
 
         MainActivity.mdb = openOrCreateDatabase("menZworldDB", Context.MODE_PRIVATE, null);
 
-        if(MainActivity.mdb == null)
-        Log.d("JKS ","open dbfailed");
-        else
-            Log.d("JKS ", "open db success :)");
         MainActivity.mdb.execSQL("CREATE TABLE IF NOT EXISTS stockData(stockId INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 " serialNumber INTEGER NOT NULL,"+
                 " barcodeId bigint,"+

@@ -42,9 +42,6 @@ public class ViewBillActivity extends AppCompatActivity {
             while (c.moveToNext()) {
                 date[index] = c.getString(0);
                 billId[index] = c.getString(1);
-
-                Log.d("JKS", "" + c.getString(0) + " ," + c.getString(1) );
-
                 index++;
             }
 
@@ -61,33 +58,31 @@ public class ViewBillActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     if(position ==0) return;
-
-                    Log.d("JKS","position= "+billId[position]);
                     int billTblId = Integer.parseInt(billId[position]);
                     String dateTime = "";
                     int discount = 0;
 
                     String gebillDateQuerry = "SELECT billDate FROM billTable WHERE billId="+billTblId;
-                    Log.d("JKS"," select querry = "+gebillDateQuerry);
+
 
                     Cursor c = MainActivity.mdb.rawQuery(gebillDateQuerry, null);
-                    Log.d("JKS","Get "+c.getCount());
+
 
                     if(c.getCount() == 1) {
                         c.moveToNext();
-                        Log.d("JKS ", "date is " + c.getInt(0));
+
                         dateTime = c.getString(0);
                     }
 
                     String gediscountQuerry = "SELECT discount FROM billTable WHERE billId="+billTblId;
-                    Log.d("JKS"," select querry = "+gediscountQuerry);
+
 
                     Cursor c2 = MainActivity.mdb.rawQuery(gediscountQuerry, null);
-                    Log.d("JKS","Get "+c2.getCount());
+
 
                     if(c2.getCount() == 1) {
                         c2.moveToNext();
-                        Log.d("JKS ", "discount is " + c2.getInt(0));
+
                         discount = c2.getInt(0);
                     }
 
