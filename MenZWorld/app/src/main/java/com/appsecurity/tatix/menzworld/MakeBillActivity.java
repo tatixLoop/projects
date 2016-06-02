@@ -246,16 +246,6 @@ public class MakeBillActivity extends AppCompatActivity {
                         tr1.addView(textview3);
                         tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                     }
-                } else {
-                    Log.d("JKS", "No results for the barcode scaned");
-                    Log.d("JKS", "Available are");
-                    Cursor c4 = MainActivity.mdb.rawQuery("SELECT * FROM stockData", null);
-
-                    if (c4.getCount() != 0) {
-                        while (c4.moveToNext()) {
-                            Log.d("JKS", "barcodeId = " + c4.getString(0) + " item = " + c4.getInt(1) + " price = " + c4.getInt(2) + " selling price" + c4.getInt(3) + " solding price = " + c4.getInt(4));
-                        }
-                    }
                 }
                 txt_serial.setText("");
             }
@@ -272,23 +262,53 @@ public class MakeBillActivity extends AppCompatActivity {
             String scanFormat = scanningResult.getFormatName();
 
 
-            Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price FROM stockData WHERE barcodeId='" + scanContent + "'", null);
+            Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold FROM stockData WHERE barcodeId='" + scanContent + "'", null);
 
             TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
             TableRow tr1 = new TableRow(ctx);
             if (c3.getCount() != 0) {
+
+
                 Log.d("JKS", " scan Result");
                 while (c3.moveToNext()) {
+                    int totalItems = c3.getInt(4);
+                    int itemsSold = c3.getInt(5);
+                    if(itemsSold>=totalItems)
+                    {
+                        Log.d("JKS","Soldall items "+itemsSold+">="+totalItems);
+                        Toast.makeText(getBaseContext(), "This item is out of stock",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
-                    Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2));
+                    itemCount++;
+                    Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2)+" stockId ="+c3.getInt(3));
+                    insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+MainActivity.billRefId+","+c3.getInt(3)+");";
+                    MainActivity.mdb.execSQL(insertQuerry);
+                    Log.d("JKS", "Ins Query = " + insertQuerry);
+                    insertQuerry ="";
 
+                    int itemsSold_q = 0;
+                    String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c3.getInt(3);
+                    Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
+                    if(c4.getCount() == 1) {
+                        c4.moveToNext();
+                        Log.d("JKS", "Items Sold = " + c4.getInt(0));
+                        itemsSold_q = c4.getInt(0);
+                    }
+                    String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q + 1)+" WHERE stockId="+c3.getInt(3);
+                    Log.d("JKS","update Querry = "+updateQuerry);
+                    MainActivity.mdb.execSQL(updateQuerry);
 
                     TextView textview = new TextView(ctx);
                     TextView textview2 = new TextView(ctx);
                     TextView textview3 = new TextView(ctx);
+                    textview.setTextColor(Color.parseColor("#FFFFFF"));
+                    textview2.setTextColor(Color.parseColor("#FFFFFF"));
+                    textview3.setTextColor(Color.parseColor("#FFFFFF"));
                     textview.setText(c3.getString(0));
 
-                    itemCount++;
+
                     switch (c3.getInt(1)) {
                         case 0:textview2.setText("SHIRT  ");break;
                         case 1:textview2.setText("JEANS  ");break;
@@ -308,22 +328,12 @@ public class MakeBillActivity extends AppCompatActivity {
                     TextView txt_total = (TextView) findViewById(R.id.txt_total);
                     txt_total.setText("RS: " + total);
 
+
                     tr1.addView(textview);
                     tr1.addView(textview2);
                     tr1.addView(textview3);
                     tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 }
-            } else {
-                Log.d("JKS", "No results for the barcode scaned");
-                Log.d("JKS", "Available are");
-                Cursor c4 = MainActivity.mdb.rawQuery("SELECT * FROM stockData", null);
-
-                if (c4.getCount() != 0) {
-                    while (c4.moveToNext()) {
-                        Log.d("JKS", "barcodeId = " + c4.getString(0) + " item = " + c4.getInt(1) + " price = " + c4.getInt(2) + " selling price" + c4.getInt(3) + " solding price = " + c4.getInt(4));
-                    }
-                }
-
             }
 
 
