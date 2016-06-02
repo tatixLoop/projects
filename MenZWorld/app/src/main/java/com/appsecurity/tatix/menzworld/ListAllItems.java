@@ -77,7 +77,7 @@ public class ListAllItems extends AppCompatActivity {
 
 
             customListAll adapter = new
-                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,soldItems,nCount);
+                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,soldItems,nCount+1);
 
 
             stockList = (ListView)findViewById(R.id.list_all);

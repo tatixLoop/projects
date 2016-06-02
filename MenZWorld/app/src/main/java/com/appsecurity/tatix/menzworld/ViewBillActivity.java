@@ -50,7 +50,7 @@ public class ViewBillActivity extends AppCompatActivity {
 
 
             CustomListBill adapter = new
-                    CustomListBill(ViewBillActivity.this, date, billId, nCount);
+                    CustomListBill(ViewBillActivity.this, date, billId, nCount+1);
 
 
             billList = (ListView)findViewById(R.id.list_bill);

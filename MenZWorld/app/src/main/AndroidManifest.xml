@@ -10,18 +10,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:windowSoftInputMode="adjustNothing">
 
         </activity>
-        <activity android:name=".AddItemActivity" />
+        <activity android:name=".AddItemActivity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".MakeBillActivity"
             android:windowSoftInputMode="adjustNothing"/>
-        <activity android:name=".ListAllItems" />
-        <activity android:name=".BackUpRestore" />
-        <activity android:name=".ShowSerial" />
-        <activity android:name=".BillActivity" />
-        <activity android:name=".ViewBillActivity" />
-        <activity android:name=".ReportActivity" />
+        <activity android:name=".ListAllItems"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".BackUpRestore"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".ShowSerial"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".BillActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".ViewBillActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".ReportActivity"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +37,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityChangePassword"></activity>
+        <activity android:name=".ActivityChangePassword"
+            android:windowSoftInputMode="adjustNothing"></activity>
     </application>
 
 </manifest>
