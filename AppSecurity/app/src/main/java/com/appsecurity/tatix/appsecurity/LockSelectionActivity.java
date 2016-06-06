@@ -12,6 +12,7 @@ import android.widget.Button;
 
 public class LockSelectionActivity extends AppCompatActivity {
 
+    private boolean firstSelection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,17 +25,23 @@ public class LockSelectionActivity extends AppCompatActivity {
         Cursor c3 = MainActivityLockScreen.mdb.rawQuery("SELECT * FROM lockType", null);
         if(c3.getCount() != 0)
         {
+            firstSelection = true;
             while (c3.moveToNext()) {
                 Log.d("JKS", "lock id = " + c3.getInt(0) + " enabled = " + c3.getInt(1));
                 switch(c3.getInt(0))
                 {
                     case 0:
-                        if(c3.getInt(1) == 1)
+                        if(c3.getInt(1) == 1) {
+                            firstSelection = false;
+
                             btn_numLock.setBackgroundResource(R.drawable.selectednumlock);
+                        }
                         break;
                     case 1:
-                        if(c3.getInt(1) == 1)
+                        if(c3.getInt(1) == 1) {
+                            firstSelection = false;
                             btn_tilesLock.setBackgroundResource(R.drawable.selectedtilelock);
+                        }
                         break;
                 }
             }
@@ -59,7 +66,14 @@ public class LockSelectionActivity extends AppCompatActivity {
                         btn_tiles.setBackgroundResource(R.drawable.invisible_tiles);
 
                         Intent intent = new Intent(LockSelectionActivity.this, NumberLockActivity.class);
-                        intent.putExtra("key","setKey");
+                        intent.putExtra("key", "setKey");
+                        if(firstSelection == true) {
+                            intent.putExtra("isFirstSetup", "yes");
+                        }
+                        else
+                        {
+                            intent.putExtra("isFirstSetup", "no");
+                        }
                         startActivity(intent);
                         break;
                     }

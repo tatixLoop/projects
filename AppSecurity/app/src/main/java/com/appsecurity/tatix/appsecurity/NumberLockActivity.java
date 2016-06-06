@@ -118,9 +118,7 @@ public class NumberLockActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Perform action on click
                 enteredPascode = "";
-
                 txt_enteredPassCode.setText("");
-
             }
         });
 
@@ -129,11 +127,14 @@ public class NumberLockActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.getStringExtra("key").equals("setKey"))
         {
-            txt_title.setText("Set Passcode:");
-
             txt_title.setText("Enter Current Passcode:");
+            if(intent.getStringExtra("isFirstSetup").equals("yes"))
+            {
+                mSetLockStage = 1;
+                txt_title.setText("Set Passcode:");
+            }
+            else mSetLockStage = 0;
             updatePasscode = true;
-
         }
         else {
 
@@ -158,7 +159,7 @@ public class NumberLockActivity extends AppCompatActivity {
             lockedApp = name;
         }
 
-        mSetLockStage = 0;
+
         assert btn_setPin != null;
         btn_setPin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
