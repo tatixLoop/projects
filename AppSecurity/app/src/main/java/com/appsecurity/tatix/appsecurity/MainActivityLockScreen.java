@@ -65,13 +65,15 @@ public class MainActivityLockScreen extends AppCompatActivity {
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS tileLockApps(package VARCHAR);");
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS lockStatus(status int);");
                 mdb.execSQL("CREATE TABLE IF NOT EXISTS lockType(lockId int,enabled int);");
-                mdb.execSQL("CREATE TABLE IF NOT EXISTS unlockKey(lockId int,key int);");
+                mdb.execSQL("CREATE TABLE IF NOT EXISTS unlockKey(lockId int,key varchar);");
                 // add lock type to database;; this is required before adding any new type of lock
                 Cursor c3=mdb.rawQuery("SELECT * FROM lockType", null);
                 if(c3.getCount() == 0)
                 {
                     mdb.execSQL("INSERT INTO lockType VALUES('0','0')");
                     mdb.execSQL("INSERT INTO lockType VALUES('1','0')");
+                    mdb.execSQL("INSERT INTO unlockKey VALUES('0','1111')");
+                    mdb.execSQL("INSERT INTO unlockKey VALUES('1','1111')");
                 }
 
                 Cursor c2=mdb.rawQuery("SELECT * FROM lockStatus", null);
@@ -485,15 +487,46 @@ public class MainActivityLockScreen extends AppCompatActivity {
         return false;
     }
     public static void launchLockScreen(String appName) {
-        Log.d("JKS", "Launch lock screen from here");
-        Intent myIntent = new Intent(mContext, FullscreenLockActivity.class);
-        myIntent.putExtra("key",appName); //Optional parameters
-        myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
-                        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
-                        Intent.FLAG_ACTIVITY_NO_HISTORY |
-                        Intent.FLAG_ACTIVITY_NEW_TASK
-        );
-        mContext.startActivity(myIntent);
+
+        Intent myIntent =null;
+        Cursor c3 = MainActivityLockScreen.mdb.rawQuery("SELECT * FROM lockType", null);
+        if(c3.getCount() != 0)
+        {
+            while (c3.moveToNext()) {
+                Log.d("JKS", "lock id = " + c3.getInt(0) + " enabled = " + c3.getInt(1));
+                switch(c3.getInt(0))
+                {
+                    case 0:
+                        if(c3.getInt(1) == 1)
+                            Log.d("JKS", "Launch lock screen from here");
+                        myIntent = new Intent(mContext, NumberLockActivity.class);
+                        myIntent.putExtra("key",appName); //Optional parameters
+                        myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
+                                        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+                                        Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                        Intent.FLAG_ACTIVITY_NEW_TASK
+                        );
+                        mContext.startActivity(myIntent);
+
+                        break;
+                    case 1:
+                        if(c3.getInt(1) == 1) {
+                            Log.d("JKS", "Launch lock screen from here");
+                            myIntent = new Intent(mContext, FullscreenLockActivity.class);
+                            myIntent.putExtra("key", appName); //Optional parameters
+                            myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
+                                            Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+                                            Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                            Intent.FLAG_ACTIVITY_NEW_TASK
+                            );
+                        }
+                        mContext.startActivity(myIntent);
+
+                        break;
+                }
+            }
+        }
+
         //lockScreen();
 
     }

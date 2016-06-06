@@ -13,12 +13,12 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="161dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btn_1"
         android:background="@drawable/btn1"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/txt_title"
         android:layout_alignStart="@+id/btn_4" />
 
     <Button
@@ -119,17 +119,44 @@
         android:text="Enter Passcode"
         android:id="@+id/txt_title"
         android:textColor="#ffffff"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/btn_2" />
+        android:layout_alignStart="@+id/txtEnteredPasscode" />
+    <ImageView
+        android:id="@+id/img_icon_numLock"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/txt_title"
+        android:layout_alignStart="@+id/btn_2" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="2dp"
         android:text="SET PASSCODE"
         android:id="@+id/btn_setPassCode"
-        android:layout_below="@+id/btn_0"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Passcode"
+        android:id="@+id/txtEnteredPasscode"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:layout_alignBottom="@+id/btn_clr"
+        android:layout_alignStart="@+id/btn_1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:id="@+id/btn_clr"
+        android:layout_above="@+id/btn_2"
+        android:layout_alignStart="@+id/btn_3"
+        android:layout_alignEnd="@+id/btn_3" />
+
 </RelativeLayout>
