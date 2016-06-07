@@ -512,7 +512,7 @@ public class MainActivityLockScreen extends AppCompatActivity {
                     case 1:
                         if(c3.getInt(1) == 1) {
                             Log.d("JKS", "Launch lock screen from here");
-                            myIntent = new Intent(mContext, FullscreenLockActivity.class);
+                            myIntent = new Intent(mContext, InvisibleTileActivity.class);
                             myIntent.putExtra("key", appName); //Optional parameters
                             myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
                                             Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |

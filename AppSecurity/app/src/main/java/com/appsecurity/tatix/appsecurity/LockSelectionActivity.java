@@ -105,8 +105,18 @@ public class LockSelectionActivity extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.selectedtilelock);
                         Button btn_tiles = (Button) findViewById(R.id.btn_lockNumber);
                         btn_tiles.setBackgroundResource(R.drawable.numlock);
-                        MainActivityLockScreen.mdb.execSQL("UPDATE lockType SET enabled=1 WHERE lockId=1");
-                        MainActivityLockScreen.mdb.execSQL("UPDATE lockType SET enabled=0 WHERE lockId<>1");
+
+                        Intent intent = new Intent(LockSelectionActivity.this, InvisibleTileActivity.class);
+                        intent.putExtra("key", "setKey");
+                        if(firstSelection == true) {
+                            intent.putExtra("isFirstSetup", "yes");
+                        }
+                        else
+                        {
+                            intent.putExtra("isFirstSetup", "no");
+                        }
+                        startActivity(intent);
+
                         break;
                     }
                     case MotionEvent.ACTION_CANCEL: {

@@ -19,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class NumberLockActivity extends AppCompatActivity {
 
     private int mSetLockStage;
@@ -36,16 +34,18 @@ public class NumberLockActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        MainActivityLockScreen.unlockApp(lockedApp);
+        if (updatePasscode == false) {
+            MainActivityLockScreen.unlockApp(lockedApp);
+        }
     }
     @Override
     protected void onStop(){
         super.onStop();
 
-        Intent intent = new Intent(this, NumberLockActivity.class);
-        if(MainActivityLockScreen.getAppStatus(lockedApp)) {
 
+        if(updatePasscode == false && MainActivityLockScreen.getAppStatus(lockedApp)) {
 
+            Intent intent = new Intent(this, NumberLockActivity.class);
             Log.d("JKS", "Reloading lockscreen for " + gName);
             intent.putExtra("key", gName); //Optional parameters
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION |
@@ -228,10 +228,10 @@ public class NumberLockActivity extends AppCompatActivity {
                 }
             }
         });
-        Button btn_1 = (Button) findViewById(R.id.btn_1);
-        Button btn_2 = (Button) findViewById(R.id.btn_2);
-        Button btn_3 = (Button) findViewById(R.id.btn_3);
-        Button btn_4 = (Button) findViewById(R.id.btn_4);
+        Button btn_1 = (Button) findViewById(R.id.btninT_1);
+        Button btn_2 = (Button) findViewById(R.id.btninT_2);
+        Button btn_3 = (Button) findViewById(R.id.btninT_3);
+        Button btn_4 = (Button) findViewById(R.id.btninT_4);
         Button btn_5 = (Button) findViewById(R.id.btn_5);
         Button btn_6 = (Button) findViewById(R.id.btn_6);
         Button btn_7 = (Button) findViewById(R.id.btn_7);
