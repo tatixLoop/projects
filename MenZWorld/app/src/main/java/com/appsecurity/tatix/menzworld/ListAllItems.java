@@ -46,7 +46,7 @@ public class ListAllItems extends AppCompatActivity {
             price[index] = "Price";
             noOfItems[index] = "Total";
             sellingPrice[index] = "Retail";
-            soldItems[index]= "Available";
+            soldItems[index]= "Sold";
             index++;
 
             while (c.moveToNext()) {

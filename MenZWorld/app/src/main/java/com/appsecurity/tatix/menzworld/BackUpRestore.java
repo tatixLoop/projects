@@ -73,11 +73,56 @@ public class BackUpRestore extends AppCompatActivity {
                     txt_msg.setText("back up done for current data to "+outFileName);
                 }
                 catch (FileNotFoundException ex) {
-                    Log.d("JKS","File not found exception");
+
+                    try {
+                        Log.d("JKS", "File not found exception");
+                        FileInputStream fis = new FileInputStream(dbFile);
+                        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy_HHmmss");
+                        String currentDateandTime = sdf.format(new Date());
+
+                        String outFileName = "/storage/sdcard0/MenzWorldBkup/menZWorldDBbkup" + currentDateandTime +
+                                ".db";
+
+
+                        File file = new File("/storage/sdcard0/MenzWorldBkup");
+                        if (!file.exists()) {
+                            if (!file.mkdirs()) {
+                                Log.d("JKS", "Nake directory failed");
+                            }
+
+                        }
+                        // Open the empty db as the output stream
+                        OutputStream output = new FileOutputStream(outFileName);
+
+
+                        // Transfer bytes from the inputfile to the outputfile
+                        byte[] buffer = new byte[1024];
+                        int length;
+                        while ((length = fis.read(buffer)) > 0) {
+                            output.write(buffer, 0, length);
+                        }
+
+                        // Close the streams
+                        output.flush();
+                        output.close();
+                        fis.close();
+
+                        TextView txt_msg = (TextView) findViewById(R.id.txt_msg);
+                        txt_msg.setText("back up done for current data to " + outFileName);
+                    }
+                    catch (FileNotFoundException ex2)
+                    {
+
+                        Log.d("JKS","Again file didnt find ");
+                    }
+                    catch (IOException ex2)
+                    {
+                        Log.d("JKS", "IO Exception");
+                    }
                 }
                 catch (IOException ex)
                 {
-                    Log.d("JKS","IO Exception");
+                    Log.d("JKS", "IO Exception");
                 }
                 Log.i("JKS", "DB path = " + dbFile.getAbsolutePath());
 

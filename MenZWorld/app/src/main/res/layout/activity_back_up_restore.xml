@@ -17,7 +17,9 @@
         android:id="@+id/txt_msg"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginStart="23dp"
+        android:layout_marginLeft="23dp"
         android:layout_marginBottom="97dp"
         android:textColor="#ffffff" />
 
@@ -27,7 +29,9 @@
         android:text="Restore"
         android:id="@+id/btn_restore"
         android:layout_marginEnd="41dp"
+        android:layout_marginRight="41dp"
         android:layout_alignTop="@+id/btn_bkup"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
@@ -37,5 +41,6 @@
         android:id="@+id/btn_bkup"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/txt_msg"
+        android:layout_alignLeft="@+id/txt_msg"
         android:layout_marginTop="154dp" />
 </RelativeLayout>

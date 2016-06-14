@@ -26,7 +26,8 @@
                 android:id="@+id/btn_scan"
                 android:layout_marginTop="34dp"
                 android:layout_below="@+id/btn_addItem"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"/>
 
             <Button
                 android:layout_width="200dp"
@@ -34,7 +35,8 @@
                 android:text="Add Item"
                 android:id="@+id/btn_addItem"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"/>
 
             <Button
                 android:layout_width="200dp"
@@ -43,6 +45,7 @@
                 android:id="@+id/btn_database"
                 android:layout_below="@+id/btn_scan"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="33dp" />
 
             <Button
@@ -52,6 +55,7 @@
                 android:id="@+id/btn_bkup"
                 android:layout_below="@+id/btn_reports"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="25dp" />
 
             <Button
@@ -61,6 +65,7 @@
                 android:id="@+id/btn_viewBill"
                 android:layout_below="@+id/btn_database"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="33dp" />
 
             <Button
@@ -70,6 +75,7 @@
                 android:id="@+id/btn_reports"
                 android:layout_below="@+id/btn_viewBill"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="34dp" />
 
             <Button
@@ -79,6 +85,7 @@
                 android:id="@+id/btn_change_password"
                 android:layout_below="@+id/btn_bkup"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="34dp"/>
         </RelativeLayout>
     </ScrollView>
