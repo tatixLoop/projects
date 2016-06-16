@@ -26,6 +26,7 @@ public class ListAllItems extends AppCompatActivity {
         String [] sellingPrice;
         String [] noOfItems;
         String [] soldItems;
+        String [] available;
         int nCount = 0;
 
         Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold FROM stockData WHERE noOfItems>itemsSold", null);
@@ -39,6 +40,7 @@ public class ListAllItems extends AppCompatActivity {
             noOfItems = new String[nCount+1];
             soldItems = new  String[nCount+1];
             sellingPrice = new  String[nCount+1];
+            available = new String[nCount + 1];
 
             int index = 0;
             serialNo[index] = "Sl no";
@@ -47,6 +49,7 @@ public class ListAllItems extends AppCompatActivity {
             noOfItems[index] = "Total";
             sellingPrice[index] = "Retail";
             soldItems[index]= "Sold";
+            available[index] = "Available";
             index++;
 
             while (c.moveToNext()) {
@@ -69,13 +72,14 @@ public class ListAllItems extends AppCompatActivity {
                 noOfItems[index] = c.getString(3);
                 sellingPrice[index] = c.getString(4);
                 soldItems[index]= c.getString(5);
+                available[index] = (Integer.parseInt(noOfItems[index]) - Integer.parseInt(soldItems[index]))+"";
 
                 index++;
             }
 
 
             customListAll adapter = new
-                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,soldItems,nCount+1);
+                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,available,nCount+1);
 
 
             stockList = (ListView)findViewById(R.id.list_all);
