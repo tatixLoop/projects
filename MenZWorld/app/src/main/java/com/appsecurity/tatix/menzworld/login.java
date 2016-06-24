@@ -39,7 +39,10 @@ public class login extends AppCompatActivity {
                 " selling_price INTEGER NOT NULL,"+
                 " noOfItems INTEGER NOT NULL,"+
                 " itemsSold INTEGER,"+
-                " stockDate DATETIME NOT NULL);");
+                " stockDate DATETIME NOT NULL"+
+                ",brand VARCHAR"+
+                ",size INT"+
+                ");");
 
 /*        mdb.execSQL("CREATE TABLE IF NOT EXISTS billData(refId INTEGER REFERENCES billData(refId) ,"+
                                                         " stockId INTEGER REFERENCES stockData(stockId));");*/

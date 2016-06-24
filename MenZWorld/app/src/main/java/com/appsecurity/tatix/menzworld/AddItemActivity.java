@@ -43,11 +43,21 @@ public class AddItemActivity extends AppCompatActivity {
         final CheckBox chk_belt = (CheckBox)findViewById(R.id.chk_belt);
         final CheckBox chk_wallet = (CheckBox)findViewById(R.id.chk_wallets);
 
+        final CheckBox chk_s = (CheckBox) findViewById(R.id.ckh_sx_s);
+        final CheckBox chk_m = (CheckBox) findViewById(R.id.ckh_sx_m);
+        final CheckBox chk_l = (CheckBox) findViewById(R.id.ckh_sx_l);
+        final CheckBox chk_xl = (CheckBox) findViewById(R.id.ckh_sx_xl);
+        final CheckBox chk_xxl = (CheckBox) findViewById(R.id.ckh_sx_sxxl);
+        final CheckBox chk_other_sz = (CheckBox) findViewById(R.id.ckh_sx_othr);
+        final TextView txt_sz_other = (TextView) findViewById(R.id.txt_dz_other);
+        txt_sz_other.setVisibility(View.GONE);
+
 
 
         final EditText txt_price = (EditText)findViewById(R.id.txt_price);
         final EditText txt_selprice = (EditText)findViewById(R.id.txt_selprice);
         final EditText txt_numItems = (EditText)findViewById(R.id.txt_numItems);
+        final EditText txt_brand = (EditText)findViewById(R.id.txt_brand);
 
 
 
@@ -70,6 +80,24 @@ public class AddItemActivity extends AppCompatActivity {
                 int sellingPrice = 0;
                 int soldPrice = 0;
                 int noOfItems = 1;
+                String brand ="";
+                int size = 0;
+
+                brand = txt_brand.getText().toString();
+                if(chk_s.isChecked())
+                    size = MainActivity.SZ_SMALL;
+                else if(chk_m.isChecked())
+                    size = MainActivity.SZ_MEDIUM;
+                else if(chk_l.isChecked())
+                    size = MainActivity.SZ_LARGE;
+                else if(chk_xl.isChecked())
+                    size = MainActivity.SZ_XLARGE;
+                else if(chk_xxl.isChecked())
+                    size = MainActivity.SZ_XXLARGE;
+                else if (chk_other_sz.isChecked())
+                {
+                    size = Integer.parseInt(txt_sz_other.getText().toString());
+                }
 
                 if(chk_jeans.isChecked())
                     item = MainActivity.JEANS;
@@ -112,8 +140,8 @@ public class AddItemActivity extends AppCompatActivity {
                 BigInteger barcode_int = new BigInteger(barcode.getText().toString(),10);
 
                 String querry =
-                        "INSERT INTO stockData (serialNumber,barcodeId, item, price, selling_price, noOfItems,itemsSold,stockDate) values ("
-                                                +MainActivity.serialNumber +","+barcode_int+","+item +","+price+","+sellingPrice+","+noOfItems+",0"+",'"+getDateTime()+"')";
+                        "INSERT INTO stockData (serialNumber,barcodeId, item, price, selling_price, noOfItems,itemsSold,stockDate,brand,size) values ("
+                                                +MainActivity.serialNumber +","+barcode_int+","+item +","+price+","+sellingPrice+","+noOfItems+",0"+",'"+getDateTime()+"','"+brand+"'"+","+size +")";
 
 
                 MainActivity.mdb.execSQL(querry);
@@ -292,9 +320,105 @@ public class AddItemActivity extends AppCompatActivity {
                 }
 
             }
+
         });
 
+        chk_s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // perform logic
+                    chk_m.setChecked(false);
+                    chk_l.setChecked(false);
+                    chk_xl.setChecked(false);
+                    chk_xxl.setChecked(false);
+                    chk_other_sz.setChecked(false);
+                    txt_sz_other.setVisibility(View.GONE);
 
+                }
+
+            }
+        });
+        chk_m.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // perform logic
+                    chk_s.setChecked(false);
+                    chk_l.setChecked(false);
+                    chk_xl.setChecked(false);
+                    chk_xxl.setChecked(false);
+                    chk_other_sz.setChecked(false);
+                    txt_sz_other.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+        chk_l.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // perform logic
+                    chk_m.setChecked(false);
+                    chk_s.setChecked(false);
+                    chk_xl.setChecked(false);
+                    chk_xxl.setChecked(false);
+                    chk_other_sz.setChecked(false);
+                    txt_sz_other.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+        chk_xl.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // perform logic
+                    chk_m.setChecked(false);
+                    chk_l.setChecked(false);
+                    chk_s.setChecked(false);
+                    chk_xxl.setChecked(false);
+                    chk_other_sz.setChecked(false);
+                    txt_sz_other.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+        chk_xxl.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // perform logic
+                    chk_m.setChecked(false);
+                    chk_l.setChecked(false);
+                    chk_xl.setChecked(false);
+                    chk_s.setChecked(false);
+                    chk_other_sz.setChecked(false);
+                    txt_sz_other.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+        chk_other_sz.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // perform logic
+                    chk_m.setChecked(false);
+                    chk_l.setChecked(false);
+                    chk_xl.setChecked(false);
+                    chk_xxl.setChecked(false);
+                    chk_s.setChecked(false);
+                    txt_sz_other.setVisibility(View.VISIBLE);
+
+                }
+
+            }
+        });
 
     }
     public static String getDateTime() {

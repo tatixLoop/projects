@@ -36,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
     public static int WALLET = 8;
     public static int OTHERS = 9;
 
+    public static int SZ_SMALL = 0;
+    public static int SZ_MEDIUM = 1;
+    public static int SZ_LARGE = 2;
+    public static int SZ_XLARGE = 3;
+    public static int SZ_XXLARGE= 4;
+
+
     public static int serialNumber=0000;
     public static int billRefId = 0;
     @Override
