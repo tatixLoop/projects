@@ -3,6 +3,12 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:stretchColumns="0,1,2,3,4,5,6,7">
     <TableRow>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
         <TextView
             android:id="@+id/slNo"
             android:layout_width="wrap_content"
@@ -60,6 +66,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
             />
+        </LinearLayout>
 
     </TableRow>
 

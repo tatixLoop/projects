@@ -91,7 +91,7 @@ public class ListAllItems extends AppCompatActivity {
                     case 2: size[index] = "LARGE";break;
                     case 3: size[index] = "X-LARGE";break;
                     case 4: size[index] = "XX-LARGE";break;
-                    case -1: size[index]="Not mentioned" ; break;
+                    case -1: size[index]="N A" ; break;
                     default: size[index] = c.getString(7);break;
                 }
 
