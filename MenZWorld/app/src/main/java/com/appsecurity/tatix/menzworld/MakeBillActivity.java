@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,6 +27,15 @@ public class MakeBillActivity extends AppCompatActivity {
     int total = 0;
     Context ctx ;
     int itemCount = 0;
+    private String[] itemCode;
+    private String[] item;
+    private String[] price;
+    private String[] brand;
+    private String[] size;
+    private int numItemsInbill;
+
+    private  CustomListMakeBillList adapter;
+    static ListView billItems;
 
     public String insertQuerry = "INSERT INTO billData (refId,stockId) values (null, null);";
 
@@ -38,6 +49,36 @@ public class MakeBillActivity extends AppCompatActivity {
         total = 0;
         ctx = MakeBillActivity.this;
         insertQuerry="";
+
+        numItemsInbill = 0;
+        itemCode = new String[100];
+        item = new String [100];
+        price = new String[100];
+        brand = new String[100];
+        size = new String[100];
+
+        itemCode[numItemsInbill] = "CODE";
+        item[numItemsInbill] = "ITEM";
+        brand[numItemsInbill]= "BRAND";
+        size[numItemsInbill] = "SIZE";
+        price[numItemsInbill] = "PRICE";
+        numItemsInbill++;
+
+        adapter = new
+                CustomListMakeBillList(MakeBillActivity.this, itemCode, item, price,brand,size,numItemsInbill);
+
+        billItems = (ListView)findViewById(R.id.list_make_bill);
+        billItems.setAdapter(adapter);
+        billItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Log.d("JKS","Clicked on bill item position "+position + " item="+itemCode[position]+ " price="+price[position]+ " brand="+brand[position]+ " size="+size[position]);
+
+            }
+        });
 
         Button btn_cancel = (Button)findViewById(R.id.btn_cancel_bill);
         Button btn_scan = (Button)findViewById(R.id.btn_scan_item);
@@ -170,13 +211,13 @@ public class MakeBillActivity extends AppCompatActivity {
                 int serialNum = Integer.parseInt(txt_serial.getText().toString());
 
 
-                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold FROM stockData WHERE serialNumber='" + serialNum + "'", null);
+                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold,brand,size FROM stockData WHERE serialNumber='" + serialNum + "'", null);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(txt_serial.getWindowToken(), 0);
 
 
-                TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
-                TableRow tr1 = new TableRow(ctx);
+             //   TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
+            //    TableRow tr1 = new TableRow(ctx);
                 if (c3.getCount() != 0) {
 
 
@@ -220,31 +261,53 @@ public class MakeBillActivity extends AppCompatActivity {
                         textview3.setTextColor(Color.parseColor("#FFFFFF"));
                         textview.setText(c3.getString(0));
 
+                        itemCode[numItemsInbill] = c3.getString(0);
 
                         switch (c3.getInt(1)) {
-                            case 0:textview2.setText("SHIRT  ");break;
-                            case 1:textview2.setText("JEANS  ");break;
-                            case 2:textview2.setText("OTHERS ");break;
-                            case 3:textview2.setText("PANTS  ");break;
-                            case 4:textview2.setText("T-SHIRT");break;
-                            case 5:textview2.setText("BELT   ");break;
-                            case 6:textview2.setText("INNER  ");break;
-                            case 7:textview2.setText("SHORTS ");break;
-                            case 8:textview2.setText("WALLET ");break;
-                            case 9:textview2.setText("OTHERS ");break;
-                            default:textview2.setText("OTHERS ");
+                            case 0:textview2.setText("SHIRT  "); item[numItemsInbill] = "SHIRT";break;
+                            case 1:textview2.setText("JEANS  "); item[numItemsInbill] = "JEANS"; break;
+                            case 2:textview2.setText("OTHERS "); item[numItemsInbill] = "OTHERS"; break;
+                            case 3:textview2.setText("PANTS  "); item[numItemsInbill] = "PANTS"; break;
+                            case 4:textview2.setText("T-SHIRT"); item[numItemsInbill] = "T-SHIRT"; break;
+                            case 5:textview2.setText("BELT   "); item[numItemsInbill] = "BELT"; break;
+                            case 6:textview2.setText("INNER  "); item[numItemsInbill] = "INNER"; break;
+                            case 7:textview2.setText("SHORTS "); item[numItemsInbill] = "SHORTS"; break;
+                            case 8:textview2.setText("WALLET "); item[numItemsInbill] = "WALLET"; break;
+                            case 9:textview2.setText("OTHERS "); item[numItemsInbill] = "OTHERS"; break;
+                            default:textview2.setText("OTHERS ");item[numItemsInbill] = "OTHERS";
                         }
 
                         textview3.setText(c3.getString(2));
+                        price[numItemsInbill] = c3.getString(2);
+                        brand[numItemsInbill]= c3.getString(6);
+                        if(brand[numItemsInbill].length() <= 0)
+                        {
+                            brand[numItemsInbill] = "menz world";
+                        }
+                        switch (c3.getInt(7))
+                        {
+                            case 0:size[numItemsInbill] =  "SMALL";break;
+                            case 1: size[numItemsInbill] =  "MEDIUM";break;
+                            case 2: size[numItemsInbill] =  "LARGE";break;
+                            case 3: size[numItemsInbill] =  "X-LARGE";break;
+                            case 4: size[numItemsInbill] =  "XX-LARGE";break;
+                            case -1: size[numItemsInbill] = "N A" ; break;
+                            default: size[numItemsInbill] =  c3.getString(7);break;
+                        }
+                        numItemsInbill++;
+                        adapter.updateCount(numItemsInbill);
+                        adapter.notifyDataSetChanged();
+                        billItems.invalidateViews();
+                        billItems.refreshDrawableState();
                         total += c3.getInt(2);
                         TextView txt_total = (TextView) findViewById(R.id.txt_total);
                         txt_total.setText("RS: " + total);
 
 
-                        tr1.addView(textview);
-                        tr1.addView(textview2);
-                        tr1.addView(textview3);
-                        tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+              //          tr1.addView(textview);
+              //          tr1.addView(textview2);
+             //           tr1.addView(textview3);
+            //            tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                     }
                 }
                 txt_serial.setText("");
@@ -264,8 +327,8 @@ public class MakeBillActivity extends AppCompatActivity {
 
             Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold FROM stockData WHERE barcodeId='" + scanContent + "'", null);
 
-            TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
-            TableRow tr1 = new TableRow(ctx);
+      //      TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
+      //      TableRow tr1 = new TableRow(ctx);
             if (c3.getCount() != 0) {
 
                 while (c3.moveToNext()) {
@@ -305,31 +368,54 @@ public class MakeBillActivity extends AppCompatActivity {
                     textview3.setTextColor(Color.parseColor("#FFFFFF"));
                     textview.setText(c3.getString(0));
 
+                    itemCode[numItemsInbill] = c3.getString(0);
 
                     switch (c3.getInt(1)) {
-                        case 0:textview2.setText("SHIRT  ");break;
-                        case 1:textview2.setText("JEANS  ");break;
-                        case 2:textview2.setText("OTHERS ");break;
-                        case 3:textview2.setText("PANTS  ");break;
-                        case 4:textview2.setText("T-SHIRT");break;
-                        case 5:textview2.setText("BELT   ");break;
-                        case 6:textview2.setText("INNER  ");break;
-                        case 7:textview2.setText("SHORTS ");break;
-                        case 8:textview2.setText("WALLET ");break;
-                        case 9:textview2.setText("OTHERS ");break;
-                        default:textview2.setText("OTHERS ");
+
+                        case 0:textview2.setText("SHIRT  "); item[numItemsInbill] = "SHIRT";break;
+                        case 1:textview2.setText("JEANS  "); item[numItemsInbill] = "JEANS"; break;
+                        case 2:textview2.setText("OTHERS "); item[numItemsInbill] = "OTHERS"; break;
+                        case 3:textview2.setText("PANTS  "); item[numItemsInbill] = "PANTS"; break;
+                        case 4:textview2.setText("T-SHIRT"); item[numItemsInbill] = "T-SHIRT"; break;
+                        case 5:textview2.setText("BELT   "); item[numItemsInbill] = "BELT"; break;
+                        case 6:textview2.setText("INNER  "); item[numItemsInbill] = "INNER"; break;
+                        case 7:textview2.setText("SHORTS "); item[numItemsInbill] = "SHORTS"; break;
+                        case 8:textview2.setText("WALLET "); item[numItemsInbill] = "WALLET"; break;
+                        case 9:textview2.setText("OTHERS "); item[numItemsInbill] = "OTHERS"; break;
+                        default:textview2.setText("OTHERS ");item[numItemsInbill] = "OTHERS";
                     }
 
                     textview3.setText(c3.getString(2));
+                    price[numItemsInbill] = c3.getString(2);
+                    brand[numItemsInbill]= c3.getString(6);
+                    if(brand[numItemsInbill].length() <= 0)
+                    {
+                        brand[numItemsInbill] = "menz world";
+                    }
+                    switch (c3.getInt(7))
+                    {
+                        case 0:size[numItemsInbill] =  "SMALL";break;
+                        case 1: size[numItemsInbill] =  "MEDIUM";break;
+                        case 2: size[numItemsInbill] =  "LARGE";break;
+                        case 3: size[numItemsInbill] =  "X-LARGE";break;
+                        case 4: size[numItemsInbill] =  "XX-LARGE";break;
+                        case -1: size[numItemsInbill] = "N A" ; break;
+                        default: size[numItemsInbill] =  c3.getString(7);break;
+                    }
+                    numItemsInbill++;
+                    adapter.updateCount(numItemsInbill);
+                    adapter.notifyDataSetChanged();
+                    billItems.invalidateViews();
+                    billItems.refreshDrawableState();
                     total += c3.getInt(2);
                     TextView txt_total = (TextView) findViewById(R.id.txt_total);
                     txt_total.setText("RS: " + total);
 
 
-                    tr1.addView(textview);
-                    tr1.addView(textview2);
-                    tr1.addView(textview3);
-                    tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+//                    tr1.addView(textview);
+  //                  tr1.addView(textview2);
+    //                tr1.addView(textview3);
+      //              tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 }
             }
 
