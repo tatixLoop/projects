@@ -26,10 +26,12 @@ public class customListAll extends ArrayAdapter<String>{
     private String[] stockNoOfItem;
     private String[] sellingPrice;
     private String[] soldItems;
+    private String[] brand;
+    private String[] size;
 
 
     public customListAll(Activity context,
-                      String[] serialNo,  String[] itemType, String[] price, String[] stockNoOfItem,String[] sellingPrice, String[] soldItems, int noOfItem) {
+                      String[] serialNo,  String[] itemType, String[] price, String[] stockNoOfItem,String[] sellingPrice, String[] soldItems, String[] brand, String[] size, int noOfItem) {
         super(context, R.layout.list_all_single, serialNo);
         this.context = context;
         this.serialNo = serialNo;
@@ -39,6 +41,8 @@ public class customListAll extends ArrayAdapter<String>{
         this.sellingPrice = sellingPrice;
         this.soldItems = soldItems;
         this.maxItem = noOfItem;
+        this.brand = brand;
+        this.size = size;
 
     }
     @Override
@@ -57,6 +61,8 @@ public class customListAll extends ArrayAdapter<String>{
         TextView noOfItems = (TextView) rowView.findViewById(R.id.noOfItems);
         TextView txt_sellingPrice = (TextView) rowView.findViewById(R.id.selling_rpice);
         TextView txtsoldItems = (TextView) rowView.findViewById(R.id.soldItems);
+        TextView txt_brand = (TextView)rowView.findViewById(R.id.brnd);
+        TextView txt_size = (TextView) rowView.findViewById(R.id.sz);
 
         if(position == 0)
         {
@@ -66,14 +72,18 @@ public class customListAll extends ArrayAdapter<String>{
             noOfItems.setTypeface(null, Typeface.BOLD);
             txt_sellingPrice.setTypeface(null, Typeface.BOLD);
             txtsoldItems.setTypeface(null, Typeface.BOLD);
+            txt_brand.setTypeface(null, Typeface.BOLD);
+            txt_size.setTypeface(null, Typeface.BOLD);
         }
 
         slno.setText(serialNo[position]);
         item.setText(itemType[position]);
         txtPrice.setText(price[position]);
-        noOfItems.setText(stockNoOfItem[position]);
+        noOfItems.setText("   "+stockNoOfItem[position]);
         txt_sellingPrice.setText(sellingPrice[position]);
-        txtsoldItems.setText(soldItems[position]);
+        txtsoldItems.setText("   "+soldItems[position]);
+        txt_brand.setText(brand[position]);
+        txt_size.setText(size[position]);
 
 
         return rowView;

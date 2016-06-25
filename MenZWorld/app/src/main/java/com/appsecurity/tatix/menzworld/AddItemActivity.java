@@ -98,6 +98,7 @@ public class AddItemActivity extends AppCompatActivity {
                 {
                     size = Integer.parseInt(txt_sz_other.getText().toString());
                 }
+                else size = -1;
 
                 if(chk_jeans.isChecked())
                     item = MainActivity.JEANS;

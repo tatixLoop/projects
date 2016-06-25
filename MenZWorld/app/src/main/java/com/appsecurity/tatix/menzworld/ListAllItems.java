@@ -27,9 +27,11 @@ public class ListAllItems extends AppCompatActivity {
         String [] noOfItems;
         String [] soldItems;
         String [] available;
+        String [] brand;
+        String [] size;
         int nCount = 0;
 
-        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold FROM stockData WHERE noOfItems>itemsSold", null);
+        Cursor c = MainActivity.mdb.rawQuery("SELECT serialNumber,item,price,noOfItems,selling_price,itemsSold,brand,size FROM stockData WHERE noOfItems>itemsSold", null);
 
         nCount = c.getCount();
         if(nCount != 0)
@@ -41,6 +43,8 @@ public class ListAllItems extends AppCompatActivity {
             soldItems = new  String[nCount+1];
             sellingPrice = new  String[nCount+1];
             available = new String[nCount + 1];
+            brand = new String[nCount + 1];
+            size = new String[nCount + 1];
 
             int index = 0;
             serialNo[index] = "Sl no";
@@ -50,6 +54,8 @@ public class ListAllItems extends AppCompatActivity {
             sellingPrice[index] = "Retail";
             soldItems[index]= "Sold";
             available[index] = "Available";
+            brand[index] = "Brand";
+            size[index] = "Size";
             index++;
 
             while (c.moveToNext()) {
@@ -73,13 +79,28 @@ public class ListAllItems extends AppCompatActivity {
                 sellingPrice[index] = c.getString(4);
                 soldItems[index]= c.getString(5);
                 available[index] = (Integer.parseInt(noOfItems[index]) - Integer.parseInt(soldItems[index]))+"";
+                brand[index] = c.getString(6);
+                if(brand[index].length() <= 0)
+                {
+                    brand[index] = "menz world";
+                }
+                switch (c.getInt(7))
+                {
+                    case 0: size[index] = "SMALL";break;
+                    case 1: size[index] = "MEDIUM";break;
+                    case 2: size[index] = "LARGE";break;
+                    case 3: size[index] = "X-LARGE";break;
+                    case 4: size[index] = "XX-LARGE";break;
+                    case -1: size[index]="Not mentioned" ; break;
+                    default: size[index] = c.getString(7);break;
+                }
 
                 index++;
             }
 
 
             customListAll adapter = new
-                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,available,nCount+1);
+                    customListAll(ListAllItems.this, serialNo, itemType, price,noOfItems,sellingPrice,available,brand,size,nCount+1);
 
 
             stockList = (ListView)findViewById(R.id.list_all);
