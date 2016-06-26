@@ -33,9 +33,12 @@ public class MakeBillActivity extends AppCompatActivity {
     private String[] brand;
     private String[] size;
     private int numItemsInbill;
+    private  int curBillRefId = -1;
 
     private  CustomListMakeBillList adapter;
     static ListView billItems;
+
+    boolean editBillFlag;
 
     public String insertQuerry = "INSERT INTO billData (refId,stockId) values (null, null);";
 
@@ -44,6 +47,8 @@ public class MakeBillActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_make_bill);
+
+        curBillRefId = MainActivity.billRefId;
 
         itemCount = 0;
         total = 0;
@@ -64,6 +69,88 @@ public class MakeBillActivity extends AppCompatActivity {
         price[numItemsInbill] = "PRICE";
         numItemsInbill++;
 
+        // get previous bill items if it is edit
+        Intent intent = getIntent();
+        final int billNo = intent.getIntExtra("billno", -1);
+        if(billNo == -1)
+        {
+            Log.d("JKS","CREATE NEW BILL");
+            editBillFlag = false;
+        }
+        else {
+            Log.d("JKS", "EDIT BILL");
+            editBillFlag = true;
+
+            int refId = 0;
+            String getRefIdQuerry = "SELECT refId FROM billTable WHERE billId="+billNo;
+            Cursor c = MainActivity.mdb.rawQuery(getRefIdQuerry, null);
+
+            if(c.getCount() == 1) {
+                c.moveToNext();
+                refId = c.getInt(0);
+            }
+
+            curBillRefId = refId;
+
+            String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+refId;
+            Cursor c2 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
+
+
+            if(c2.getCount() != 0) {
+                while(c2.moveToNext()){
+
+                    Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold,brand,size FROM stockData WHERE stockId='" + c2.getInt(0) + "'", null);
+
+                    if(c3.getCount() != 0) {
+                        while (c3.moveToNext()) {
+
+                            itemCode[numItemsInbill] = c3.getString(0);
+                            switch (c3.getInt(1)) {
+
+                                case 0: item[numItemsInbill] = "SHIRT";break;
+                                case 1: item[numItemsInbill] = "JEANS"; break;
+                                case 2:item[numItemsInbill] = "OTHERS"; break;
+                                case 3:item[numItemsInbill] = "PANTS"; break;
+                                case 4:item[numItemsInbill] = "T-SHIRT"; break;
+                                case 5: item[numItemsInbill] = "BELT"; break;
+                                case 6: item[numItemsInbill] = "INNER"; break;
+                                case 7: item[numItemsInbill] = "SHORTS"; break;
+                                case 8: item[numItemsInbill] = "WALLET"; break;
+                                case 9: item[numItemsInbill] = "OTHERS"; break;
+                                default:item[numItemsInbill] = "OTHERS";
+                            }
+
+                            price[numItemsInbill] = c3.getString(2);
+                            brand[numItemsInbill]= c3.getString(6);
+                            if(brand[numItemsInbill].length() <= 0)
+                            {
+                                brand[numItemsInbill] = "menz world";
+                            }
+                            switch (c3.getInt(7))
+                            {
+                                case 0:size[numItemsInbill] =  "SMALL";break;
+                                case 1: size[numItemsInbill] =  "MEDIUM";break;
+                                case 2: size[numItemsInbill] =  "LARGE";break;
+                                case 3: size[numItemsInbill] =  "X-LARGE";break;
+                                case 4: size[numItemsInbill] =  "XX-LARGE";break;
+                                case -1: size[numItemsInbill] = "N A" ; break;
+                                default: size[numItemsInbill] =  c3.getString(7);break;
+                            }
+                            numItemsInbill++;
+                            total += c3.getInt(2);
+                            TextView txt_total = (TextView) findViewById(R.id.txt_total);
+                            txt_total.setText("RS: " + total);
+                        }
+                    }
+
+
+                }
+            }
+
+
+        }
+
+
         adapter = new
                 CustomListMakeBillList(MakeBillActivity.this, itemCode, item, price,brand,size,numItemsInbill);
 
@@ -75,7 +162,61 @@ public class MakeBillActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
+                int stockId = -1;
+                if(position > numItemsInbill -1)
+                {
+                    return;
+                }
                 Log.d("JKS","Clicked on bill item position "+position + " item="+itemCode[position]+ " price="+price[position]+ " brand="+brand[position]+ " size="+size[position]);
+                int itemsSold_q = 0;
+                String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE serialNumber="+itemCode[position];
+                Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
+                if(c4.getCount() == 1) {
+                    c4.moveToNext();
+                    Log.d("JKS", "Items Sold = " + c4.getInt(0));
+                    itemsSold_q = c4.getInt(0);
+                }
+                String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q - 1)+" WHERE serialNumber="+itemCode[position];
+                Log.d("JKS","update Querry = "+updateQuerry);
+                MainActivity.mdb.execSQL(updateQuerry);
+
+                String getStockIdFromSerial = "SELECT stockId FROM stockData WHERE serialNumber="+itemCode[position];
+                Cursor getStockId = MainActivity.mdb.rawQuery(getStockIdFromSerial, null);
+                Log.d("JKS","Get "+getStockId.getCount());
+
+                if(getStockId.getCount() == 1) {
+                    getStockId.moveToNext();
+                    Log.d("JKS ", "stock id to be removed is " + getStockId.getInt(0));
+                    stockId = getStockId.getInt(0);
+                }
+
+                insertQuerry = " DELETE FROM billData  WHERE stockRefId ="+stockId;
+                MainActivity.mdb.execSQL(insertQuerry);
+                insertQuerry ="";
+                Log.d("JKS ","------Items in this bill----");
+                String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+ curBillRefId;
+                Log.d("JKS"," select querry = "+getStockIdQuerry);
+
+                Cursor stockRefId = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
+                Log.d("JKS","Get "+stockRefId.getCount());
+                while(stockRefId.moveToNext()) {
+                    Log.d("JKS ", "Items in this bill is " + stockRefId.getInt(0));
+                }
+                Log.d("JKS ","--------------------------");
+
+                numItemsInbill--;
+                for(int i = position; i < numItemsInbill - 1 ; i++)
+                {
+                    itemCode[i] =  itemCode[i + 1];
+                    item[i] = item[i + 1];
+                    brand[i]= brand[i + 1];
+                    size[i] = size[i + 1];
+                    price[i] = price[i + 1];
+                }
+                adapter.updateCount(numItemsInbill);
+                adapter.notifyDataSetChanged();
+                billItems.invalidateViews();
+                billItems.refreshDrawableState();
 
             }
         });
@@ -96,45 +237,51 @@ public class MakeBillActivity extends AppCompatActivity {
                     return;
                 }
 
-                int refId = MainActivity.billRefId;
+                int refId = curBillRefId;
                 int discount = Integer.parseInt(editDiscount.getText().toString());
                 String dateTime = AddItemActivity.getDateTime();
-                String billQuerry = "INSERT INTO billTable (refId,discount,billDate) values("+MainActivity.billRefId +","+discount+",'"+dateTime+"');";
-                Log.d("JKS", "Bill Query = " + billQuerry);
-                MainActivity.mdb.execSQL(billQuerry);
 
-                insertQuerry="";
-                billQuerry="";
-
-                Intent intent = new Intent(MakeBillActivity.this, BillActivity.class);
-
-                String getBillIdQuerry = "SELECT billId FROM billTable WHERE refId="+refId;
-                Log.d("JKS"," select querry = "+getBillIdQuerry);
-
-                Cursor c = MainActivity.mdb.rawQuery(getBillIdQuerry, null);
-                Log.d("JKS","Get "+c.getCount());
-
-                int billId = 0;
-                if(c.getCount() == 1) {
-                    c.moveToNext();
-                    Log.d("JKS ", "bill id is is " + c.getInt(0));
-                    billId = c.getInt(0);
+                if(editBillFlag == false) {
+                    String billQuerry = "INSERT INTO billTable (refId,discount,billDate) values(" + curBillRefId + "," + discount + ",'" + dateTime + "');";
+                    Log.d("JKS", "Bill Query = " + billQuerry);
+                    MainActivity.mdb.execSQL(billQuerry);
+                }
+                else
+                {
+                    String billQuerry = "UPDATE billTable set billDate='" + dateTime + "' WHERE billId="+billNo+";";
+                    Log.d("JKS", "Bill Query = " + billQuerry);
+                    MainActivity.mdb.execSQL(billQuerry);
                 }
 
-                String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+refId;
-                Log.d("JKS"," select querry = "+getStockIdQuerry);
+                insertQuerry="";
 
-                Cursor c2 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
-                Log.d("JKS","Get "+c2.getCount());
+                int billId = 0;
+                if(editBillFlag == false) {
+                    String getBillIdQuerry = "SELECT billId FROM billTable WHERE refId="+refId;
+                    Log.d("JKS"," select querry = "+getBillIdQuerry);
 
+                    Cursor c = MainActivity.mdb.rawQuery(getBillIdQuerry, null);
 
+                    if(c.getCount() == 1) {
+                        c.moveToNext();
+                        Log.d("JKS ", "bill id is is " + c.getInt(0));
+                        billId = c.getInt(0);
+                    }
+                }
+                else
+                {
+                    billId = billNo;
+                }
+
+                Intent intent = new Intent(MakeBillActivity.this, BillActivity.class);
                 intent.putExtra("billno", billId);
                 intent.putExtra("date",dateTime);
                 intent.putExtra("discount",discount);
                 startActivity(intent);
-                MainActivity.billRefId++;
+                if(editBillFlag == false) {
+                    MainActivity.billRefId++;
+                }
                 finish();
-
             }
         });
 
@@ -166,7 +313,7 @@ public class MakeBillActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+MainActivity.billRefId;
+                String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+curBillRefId;
                 Cursor c2 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
                 Log.d("JKS", "Get " + c2.getCount());
 
@@ -187,7 +334,7 @@ public class MakeBillActivity extends AppCompatActivity {
                     }
                 }
 
-                insertQuerry = " DELETE FROM billData  WHERE billrefId ="+MainActivity.billRefId;
+                insertQuerry = " DELETE FROM billData  WHERE billrefId ="+curBillRefId;
                 MainActivity.mdb.execSQL(insertQuerry);
                 insertQuerry ="";
 
@@ -216,8 +363,6 @@ public class MakeBillActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(txt_serial.getWindowToken(), 0);
 
 
-             //   TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
-            //    TableRow tr1 = new TableRow(ctx);
                 if (c3.getCount() != 0) {
 
 
@@ -236,10 +381,22 @@ public class MakeBillActivity extends AppCompatActivity {
 
                         itemCount++;
                         Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2)+" stockId ="+c3.getInt(3));
-                        insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+MainActivity.billRefId+","+c3.getInt(3)+");";
+                        insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+curBillRefId+","+c3.getInt(3)+");";
                         MainActivity.mdb.execSQL(insertQuerry);
                         Log.d("JKS", "Ins Query = " + insertQuerry);
                         insertQuerry ="";
+
+                        Log.d("JKS","-- inserting item to billData--");
+                        Log.d("JKS ","------Items in this bill----");
+                        String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId="+ curBillRefId;
+                        Log.d("JKS"," select querry = "+getStockIdQuerry);
+
+                        Cursor stockRefId = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
+                        Log.d("JKS","Get "+stockRefId.getCount());
+                        while(stockRefId.moveToNext()) {
+                            Log.d("JKS ", "Items in this bill is " + stockRefId.getInt(0));
+                        }
+                        Log.d("JKS ","--------------------------");
 
                         int itemsSold_q = 0;
                         String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c3.getInt(3);
@@ -253,31 +410,23 @@ public class MakeBillActivity extends AppCompatActivity {
                         Log.d("JKS","update Querry = "+updateQuerry);
                         MainActivity.mdb.execSQL(updateQuerry);
 
-                        TextView textview = new TextView(ctx);
-                        TextView textview2 = new TextView(ctx);
-                        TextView textview3 = new TextView(ctx);
-                        textview.setTextColor(Color.parseColor("#FFFFFF"));
-                        textview2.setTextColor(Color.parseColor("#FFFFFF"));
-                        textview3.setTextColor(Color.parseColor("#FFFFFF"));
-                        textview.setText(c3.getString(0));
 
                         itemCode[numItemsInbill] = c3.getString(0);
 
                         switch (c3.getInt(1)) {
-                            case 0:textview2.setText("SHIRT  "); item[numItemsInbill] = "SHIRT";break;
-                            case 1:textview2.setText("JEANS  "); item[numItemsInbill] = "JEANS"; break;
-                            case 2:textview2.setText("OTHERS "); item[numItemsInbill] = "OTHERS"; break;
-                            case 3:textview2.setText("PANTS  "); item[numItemsInbill] = "PANTS"; break;
-                            case 4:textview2.setText("T-SHIRT"); item[numItemsInbill] = "T-SHIRT"; break;
-                            case 5:textview2.setText("BELT   "); item[numItemsInbill] = "BELT"; break;
-                            case 6:textview2.setText("INNER  "); item[numItemsInbill] = "INNER"; break;
-                            case 7:textview2.setText("SHORTS "); item[numItemsInbill] = "SHORTS"; break;
-                            case 8:textview2.setText("WALLET "); item[numItemsInbill] = "WALLET"; break;
-                            case 9:textview2.setText("OTHERS "); item[numItemsInbill] = "OTHERS"; break;
-                            default:textview2.setText("OTHERS ");item[numItemsInbill] = "OTHERS";
+                            case 0: item[numItemsInbill] = "SHIRT";break;
+                            case 1: item[numItemsInbill] = "JEANS"; break;
+                            case 2: item[numItemsInbill] = "OTHERS"; break;
+                            case 3: item[numItemsInbill] = "PANTS"; break;
+                            case 4: item[numItemsInbill] = "T-SHIRT"; break;
+                            case 5: item[numItemsInbill] = "BELT"; break;
+                            case 6: item[numItemsInbill] = "INNER"; break;
+                            case 7: item[numItemsInbill] = "SHORTS"; break;
+                            case 8: item[numItemsInbill] = "WALLET"; break;
+                            case 9: item[numItemsInbill] = "OTHERS"; break;
+                            default:item[numItemsInbill] = "OTHERS";
                         }
 
-                        textview3.setText(c3.getString(2));
                         price[numItemsInbill] = c3.getString(2);
                         brand[numItemsInbill]= c3.getString(6);
                         if(brand[numItemsInbill].length() <= 0)
@@ -303,11 +452,6 @@ public class MakeBillActivity extends AppCompatActivity {
                         TextView txt_total = (TextView) findViewById(R.id.txt_total);
                         txt_total.setText("RS: " + total);
 
-
-              //          tr1.addView(textview);
-              //          tr1.addView(textview2);
-             //           tr1.addView(textview3);
-            //            tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                     }
                 }
                 txt_serial.setText("");
@@ -327,8 +471,6 @@ public class MakeBillActivity extends AppCompatActivity {
 
             Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,noOfItems,itemsSold FROM stockData WHERE barcodeId='" + scanContent + "'", null);
 
-      //      TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
-      //      TableRow tr1 = new TableRow(ctx);
             if (c3.getCount() != 0) {
 
                 while (c3.moveToNext()) {
@@ -343,7 +485,7 @@ public class MakeBillActivity extends AppCompatActivity {
 
                     itemCount++;
 
-                    insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+MainActivity.billRefId+","+c3.getInt(3)+");";
+                    insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+curBillRefId+","+c3.getInt(3)+");";
                     MainActivity.mdb.execSQL(insertQuerry);
 
                     insertQuerry ="";
@@ -412,10 +554,6 @@ public class MakeBillActivity extends AppCompatActivity {
                     txt_total.setText("RS: " + total);
 
 
-//                    tr1.addView(textview);
-  //                  tr1.addView(textview2);
-    //                tr1.addView(textview3);
-      //              tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                 }
             }
 

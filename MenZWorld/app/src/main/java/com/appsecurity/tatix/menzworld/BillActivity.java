@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 public class BillActivity extends AppCompatActivity {
 
+    int billNo = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,7 @@ public class BillActivity extends AppCompatActivity {
         int discount = 0;
 
         Intent intent = getIntent();
-        int billNo = intent.getIntExtra("billno", 0);
+        billNo = intent.getIntExtra("billno", 0);
         discount = intent.getIntExtra("discount",0);
 
         TextView txtBillNo = (TextView)findViewById(R.id.txt_billNo);
@@ -50,6 +51,19 @@ public class BillActivity extends AppCompatActivity {
                     }
                 });
 
+        Button btn_edit = (Button)findViewById(R.id.btn_edit_bill);
+        btn_edit.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(BillActivity.this, MakeBillActivity.class);
+                        intent.putExtra("billno", billNo);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
 
 
         int refId = 0;
@@ -71,20 +85,22 @@ public class BillActivity extends AppCompatActivity {
         if(c2.getCount() != 0) {
             while(c2.moveToNext()){
 
-                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId FROM stockData WHERE stockId='" + c2.getInt(0) + "'", null);
+                Cursor c3 = MainActivity.mdb.rawQuery("SELECT serialNumber,item,selling_price,stockId,brand,size FROM stockData WHERE stockId='" + c2.getInt(0) + "'", null);
 
                 if(c3.getCount() != 0) {
                     while (c3.moveToNext()) {
-
-
                         TableLayout tl = (TableLayout) findViewById(R.id.tbl_bill);
                         TableRow tr1 = new TableRow(BillActivity.this);
                         TextView textview = new TextView(BillActivity.this);
                         TextView textview2 = new TextView(BillActivity.this);
                         TextView textview3 = new TextView(BillActivity.this);
+                        TextView textview4 = new TextView(BillActivity.this);
+                        TextView textview5 = new TextView(BillActivity.this);
                         textview.setTextColor(Color.parseColor("#FFFFFF"));
                         textview2.setTextColor(Color.parseColor("#FFFFFF"));
                         textview3.setTextColor(Color.parseColor("#FFFFFF"));
+                        textview4.setTextColor(Color.parseColor("#FFFFFF"));
+                        textview5.setTextColor(Color.parseColor("#FFFFFF"));
                         textview.setText(c3.getString(0));
 
 
@@ -101,21 +117,27 @@ public class BillActivity extends AppCompatActivity {
                             case 9:textview2.setText("OTHERS  ");break;
                             default:textview2.setText("OTHERS  ");
                         }
-
+                        textview5.setText(c3.getString(5)+"  ");
+                        switch (c3.getInt(5))
+                        {
+                            case 0:   textview5.setText("SMALL    ");break;
+                            case 1:   textview5.setText("MEDIUM   ");break;
+                            case 2:   textview5.setText("LARGE    ");break;
+                            case 3:   textview5.setText("X-LARGE  ");break;
+                            case 4:   textview5.setText("XX-LARGE ");break;
+                            case -1: textview5.setText ("N A      ") ; break;
+                            default:  textview5.setText(c3.getString(5)+ "     ");break;
+                        }
                         textview3.setText(c3.getString(2));
+                        textview4.setText(c3.getString(4));
+
                         total += c3.getInt(2);
 
-                       /* if(textview.getParent()!=null)
-                            ((ViewGroup)textview.getParent()).removeView(textview);*/
-                        tr1.addView(textview);
-                        /*if(textview2.getParent()!=null)
-                            ((ViewGroup)textview2.getParent()).removeView(textview2);*/
+                        //tr1.addView(textview);
                         tr1.addView(textview2);
-                   /*     if(textview3.getParent()!=null)
-                            ((ViewGroup)textview3.getParent()).removeView(textview3);*/
+                        tr1.addView(textview4);
+                        tr1.addView(textview5);
                         tr1.addView(textview3);
-/*                        if(tr1.getParent()!=null)
-                            ((ViewGroup)tr1.getParent()).removeView(tr1);*/
                         tl.addView(tr1, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
                     }
                 }

@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:fillViewport="true"        >
+        android:fillViewport="true"
+        android:id="@+id/scrollView">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -82,13 +83,19 @@
             <TextView
 
                 android:gravity="left"
-                android:text="ITEM CODE"
+                android:text="ITEM "
                 android:textColor="#ffffff"
                 />
             <TextView
 
                 android:gravity="left"
-                android:text="ITEM "
+                android:text="BRAND "
+                android:textColor="#ffffff"
+                />
+            <TextView
+
+                android:gravity="left"
+                android:text="SIZE "
                 android:textColor="#ffffff"
                 />
 
@@ -111,63 +118,73 @@
         android:layout_height="wrap_content"
         android:text="Total"
         android:id="@+id/textView19"
+        android:textColor="#ffffff"
         android:layout_above="@+id/textView20"
-        android:layout_toEndOf="@+id/textView9"
-        android:layout_toRightOf="@+id/textView9"
-        android:textColor="#ffffff" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="discount"
         android:id="@+id/textView20"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="13dp"
+        android:textColor="#ffffff"
         android:layout_above="@+id/textView21"
-        android:layout_toEndOf="@+id/textView9"
-        android:layout_toRightOf="@+id/textView9"
-        android:textColor="#ffffff" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Grant TOTAL"
         android:id="@+id/textView21"
-        android:layout_alignBaseline="@+id/txt_bill_grant"
-        android:layout_alignBottom="@+id/txt_bill_grant"
-        android:layout_alignStart="@+id/textView19"
-        android:layout_alignLeft="@+id/textView19"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_above="@+id/btn_edit_bill"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/txt_bill_total"
+        android:textColor="#ffffff"
         android:layout_below="@+id/tbl_bill"
-        android:layout_alignStart="@+id/txt_bill_discount"
         android:layout_alignLeft="@+id/txt_bill_discount"
-        android:textColor="#ffffff" />
+        android:layout_alignStart="@+id/txt_bill_discount" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/txt_bill_discount"
+        android:textColor="#ffffff"
         android:layout_below="@+id/txt_bill_total"
-        android:layout_alignStart="@+id/txt_bill_grant"
-        android:layout_alignLeft="@+id/txt_bill_grant"
-        android:textColor="#ffffff" />
+        android:layout_alignLeft="@+id/txt_dateB"
+        android:layout_alignStart="@+id/txt_dateB" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="0"
         android:id="@+id/txt_bill_grant"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/txt_dateB"
-        android:layout_alignRight="@+id/txt_dateB"
-        android:layout_marginBottom="37dp"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_below="@+id/textView20"
+        android:layout_alignLeft="@+id/txt_bill_discount"
+        android:layout_alignStart="@+id/txt_bill_discount" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDIT BILL"
+                android:id="@+id/btn_edit_bill"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+    </ScrollView>
 
     <Button
         android:layout_width="wrap_content"
@@ -175,8 +192,6 @@
         android:text="OK"
         android:id="@+id/btn_ok_bill"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-    </ScrollView>
+        android:layout_alignRight="@+id/scrollView"
+        android:layout_alignEnd="@+id/scrollView" />
 </RelativeLayout>
