@@ -1,12 +1,17 @@
 package com.appsecurity.tatix.menzworld;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,7 +34,7 @@ public class BackUpRestore extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_back_up_restore);
 
-
+        isStoragePermissionGranted();
 
         Button btn_bkup = (Button)findViewById(R.id.btn_bkup);
         btn_bkup.setOnClickListener(new View.OnClickListener() {
@@ -41,16 +46,19 @@ public class BackUpRestore extends AppCompatActivity {
                     SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy_HHmmss");
                     String currentDateandTime = sdf.format(new Date());
 
-                    String outFileName = "/storage/emulated/0/MenzWorldBkup/menZWorldDBbkup"+currentDateandTime+
+                    String outFileName = Environment.getExternalStorageDirectory()+"/MenzWorldBkup/menZWorldDBbkup"+currentDateandTime+
                             ".db";
 
 
 
-                    File file = new File("/storage/emulated/0/MenzWorldBkup");
+                    File file = new File(Environment.getExternalStorageDirectory()+"/MenzWorldBkup");
+                    Log.d("JKS","Directory path is "+Environment.getExternalStorageDirectory()+"/MenzWorldBkup");
+                    Log.d("JKS","outFile name is "+outFileName);
                     if (!file.exists()) {
                         if (!file.mkdirs()) {
                             Log.d("JKS","Nake directory failed");
                         }
+
 
                     }
                     // Open the empty db as the output stream
@@ -148,6 +156,27 @@ public class BackUpRestore extends AppCompatActivity {
 
             }
         });
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("JKS","Permission is granted");
+                return true;
+            } else {
+
+                Log.v("JKS","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("JKS","Permission is granted");
+            return true;
+        }
+
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
