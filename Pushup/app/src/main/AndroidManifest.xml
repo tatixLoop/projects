@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.sony.pushup">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/logo1"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".welcome"/>
+
+            <activity
+                android:name=".Navigatormain"
+                android:label="@string/title_activity_navigatormain"
+                android:theme="@style/AppTheme.NoActionBar" >
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>/>
+
+
+        </activity>
+        <activity android:name=".Home" />
+        <activity android:name=".StandardPushup" />
+
+        <activity android:name=".ShoulderTap" />
+        <activity android:name=".Tpushup" />
+        <activity android:name=".TightTap" />
+        <activity android:name=".SingleHandRaised" />
+        <activity android:name=".SingleLegRaised" />
+        <activity android:name=".StaggeredPushup" />
+        <activity android:name=".SlowToKnee" />
+        <activity android:name=".SpiderManPushup" />
+        <activity android:name=".PseudoPlaincheePushup" />
+        <activity android:name=".OutsideLegKick" />
+        <activity android:name=".WidePushup" />
+        <activity android:name=".TigerPushup" />
+        <activity android:name=".PikePushup" />
+        <activity android:name=".SideRollPushup" />
+        <activity android:name=".YogaPushup" />
+        <activity android:name=".SliderPushup" />
+        <activity android:name=".SuperManPushup" />
+    </application>
+
+</manifest>
