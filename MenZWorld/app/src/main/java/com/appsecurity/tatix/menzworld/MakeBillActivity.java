@@ -183,20 +183,6 @@ public class MakeBillActivity extends AppCompatActivity {
                 }
                 Log.d("JKS", "Clicked on bill item position " + position + " item=" + itemCode[position] + " price=" + price[position] + " brand=" + brand[position] + " size=" + size[position]);
 
-
-                if (editBillFlag == true) {
-                    int itemsSold_q = 0;
-                    String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE serialNumber=" + itemCode[position];
-                    Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                    if (c4.getCount() == 1) {
-                        c4.moveToNext();
-                        Log.d("JKS", "Items Sold = " + c4.getInt(0));
-                        itemsSold_q = c4.getInt(0);
-                    }
-                    String updateQuerry = "UPDATE stockData SET itemsSold = " + (itemsSold_q - 1) + " WHERE serialNumber=" + itemCode[position];
-                    Log.d("JKS", "update Querry = " + updateQuerry);
-                    MainActivity.mdb.execSQL(updateQuerry);
-                }
                 String getStockIdFromSerial = "SELECT stockId FROM stockData WHERE serialNumber=" + itemCode[position];
                 Cursor getStockId = MainActivity.mdb.rawQuery(getStockIdFromSerial, null);
                 Log.d("JKS", "Get " + getStockId.getCount());
@@ -209,27 +195,6 @@ public class MakeBillActivity extends AppCompatActivity {
 
                 removedSlNo[removedIndex++] = stockId;
 
-
-                if (editBillFlag == true)
-                {
-                    String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE stockRefId=" + stockId;
-                    Log.d("JKS", " select querry = " + getStockIdQuerry);
-
-                    Cursor stockRefId = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
-                    Log.d("JKS", "Get " + stockRefId.getCount());
-                    int count_refId = stockRefId.getCount();
-
-                    insertQuerry = " DELETE FROM billData  WHERE stockRefId =" + stockId + " AND billrefId="+curBillRefId;
-                    MainActivity.mdb.execSQL(insertQuerry);
-                    insertQuerry = "";
-
-                    if (count_refId > 1) {
-                        for (int i = 0; i < count_refId - 1; i++) {
-                            insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values (" + curBillRefId + "," + stockId + ");";
-                            MainActivity.mdb.execSQL(insertQuerry);
-                        }
-                    }
-                }
                 numItemsInbill--;
                 itemCount--;
                 for(int i = position; i < numItemsInbill - 1 ; i++)
@@ -271,16 +236,52 @@ public class MakeBillActivity extends AppCompatActivity {
                 if(newItemIndex == 0 && removedIndex != 0)
                 {
                     Log.d("JKS ", "No items added only items removed");
+                    for(int j = 0; j < removedIndex; j++)
+                    {
+                        //update stockData table; reduce by one
+                        Log.d("JKS ", "REMOVING "+removedSlNo[j]);
+                        if (editBillFlag == true) {
+                            Log.d("JKS ", "REMOVING1 "+removedSlNo[j]);
+                            int itemsSold_q = 0;
+                            String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId=" + removedSlNo[j];
+                            Log.d("JKS ", "itemSoldQuerry= "+itemSoldQuerry);
+                            Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
+                            if (c4.getCount() == 1) {
+                                c4.moveToNext();
+                                Log.d("JKS", "Items Sold = " + c4.getInt(0));
+                                itemsSold_q = c4.getInt(0);
+                            }
+                            String updateQuerry = "UPDATE stockData SET itemsSold = " + (itemsSold_q - 1) + " WHERE stockId=" + removedSlNo[j];
+                            Log.d("JKS", "update Querry = " + updateQuerry);
+                            MainActivity.mdb.execSQL(updateQuerry);
+                        }
+                        if (editBillFlag == true)
+                        {
+                            Log.d("JKS ", "REMOVING 2"+removedSlNo[j]);
+                            String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE stockRefId=" + removedSlNo[j];
+                            Log.d("JKS", " select querry = " + getStockIdQuerry);
+
+                            insertQuerry = " DELETE FROM billData  WHERE stockRefId =" + removedSlNo[j] + " AND billrefId="+curBillRefId;
+                            MainActivity.mdb.execSQL(insertQuerry);
+                            insertQuerry = "";
+
+                        }
+                    }
                 }
 
                 for(int i = 0 ; i <newItemIndex; i++)
                 {
                     boolean removed = false;
-                    for(int j = 0; j <removedIndex; j++)
+                    for(int j = 0; j < removedIndex; j++)
                     {
                         if(newItem[i] == removedSlNo[j])
                         {
                             removed = true;
+                            for(int k =j; k <removedIndex - j -1; k++)
+                            {
+                                removedSlNo[k] = removedSlNo[k+1];
+                            }
+                            removedIndex--;
                             break;
                         }
                     }
@@ -302,30 +303,34 @@ public class MakeBillActivity extends AppCompatActivity {
                         Log.d("JKS","update Querry = "+updateQuerry);
                         MainActivity.mdb.execSQL(updateQuerry);
                     }
-                }
-
-
-                        /*
-                        Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2)+" stockId ="+c3.getInt(3));
-                        insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+curBillRefId+","+c3.getInt(3)+");";
-                        MainActivity.mdb.execSQL(insertQuerry);
-                        Log.d("JKS", "Ins Query = " + insertQuerry);
-                        insertQuerry ="";
-
-
-                        int itemsSold_q = 0;
-                        String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c3.getInt(3);
-                        Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                        if(c4.getCount() == 1) {
-                            c4.moveToNext();
-                            Log.d("JKS", "Items Sold = " + c4.getInt(0));
-                            itemsSold_q = c4.getInt(0);
+                    else
+                    {
+                        //update stockData table; reduce by one
+                        if (editBillFlag == true) {
+                            int itemsSold_q = 0;
+                            String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId=" + newItem[i];
+                            Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
+                            if (c4.getCount() == 1) {
+                                c4.moveToNext();
+                                Log.d("JKS", "Items Sold = " + c4.getInt(0));
+                                itemsSold_q = c4.getInt(0);
+                            }
+                            String updateQuerry = "UPDATE stockData SET itemsSold = " + (itemsSold_q - 1) + " WHERE stockId=" + newItem[i];
+                            Log.d("JKS", "update Querry = " + updateQuerry);
+                            MainActivity.mdb.execSQL(updateQuerry);
                         }
-                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q + 1)+" WHERE stockId="+c3.getInt(3);
-                        Log.d("JKS","update Querry = "+updateQuerry);
-                        MainActivity.mdb.execSQL(updateQuerry);
+                        if (editBillFlag == true)
+                        {
+                            String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE stockRefId=" + newItem[i];
+                            Log.d("JKS", " select querry = " + getStockIdQuerry);
 
-*/
+                            insertQuerry = " DELETE FROM billData  WHERE stockRefId =" + newItem[i] + " AND billrefId="+curBillRefId;
+                            MainActivity.mdb.execSQL(insertQuerry);
+                            insertQuerry = "";
+
+                        }
+                    }
+                }
 
 
                 if(editBillFlag == false) {
@@ -443,33 +448,7 @@ public class MakeBillActivity extends AppCompatActivity {
                         }
 
                         itemCount++;
-                        {
-                            newItem[newItemIndex++] = c3.getInt(3);
-                        }
-
-
-                        /*
-                        Log.d("JKS", "slNum = " + c3.getString(0) + " item = " + c3.getInt(1) + " price = " + c3.getInt(2)+" stockId ="+c3.getInt(3));
-                        insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+curBillRefId+","+c3.getInt(3)+");";
-                        MainActivity.mdb.execSQL(insertQuerry);
-                        Log.d("JKS", "Ins Query = " + insertQuerry);
-                        insertQuerry ="";
-
-
-                        int itemsSold_q = 0;
-                        String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c3.getInt(3);
-                        Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                        if(c4.getCount() == 1) {
-                            c4.moveToNext();
-                            Log.d("JKS", "Items Sold = " + c4.getInt(0));
-                            itemsSold_q = c4.getInt(0);
-                        }
-                        String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q + 1)+" WHERE stockId="+c3.getInt(3);
-                        Log.d("JKS","update Querry = "+updateQuerry);
-                        MainActivity.mdb.execSQL(updateQuerry);
-
-*/
-
+                        newItem[newItemIndex++] = c3.getInt(3);
                         itemCode[numItemsInbill] = c3.getString(0);
 
                         switch (c3.getInt(1)) {
@@ -510,7 +489,6 @@ public class MakeBillActivity extends AppCompatActivity {
                         total += c3.getInt(2);
                         TextView txt_total = (TextView) findViewById(R.id.txt_total);
                         txt_total.setText("RS: " + total);
-
                     }
                 }
                 txt_serial.setText("");
@@ -544,26 +522,6 @@ public class MakeBillActivity extends AppCompatActivity {
 
                     itemCount++;
                     newItem[newItemIndex++] = c3.getInt(3);
-
-                    /*
-                    insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values ("+curBillRefId+","+c3.getInt(3)+");";
-                    MainActivity.mdb.execSQL(insertQuerry);
-
-                    insertQuerry ="";
-
-                    int itemsSold_q = 0;
-                    String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId="+c3.getInt(3);
-                    Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                    if(c4.getCount() == 1) {
-                        c4.moveToNext();
-
-                        itemsSold_q = c4.getInt(0);
-                    }
-                    String updateQuerry = "UPDATE stockData SET itemsSold = "+(itemsSold_q + 1)+" WHERE stockId="+c3.getInt(3);
-
-                    MainActivity.mdb.execSQL(updateQuerry);
-*/
-
                     itemCode[numItemsInbill] = c3.getString(0);
 
                     switch (c3.getInt(1)) {
@@ -615,103 +573,5 @@ public class MakeBillActivity extends AppCompatActivity {
         }else{
           Log.d("JKS","ERRROR in reading barcode");
         }
-    }
-    public void cancel_DatasRecorded()
-    {
-
-
-        if(editBillFlag == false) {
-            String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE billrefId=" + curBillRefId;
-            Cursor c2 = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
-            Log.d("JKS", "Get " + c2.getCount());
-
-
-            if (c2.getCount() != 0) {
-                while (c2.moveToNext()) {
-                    int itemsSold_q = 0;
-                    String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId=" + c2.getInt(0);
-                    Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                    if (c4.getCount() == 1) {
-                        c4.moveToNext();
-                        Log.d("JKS", "Items Sold = " + c4.getInt(0));
-                        itemsSold_q = c4.getInt(0);
-                    }
-                    String updateQuerry = "UPDATE stockData SET itemsSold = " + (itemsSold_q - 1) + " WHERE stockId=" + c2.getInt(0);
-                    Log.d("JKS", "update Querry = " + updateQuerry);
-                    MainActivity.mdb.execSQL(updateQuerry);
-                }
-            }
-
-            insertQuerry = " DELETE FROM billData  WHERE billrefId =" + curBillRefId;
-            MainActivity.mdb.execSQL(insertQuerry);
-            insertQuerry = "";
-        }
-        else
-        {
-            Log.d("JKS","Cancel operation in edit bill");
-
-            if(removedIndex > 0)
-            {
-
-                for(int i = 0; i<removedIndex; i++) {
-
-                    int itemsSold_q = 0;
-                    String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId=" +  removedSlNo[i];
-                    Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                    if (c4.getCount() == 1) {
-                        c4.moveToNext();
-                        Log.d("JKS", "Items Sold = " + c4.getInt(0));
-                        itemsSold_q = c4.getInt(0);
-                    }
-                    String updateQuerry = "UPDATE stockData SET itemsSold = " + (itemsSold_q + 1) + " WHERE stockId=" +  removedSlNo[i];
-                    Log.d("JKS", "update Querry = " + updateQuerry);
-                    MainActivity.mdb.execSQL(updateQuerry);
-
-                    insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values (" + curBillRefId + "," + removedSlNo[i] + ");";
-                    MainActivity.mdb.execSQL(insertQuerry);
-                    insertQuerry = "";
-                    // update stockid also
-                }
-            }
-            if(newItemIndex > 0)
-            {
-                for(int i = 0; i<newItemIndex; i++) {
-                    int itemsSold_q = 0;
-                    String itemSoldQuerry = "SELECT itemsSold FROM stockData WHERE stockId=" + newItem[i];
-                    Cursor c4 = MainActivity.mdb.rawQuery(itemSoldQuerry, null);
-                    if (c4.getCount() == 1) {
-                        c4.moveToNext();
-                        Log.d("JKS", "Items Sold = " + c4.getInt(0));
-                        itemsSold_q = c4.getInt(0);
-                    }
-                    String updateQuerry = "UPDATE stockData SET itemsSold = " + (itemsSold_q - 1) + " WHERE stockId=" + newItem[i];
-                    Log.d("JKS", "update Querry = " + updateQuerry);
-                    MainActivity.mdb.execSQL(updateQuerry);
-
-
-                    String getStockIdQuerry = "SELECT stockRefId FROM billData WHERE stockRefId="+  newItem[i];
-                    Log.d("JKS"," select querry = "+getStockIdQuerry);
-
-                    Cursor stockRefId = MainActivity.mdb.rawQuery(getStockIdQuerry, null);
-                    Log.d("JKS","Get "+stockRefId.getCount());
-                    int count_refId = stockRefId.getCount();
-
-                    insertQuerry = " DELETE FROM billData  WHERE stockRefId ="+ newItem[i];
-                    MainActivity.mdb.execSQL(insertQuerry);
-                    insertQuerry ="";
-
-                    if(count_refId > 1)
-                    {
-                        for(i = 0; i <count_refId -1 ; i++) {
-                            insertQuerry = " INSERT INTO billData (billrefId,stockRefId) values (" + curBillRefId + "," +  newItem[i] + ");";
-                            MainActivity.mdb.execSQL(insertQuerry);
-                        }
-                    }
-                    insertQuerry = "";
-                    // update stockid also
-                }
-            }
-        }
-
     }
 }
