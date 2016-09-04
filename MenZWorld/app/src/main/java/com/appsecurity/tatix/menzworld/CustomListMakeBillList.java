@@ -19,11 +19,11 @@ public class CustomListMakeBillList  extends ArrayAdapter<String> {
     private int maxItem;
 
 
-    private final String[] itemCode;
-    private final String[] item;
-    private final String[] price;
-    private final String[] brand;
-    private final String[] size;
+    private  String[] itemCode;
+    private  String[] item;
+    private  String[] price;
+    private  String[] brand;
+    private  String[] size;
 
 
     public CustomListMakeBillList(Activity context,
@@ -75,11 +75,22 @@ public class CustomListMakeBillList  extends ArrayAdapter<String> {
 
         return rowView;
     }
+
+    void updateAll(String[] itemCode,
+                   String[] item,
+                   String[] price,
+                   String[] brand,
+                   String[] size,
+                   int noOfItem) {
+        this.itemCode = itemCode;
+        this.item = item;
+        this.price = price;
+        this.brand = brand;
+        this.size = size;
+        this.maxItem = noOfItem;
+    }
     void updateCount(int count) {
-        for(int i= 0 ; i <count;i++)
-        {
-            Log.d("JKS","ITEMS IN ARRAY itemcode="+itemCode[i] +" item="+item[i] + " price="+price[i]);
-        }
+
         this.maxItem = count;
     }
 }
