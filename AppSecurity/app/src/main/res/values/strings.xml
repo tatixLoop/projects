@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">App Security</string>
-    <string name="title_activity_app_lisinting">Tatix App Seurity</string>
-
-    <string name="accessibility_service_label">Tatix App Security</string>
-    <string name="accessibility_service_desc">This is a service for the Tatix App Security. Right now this is in development phase. We will add more info here later</string>
-    <string name="title_activity_lock_selection">Tatix App Seurit</string>
-
-</resources>
