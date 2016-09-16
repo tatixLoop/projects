@@ -30,7 +30,7 @@ public class PushupList extends AppCompatActivity implements AdapterView.OnItemC
         setContentView(R.layout.activity_pushup_list);
         lv_pushup = (ListView) findViewById(R.id.lv_excersises);
         list1 = new ArrayList<>();
-        String sel = "select * from tb_pushupdetails";
+        String sel = "select excersisename from tb_pushupdetails";
         db = new Databasepushup(this);
         db.openConnection();
 

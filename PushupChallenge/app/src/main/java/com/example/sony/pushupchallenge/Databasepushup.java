@@ -47,7 +47,7 @@ public class Databasepushup extends SQLiteOpenHelper {
         db.execSQL(qury2);
 
 
-        String qury3 = "create table tb_pushupdetails(Pushup_id INTEGER PRIMARY KEY  , Name VARCHAR(500) ,Description VARCHAR(500)  ,Imageid INTEGER  ,locked INTEGER ,Badge INTEGER  ,Targetnopushup INTEGER )";
+        String qury3 = "create table tb_pushupdetails(Pushup_id INTEGER PRIMARY KEY  , excersisename VARCHAR(500) ,Description VARCHAR(500)  ,Imageid INTEGER  ,locked INTEGER ,Badge INTEGER  ,Targetnopushup INTEGER )";
         db.execSQL(qury3);
 
 
