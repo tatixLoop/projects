@@ -31,8 +31,8 @@ public class Adapterpushuplist extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
-    }
+        return list1.size();
+    }  /// define the string  size else nothing is dsplayed
 
     @Override
     public Object getItem(int position) {
