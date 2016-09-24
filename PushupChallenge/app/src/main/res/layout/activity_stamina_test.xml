@@ -16,15 +16,65 @@
         android:text="Take Stamina Test"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_chllengecount_test"
+        android:text="Take maximum pushups by keeping the phone below your chest on the bench/floor. We need to check your stamina for good resuls. Click Start test button when you are ready"
+        android:paddingTop="20sp"
+        android:textAlignment="center"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/time_test"
+        android:text="test time"
+        android:textSize="25sp"
+        android:paddingTop="40sp"
+        android:paddingBottom="25dp"
+        android:layout_below="@+id/tv_chllengecount_test"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="result"
+        android:paddingTop="20sp"
+        android:id="@+id/staminaTestResult"
+        android:layout_marginBottom="43dp"
+        android:layout_below="@+id/btn_startTest"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Again"
+        android:id="@+id/btn_testAgain"
+        android:layout_marginBottom="44dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEST BUTTON TO TAKE STATMINA TEST"
-        android:id="@+id/btn_statinaTest"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="OK"
+        android:id="@+id/btn_test_ok"
+        android:layout_alignBottom="@+id/btn_testAgain"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Test"
+        android:id="@+id/btn_startTest"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/time_test"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

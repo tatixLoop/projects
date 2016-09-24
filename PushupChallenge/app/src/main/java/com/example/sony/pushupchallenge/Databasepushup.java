@@ -38,7 +38,7 @@ public class Databasepushup extends SQLiteOpenHelper {
 
 
 
-        String qury = "create table tb_staminatest(Testno INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date VARCHAR(500) NOT NULL , pushupno INTEGER NOT NULL ,Timetaken INTEGER NOT NULL ,Score INTEGER NOT NULL)";
+        String qury = "create table tb_staminatest(Testno INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, numPushUp INTEGER NOT NULL ,Timetaken INTEGER NOT NULL )";
         db.execSQL(qury);
 
         String qury1 = "create table tb_userdata(Userid INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(30) NOT NULL , height INTEGER NOT NULL ,weight INTEGER NOT NULL ,Score INTEGER NOT NULL)";

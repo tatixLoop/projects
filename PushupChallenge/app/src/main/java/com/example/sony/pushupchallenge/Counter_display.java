@@ -65,7 +65,7 @@ public class Counter_display extends AppCompatActivity implements TextToSpeech.O
 
     }
 
-//*************** STOP WATCH *************
+//*************** STOP WATCH ****super*********
 public Runnable updateTimer = new Runnable() {
     public void run() {
         timeInMilliseconds = SystemClock.uptimeMillis() - starttime;
