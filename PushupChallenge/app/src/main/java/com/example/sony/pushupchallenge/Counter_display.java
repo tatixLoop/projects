@@ -54,8 +54,8 @@ public class Counter_display extends AppCompatActivity implements TextToSpeech.O
             //******** BACK KEY PRESSED********
             @Override
             public void onBackPressed() {
-                Intent i = new Intent(getApplicationContext(),PushupList.class);
-                startActivity(i);
+               // Intent i = new Intent(getApplicationContext(),PushupList.class);
+               // startActivity(i);
               //  overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                 //setContentView(R.layout.activity_counter_display);
               //  super.finish();
