@@ -33,13 +33,14 @@ public class PushupList extends AppCompatActivity implements AdapterView.OnItemC
 
         db = new Databasepushup(this);
         db.openConnection();
+        getpushuplist();
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        getpushuplist();
+
     }
 
 

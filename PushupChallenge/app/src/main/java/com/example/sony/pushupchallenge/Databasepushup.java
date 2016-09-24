@@ -77,10 +77,12 @@ public class Databasepushup extends SQLiteOpenHelper {
 
 // description inserion .... only first five excersise  detais is correct
 
-        String[] s1={"Place your hands firmly on the ground, directly under shoulders. Ground your toes into the floor. Tighten your abs and flatten your back so your entire body is neutral and straight.","Keep your back flat.\n" +
-                "Inhale as you begin to lower your body until your chest touches the floor. \n" +
-                "Your body should remain in a straight line from head to toe. \n","Keep your core engaged.\n" +
-                "Exhale as you push back to the starting position. \n"},s2={"Lower yourself till nearly touching the ground.\n" +
+        String[] s1={"Place your hands firmly on the ground, directly under shoulders.: Ground your toes into the floor.: Tighten your abs and flatten your back so your entire body is neutral and straight.:","Keep your back flat.:\n" +
+                "Inhale as you begin to lower your body until your chest touches the floor.: \n" +
+                "Your body should remain in a straight line from head to toe.: \n","Keep your core engaged.:\n" +
+                "Exhale as you push back to the starting position.: \n"};
+
+        String[] s2={"Lower yourself till nearly touching the ground.\n" +
                 " Push yourself up till back to starting position and tap your left hand back with Right hand.then bring it back to starting position.\n"," Lower yourself till nearly touching the ground again.\n" +
                 " Push yourself up till back to starting position and tap your right hand back with Left hand, then bring it back to starting position. \n" +
                 " Inhale when going up, exhale when going down.\n"},s3={" Lower yourself till nearly touching the ground.\n" +
@@ -171,21 +173,21 @@ public class Databasepushup extends SQLiteOpenHelper {
         int[] img2={R.mipmap.download, R.mipmap.pic, R.mipmap.popo,R.mipmap.pushup};
 
         for(int i=0;i<img2.length;i++){
-            String des4="insert into tb_pushupimages(Pushup_id,image)values('3','"+img2[i]+"')";
+            String des4="insert into tb_pushupimages(Pushup_id,image)values('2','"+img2[i]+"')";
             db.execSQL(des4);
         }
         for(int i=0;i<s3.length;i++){
-            String des5="insert into tb_description(Pushup_id,steps)values('4','"+s3[i]+"')";
+            String des5="insert into tb_description(Pushup_id,steps)values('3','"+s3[i]+"')";
             db.execSQL(des5);
         }
         int[] img3={R.mipmap.download, R.mipmap.pic, R.mipmap.popo,R.mipmap.pushup};
 
         for(int i=0;i<img3.length;i++){
-            String des6="insert into tb_pushupimages(Pushup_id,image)values('4','"+img3[i]+"')";
+            String des6="insert into tb_pushupimages(Pushup_id,image)values('3','"+img3[i]+"')";
             db.execSQL(des6);
         }
         for(int i=0;i<s4.length;i++){
-            String des7="insert into tb_description(Pushup_id,steps)values('5','"+s4[i]+"')";
+            String des7="insert into tb_description(Pushup_id,steps)values('4','"+s4[i]+"')";
             db.execSQL(des7);
         }
         int[] img4={R.mipmap.download, R.mipmap.pic, R.mipmap.popo,R.mipmap.pushup};

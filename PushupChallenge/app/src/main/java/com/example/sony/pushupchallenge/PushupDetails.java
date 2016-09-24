@@ -1,6 +1,7 @@
 package com.example.sony.pushupchallenge;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -13,20 +14,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class PushupDetails extends FragmentActivity {
-Button bt_challenge;
+    Button bt_challenge;
+    TextView tv_des;
 
-    int[] imgs1={R.mipmap.popo, R.mipmap.download, R.mipmap.pic, R.mipmap.pushup};
+    int[] imgs1;
+    String fid="";
+    //={R.mipmap.popo, R.mipmap.download, R.mipmap.pic, R.mipmap.pushup};
     ViewPager mViewPager;
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
+    Databasepushup db;
+    String des="";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pushup_details);
-bt_challenge= (Button) findViewById(R.id.btn_challenge);
+        bt_challenge= (Button) findViewById(R.id.btn_challenge);
+        tv_des= (TextView) findViewById(R.id.tv_des);
+        db = new Databasepushup(this);
+        db.openConnection();
+
+         fid = getIntent().getStringExtra("fid");
+
+        getImages();
+        getDescription();
         bt_challenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +70,48 @@ bt_challenge= (Button) findViewById(R.id.btn_challenge);
 
     }
 
+    private  void getImages() {
+        int i=0;
+        String sel = "select image from tb_pushupimages where Pushup_id='" + fid + "'";
+        Cursor c = db.selectData(sel);
+
+        if (c != null) {
+            int r=c.getCount();//to find no fo rows in cursor
+            imgs1=new int[r];
+            while (c.moveToNext()) {
+                imgs1[i]=c.getInt(0);
+                i++;
+
+            }
+
+
+        }
+
+    }
+
+
+    private void getDescription()
+    {
+
+        String se="select Steps from tb_description where Pushup_id= '"+fid+"'";
+        Cursor c=db.selectData(se);
+        int i=1;
+        if (c != null) {
+            while(c.moveToNext()) {
+                String s1 = c.getString(0);
+                des=des+"Step "+i+":\n";//+s1+"\n";
+                String[] s2= s1.split(".:");
+                for(int j=0;j<s2.length;j++){
+                    des=des+s2[j]+".\n";
+                }
+                i++;
+            }
+            tv_des.setText(des);
+
+        }
+
+    }
+
     public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
         public DemoCollectionPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -74,7 +131,7 @@ bt_challenge= (Button) findViewById(R.id.btn_challenge);
 
         @Override
         public int getCount() {
-            return 4;
+            return imgs1.length;
         }
 
         @Override

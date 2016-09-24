@@ -61,7 +61,7 @@ public class Adapterpushuplist extends BaseAdapter {
             viewHolder=(ViewHolder)convertView.getTag();
         }
 
-        viewHolder.img.setImageResource(R.mipmap.ic_launcher);
+        viewHolder.img.setImageResource(list1.get(position).getImg());
         viewHolder.tv1.setText(list1.get(position).getName());
         return convertView;
     }
