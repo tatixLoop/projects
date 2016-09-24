@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,10 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity android:name=".PushupList" />
+
         <activity android:name=".PushupDetails" />
         <activity android:name=".TestPushup" />
-        <activity android:name=".PushupChallenger"></activity>
+        <activity android:name=".PushupChallenger">
+
+        </activity>
     </application>
 
 </manifest>

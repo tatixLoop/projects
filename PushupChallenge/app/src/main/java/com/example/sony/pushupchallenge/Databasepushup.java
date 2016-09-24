@@ -36,141 +36,166 @@ public class Databasepushup extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String qury = "create table staminatest(Testno INTEGER PRIMARY KEY NOT NULL, Data VARCHAR(500) NOT NULL , pushupno INTEGER NOT NULL ,Timetaken INTEGER NOT NULL ,Score INTEGER NOT NULL)";
+
+
+        String qury = "create table tb_staminatest(Testno INTEGER PRIMARY KEY NOT NULL, Data VARCHAR(500) NOT NULL , pushupno INTEGER NOT NULL ,Timetaken INTEGER NOT NULL ,Score INTEGER NOT NULL)";
         db.execSQL(qury);
 
-        String qury1 = "create table userdata(Userid INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(30) NOT NULL , height INTEGER NOT NULL ,weight INTEGER NOT NULL ,Score INTEGER NOT NULL)";
+        String qury1 = "create table tb_userdata(Userid INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(30) NOT NULL , height INTEGER NOT NULL ,weight INTEGER NOT NULL ,Score INTEGER NOT NULL)";
         db.execSQL(qury1);
 
 
-        String qury2 = "create table pushupdata(Data_id INTEGER PRIMARY KEY AUTOINCREMENT ,Pushup_id INTEGER NOT NULL , Data VARCHAR(500) NOT NULL ,Attemptno VARCHAR(30) NOT NULL ,Numpushup INTEGER NOT NULL,Timetaken INTEGER NOT NULL,Score INTEGER NOT NULL,Badge INTEGER NOT NULL )";
+        String qury2 = "create table tb_pushupdata(Data_id INTEGER PRIMARY KEY AUTOINCREMENT ,Pushup_id INTEGER NOT NULL , Data VARCHAR(500) NOT NULL ,Attemptno VARCHAR(30) NOT NULL ,Numpushup INTEGER NOT NULL,Timetaken INTEGER NOT NULL,Score INTEGER NOT NULL,Badge INTEGER NOT NULL )";
         db.execSQL(qury2);
 
 
-        String qury3 = "create table tb_pushupdetails(Pushup_id INTEGER PRIMARY KEY  , excersisename VARCHAR(500) ,Description VARCHAR(500)  ,Imageid INTEGER  ,locked INTEGER ,Badge INTEGER  ,Targetnopushup INTEGER )";
+        String qury3 = "create table tb_pushupdetails(Pushup_id INTEGER PRIMARY KEY AUTOINCREMENT , excersisename VARCHAR(500),images VARCHAR(100)  )";
         db.execSQL(qury3);
 
 
-        String qury4 = "create table pushupsteps(Pushup_id INTEGER PRIMARY KEY NOT NULL, Step1 VARCHAR(500) NOT NULL , Step2 VARCHAR(500) NOT NULL ,STEP3 VARCHAR(500),STEP4 VRCHAR(500) )";
+        String qury4 = "create table tb_description( Description_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,Pushup_id INTEGER , Steps VARCHAR(100) )";
         db.execSQL(qury4);
+
+
+        String qury5 = "create table tb_pushupimages(Image_id INTEGER PRIMARY KEY AUTOINCREMENT ,Pushup_id INTEGER  , image VARCHAR(30) )";
+        db.execSQL(qury5);
 
         Toast.makeText(c, "created", Toast.LENGTH_SHORT).show();
 
-                /// insertion
-
-        String ins="insert into tb_pushupdetails(excersisename)values('STANDARD')";
-
-        db.execSQL(ins);
-        String ins1="insert into tb_pushupdetails(excersisename)values('KNEE PUSHUP')";
-
-        db.execSQL(ins1);
-        String ins2="insert into tb_pushupdetails(excersisename)values('SHOULDER TAP')";
-
-        db.execSQL(ins2);
-        String ins3="insert into tb_pushupdetails(excersisename)values('HAND TAP')";
-
-        db.execSQL(ins3);
-        String ins4="insert into tb_pushupdetails(excersisename)values('T PUSHUP')";
-
-        db.execSQL(ins4);
-        String ins5="insert into tb_pushupdetails(excersisename)values('TIGHT TAP ')";
-
-        db.execSQL(ins5);
-        String ins6="insert into tb_pushupdetails(excersisename)values('SINGLE HAND RAISED')";
-
-        db.execSQL(ins6);
-        String ins7="insert into tb_pushupdetails(excersisename)values('SINGLE LEG RAISED')";
-
-        db.execSQL(ins7);
-        String ins8="insert into tb_pushupdetails(excersisename)values('KNUCKLE PUSHUP')";
-
-        db.execSQL(ins8);
-        String ins9="insert into tb_pushupdetails(excersisename)values('STAGGERED PUSHUP')";
-
-        db.execSQL(ins9);
-        String ins10="insert into tb_pushupdetails(excersisename)values('ALLIGATOR PUSHUP')";
-
-        db.execSQL(ins10);
-        String ins11="insert into tb_pushupdetails(excersisename)values('SLOW TO KNEE')";
-
-        db.execSQL(ins11);
-        String ins12="insert into tb_pushupdetails(excersisename)values('SPIDERMAN PUSHUP')";
-
-        db.execSQL(ins12);
-        String ins13="insert into tb_pushupdetails(excersisename)values('KNEE TO CHEST')";
-
-        db.execSQL(ins13);
-        String ins14="insert into tb_pushupdetails(excersisename)values('PSEUDO PLAINCHEE PUSHUP')";
-
-        db.execSQL(ins14);
-        String ins15="insert into tb_pushupdetails(excersisename)values('OUTSIDE LEG KICK')";
-
-        db.execSQL(ins15);
-        String ins16="insert into tb_pushupdetails(excersisename)values('GRASSHOPPER PUSHUP')";
-
-        db.execSQL(ins16);
-        String ins17="insert into tb_pushupdetails(excersisename)values('FOOT TAP')";
-
-        db.execSQL(ins17);
-        String ins18="insert into tb_pushupdetails(excersisename)values('KNEE TO OPPOSITE ')";
-
-        db.execSQL(ins18);
-        String ins19="insert into tb_pushupdetails(excersisename)values('CROSS SCREW PUSHUP ELBOW')";
-
-        db.execSQL(ins19);
-        String ins20="insert into tb_pushupdetails(excersisename)values('DIAMOND PUSHUP')";
-
-        db.execSQL(ins20);
-        String ins21="insert into tb_pushupdetails(excersisename)values('WIDE PUSHUP')";
-
-        db.execSQL(ins21);
-        String ins22="insert into tb_pushupdetails(excersisename)values('TIGER PUSHUP')";
-
-        db.execSQL(ins22);
-        String ins23="insert into tb_pushupdetails(excersisename)values('PIKE PUSHUP')";
-
-        db.execSQL(ins23);
-        String ins24="insert into tb_pushupdetails(excersisename)values('FEET ELIVATED PUSHUP')";
-
-        db.execSQL(ins24);
-        String ins25="insert into tb_pushupdetails(excersisename)values('SIDE ROLL PUSHUP')";
-
-        db.execSQL(ins25);
-        String ins26="insert into tb_pushupdetails(excersisename)values('JACK KNIFE PUSHUP')";
-
-        db.execSQL(ins26);
-        String ins27="insert into tb_pushupdetails(excersisename)values('YOGA PUSHUP')";
-
-        db.execSQL(ins27);
-        String ins28="insert into tb_pushupdetails(excersisename)values('EXPLOSIVE STAGGERED PUSHUP')";
-
-        db.execSQL(ins28);
-        String ins29="insert into tb_pushupdetails(excersisename)values('EXPLOSIVE JACKS PUSHUP')";
-
-        db.execSQL(ins29);
-        String ins30="insert into tb_pushupdetails(excersisename)values('CLAP PUSHUP')";
-
-        db.execSQL(ins30);
-        String ins31="insert into tb_pushupdetails(excersisename)values('SLIDER PUSHUP')";
-
-        db.execSQL(ins31);
-        String ins32="insert into tb_pushupdetails(excersisename)values('FEET ON WALL')";
-
-        db.execSQL(ins32);
-        String ins33="insert into tb_pushupdetails(excersisename)values('SUPERMAN PUSHUP')";
-
-        db.execSQL(ins33);
-        String ins34="insert into tb_pushupdetails(excersisename)values('FINGER TIP PUSHUP')";
-
-        db.execSQL(ins34);
 
 
 
+// push up name and image insetion
+        int[]img ={R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic};
 
+        String[] names ={"STANDARD","KNEE PUSHUP","SHOULDER TAP","HAND TAP","T PUSHUP","TIGHT TAP","SINGLE HAND RAISED"," SINGLE LEG RAISED","KNUCKLE PUSHUP","STAGGERED PUSHUP","ALLIGATOR PUSHUP","SLOW TO KNEE","SPIDERMAN PUSHUP","KNEE TO CHEST","PSEUDO PLAINCHEE PUSHUP","OUTSIDE LEG KICK","GRASSHOPPER PUSHUP","FOOT TAP","KNEE TO OPPOSITE ","CROSS SCREW PUSHUP ELBOW","DIAMOND PUSHUP","WIDE PUSHUP","TIGER PUSHUP","PIKE PUSHUP","FEET ELIVATED PUSHUP","SIDE ROLL PUSHUP","JACK KNIFE PUSHUP","YOGA PUSHUP","EXPLOSIVE STAGGERED PUSHUP","EXPLOSIVE JACKS PUSHUP","CLAP PUSHUP","SLIDER PUSHUP","FEET ON WALL","SUPERMAN PUSHUP","FINGER TIP PUSHUP"};
+
+        for(int i=0;i<names.length;i++) {
+            String st1 = "insert into tb_pushupdetails(excersisename,images )values('"+names[i]+"','"+img[i]+"')";
+            db.execSQL(st1);
+        }
+
+// description inserion .... only first five excersise  detais is correct
+
+        String[] s1={"Place your hands firmly on the ground, directly under shoulders. Ground your toes into the floor. Tighten your abs and flatten your back so your entire body is neutral and straight.","Keep your back flat.\n" +
+                "Inhale as you begin to lower your body until your chest touches the floor. \n" +
+                "Your body should remain in a straight line from head to toe. \n","Keep your core engaged.\n" +
+                "Exhale as you push back to the starting position. \n"},s2={"Lower yourself till nearly touching the ground.\n" +
+                " Push yourself up till back to starting position and tap your left hand back with Right hand.then bring it back to starting position.\n"," Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and tap your right hand back with Left hand, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s3={" Lower yourself till nearly touching the ground.\n" +
+                " Push yourself up till back to starting position and tap your Right Shoulder with left Hand.then bring it back to starting position.\n"," Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and tapLeft Shoulder with right hand, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s4={"Lower yourself till nearly touching the ground.\n" +
+                " Push yourself up till back to starting position and Raise your left hand.then bring it back to starting position.\n","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Hand, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s5={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s6={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s7={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s8={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s9={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s10={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s11={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s12={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s13={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s14={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s15={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s16={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s17={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s18={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s19={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s21={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s20={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s22={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s23={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s24={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s25={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s26={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s27={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s28={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s29={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s30={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s31={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s32={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s33={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"},s34={"Lower yourself till nearly touching the ground Push yourself up till back to starting position and Raise your left Leg.then bring it back to starting position.","Lower yourself till nearly touching the ground again.\n" +
+                " Push yourself up till back to starting position and Raise your Right Leg, then bring it back to starting position. \n" +
+                " Inhale when going up, exhale when going down.\n"};
+
+
+        for(int i=0;i<s1.length;i++){
+            String des1="insert into tb_description(Pushup_id,steps)values('1','"+s1[i]+"')";
+            db.execSQL(des1);
+        }
+        int[] img1={R.mipmap.download, R.mipmap.pic, R.mipmap.popo,R.mipmap.pushup};
+
+        for(int i=0;i<img1.length;i++){
+            String des2="insert into tb_pushupimages(Pushup_id,image)values('1','"+img1[i]+"')";
+            db.execSQL(des2);
+        }
+
+
+        for(int i=0;i<s2.length;i++){
+            String des3="insert into tb_description(Pushup_id,steps)values('2','"+s2[i]+"')";
+            db.execSQL(des3);
+        }
+        int[] img2={R.mipmap.download, R.mipmap.pic, R.mipmap.popo,R.mipmap.pushup};
+
+        for(int i=0;i<img2.length;i++){
+            String des4="insert into tb_pushupimages(Pushup_id,image)values('3','"+img2[i]+"')";
+            db.execSQL(des4);
+        }
+        for(int i=0;i<s3.length;i++){
+            String des5="insert into tb_description(Pushup_id,steps)values('4','"+s3[i]+"')";
+            db.execSQL(des5);
+        }
+        int[] img3={R.mipmap.download, R.mipmap.pic, R.mipmap.popo,R.mipmap.pushup};
+
+        for(int i=0;i<img3.length;i++){
+            String des6="insert into tb_pushupimages(Pushup_id,image)values('4','"+img3[i]+"')";
+            db.execSQL(des6);
+        }
+        for(int i=0;i<s4.length;i++){
+            String des7="insert into tb_description(Pushup_id,steps)values('5','"+s4[i]+"')";
+            db.execSQL(des7);
+        }
+        int[] img4={R.mipmap.download, R.mipmap.pic, R.mipmap.popo,R.mipmap.pushup};
+
+        for(int i=0;i<img4.length;i++){
+            String des8="insert into tb_pushupimages(Pushup_id,image)values('4','"+img4[i]+"')";
+            db.execSQL(des8);
+        }
 
         Toast.makeText(c, "inserted", Toast.LENGTH_SHORT).show();
-
-
     }
 
     public boolean insertData(String qury)

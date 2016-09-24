@@ -10,7 +10,10 @@ public class pushupc {
 
     String name,id;
 
+
     String description;
+
+    int img;
 
     public void setId(String id) {
         this.id = id;
@@ -41,6 +44,17 @@ public class pushupc {
     public String getDescription() {
         return description;
     }
+
+    public void setImg(int img) {
+        this.img = img;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+
+
 
 
 }
