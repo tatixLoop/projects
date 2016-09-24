@@ -51,11 +51,13 @@ public class PushupDetails extends FragmentActivity {
                 {
                     Intent i=new Intent(PushupDetails.this,Counter_display.class);
                     startActivity(i);
+                    finish();
                 }
                 else
                 {
                     Intent i=new Intent(PushupDetails.this,StaminaTestActivity.class);
                     startActivity(i);
+                    finish();
                 }
             }
         });
