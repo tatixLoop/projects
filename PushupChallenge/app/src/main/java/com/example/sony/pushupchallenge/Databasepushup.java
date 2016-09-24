@@ -38,7 +38,7 @@ public class Databasepushup extends SQLiteOpenHelper {
 
 
 
-        String qury = "create table tb_staminatest(Testno INTEGER PRIMARY KEY NOT NULL, Data VARCHAR(500) NOT NULL , pushupno INTEGER NOT NULL ,Timetaken INTEGER NOT NULL ,Score INTEGER NOT NULL)";
+        String qury = "create table tb_staminatest(Testno INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Date VARCHAR(500) NOT NULL , pushupno INTEGER NOT NULL ,Timetaken INTEGER NOT NULL ,Score INTEGER NOT NULL)";
         db.execSQL(qury);
 
         String qury1 = "create table tb_userdata(Userid INTEGER PRIMARY KEY AUTOINCREMENT, Name VARCHAR(30) NOT NULL , height INTEGER NOT NULL ,weight INTEGER NOT NULL ,Score INTEGER NOT NULL)";
@@ -60,7 +60,7 @@ public class Databasepushup extends SQLiteOpenHelper {
         String qury5 = "create table tb_pushupimages(Image_id INTEGER PRIMARY KEY AUTOINCREMENT ,Pushup_id INTEGER  , image VARCHAR(30) )";
         db.execSQL(qury5);
 
-        Toast.makeText(c, "created", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(c, "created", Toast.LENGTH_SHORT).show();
 
 
 
@@ -195,7 +195,7 @@ public class Databasepushup extends SQLiteOpenHelper {
             db.execSQL(des8);
         }
 
-        Toast.makeText(c, "inserted", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(c, "inserted", Toast.LENGTH_SHORT).show();
     }
 
     public boolean insertData(String qury)

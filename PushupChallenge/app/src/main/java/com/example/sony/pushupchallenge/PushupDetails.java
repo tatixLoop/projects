@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class PushupDetails extends FragmentActivity implements View.OnClickListener{
+public class PushupDetails extends FragmentActivity {
 Button bt_challenge;
 
     int[] imgs1={R.mipmap.popo, R.mipmap.download, R.mipmap.pic, R.mipmap.pushup};
@@ -27,6 +27,23 @@ Button bt_challenge;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pushup_details);
 bt_challenge= (Button) findViewById(R.id.btn_challenge);
+        bt_challenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Create object of Trainee data;
+                PushUPtraineeData trainee = new PushUPtraineeData(getApplicationContext());
+                if(trainee.isTakenStaminaTest() == true)
+                {
+                    Intent i=new Intent(PushupDetails.this,Counter_display.class);
+                    startActivity(i);
+                }
+                else
+                {
+                    Intent i=new Intent(PushupDetails.this,StaminaTestActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mDemoCollectionPagerAdapter =
                 new DemoCollectionPagerAdapter(
@@ -37,13 +54,6 @@ bt_challenge= (Button) findViewById(R.id.btn_challenge);
 
 
     }
-
-    @Override
-    public void onClick(View v) {
-        Intent i=new Intent(PushupDetails.this,Counter_display.class);
-        startActivity(i);
-    }
-
 
     public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
         public DemoCollectionPagerAdapter(FragmentManager fm) {

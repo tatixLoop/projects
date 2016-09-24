@@ -21,7 +21,7 @@ package com.example.sony.pushupchallenge;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-class Counter_display extends AppCompatActivity implements TextToSpeech.OnInitListener,SensorEventListener {
+public class Counter_display extends AppCompatActivity implements TextToSpeech.OnInitListener,SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor mSensor;

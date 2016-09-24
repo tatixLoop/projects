@@ -63,7 +63,7 @@ public class PushupList extends AppCompatActivity implements AdapterView.OnItemC
         Cursor c = db.selectData(se);
         if (c != null) {
             while (c.moveToNext()) {
-                Toast.makeText(PushupList.this, "inserted", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PushupList.this, "inserted", Toast.LENGTH_SHORT).show();
                 String id = c.getString(0);
                 String n = c.getString(1);
                 int img = c.getInt(2);
