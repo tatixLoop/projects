@@ -43,8 +43,8 @@ public class PushUPtraineeData {
         Cursor c = db.selectData(se);
         while(c.moveToNext())
         {
-            Log.d("JKS","no= "+c.getString(0)+")pushUps = "+c.getString(1)+"  stamina= "+c.getString(2) +"milliseconds per pushup");
-            stamina = c.getInt(2);
+            Log.d("JKS","no= "+c.getString(0)+")pushUps = "+c.getString(1)+"  timetaken= "+c.getString(2) +"milliseconds per pushup");
+            stamina = c.getInt(2) / c.getInt(1);
         }
         db.closeConnection();
         return stamina;

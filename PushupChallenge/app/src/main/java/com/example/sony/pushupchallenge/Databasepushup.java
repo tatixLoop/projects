@@ -45,11 +45,11 @@ public class Databasepushup extends SQLiteOpenHelper {
         db.execSQL(qury1);
 
 
-        String qury2 = "create table tb_pushupdata(Data_id INTEGER PRIMARY KEY AUTOINCREMENT ,Pushup_id INTEGER NOT NULL , Data VARCHAR(500) NOT NULL ,Attemptno VARCHAR(30) NOT NULL ,Numpushup INTEGER NOT NULL,Timetaken INTEGER NOT NULL,Score INTEGER NOT NULL,Badge INTEGER NOT NULL )";
+        String qury2 = "create table tb_pushupdata(Data_id INTEGER PRIMARY KEY AUTOINCREMENT ,Pushup_id INTEGER NOT NULL , Date VARCHAR(500) ,Attemptno VARCHAR(30) ,Numpushup INTEGER NOT NULL,Timetaken INTEGER NOT NULL,Badge INTEGER NOT NULL )";
         db.execSQL(qury2);
 
 
-        String qury3 = "create table tb_pushupdetails(Pushup_id INTEGER PRIMARY KEY AUTOINCREMENT , excersisename VARCHAR(500),images VARCHAR(100)  )";
+        String qury3 = "create table tb_pushupdetails(Pushup_id INTEGER PRIMARY KEY AUTOINCREMENT , excersisename VARCHAR(500),images VARCHAR(100) ,targetPushUp INTEGER NOT NULL )";
         db.execSQL(qury3);
 
 
@@ -66,12 +66,83 @@ public class Databasepushup extends SQLiteOpenHelper {
 
 
 // push up name and image insetion
-        int[]img ={R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic,R.mipmap.download,R.mipmap.pushup,R.mipmap.popo,R.mipmap.pic};
+        int[]img ={R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic,
+                R.mipmap.download,
+                R.mipmap.pushup,
+                R.mipmap.popo,
+                R.mipmap.pic};
 
-        String[] names ={"STANDARD","KNEE PUSHUP","SHOULDER TAP","HAND TAP","T PUSHUP","TIGHT TAP","SINGLE HAND RAISED"," SINGLE LEG RAISED","KNUCKLE PUSHUP","STAGGERED PUSHUP","ALLIGATOR PUSHUP","SLOW TO KNEE","SPIDERMAN PUSHUP","KNEE TO CHEST","PSEUDO PLAINCHEE PUSHUP","OUTSIDE LEG KICK","GRASSHOPPER PUSHUP","FOOT TAP","KNEE TO OPPOSITE ","CROSS SCREW PUSHUP ELBOW","DIAMOND PUSHUP","WIDE PUSHUP","TIGER PUSHUP","PIKE PUSHUP","FEET ELIVATED PUSHUP","SIDE ROLL PUSHUP","JACK KNIFE PUSHUP","YOGA PUSHUP","EXPLOSIVE STAGGERED PUSHUP","EXPLOSIVE JACKS PUSHUP","CLAP PUSHUP","SLIDER PUSHUP","FEET ON WALL","SUPERMAN PUSHUP","FINGER TIP PUSHUP"};
+        String[] names ={"STANDARD",
+                "KNEE PUSHUP",
+                "SHOULDER TAP",
+                "HAND TAP",
+                "T PUSHUP",
+                "TIGHT TAP",
+                "SINGLE HAND RAISED",
+                " SINGLE LEG RAISED",
+                "KNUCKLE PUSHUP",
+                "STAGGERED PUSHUP",
+                "ALLIGATOR PUSHUP",
+                "SLOW TO KNEE",
+                "SPIDERMAN PUSHUP",
+                "KNEE TO CHEST",
+                "PSEUDO PLAINCHEE PUSHUP",
+                "OUTSIDE LEG KICK",
+                "GRASSHOPPER PUSHUP",
+                "FOOT TAP",
+                "KNEE TO OPPOSITE ",
+                "CROSS SCREW PUSHUP ELBOW",
+                "DIAMOND PUSHUP",
+                "WIDE PUSHUP",
+                "TIGER PUSHUP",
+                "PIKE PUSHUP",
+                "FEET ELIVATED PUSHUP",
+                "SIDE ROLL PUSHUP",
+                "JACK KNIFE PUSHUP",
+                "YOGA PUSHUP",
+                "EXPLOSIVE STAGGERED PUSHUP",
+                "EXPLOSIVE JACKS PUSHUP",
+                "CLAP PUSHUP",
+                "SLIDER PUSHUP",
+                "FEET ON WALL",
+                "SUPERMAN PUSHUP",
+                "FINGER TIP PUSHUP"};
+
+        int count = 10;
 
         for(int i=0;i<names.length;i++) {
-            String st1 = "insert into tb_pushupdetails(excersisename,images )values('"+names[i]+"','"+img[i]+"')";
+            String st1 = "insert into tb_pushupdetails(excersisename,images,targetPushUp )values('"+names[i]+"','"+img[i]+"',"+count+")";
+            count += 5;
             db.execSQL(st1);
         }
 

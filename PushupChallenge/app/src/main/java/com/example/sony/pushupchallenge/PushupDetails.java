@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class PushupDetails extends FragmentActivity {
 
     int[] imgs1;
     String fid="";
+    int position;
     //={R.mipmap.popo, R.mipmap.download, R.mipmap.pic, R.mipmap.pushup};
     ViewPager mViewPager;
     DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
@@ -39,6 +41,8 @@ public class PushupDetails extends FragmentActivity {
         db.openConnection();
 
          fid = getIntent().getStringExtra("fid");
+        position = getIntent().getIntExtra("position", -1);
+        Log.d("JKS","Intent received on details page pos= "+position+" fid = "+fid);
 
         getImages();
         getDescription();
@@ -50,6 +54,8 @@ public class PushupDetails extends FragmentActivity {
                 if(trainee.isTakenStaminaTest() == true)
                 {
                     Intent i=new Intent(PushupDetails.this,Counter_display.class);
+                    i.putExtra("fid", fid);
+                    i.putExtra("position",position);
                     startActivity(i);
                     finish();
                 }

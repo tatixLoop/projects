@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -51,7 +52,9 @@ public class PushupList extends AppCompatActivity implements AdapterView.OnItemC
         String fid = list1.get(position).getId();
 
         Intent i = new Intent(PushupList.this, PushupDetails.class);
+        Log.d("JKS","ItemCLick on pos= "+position+" fid = "+fid);
         i.putExtra("fid", fid);
+        i.putExtra("position",position);
         startActivity(i);
 
     }
