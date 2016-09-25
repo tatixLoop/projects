@@ -143,9 +143,14 @@ public class Counter_display extends AppCompatActivity implements TextToSpeech.O
                     db.closeConnection();
                     finish();
                 }
+                else if(startChallenge == true)
+                {
+                    finish();
+                }
 
                 else
                 {
+                    Log.d("JKS", "Challenge going on");
                     time.setVisibility(View.VISIBLE);
                     tv_num.setVisibility(View.VISIBLE);
                     btn_stop.setVisibility(View.VISIBLE);
@@ -158,7 +163,9 @@ public class Counter_display extends AppCompatActivity implements TextToSpeech.O
                     txt_temp.setVisibility(View.GONE);
                     result.setVisibility(View.GONE);
                     Button saveData = (Button) findViewById(R.id.btn_stop);
-                    saveData.setText("STOP TEST");
+                    saveData.setText("STOP CHALLENGE");
+                    nearCount = 0;
+                    tv_num.setText(String.format("%d", nearCount));
 
                     t = 0;
                     handler.postDelayed(updateTimer, 0);

@@ -86,7 +86,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STOP TEST"
+        android:text="STOP CHALLENGE"
         android:id="@+id/btn_stop"
         android:layout_below="@+id/time"
         android:layout_centerHorizontal="true"
