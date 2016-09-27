@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.text.ParseException;
@@ -26,7 +28,7 @@ import java.util.List;
  * Use the {@link BlastersMatchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BlastersMatchFragment extends Fragment {
+public class BlastersMatchFragment extends Fragment implements AdapterView.OnItemClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -71,7 +73,29 @@ public class BlastersMatchFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    private  String getTeamName(int teamId)
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String fid = list1.get(position).getId();
+        Log.d("JKS","Clicked "+fid);
+        Class fragmentClass = ISLMatchPage.class;
+
+        Fragment fragment = null;
+
+        try {
+            Bundle bundle = new Bundle();
+            bundle.putString("id", fid);
+            fragment = (Fragment) fragmentClass.newInstance();
+            fragment.setArguments(bundle);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.flContent, fragment, "NewFragmentTag");
+        ft.addToBackStack(null);
+        ft.commit();
+
+    }
+        private  String getTeamName(int teamId)
     {
         String teamName = "empty";
         String query = "select teamName from tbl_teamName WHERE teamId="+teamId;
@@ -91,7 +115,7 @@ public class BlastersMatchFragment extends Fragment {
         Cursor c = db.selectData(se);
         if (c != null) {
             while (c.moveToNext()) {
-                Log.d("JKS","result "+c.getString(0)+" =  "+c.getString(1) + "team1 = "+getTeamName(c.getInt(3))+" team2="+getTeamName(c.getInt(4))) ;
+                //Log.d("JKS","result "+c.getString(0)+" =  "+c.getString(1) + "team1 = "+getTeamName(c.getInt(3))+" team2="+getTeamName(c.getInt(4))) ;
                 String dateTime = c.getString(1);
                 String format = c.getString(2);
                 try {
@@ -100,7 +124,7 @@ public class BlastersMatchFragment extends Fragment {
 
                     dateformat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                     dateTime = dateformat.format(newDate);
-                    Log.d("JKS","Date="+dateTime);
+                   // Log.d("JKS","Date="+dateTime);
                 }
                 catch (ParseException ex)
                 {
@@ -111,7 +135,7 @@ public class BlastersMatchFragment extends Fragment {
                 p1.setName(dateTime);
                 p1.setTeam1(getTeamName(c.getInt(3)));
                 p1.setTeam2(getTeamName(c.getInt(4)));
-                p1.setId(format);
+                p1.setId(c.getString(0));
                 p1.setImg(img);
                 list1.add(p1);
             }
@@ -119,6 +143,7 @@ public class BlastersMatchFragment extends Fragment {
 
         AdapterMatchList a = new AdapterMatchList(getActivity(), list1);
         lv_pushup.setAdapter(a);
+        lv_pushup.setOnItemClickListener(this);
 
     }
     @Override
@@ -174,5 +199,8 @@ public class BlastersMatchFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void onFragmentInteraction(Uri uri){
+        //you can leave it empty
     }
 }

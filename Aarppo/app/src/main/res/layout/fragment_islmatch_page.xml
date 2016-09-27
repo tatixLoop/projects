@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="60sp"
+    android:layout_marginLeft="20sp"
+    tools:context="com.appstory.aarppo.ISLMatchPage">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|top">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00: 00 : 00 : 00"
+            android:id="@+id/txt_countDown"
+            android:layout_gravity="center_horizontal|top"
+            android:textSize="40sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="to start the match"
+            android:id="@+id/textView"
+            android:textAlignment="center"
+            android:layout_gravity="right" />
+    </LinearLayout>
+</FrameLayout>

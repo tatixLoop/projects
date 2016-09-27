@@ -18,7 +18,7 @@ import android.view.MenuItem;
 
 public class BlastersMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , BlastersMatchFragment.OnFragmentInteractionListener,
-        SettingsPage.OnFragmentInteractionListener,MatchSchedule.OnFragmentInteractionListener
+        SettingsPage.OnFragmentInteractionListener,MatchSchedule.OnFragmentInteractionListener, ISLMatchPage.OnFragmentInteractionListener
 {
 
     DrawerLayout drawer;
@@ -131,4 +131,5 @@ public class BlastersMain extends AppCompatActivity
     public void onFragmentInteraction(Uri uri){
         //you can leave it empty
     }
+
 }

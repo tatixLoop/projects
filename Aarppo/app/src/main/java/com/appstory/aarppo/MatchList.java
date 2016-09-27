@@ -45,25 +45,25 @@ public class MatchList {
 
     public String getTeam1()
     {
-        Log.d("JKS","getteam1="+team1);
+
         return team1;
     }
 
     public String getTeam2()
     {
-        Log.d("JKS","getteam2="+team2);
+
         return team2;
     }
     public void setTeam1(String teamName)
     {
         this.team1 = teamName;
-        Log.d("JKS","teamName="+teamName);
+
     }
 
     public void setTeam2(String teamName)
     {
         this.team2 = teamName;
-        Log.d("JKS","teamName="+teamName);
+
     }
 
     public String getDescription() {
