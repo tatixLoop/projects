@@ -121,89 +121,125 @@ public class AarpoDb  extends SQLiteOpenHelper{
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
                 " values('2016-10-18 19:00:00','IST', 8,5)";
         db.execSQL(query);
-        /*
+
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-20 19:00:00','IST',1,6 )";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-21 19:00:00','IST',5,7 )";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-22 19:00:00','IST',3,8 )";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-23 19:00:00','IST',4,6 )";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-24 19:00:00','IST',7,2 )";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-25 19:00:00','IST', 3,5)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-27 19:00:00','IST', 8,4)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-28 19:00:00','IST', 1,3)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-29 19:00:00','IST', 6,2)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-10-30 19:00:00','IST', 7,8)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-02 19:00:00','IST', 6,5)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-03 19:00:00','IST', 4,7)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-04 19:00:00','IST', 8,2)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-05 19:00:00','IST', 1,5)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-06 19:00:00','IST', 4,3)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-08 19:00:00','IST', 2,7)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-09 19:00:00','IST', 8,6)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-10 19:00:00','IST', 5,4)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-11 19:00:00','IST', 7,1)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-12 19:00:00','IST', 2,6)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-13 19:00:00','IST', 8,3)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-15 19:00:00','IST', 6,4)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-16 19:00:00','IST', 7,5)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-17 19:00:00','IST', 3,1)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-18 19:00:00','IST', 4,8)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-19 19:00:00','IST', 5,2)";
         db.execSQL(query);
         query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
-                " values('2016-10-08 19:00:00','IST', )";
+                " values('2016-11-20 19:00:00','IST',6,3 )";
         db.execSQL(query);
-        */
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-22 19:00:00','IST',1,4)";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-23 19:00:00','IST',5,6 )";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-24 19:00:00','IST',7,3 )";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-25 19:00:00','IST',2,4)";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-26 19:00:00','IST', 6,1)";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-27 19:00:00','IST',8,7 )";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-29 19:00:00','IST',3,2 )";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-11-30 19:00:00','IST',1,8)";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-12-01 19:00:00','IST',7,6)";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-12-01 19:00:00','IST',3,4)";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-12-01 19:00:00','IST',5,8)";
+        db.execSQL(query);
+        query = "INSERT INTO tbl_schedule (date_time, timeZone, team1, team2) "+
+                " values('2016-12-01 19:00:00','IST',2,1)";
+        db.execSQL(query);
+
 
 
     }
