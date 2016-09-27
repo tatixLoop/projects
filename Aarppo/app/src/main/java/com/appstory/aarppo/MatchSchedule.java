@@ -101,6 +101,18 @@ public class MatchSchedule extends Fragment implements  AdapterView.OnItemClickL
         }
         return  teamName;
     }
+    private String getHomeGround(int teamId)
+    {
+        String teamName = "empty";
+        String query = "select homeGround from tbl_teamName WHERE teamId="+teamId;
+        Cursor c = db.selectData(query);
+        if (c != null) {
+            while (c.moveToNext()) {
+                teamName = c.getString(0);
+            }
+        }
+        return  teamName;
+    }
     private void getListSchedules() {
 
         String se = "select * from tbl_schedule";
@@ -109,7 +121,7 @@ public class MatchSchedule extends Fragment implements  AdapterView.OnItemClickL
         Cursor c = db.selectData(se);
         if (c != null) {
             while (c.moveToNext()) {
-                Log.d("JKS","result "+c.getString(0)+" =  "+c.getString(1) + "team1 = "+getTeamName(c.getInt(3))+" team2="+getTeamName(c.getInt(4))) ;
+                //Log.d("JKS","result "+c.getString(0)+" =  "+c.getString(1) + "team1 = "+getTeamName(c.getInt(3))+" team2="+getTeamName(c.getInt(4))) ;
                 String dateTime = c.getString(1);
                 String format = c.getString(2);
                 try {
@@ -118,7 +130,7 @@ public class MatchSchedule extends Fragment implements  AdapterView.OnItemClickL
 
                     dateformat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                     dateTime = dateformat.format(newDate);
-                    Log.d("JKS","Date="+dateTime);
+                    //Log.d("JKS","Date="+dateTime);
                 }
                 catch (ParseException ex)
                 {
@@ -129,7 +141,8 @@ public class MatchSchedule extends Fragment implements  AdapterView.OnItemClickL
                 p1.setName(dateTime);
                 p1.setTeam1(getTeamName(c.getInt(3)));
                 p1.setTeam2(getTeamName(c.getInt(4)));
-                p1.setId(format);
+                p1.setId(c.getString(0));
+                p1.setLocation(getHomeGround(c.getInt(3)));
                 p1.setImg(img);
                 list1.add(p1);
             }

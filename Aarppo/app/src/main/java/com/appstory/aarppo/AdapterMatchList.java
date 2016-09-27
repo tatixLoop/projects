@@ -53,9 +53,11 @@ public class AdapterMatchList extends BaseAdapter {
             viewHolder.img=(ImageView)convertView.findViewById(R.id.img);
             viewHolder.team1=(TextView)convertView.findViewById(R.id.team1);
             viewHolder.team2=(TextView) convertView.findViewById(R.id.team2);
+            viewHolder.place=(TextView) convertView.findViewById(R.id.txt_ground);
 
             viewHolder.team1.setText(list1.get(position).getTeam1());
             viewHolder.team2.setText(list1.get(position).getTeam2());
+            viewHolder.place.setText(list1.get(position).getLocation());
 
             convertView.setTag(viewHolder);
 
@@ -68,6 +70,7 @@ public class AdapterMatchList extends BaseAdapter {
         viewHolder.tv1.setText(list1.get(position).getName());
         viewHolder.team1.setText(list1.get(position).getTeam1());
         viewHolder.team2.setText(list1.get(position).getTeam2());
+        viewHolder.place.setText(list1.get(position).getLocation());
         return convertView;
     }
 
@@ -76,6 +79,7 @@ public class AdapterMatchList extends BaseAdapter {
         TextView tv1;
         TextView team1;
         TextView team2;
+        TextView place;
     }
 
 }

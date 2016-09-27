@@ -13,6 +13,7 @@ public class MatchList {
 
     String name,id;
     String date, team1, team2;
+    String place;
 
 
     String description;
@@ -42,6 +43,11 @@ public class MatchList {
         return name;
 
     }
+    public String getLocation()
+    {
+
+        return place;
+    }
 
     public String getTeam1()
     {
@@ -58,6 +64,10 @@ public class MatchList {
     {
         this.team1 = teamName;
 
+    }
+    public void setLocation(String place)
+    {
+        this.place = place;
     }
 
     public void setTeam2(String teamName)

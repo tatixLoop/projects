@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -10,23 +11,44 @@
         android:background="#ffffff"
         android:layout_marginBottom="10dp"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:weightSum="1">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/img"
             android:src="@mipmap/ic_launcher"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
 
-        <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Date and Time"
-        android:id="@+id/tv_name"
-            android:layout_marginLeft="25dp"
-            android:layout_gravity="center_vertical" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="150sp"
+            android:layout_height="match_parent">
+
+            <TextView
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Date and Time"
+            android:id="@+id/tv_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\@"
+                android:id="@+id/textView3" />
+
+            <TextView
+                android:gravity="left"
+                android:layout_height="fill_parent"
+                android:layout_width="88dp"
+                android:maxLines="4"
+                android:lines="4"
+                android:text="ground"
+                android:id="@+id/txt_ground" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,35 +56,37 @@
             android:orientation="vertical"
             android:background="#ffffff"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp">
+            android:paddingRight="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="TEAM 1"
-                android:id="@+id/team1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/team1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vs"
+                android:id="@+id/textView2"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
                 android:layout_gravity="center_horizontal" />
 
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vs"
-            android:id="@+id/textView2"
-            android:layout_marginLeft="20dp"
-            android:textSize="30sp"
-                android:layout_gravity="center_horizontal" />
-
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="TEAM2"
-            android:id="@+id/team2"
-                android:layout_gravity="center_horizontal" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="20dp"
+                android:text="TEAM2"
+                android:id="@+id/team2" />
         </LinearLayout>
+
+
     </LinearLayout>
+
 </LinearLayout>
 
 
