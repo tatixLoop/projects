@@ -140,29 +140,27 @@ Date matchDate;
         View rootView = inflater.inflate(R.layout.fragment_islmatch_page, container, false);
 
         Log.d("JKS","==================================");
-if(isNetworkAvailable()) {
-    Log.d("JKS","Inter net connection is available");
+        if(isNetworkAvailable()) {
+            Log.d("JKS","Internet connection is available");
 
-    try {
-        Date netWorkTime = getNetworkTime();
-        Date curTime = new Date();
-        long diffTime = netWorkTime.getTime() - curTime.getTime();
-        driftTime  = diffTime;
-        long secs = TimeUnit.MILLISECONDS.toSeconds(diffTime) % 60;
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(diffTime) % 60;
-        long hours = TimeUnit.MILLISECONDS.toHours(diffTime) % 24;
-        long days = TimeUnit.MILLISECONDS.toDays(diffTime);
 
-        Log.d("JKS", "Time drift" + days + ":" + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":"
-                + String.format("%02d", secs));
-    } catch (IOException ex) {
 
-    }
-}
+            long diffTime = BlastersSplash.getTimeDelay();
+
+            driftTime  = diffTime;
+            long secs = TimeUnit.MILLISECONDS.toSeconds(diffTime) % 60;
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(diffTime) % 60;
+            long hours = TimeUnit.MILLISECONDS.toHours(diffTime) % 24;
+            long days = TimeUnit.MILLISECONDS.toDays(diffTime);
+
+            Log.d("JKS", "Time drift" + days + ":" + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":"
+                    + String.format("%02d", secs));
+
+        }
         else
-{
-    Log.d("JKS","Internet is not present");
-}
+        {
+            Log.d("JKS","Internet is not present");
+        }
 //        Context context = getActivity();
 //        SharedPreferences sharedPref = context.getSharedPreferences(
 //                (Settings.System.AUTO_TIME), Context.MODE_PRIVATE);

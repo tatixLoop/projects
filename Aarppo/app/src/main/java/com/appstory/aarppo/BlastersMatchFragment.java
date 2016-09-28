@@ -110,7 +110,7 @@ public class BlastersMatchFragment extends Fragment implements AdapterView.OnIte
     private String getHomeGround(int teamId)
     {
         String teamName = "empty";
-        Log.d("JKS","Select home ground");
+
         String query = "select homeGround from tbl_teamName WHERE teamId="+teamId;
         Cursor c = db.selectData(query);
         if (c != null) {
@@ -118,7 +118,7 @@ public class BlastersMatchFragment extends Fragment implements AdapterView.OnIte
                 teamName = c.getString(0);
             }
         }
-        Log.d("JKS","ground = "+ teamName);
+
         return  teamName;
     }
     private void getListBlastersSchedules() {
