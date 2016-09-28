@@ -19,6 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import javax.crypto.AEADBadTagException;
 
 
 /**
@@ -106,7 +111,7 @@ Date matchDate;
             long hours = TimeUnit.MILLISECONDS.toHours(diffTime)%24;
             long days = TimeUnit.MILLISECONDS.toDays(diffTime);
 
-            countDown.setText("" + days + ":" + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":"
+            countDown.setText("" + String.format("%02d", days )+ ":" + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":"
                     + String.format("%02d", secs));
 
             handler.postDelayed(this, 500);
@@ -129,6 +134,37 @@ Date matchDate;
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+    private  String getTeamName(int teamId)
+    {
+        String teamName = "empty";
+        String query = "select teamName from tbl_teamName WHERE teamId="+teamId;
+        AarpoDb db = new AarpoDb();
+        db.openConnection();
+        Cursor c = db.selectData(query);
+        if (c != null) {
+            while (c.moveToNext()) {
+                teamName = c.getString(0);
+            }
+        }
+        db.closeConnection();
+        return  teamName;
+    }
+    private String getHomeGround(int teamId)
+    {
+        String teamName = "empty";
+
+        String query = "select homeGround from tbl_teamName WHERE teamId="+teamId;
+        AarpoDb db = new AarpoDb();
+        db.openConnection();
+        Cursor c = db.selectData(query);
+        if (c != null) {
+            while (c.moveToNext()) {
+                teamName = c.getString(0);
+            }
+        }
+        db.closeConnection();
+        return  teamName;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -188,13 +224,20 @@ Date matchDate;
         Log.d("JKS","id ="+strtext);
         mId = strtext;
 
-        String query = "select date_time from tbl_schedule WHERE sched_id="+mId;
+        String query = "select date_time,team1, team2 from tbl_schedule WHERE sched_id="+mId;
         //Log.d("JKS", "querry  =" +query);
         AarpoDb db = new AarpoDb();
         db.openConnection();
         Cursor crsor = db.selectData(query);
+        TextView team1 = (TextView) rootView.findViewById(R.id.isl_team1);
+        TextView team2 = (TextView) rootView.findViewById(R.id.isl_team2);
+        TextView ground = (TextView) rootView.findViewById(R.id.isl_ground);
+
         if (crsor != null) {
             while (crsor.moveToNext()) {
+                team1.setText(getTeamName(crsor.getInt(1)));
+                team2.setText(getTeamName(crsor.getInt(2)));
+                ground.setText(getHomeGround(crsor.getInt(1)));
                 //Log.d("JKS","result "+c.getString(0)+" =  "+c.getString(1) + "team1 = "+getTeamName(c.getInt(3))+" team2="+getTeamName(c.getInt(4))) ;
                 try
                 {
@@ -208,11 +251,240 @@ Date matchDate;
                 }
             }
         }
-        db.closeConnection();
+
 
         handler.postDelayed(updateTimer, 0);
         countDown= (TextView) rootView.findViewById(R.id.txt_countDown);
-        countDown.setText("000 days 00 hours 00 mins 00 seconds");
+        countDown.setText("");
+
+        CheckBox chk1 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo1);
+        CheckBox chk2 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo2);
+        CheckBox chk3 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo3);
+        CheckBox chk4 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo4);
+        CheckBox chk5 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo5);
+        CheckBox chk6 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo6);
+        CheckBox chk7 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo7);
+        CheckBox chk8 = (CheckBox)rootView.findViewById(R.id.chk_Aarpo8);
+
+        query = "Select * from tbl_AARPO WHERE sched_id="+mId;
+        Cursor aarpo =  db.selectData(query);
+        if (aarpo != null) {
+            while (aarpo.moveToNext()) {
+                if(aarpo.getInt(1) == 1)
+                    chk1.setChecked(true);
+                else
+                    chk1.setChecked(false);
+                if(aarpo.getInt(2) == 1)
+                    chk2.setChecked(true);
+                else
+                    chk2.setChecked(false);
+                if(aarpo.getInt(3) == 1)
+                    chk3.setChecked(true);
+                else
+                    chk3.setChecked(false);
+                if(aarpo.getInt(4) == 1)
+                    chk4.setChecked(true);
+                else
+                    chk4.setChecked(false);
+                if(aarpo.getInt(5) == 1)
+                    chk5.setChecked(true);
+                else
+                    chk5.setChecked(false);
+                if(aarpo.getInt(6) == 1)
+                    chk6.setChecked(true);
+                else
+                    chk6.setChecked(false);
+                if(aarpo.getInt(7) == 1)
+                    chk7.setChecked(true);
+                else
+                    chk7.setChecked(false);
+                if(aarpo.getInt(8) == 1)
+                    chk8.setChecked(true);
+                else
+                    chk8.setChecked(false);
+            }
+
+        }
+
+        db.closeConnection();
+
+
+        chk1.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                     query = "UPDATE tbl_AARPO SET aarpo1=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo1=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
+        chk2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                    query = "UPDATE tbl_AARPO SET aarpo2=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo2=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
+        chk3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                    query = "UPDATE tbl_AARPO SET aarpo3=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo3=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
+        chk4.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                    query = "UPDATE tbl_AARPO SET aarpo4=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo4=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
+        chk5.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                    query = "UPDATE tbl_AARPO SET aarpo5=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo5=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
+        chk6.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                    query = "UPDATE tbl_AARPO SET aarpo6=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo6=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
+        chk7.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                    query = "UPDATE tbl_AARPO SET aarpo7=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo7=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
+        chk8.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String query;
+                AarpoDb db = new AarpoDb();
+                db.openConnection();
+
+                if ( ((CheckBox)v).isChecked() ) {
+                    // perform logic
+                    Log.d("JKS","Checked");
+                    query = "UPDATE tbl_AARPO SET aarpo8=1 WHERE sched_id="+mId;
+                }
+                else
+                {
+                    query = "UPDATE tbl_AARPO SET aarpo8=0 WHERE sched_id="+mId;
+                }
+                Log.d("JKS","query="+query);
+                db.insertData(query);
+                db.closeConnection();
+            }
+        });
 
         return rootView;
     }

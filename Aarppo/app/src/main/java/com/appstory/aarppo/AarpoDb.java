@@ -52,6 +52,19 @@ public class AarpoDb  extends SQLiteOpenHelper{
                                                     " result INTEGER )";
         db.execSQL(qury1);
 
+        qury = "create table tbl_AARPO(sched_id INTEGER, "+
+                " aarpo1 INTEGER NOT NULL ,"+
+                " aarpo2 INTEGER NOT NULL," +
+                " aarpo3 INTEGER NOT NULL," +
+                " aarpo4 INTEGER NOT NULL," +
+                " aarpo5 INTEGER NOT NULL," +
+                " aarpo6 INTEGER NOT NULL," +
+                " aarpo7 INTEGER NOT NULL," +
+                " aarpo8 INTEGER NOT NULL)";
+
+        db.execSQL(qury);
+
+
         String query = "INSERT INTO tbl_teamName (teamName,teamId,homeGround) values('North East United FC',1, 'Indira Gandhi Athletic Stadium, Guwahati')";
         db.execSQL(query);
         query = "INSERT INTO tbl_teamName (teamName,teamId,homeGround) values('Kerala Blasters FC',2,'Jawaharlal Nehru Stadium, Kochi')";
@@ -241,6 +254,12 @@ public class AarpoDb  extends SQLiteOpenHelper{
         db.execSQL(query);
 
 
+        query = "SELECT sched_id FROM tbl_schedule";
+        Cursor c = db.rawQuery(query,null);
+        for(int i = 0; i < c.getCount();i++) {
+            qury = "INSERT INTO tbl_AARPO (sched_id,aarpo1,aarpo2,aarpo3,aarpo4,aarpo5,aarpo6,aarpo7,aarpo8) values("+i+",1,1,1,1,1,1,1,1)";
+            db.execSQL(qury);
+        }
 
     }
 

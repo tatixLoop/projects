@@ -29,10 +29,10 @@ public class BlastersSplash extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_blasters_splash);
-
         ClockdriftTime = 0;
-        new Handler().postDelayed(new Runnable() {
 
+        Thread thread = new Thread() {
+            @Override
             public void run() {
                 ClockdriftTime = 0;
                 try {
@@ -57,9 +57,13 @@ public class BlastersSplash extends AppCompatActivity {
                 {
 
                 }
-
             }
-        }, 1000);
+        };
+
+        thread.start();
+
+
+       Log.d("JKS", "Get network time exits");
 
         new Handler().postDelayed(new Runnable() {
             @Override
