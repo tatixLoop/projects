@@ -87,7 +87,7 @@ public class AarpoCheckService extends Service {
                         long secs = TimeUnit.MILLISECONDS.toSeconds(diffTime_Match)%60;
                         Log.d("JKS","days =" +days + "hours ="+hours +" mins = "+ mins +"seconds = "+secs);
                             Log.d("JKS", "more than one hours for the match " +diffTime_Match);
-                            //if(days == 0 && hours <1 && hours >= 0)
+                            if(isMatchNotStarted(diffTime_Match))
                             {
                                 if(days == 0 && hours == 0 && mins == 0) {
                                     if(cbRemoved == 1) {
@@ -98,6 +98,11 @@ public class AarpoCheckService extends Service {
                                         cbRemoved =0;
                                     }
                                 }
+                            }
+                            else
+                            {
+                                Log.d("JKS","Match stared, check for aarpo sync");
+
                             }
 
                         }
@@ -128,6 +133,22 @@ public class AarpoCheckService extends Service {
         return 120;
     }
 
+    private boolean isMatchNotStarted(long matchDiffTime)
+    {
+        boolean result = false;
+
+        if(matchDiffTime < 0)
+        {
+            result = true;
+        }
+
+        long hours = TimeUnit.MILLISECONDS.toHours(matchDiffTime)%24;
+        long days = TimeUnit.MILLISECONDS.toDays(matchDiffTime);
+        long mins = TimeUnit.MILLISECONDS.toMinutes(matchDiffTime) %60;
+        long secs = TimeUnit.MILLISECONDS.toSeconds(matchDiffTime)%60;
+
+        return result;
+    }
     private boolean isPlayingToday()
     {
         boolean result = false;
