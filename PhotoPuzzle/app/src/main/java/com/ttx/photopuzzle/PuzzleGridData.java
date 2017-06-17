@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ttx.photopuzzle.ListPuzzleData;
@@ -57,7 +58,19 @@ public class PuzzleGridData extends BaseAdapter {
 
             viewHolder.data = (TextView)convertView.findViewById(R.id.txt_text);
             viewHolder.img = (ImageView)convertView.findViewById(R.id.img_peice);
-          
+            viewHolder.layout = (RelativeLayout)convertView.findViewById(R.id.layout);
+
+
+
+            viewHolder.data.setWidth(puzzleList.get(position).getWidth());
+            viewHolder.data.setHeight(puzzleList.get(position).getHeight());
+
+            viewHolder.img.getLayoutParams().width = puzzleList.get(position).getWidth();
+            viewHolder.img.getLayoutParams().height = puzzleList.get(position).getHeight();
+
+            viewHolder.layout.getLayoutParams().width = puzzleList.get(position).getWidth();
+            viewHolder.layout.getLayoutParams().height = puzzleList.get(position).getHeight();
+
             /*Typeface font = Typeface.createFromAsset(context.getAssets(), "Tahoma.ttf");
 
             viewHolder.data .setTypeface(font);
@@ -84,5 +97,6 @@ public class PuzzleGridData extends BaseAdapter {
     class  ViewHolder{
         TextView data;
         ImageView img;
+        RelativeLayout layout;
     }
 }

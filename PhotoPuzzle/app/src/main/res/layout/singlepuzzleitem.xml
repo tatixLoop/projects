@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="66dp"
-    android:layout_height="66dp"
+    android:layout_width="110dp"
+    android:layout_height="110dp"
     android:background="@android:color/holo_green_dark">
+    <RelativeLayout
+        android:layout_width="110dp"
+        android:id="@+id/layout"
+        android:layout_height="110dp">
 
     <TextView
         android:id="@+id/txt_text"
-        android:layout_width="66dp"
-        android:layout_height="66dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="TextView" />
 
     <ImageView
-        android:layout_width="66dp"
-        android:layout_height="66dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         app:srcCompat="@mipmap/ic_launcher"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:id="@+id/img_peice" />
+    </RelativeLayout>
 </RelativeLayout>

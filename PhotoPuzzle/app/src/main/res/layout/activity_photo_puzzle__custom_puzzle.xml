@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_photo_puzzle__custom_puzzle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#440821"
+    tools:context="com.ttx.photopuzzle.PhotoPuzzle_CustomPuzzle">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_Gameheading"
+        android:text="SELECT LEVEL"
+        android:textSize="35sp"
+        android:textColor="#ffff"
+        android:gravity="left"
+        android:textAllCaps="true"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="20dp"/>
+<HorizontalScrollView
+    android:layout_width="fill_parent"
+    android:layout_marginTop="50dp"
+    android:layout_height="wrap_content"
+    android:scrollbarAlwaysDrawHorizontalTrack="true"
+    android:scrollbars="none"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:id="@+id/Linear_game1"
+        >
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/imv_game2"
+            android:src="@drawable/twogamepuzzle"/>
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_alignLeft="@+id/imv_game2"
+            android:layout_height="125dp"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/imv_game3"
+            android:src="@drawable/threegamepuzzle"/>
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/imv_game4"
+
+            android:src="@drawable/fourgamepuzzle"/>
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/imv_game5"
+            android:src="@drawable/fivegamepuzzle"
+            android:layout_marginRight="40dp"/>
+
+    </LinearLayout>
+
+</HorizontalScrollView>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/imv_choosenimage"
+        android:layout_below="@+id/btn_chooseimage"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginBottom="10dp"
+
+        />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/btn_start"
+        android:text="START"
+        android:textAllCaps="true"
+        android:textSize="20dp"
+        android:background="#4CAF50"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="25dp"
+         />
+
+    <Button
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/Linear_game1"
+        android:id="@+id/btn_chooseimage"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Choose Image"
+        android:layout_marginLeft="15dp"
+        android:background="#4CAF50"
+        />
+</RelativeLayout>
+</LinearLayout>

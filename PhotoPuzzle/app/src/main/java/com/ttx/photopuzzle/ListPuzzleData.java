@@ -7,8 +7,35 @@ import android.graphics.Bitmap;
  */
 
 public class ListPuzzleData {
-    String text;
-    Bitmap img;
+    int imageId; // to check if puzzle is solved
+    String text; // to check whether puzzle is solved
+    Bitmap img;   // to display image
+    int width;
+    int height;
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
 
     public Bitmap getImg() {
         return img;

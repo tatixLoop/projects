@@ -7,7 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,22 +105,34 @@ public class    PuzzleActivity extends AppCompatActivity implements View.OnDragL
         for(int i = 0 ; i < size; i++)
         {
             print("Check "+list.get(i).getText() + " and " + (i+1));
+
+            if(list.get(i).getImageId() != i) {
+                return false;
+            }
+            /*
             if(!(list.get(i).getText().equals(""+(i+1))))
                 return false;
-
+*/
         }
         return true;
     }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle);
 
+        /////    full screen  page with transparent status bar
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+
         print("App start");
         int numElements = 9;
-        /*
 
-*/
         Eventregisterd = false;
 
         gridPuzzle2 = (GridView)findViewById(R.id.gridPuzzle2);
@@ -133,8 +147,15 @@ public class    PuzzleActivity extends AppCompatActivity implements View.OnDragL
         {
             ListPuzzleData item = new ListPuzzleData();
             item.setText(""+(i+1));
+
+            item.setImageId(i);
+
             itemList2.add(item);
         }
+
+        //shuffle data
+        long seed = System.nanoTime();
+        Collections.shuffle(itemList2, new Random(seed));
 
         gridPuzzle2.setAdapter(dataAdapter2);
 
@@ -210,15 +231,17 @@ public class    PuzzleActivity extends AppCompatActivity implements View.OnDragL
         int i,j;
         int width=source.getWidth();
         int height=source.getHeight();
+
         for(i=0;i<3;i++){
             for(j=0;j<3;j++){
+
                 bmp= Bitmap.createBitmap(source,(width*j)/3,(i*height)/3,width/3,height/3);
                 itemList2.get(k).setImg(bmp);
+                itemList2.get(k).setImageId(k);
                 k++;
+
             }
-
         }
-
         //shuffle data
         long seed = System.nanoTime();
         Collections.shuffle(itemList2, new Random(seed));
@@ -262,5 +285,31 @@ public class    PuzzleActivity extends AppCompatActivity implements View.OnDragL
 
 
     }
-    
+
+
+        //// press bouble tap to exit  from app
+
+
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new android.os.Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
 }
