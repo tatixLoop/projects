@@ -16,4 +16,11 @@
         android:id="@+id/tv_name"
         android:text="HELLO"
         android:textSize="100sp" />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lv_list"
+        android:layout_below="@+id/tv_name">
+
+    </ListView>
 </RelativeLayout>

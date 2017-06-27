@@ -60,6 +60,7 @@ for (int i=2;i<6;i++)
     {
 String insertion="insert into tb_photopuzzle(id,puzzleno,status,timetaken,userid,puzzletype,puzzleimg)values('puzzleno','0','0','0','puzzleimg')";
         sqldb.execSQL(insertion);
+        int puzzleimg=0;
         puzzleimg++;
     }
 }
