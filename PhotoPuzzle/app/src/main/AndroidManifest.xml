@@ -22,7 +22,8 @@
         <activity android:name=".PotoPuzzle_selectlevel" />
         <activity android:name=".PhotoPuzzle_Selected" />
         <activity android:name=".PhotoPuzzle_CustomPuzzle" />
-        <activity android:name=".PhotoPuzzle_Game"></activity>
+        <activity android:name=".PhotoPuzzle_Game" />
+        <activity android:name=".Photo_PuzzleStart"></activity>
     </application>
 
 </manifest>
