@@ -30,16 +30,16 @@ import static android.R.id.list;
 public class PhotoPuzzle_Game extends AppCompatActivity {
 
 
-
     PuzzleGridData dataAdapter2;
     List<ListPuzzleData> itemList2;
     GridView gridPuzzle2;
-    void print(String str)
-    {
-        Log.d("JKS",str);
+
+    void print(String str) {
+        Log.d("JKS", str);
     }
 
     ImageView imv_selectedimage;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +57,13 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
 
         print("Activity launched");
 
-        imv_selectedimage= (ImageView) findViewById(R.id.imv_result);
+        imv_selectedimage = (ImageView) findViewById(R.id.imv_result);
 
         String type = getIntent().getStringExtra("imageselscted");
 
-        int x = getIntent().getIntExtra("gridselected",0);
+        int x = getIntent().getIntExtra("gridselected", 0);
 
-        print("Got intent argument path ="+type+" grid="+x);
+        print("Got intent argument path =" + type + " grid=" + x);
 
         /// convert selected image in to bitmap and print it in to small image view
 
@@ -82,11 +82,10 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
         imv_selectedimage.setImageBitmap(image);
 
         print("App start");
-        int numElements = x*x;
+        int numElements = x * x;
 
 
-
-        gridPuzzle2 = (GridView)findViewById(R.id.gridPuzzle2);
+        gridPuzzle2 = (GridView) findViewById(R.id.gridPuzzle2);
         gridPuzzle2.setNumColumns(x);
 
         itemList2 = new ArrayList<>();
@@ -94,17 +93,18 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
 
         int dps = 330 / x;
         final float scale = this.getResources().getDisplayMetrics().density;
-        int gridWidth = (int) (dps * scale + 0.5f);;
-        int gridHeight = (int) (dps * scale + 0.5f); ;
+        int gridWidth = (int) (dps * scale + 0.5f);
+        ;
+        int gridHeight = (int) (dps * scale + 0.5f);
+        ;
 
-        print("JKS dps = "+dps+"width of one grid = "+gridWidth+"heoght of one grid ="+gridHeight);
-        print("get width in pixels for gridview"+ gridPuzzle2.getLayoutParams().width);
+        print("JKS dps = " + dps + "width of one grid = " + gridWidth + "heoght of one grid =" + gridHeight);
+        print("get width in pixels for gridview" + gridPuzzle2.getLayoutParams().width);
 
 
-        for(int i = 0; i < numElements; i++)
-        {
+        for (int i = 0; i < numElements; i++) {
             ListPuzzleData item = new ListPuzzleData();
-            item.setText(""+(i+1));
+            item.setText("" + (i + 1));
             item.setImageId(i);
             item.setWidth(gridWidth);
             item.setHeight(gridHeight);
@@ -115,7 +115,6 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
         createBitmaps(image, x);
 
 
-
         //shuffle data
         long seed = System.nanoTime();
         Collections.shuffle(itemList2, new Random(seed));
@@ -123,55 +122,47 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
         gridPuzzle2.setAdapter(dataAdapter2);
 
 
-        gridPuzzle2.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        gridPuzzle2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
 
-                if(isSolved(itemList2))
-                {
+                if (isSolved(itemList2)) {
                     Toast.makeText(PhotoPuzzle_Game.this, "Puzzle solved", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(firstClick == false)
-                {
+                if (firstClick == false) {
                     firstClick = true;
                     firstIndex = gridPuzzle2.getPositionForView(v);
                     v.setBackgroundColor(Color.parseColor("#772544"));
-                    print("Clicked on "+firstIndex);
-                }
-                else
-                {
+                    print("Clicked on " + firstIndex);
+                } else {
                     firstClick = false;
                     int secondIndex = gridPuzzle2.getPositionForView(v);
-                    print("Swap "+firstIndex + " And "+secondIndex);
-                    Collections.swap(itemList2,firstIndex, secondIndex);
+                    print("Swap " + firstIndex + " And " + secondIndex);
+                    Collections.swap(itemList2, firstIndex, secondIndex);
                     v.setBackgroundColor(Color.parseColor("#25776a"));
                     dataAdapter2.notifyDataSetChanged();
                 }
-                if(isSolved(itemList2))
-                {
+                if (isSolved(itemList2)) {
                     Toast.makeText(PhotoPuzzle_Game.this, "Puzzle solved", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-       /* int x;
-        x=Integer.parseInt(grid);*/
+
     }
 
-    public void createBitmaps(Bitmap source, int x)
-    {
-        Bitmap bmp ;
-        int k=0;
-        int i,j;
-        int width=source.getWidth();
-        int height=source.getHeight();
+    public void createBitmaps(Bitmap source, int x) {
+        Bitmap bmp;
+        int k = 0;
+        int i, j;
+        int width = source.getWidth();
+        int height = source.getHeight();
 
-        for(i=0;i<x;i++){
-            for(j=0;j<x;j++){
+        for (i = 0; i < x; i++) {
+            for (j = 0; j < x; j++) {
 
-                bmp= Bitmap.createBitmap(source,(width*j)/x,(i*height)/x,width/x,height/x);
+                bmp = Bitmap.createBitmap(source, (width * j) / x, (i * height) / x, width / x, height / x);
                 itemList2.get(k).setImg(bmp);
                 itemList2.get(k).setImageId(k);
                 k++;
@@ -279,14 +270,12 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
     boolean firstClick = false;
     int firstIndex = 0;
 
-    boolean isSolved(List<ListPuzzleData> list)
-    {
+    boolean isSolved(List<ListPuzzleData> list) {
         int size = list.size();
-        for(int i = 0 ; i < size; i++)
-        {
-            print("Check "+list.get(i).getText() + " and " + (i+1));
+        for (int i = 0; i < size; i++) {
+            print("Check " + list.get(i).getText() + " and " + (i + 1));
 
-            if(list.get(i).getImageId() != i) {
+            if (list.get(i).getImageId() != i) {
                 return false;
             }
             /*

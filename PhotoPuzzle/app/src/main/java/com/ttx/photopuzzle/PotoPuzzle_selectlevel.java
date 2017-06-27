@@ -13,12 +13,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import static java.security.AccessController.getContext;
+
 public class PotoPuzzle_selectlevel extends AppCompatActivity {
 
 
     ImageView imv_two,imv_three,imv_four,imv_five;
     Button bt_gameselect;
-
+  // PhotoPuzzle_Data db;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -84,6 +88,10 @@ imv_two= (ImageView) findViewById(R.id.two);
         });
 
     }
+
+
+   
+
 
     //// press bouble tap to exit  from app
 

@@ -48,7 +48,7 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                chooseimage=1;
+                chooseimage = 1;
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -56,32 +56,25 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
                 startActivityForResult(i, 101);
             }
         });
-        btn_startgame= (Button) findViewById(R.id.btn_start);
-
+        btn_startgame = (Button) findViewById(R.id.btn_start);
 
 
         btn_startgame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (selectedgrid==0)
-                {
-                    Toast.makeText(PhotoPuzzle_CustomPuzzle.this,"Select the puzzle level", Toast.LENGTH_SHORT).show();
-                }
-                else if(chooseimage==0)
-                {
-                    Toast.makeText(PhotoPuzzle_CustomPuzzle.this,"Please An Choose Image", Toast.LENGTH_SHORT).show();
+                if (selectedgrid == 0) {
+                    Toast.makeText(PhotoPuzzle_CustomPuzzle.this, "Select the puzzle level", Toast.LENGTH_SHORT).show();
+                } else if (chooseimage == 0) {
+                    Toast.makeText(PhotoPuzzle_CustomPuzzle.this, "Please An Choose Image", Toast.LENGTH_SHORT).show();
 
-                }
-                else if(selectedpath==null)
-                {
-                    Toast.makeText(PhotoPuzzle_CustomPuzzle.this,"Nothing Selected Try Again", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Log.d("PS","launching activity with selected path ="+selectedpath + " selected grid="+selectedgrid);
+                } else if (selectedpath == null) {
+                    Toast.makeText(PhotoPuzzle_CustomPuzzle.this, "Nothing Selected Try Again", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("PS", "launching activity with selected path =" + selectedpath + " selected grid=" + selectedgrid);
                     Intent i = new Intent(PhotoPuzzle_CustomPuzzle.this, PhotoPuzzle_Game.class);
                     i.putExtra("imageselscted", selectedpath);
-                    i.putExtra("gridselected",selectedgrid);
+                    i.putExtra("gridselected", selectedgrid);
                     startActivity(i);
                 }
 
@@ -92,10 +85,10 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
         //// initialising button views
 
 
-        imv_two_custom= (ImageView) findViewById(R.id.imv_game2);
-        imv_three_custom= (ImageView) findViewById(R.id.imv_game3);
-        imv_four_custom= (ImageView) findViewById(R.id.imv_game4);
-        imv_five_custom= (ImageView) findViewById(R.id.imv_game5);
+        imv_two_custom = (ImageView) findViewById(R.id.imv_game2);
+        imv_three_custom = (ImageView) findViewById(R.id.imv_game3);
+        imv_four_custom = (ImageView) findViewById(R.id.imv_game4);
+        imv_five_custom = (ImageView) findViewById(R.id.imv_game5);
         imv_two_custom.setOnClickListener(new View.OnClickListener() {
 
 
@@ -103,21 +96,12 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                /* if (isPressed)
-                {
-                    imv_two_custom.setBackgroundResource(R.drawable.twosquare_selected);
+                selectedgrid = 2;
 
-                }
-                else
-                imv_two_custom.setBackgroundResource(R.drawable.twogamepuzzle);*/
-                   /* isPressed=!isPressed;*/
-
-
-                imv_two_custom.setBackgroundDrawable(getResources().getDrawable(R.drawable.twogamepuzzle));
-                imv_two_custom.setClickable(false);
-                imv_two_custom.setBackgroundDrawable(getResources().getDrawable(R.drawable.twosquare_selected));
-                imv_two_custom.setClickable(true);
-                selectedgrid=2;
+                imv_two_custom.setImageDrawable(getResources().getDrawable(R.drawable.twosquare_selected));
+                imv_three_custom.setImageDrawable(getResources().getDrawable(R.drawable.threegamepuzzle));
+                imv_four_custom.setImageDrawable(getResources().getDrawable(R.drawable.fourgamepuzzle));
+                imv_five_custom.setImageDrawable(getResources().getDrawable(R.drawable.fivegamepuzzle));
 
 
             }
@@ -128,9 +112,12 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                selectedgrid=3;
-                imv_three_custom.setBackgroundDrawable(getResources().getDrawable(R.drawable.threequare_selected));
+                selectedgrid = 3;
 
+                imv_two_custom.setImageDrawable(getResources().getDrawable(R.drawable.twogamepuzzle));
+                imv_three_custom.setImageDrawable(getResources().getDrawable(R.drawable.threequare_selected));
+                imv_four_custom.setImageDrawable(getResources().getDrawable(R.drawable.fourgamepuzzle));
+                imv_five_custom.setImageDrawable(getResources().getDrawable(R.drawable.fivegamepuzzle));
 
             }
         });
@@ -140,9 +127,11 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                selectedgrid=4;
-                imv_four_custom.setBackgroundDrawable(getResources().getDrawable(R.drawable.foursquare_selected));
-
+                selectedgrid = 4;
+                imv_two_custom.setImageDrawable(getResources().getDrawable(R.drawable.twogamepuzzle));
+                imv_three_custom.setImageDrawable(getResources().getDrawable(R.drawable.threegamepuzzle));
+                imv_four_custom.setImageDrawable(getResources().getDrawable(R.drawable.foursquare_selected));
+                imv_five_custom.setImageDrawable(getResources().getDrawable(R.drawable.fivegamepuzzle));
             }
         });
         imv_five_custom.setOnClickListener(new View.OnClickListener() {
@@ -150,16 +139,19 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                selectedgrid=5;
-                imv_five_custom.setBackgroundDrawable(getResources().getDrawable(R.drawable.fivesquare_selected));
-
+                selectedgrid = 5;
+                imv_two_custom.setImageDrawable(getResources().getDrawable(R.drawable.twogamepuzzle));
+                imv_three_custom.setImageDrawable(getResources().getDrawable(R.drawable.threegamepuzzle));
+                imv_four_custom.setImageDrawable(getResources().getDrawable(R.drawable.fourgamepuzzle));
+                imv_five_custom.setImageDrawable(getResources().getDrawable(R.drawable.fivesquare_selected));
             }
         });
 
     }
-    boolean isPressed=false;
-    int chooseimage=0;
-    int selectedgrid=0;
+
+    boolean isPressed = false;
+    int chooseimage = 0;
+    int selectedgrid = 0;
 
     String selectedpath;
 
@@ -196,7 +188,7 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
 
             ImageView imageView = (ImageView) findViewById(R.id.imv_choosenimage);
             imageView.setImageBitmap(image);
-            selectedpath=picturePath;
+            selectedpath = picturePath;
         }
 
 
