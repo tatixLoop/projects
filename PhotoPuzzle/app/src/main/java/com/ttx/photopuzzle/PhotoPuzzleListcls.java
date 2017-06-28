@@ -5,33 +5,34 @@ package com.ttx.photopuzzle;
  */
 
 public class PhotoPuzzleListcls {
-    String name;
-    String lock;
-    String unlock;
+
     int no;
+int status;
+    int timetaken;
+    int image;
 
-    public String getName() {
-        return name;
+    public int getStatus() {
+        return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public String getLock() {
-        return lock;
+    public int getTimetaken() {
+        return timetaken;
     }
 
-    public void setLock(String lock) {
-        this.lock = lock;
+    public void setTimetaken(int timetaken) {
+        this.timetaken = timetaken;
     }
 
-    public String getUnlock() {
-        return unlock;
+    public int getImage() {
+        return image;
     }
 
-    public void setUnlock(String unlock) {
-        this.unlock = unlock;
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public int getNo() {

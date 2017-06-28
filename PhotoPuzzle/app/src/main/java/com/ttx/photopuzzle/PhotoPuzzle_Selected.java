@@ -49,7 +49,13 @@ public class PhotoPuzzle_Selected extends AppCompatActivity implements AdapterVi
 
         db = new PhotoPuzzle_Data(this);
         db.openConnection();
-        getpuzzlelist();
+
+        getpuzzlelist(type);
+
+        Adapter_PhotoPuzzlelist a = new Adapter_PhotoPuzzlelist(this, list1);
+        lv.setAdapter(a);
+        lv.setOnItemClickListener(this);
+
 
     }
 
@@ -82,31 +88,31 @@ public class PhotoPuzzle_Selected extends AppCompatActivity implements AdapterVi
     }
 
 
-    private void getpuzzlelist() {
+    private void getpuzzlelist(int ptypt) {
 
 
-        String se = "select * from tb_photopuzzle";
+        String se = "select puzzleno,status,timetaken,puzzleimg from tb_photopuzzle where puzzletype="+ptypt;
 
         Cursor c = db.selectData(se);
         if (c != null) {
             while (c.moveToNext()) {
 
-                String lok = c.getString(0);
-                String unlok = c.getString(1);
-                int n = c.getInt(2);
+
+                int stat=c.getInt(1);
+                int time=c.getInt(2);
+                int n = c.getInt(0);
+                int img = c.getInt(3);
                 //int img = c.getInt(3);
                 PhotoPuzzleListcls p1 = new PhotoPuzzleListcls();
                 p1.setNo(n);
-                p1.setLock(lok);
-                p1.setUnlock(unlok);
+                p1.setStatus(stat);
+                p1.setTimetaken(time);
+                p1.setImage(img);
+
                 list1.add(p1);
 
             }
 
-
-            Adapter_PhotoPuzzlelist a = new Adapter_PhotoPuzzlelist(this, list1);
-            lv.setAdapter(a);
-            lv.setOnItemClickListener(this);
 
 
         }

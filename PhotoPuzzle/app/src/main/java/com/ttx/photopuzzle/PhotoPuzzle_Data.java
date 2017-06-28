@@ -38,7 +38,7 @@ public class PhotoPuzzle_Data extends SQLiteOpenHelper {
     private void createTables()
     {
 
-        String qury = "CREATE TABLE  tb_photopuzzle(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, puzzleno INTEGER NOT NULL ,status INTEGER NOT NULL ,timetaken INTEGER NOT NULL,userid INTEGER NOT NULL,puzzletype INTEGER NOT NULL,puzzleimg INTEGER NOT NULL)";
+        String qury = "CREATE TABLE  IF NOT EXISTS  tb_photopuzzle(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, puzzleno INTEGER NOT NULL ,status INTEGER NOT NULL ,timetaken INTEGER NOT NULL,userid INTEGER NOT NULL,puzzletype INTEGER NOT NULL,puzzleimg INTEGER NOT NULL)";
         sqldb.execSQL(qury);
     }
 
@@ -54,16 +54,18 @@ public class PhotoPuzzle_Data extends SQLiteOpenHelper {
 
         ///// insert data here
 
-for (int i=2;i<6;i++)
-{
-    for (int puzzleno=1;puzzleno<14;puzzleno++)
-    {
-String insertion="insert into tb_photopuzzle(id,puzzleno,status,timetaken,userid,puzzletype,puzzleimg)values('puzzleno','0','0','0','puzzleimg')";
-        sqldb.execSQL(insertion);
         int puzzleimg=0;
-        puzzleimg++;
-    }
-}
+        for (int i=2;i<6;i++)
+        {
+            for (int puzzleno=1;puzzleno<14;puzzleno++)
+            {
+                String insertion="insert into tb_photopuzzle(puzzleno,status,timetaken,userid,puzzletype,puzzleimg)values("+puzzleno+",0,0,0,"+i+","+puzzleimg+")";
+                print(insertion);
+                sqldb.execSQL(insertion);
+
+                puzzleimg++;
+            }
+        }
 
     }
     public void closeConnection()

@@ -58,9 +58,10 @@ public class Adapter_PhotoPuzzlelist extends BaseAdapter {
         }
 
 
-        viewHolder.tv1.setText(list1.get(i).getNo());
-        viewHolder.tv2.setText(list1.get(i).getUnlock());
-        viewHolder.tv2.setText(list1.get(i).getLock());
+        viewHolder.tv1.setText(" "+list1.get(i).getNo());
+        viewHolder.tv2.setText(" "+list1.get(i).getStatus());
+
+
         return view;
 
     }
