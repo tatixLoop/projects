@@ -54,18 +54,32 @@ public class PhotoPuzzle_Data extends SQLiteOpenHelper {
 
         ///// insert data here
 
-        int puzzleimg=0;
-        for (int i=2;i<6;i++)
-        {
-            for (int puzzleno=1;puzzleno<14;puzzleno++)
-            {
-                String insertion="insert into tb_photopuzzle(puzzleno,status,timetaken,userid,puzzletype,puzzleimg)values("+puzzleno+",0,0,0,"+i+","+puzzleimg+")";
+
+        int puzzleimg = 0;
+        for (int i = 2; i < 6; i++) {
+            for (int puzzleno = 1; puzzleno < 16; puzzleno++) {
+                String insertion = "insert into tb_photopuzzle(puzzleno,status,timetaken,userid,puzzletype,puzzleimg)values(" + puzzleno + ",0,0,0," + i + "," + puzzleimg + ")";
                 print(insertion);
                 sqldb.execSQL(insertion);
 
                 puzzleimg++;
             }
+            updatepuzzleopen(2);
+            updatepuzzleopen(3);
         }
+
+
+    }
+
+
+
+    private void updatepuzzleopen( int puzzletype)
+    {
+        int status=1;
+        String query ;
+
+        query =  "UPDATE tb_photopuzzle SET status="+status +" WHERE puzzletype="+puzzletype;
+        sqldb.execSQL(query);
 
     }
     public void closeConnection()
@@ -99,5 +113,6 @@ public class PhotoPuzzle_Data extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
 
 }

@@ -56,9 +56,10 @@ imv_two= (ImageView) findViewById(R.id.two);
             @Override
             public void onClick(View view) {
 
-                Intent i= new Intent(PotoPuzzle_selectlevel.this,PhotoPuzzle_Selected.class);
-               // i.putExtra("puzzleselected","1");
-                i.putExtra("puzzleselected",2);
+                    Intent i = new Intent(PotoPuzzle_selectlevel.this, PhotoPuzzle_Selected.class);
+                    // i.putExtra("puzzleselected","1");
+                    i.putExtra("puzzleselected", 2);
+
                 startActivity(i);
 
             }

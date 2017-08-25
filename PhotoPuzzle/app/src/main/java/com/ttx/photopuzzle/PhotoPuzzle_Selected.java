@@ -2,11 +2,13 @@ package com.ttx.photopuzzle;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +28,7 @@ public class PhotoPuzzle_Selected extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_photo_puzzle__selected);
         lv = (ListView) findViewById(R.id.lv_list);
 
-        tv_puzzleselected = (TextView) findViewById(R.id.tv_name);
+        tv_puzzleselected = (TextView) findViewById(R.id.tv_name1);
 
         int type = getIntent().getIntExtra("puzzleselected", 0);
 
@@ -69,20 +71,22 @@ public class PhotoPuzzle_Selected extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-       ////// go to page PhotoPuzzle_game
-
-
-/*
+        ////// go to page PhotoPuzzle_game
 
         int number = list1.get(i).getNo();
 
-        Intent intent = new Intent(PhotoPuzzle_Selected.this, PushupDetails.class);
+        Intent intent = new Intent(PhotoPuzzle_Selected.this, PhotoPuzzle_Game.class);
 
         intent.putExtra("fid", number);
         intent.putExtra("position",i);
-        startActivity(intent);
-*/
 
+
+        /// passs drwawable here
+
+        String im= "R.Drawable."+"img_"+number+"_"+i+".jpg";
+intent.putExtra("image",im);
+        Log.d("PS",im);
+        startActivity(intent);
 
 
     }

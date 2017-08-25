@@ -57,100 +57,136 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
 
         print("Activity launched");
 
+
+
+
         imv_selectedimage = (ImageView) findViewById(R.id.imv_result);
+
+
+        String imageimpoted;
 
         String type = getIntent().getStringExtra("imageselscted");
 
         int x = getIntent().getIntExtra("gridselected", 0);
 
+
         print("Got intent argument path =" + type + " grid=" + x);
 
-        /// convert selected image in to bitmap and print it in to small image view
+        imageimpoted = getIntent().getStringExtra("imageselscted");
+        imageimpoted = getIntent().getStringExtra("image");
 
-        Bitmap image = BitmapFactory.decodeFile(type);
-        Log.d("JKS", "width =" + image.getWidth() + " heigh = " + image.getHeight());
-        int width = image.getWidth();
-        int height = image.getHeight();
-        if (width != height) {
-            int lesser;
-            if (width < height)
-                lesser = width;
-            else
-                lesser = height;
-            image = Bitmap.createBitmap(image, 0, 0, lesser, lesser);
-        }
-        imv_selectedimage.setImageBitmap(image);
-
-        print("App start");
-        int numElements = x * x;
+        if (imageimpoted == type) {
+            /// convert selected image in to bitmap and print it in to small image view
 
 
-        gridPuzzle2 = (GridView) findViewById(R.id.gridPuzzle2);
-        gridPuzzle2.setNumColumns(x);
-
-        itemList2 = new ArrayList<>();
-        dataAdapter2 = new PuzzleGridData(this, itemList2);
-
-        int dps = 330 / x;
-        final float scale = this.getResources().getDisplayMetrics().density;
-        int gridWidth = (int) (dps * scale + 0.5f);
-        ;
-        int gridHeight = (int) (dps * scale + 0.5f);
-        ;
-
-        print("JKS dps = " + dps + "width of one grid = " + gridWidth + "heoght of one grid =" + gridHeight);
-        print("get width in pixels for gridview" + gridPuzzle2.getLayoutParams().width);
-
-
-        for (int i = 0; i < numElements; i++) {
-            ListPuzzleData item = new ListPuzzleData();
-            item.setText("" + (i + 1));
-            item.setImageId(i);
-            item.setWidth(gridWidth);
-            item.setHeight(gridHeight);
-            itemList2.add(item);
-        }
-
-        //cut image into x*x peices
-        createBitmaps(image, x);
-
-
-        //shuffle data
-        long seed = System.nanoTime();
-        Collections.shuffle(itemList2, new Random(seed));
-
-        gridPuzzle2.setAdapter(dataAdapter2);
-
-
-        gridPuzzle2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-
-                if (isSolved(itemList2)) {
-                    Toast.makeText(PhotoPuzzle_Game.this, "Puzzle solved", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (firstClick == false) {
-                    firstClick = true;
-                    firstIndex = gridPuzzle2.getPositionForView(v);
-                    v.setBackgroundColor(Color.parseColor("#772544"));
-                    print("Clicked on " + firstIndex);
-                } else {
-                    firstClick = false;
-                    int secondIndex = gridPuzzle2.getPositionForView(v);
-                    print("Swap " + firstIndex + " And " + secondIndex);
-                    Collections.swap(itemList2, firstIndex, secondIndex);
-                    v.setBackgroundColor(Color.parseColor("#25776a"));
-                    dataAdapter2.notifyDataSetChanged();
-                }
-                if (isSolved(itemList2)) {
-                    Toast.makeText(PhotoPuzzle_Game.this, "Puzzle solved", Toast.LENGTH_SHORT).show();
-                }
+            Bitmap image = BitmapFactory.decodeFile(type);
+            Log.d("JKS", "width =" + image.getWidth() + " heigh = " + image.getHeight());
+            int width = image.getWidth();
+            int height = image.getHeight();
+            if (width != height) {
+                int lesser;
+                if (width < height)
+                    lesser = width;
+                else
+                    lesser = height;
+                image = Bitmap.createBitmap(image, 0, 0, lesser, lesser);
             }
-        });
+            imv_selectedimage.setImageBitmap(image);
+
+            ///////    create bit map for the image in drawable
 
 
-    }
+            String im = getIntent().getStringExtra("image");
+
+
+                Bitmap ima = BitmapFactory.decodeFile(im);
+                Log.d("JKS", "width =" + image.getWidth() + " heigh = " + image.getHeight());
+                int widt = image.getWidth();
+                int heigh = image.getHeight();
+                if (widt != heigh) {
+                    int lesser;
+                    if (widt < heigh)
+                        lesser = widt;
+                    else
+                        lesser = heigh;
+                    ima = Bitmap.createBitmap(image, 0, 0, lesser, lesser);
+                }
+                imv_selectedimage.setImageBitmap(ima);
+
+
+                print("App start");
+                int numElements = x * x;
+
+
+                gridPuzzle2 = (GridView) findViewById(R.id.gridPuzzle2);
+                gridPuzzle2.setNumColumns(x);
+
+                itemList2 = new ArrayList<>();
+                dataAdapter2 = new PuzzleGridData(this, itemList2);
+
+                int dps = 330 / x;
+                final float scale = this.getResources().getDisplayMetrics().density;
+                int gridWidth = (int) (dps * scale + 0.5f);
+
+                int gridHeight = (int) (dps * scale + 0.5f);
+
+
+                print("JKS dps = " + dps + "width of one grid = " + gridWidth + "heoght of one grid =" + gridHeight);
+                print("get width in pixels for gridview" + gridPuzzle2.getLayoutParams().width);
+
+
+                for (int i = 0; i < numElements; i++) {
+                    ListPuzzleData item = new ListPuzzleData();
+                    item.setText("" + (i + 1));
+                    item.setImageId(i);
+                    item.setWidth(gridWidth);
+                    item.setHeight(gridHeight);
+                    itemList2.add(item);
+                }
+
+                //cut image into x*x peices
+                createBitmaps(image, x);
+
+
+                //shuffle data
+                long seed = System.nanoTime();
+                Collections.shuffle(itemList2, new Random(seed));
+
+                gridPuzzle2.setAdapter(dataAdapter2);
+
+
+                gridPuzzle2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+
+                        if (isSolved(itemList2)) {
+                            Toast.makeText(PhotoPuzzle_Game.this, "Puzzle solved", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (firstClick == false) {
+                            firstClick = true;
+                            firstIndex = gridPuzzle2.getPositionForView(v);
+                            v.setBackgroundColor(Color.parseColor("#772544"));
+                            print("Clicked on " + firstIndex);
+                        } else {
+                            firstClick = false;
+                            int secondIndex = gridPuzzle2.getPositionForView(v);
+                            print("Swap " + firstIndex + " And " + secondIndex);
+                            Collections.swap(itemList2, firstIndex, secondIndex);
+                            v.setBackgroundColor(Color.parseColor("#25776a"));
+                            dataAdapter2.notifyDataSetChanged();
+                        }
+                        if (isSolved(itemList2)) {
+                            Toast.makeText(PhotoPuzzle_Game.this, "Puzzle solved", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+            }
+        }
+
+
 
     public void createBitmaps(Bitmap source, int x) {
         Bitmap bmp;

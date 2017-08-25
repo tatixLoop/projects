@@ -2,25 +2,63 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="150dp">
+    android:layout_marginTop="150dp"
+    android:background="#b9f203">
+<ImageView
+    android:layout_width="45dp"
+    android:layout_height="45dp"
+    android:id="@+id/imagelogo"
+    android:src="@drawable/puzzleimgdummy"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="15dp"
+    />
 
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:id="@+id/tv_listno"
-        android:text="1"
-        android:textSize="45dp"
-        android:textColor="#f44336"
-        android:textAlignment="center"
-        />
+        android:layout_width="110sp"
+        android:layout_height="33dp"
+        android:text="00:12:40"
+        android:id="@+id/textClock"
+        android:textSize="22dp"
+        android:textColor="#3c0a23"
+        android:layout_below="@+id/tv_listno"
+        android:layout_toEndOf="@+id/tv_Puzzle" />
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/imv_status"
+
+        android:src="@drawable/status_open"
+        android:layout_marginStart="31dp"
+        android:layout_alignTop="@+id/imagelogo"
+        android:layout_toEndOf="@+id/tv_listno"
+        android:layout_marginTop="11dp" />
+
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:id="@+id/tv_unlock"
-        android:layout_marginLeft="150dp"
-        android:text="unlock/lock"
-        android:textSize="20dp"
-        android:textColor="#f44336"
-        android:textAlignment="center"/>
+        android:layout_width="110sp"
+        android:layout_height="45dp"
+        android:id="@+id/tv_Puzzle"
+        android:text="Puzzle"
+        android:textSize="30dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="#3c0a23"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_marginStart="18dp"
+        android:layout_alignTop="@+id/imv_status"
+        android:layout_toEndOf="@+id/imagelogo" />
+
+    <TextView
+        android:layout_width="45sp"
+        android:layout_height="45dp"
+        android:id="@+id/tv_listno"
+        android:text="01"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#3c0a23"
+
+        android:layout_alignBaseline="@+id/tv_Puzzle"
+        android:layout_alignBottom="@+id/tv_Puzzle"
+        android:layout_toEndOf="@+id/tv_Puzzle" />
 
 </RelativeLayout>
