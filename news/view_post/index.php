@@ -1,8 +1,34 @@
 <!DOCTYPE html>
+<?php
+include ('../connection.php')
+?>
 <html>
 <head>
 <link rel="stylesheet" href="../main.css">
+	<?php
+	$con=mysqli_connect($dbhost,$dbusername,$dbpwd,$db);
+	?>
+	<?php
+		$result_img = mysqli_query($con,"SELECT * FROM table_newsimg where id=".$id);
+		$row_img_tag = mysqli_fetch_array($result_img);
+		$img_preview=$row_img_tag['img'];
+		$result_p = mysqli_query($con,"SELECT * FROM `table_news` WHERE id=".$row_img_tag['id']);
+		$row_ptag = mysqli_fetch_array($result_p);
+		$title=$row_ptag['heading'];
+
+	?>
+	
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:url" content="http://tatixtech.com//goodnews/view_post/?id=<?php echo $id ?>" />         
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="tatixTech" />
+<meta property="og:title" content="<?php echo $title; ?>" />       
+<meta property="og:description" content="<?php echo $title; ?>" />  
+<meta property="og:image" content="<?php echo "http://tatixtech.com/goodnews/img/".$img_preview; ?>"/>
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+
+
 <style>
 * {
   box-sizing: border-box;
@@ -46,9 +72,7 @@ h1 {
 }
 </style>
 </head>
-<?php
-$host='http://192.168.43.207';
-?>
+
 <body style="font-family:Verdana;color:#aaaaaa;">
 
 <div style="background-color:#4ac475;padding:15px;text-align:center;">
@@ -58,10 +82,8 @@ $host='http://192.168.43.207';
 
 <div style="overflow:auto">
   
-<?php
-
-	$id = $_GET['id'];
-	$con=mysqli_connect("localhost","root","","sg_news");
+	
+	<?php
 	$result = mysqli_query($con,"SELECT * FROM `table_news` WHERE id=".$id);
 	while($row = mysqli_fetch_array($result))
 	{
@@ -73,7 +95,7 @@ $host='http://192.168.43.207';
 author  | date
 </br>
 </br>
-<?php
+		<?php
 		$result_img = mysqli_query($con,"SELECT * FROM table_newsimg where id=".$id);
 		$row_img = mysqli_fetch_array($result_img);
 		$img=$row_img['img'];
