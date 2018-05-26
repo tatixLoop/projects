@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?php
-include ('../connection.php')
+include ('connection.php')
 ?>
 <html>
 <head>
-<link rel="stylesheet" href="../main.css">
+<link rel="stylesheet" href="main.css">
 	<?php
 	$con=mysqli_connect($dbhost,$dbusername,$dbpwd,$db);
 	?>
@@ -12,7 +12,7 @@ include ('../connection.php')
 		$result_img = mysqli_query($con,"SELECT * FROM table_newsimg where id=(SELECT max(id) from table_news)");
 		$row_img_tag = mysqli_fetch_array($result_img);
 		$img_preview=$row_img_tag['img'];
-		$result_p = mysqli_query($con,"SELECT * FROM `table_news` WHERE id=".$id);
+		$result_p = mysqli_query($con,"SELECT * FROM `table_news` WHERE id=".$row_img_tag['id']);
 		$row_ptag = mysqli_fetch_array($result_p);
 		$title=$row_ptag['heading'];
 
