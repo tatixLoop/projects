@@ -20,12 +20,12 @@ include ('../connection.php')
 	?>
 	
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:url" content="http://tatixtech.com//goodnews/view_post/?id=<?php echo $id ?>" />         
+<meta property="og:url" content="http://tatixtech.com//<?php echo $appdir; ?>/view_post/?id=<?php echo $id ?>" />         
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="tatixTech" />
 <meta property="og:title" content="<?php echo $title; ?>" />       
 <meta property="og:description" content="<?php echo $title; ?>" />  
-<meta property="og:image" content="<?php echo "http://tatixtech.com/goodnews/img/".$img_preview; ?>"/>
+<meta property="og:image" content="<?php echo "http://tatixtech.com/".$appdir."/img/".$img_preview; ?>"/>
 <meta property="og:image:width" content="200" />
 <meta property="og:image:height" content="200" />
 
@@ -78,7 +78,7 @@ h1 {
 
 <div style="background-color:#4ac475;padding:15px;text-align:center;">
   
-<a href='<?php echo $host?>/goodnews/' style="text-decoration:none;"><h1>Good News</h1> </a>
+<a href='<?php echo $host?>/<?php echo $appdir; ?>/' style="text-decoration:none;"><h1>Good News</h1> </a>
 </div>
 
 <div style="overflow:auto">
@@ -138,7 +138,7 @@ author  | date
 		
 		
 			<div class="container">
-			    <a href='<?php echo $host?>/goodnews/view_post/?id=<?php echo $id ?>' style="text-decoration:none;">
+			    <a href='<?php echo $host?>/<?php echo $appdir; ?>/view_post/?id=<?php echo $id ?>' style="text-decoration:none;">
 				<?php
 				echo $row['heading'];
 				?>

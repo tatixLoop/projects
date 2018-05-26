@@ -4,4 +4,5 @@ $dbhost='localhost';
 $dbusername='root';
 $dbpwd='';
 $db='sg_news';
+$appdir='app/news';
 ?>
