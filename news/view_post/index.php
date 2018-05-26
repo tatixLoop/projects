@@ -6,13 +6,14 @@ include ('../connection.php')
 <head>
 <link rel="stylesheet" href="../main.css">
 	<?php
+        $id = $_GET['id'];
 	$con=mysqli_connect($dbhost,$dbusername,$dbpwd,$db);
 	?>
 	<?php
 		$result_img = mysqli_query($con,"SELECT * FROM table_newsimg where id=".$id);
 		$row_img_tag = mysqli_fetch_array($result_img);
 		$img_preview=$row_img_tag['img'];
-		$result_p = mysqli_query($con,"SELECT * FROM `table_news` WHERE id=".$row_img_tag['id']);
+		$result_p = mysqli_query($con,"SELECT * FROM `table_news` WHERE id=".$id);
 		$row_ptag = mysqli_fetch_array($result_p);
 		$title=$row_ptag['heading'];
 
