@@ -1,4 +1,5 @@
 <?php
+include('connection.php');
 $heading_text = "";
 $subheading_text = "";
 $content_text = "";
@@ -88,6 +89,16 @@ function test_input($data) {
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
+}
+?>
+<?php
+session_start();
+if(isset($_SESSION['id']))
+{
+}
+else
+{
+    header("Location: ".$host."/".$appdir."/post.php");
 }
 ?>
 
