@@ -10,7 +10,7 @@
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
    }
 
-   $result = mysqli_query($con,"SELECT * FROM table_news WHERE approvals=0 and downvote=0");
+   $result = mysqli_query($con,"SELECT * FROM table_news WHERE downvote<>0");
 
 
    if (!empty($result)) {
