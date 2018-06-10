@@ -19,7 +19,7 @@ include ('connection.php')
 	?>
 	
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:url" content="http://tatixtech.com/<?php echo $appdir; ?>/view_post/?id=<?php echo $id ?>" />         
+<meta property="og:url" content="http://tatixtech.com/" />         
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="tatixTech" />
 <meta property="og:title" content="<?php echo $title; ?>" />       

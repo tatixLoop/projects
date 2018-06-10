@@ -3,6 +3,8 @@ include('connection.php');
 $heading_text = "";
 $subheading_text = "";
 $content_text = "";
+$session_uid=0;
+$con=mysqli_connect($dbhost,$dbusername,$dbpwd,$db);
 
 if(isset($_FILES['image'])){
       $errors= array();
@@ -15,7 +17,7 @@ if(isset($_FILES['image'])){
 
       $expensions= array("jpeg","jpg","png");
 
-      if(in_array($file_ext,$expensions)=== false){
+      if(in_array($file_ext,$expensions)== false){
          $errors[]="extension not allowed, please choose a JPEG or PNG file.";
       }
 
@@ -24,6 +26,12 @@ if(isset($_FILES['image'])){
       }
 
       if(empty($errors)==true){
+
+         $query = "SELECT max(id) from table_news";
+         $result_i=mysqli_query($con,$query);
+         $row=mysqli_fetch_array($result_i);
+         $nextid=$row['max(id)']+1;
+         $file_name=$session_uid."_".$nextid."_".$file_name;
          move_uploaded_file($file_tmp,"./img/".$file_name);
          echo "Success !!! Thumbnail is uploaded succesfully <br";
       }else{
@@ -44,6 +52,8 @@ if (empty($_POST["content_text"])) {
   } else {
     $content_text = test_input($_POST["content_text"]);
   }
+session_start();
+$session_uid=$_SESSION['id'];
 
   if(empty($heading_text))
   {
@@ -59,10 +69,9 @@ if (empty($_POST["content_text"])) {
   else
   {
 	$date = date('Y-m-d H:i:s');
-	$query="INSERT INTO table_news (datetime, heading, subheading, contents, views, rating) VALUES ('".$date."','".$heading_text."','".$subheading_text."','".$content_text."',0,0)";
+	$query="INSERT INTO table_news (datetime, heading, subheading, contents, views, rating,userid) VALUES ('".$date."','".$heading_text."','".$subheading_text."','".$content_text."',0,0,".$session_uid.")";
 
 	//echo $query;
-        $con=mysqli_connect($dbhost,$dbusername,$dbpwd,$db);
         $result = mysqli_query($con,$query);
         if($result)
         {
@@ -92,9 +101,9 @@ function test_input($data) {
 }
 ?>
 <?php
-session_start();
 if(isset($_SESSION['id']))
 {
+$session_uid=$_SESSION['id'];
 }
 else
 {
@@ -152,17 +161,18 @@ CONTENTS
 
 <tr>
 <td>
-         <input type="submit"/>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
          <input type="file" name="image" onchange="readURL(this);"/>
 </td>
 <td>
   <img id="blah" src="#" alt="" />
+</td>
+</tr>
+
+<tr>
+<td>
+         <input type="submit"/>
+</td>
+<td>
 </td>
 </tr>
 
