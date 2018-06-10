@@ -24,7 +24,7 @@ if(isset($_FILES['image'])){
       }
 
       if(empty($errors)==true){
-         move_uploaded_file($file_tmp,"/opt/lampp/htdocs/mobileweb/img/".$file_name);
+         move_uploaded_file($file_tmp,"./img/".$file_name);
          echo "Success !!! Thumbnail is uploaded succesfully <br";
       }else{
          print_r($errors);
@@ -62,7 +62,7 @@ if (empty($_POST["content_text"])) {
 	$query="INSERT INTO table_news (datetime, heading, subheading, contents, views, rating) VALUES ('".$date."','".$heading_text."','".$subheading_text."','".$content_text."',0,0)";
 
 	//echo $query;
-        $con=mysqli_connect("localhost","root","","sg_news");
+        $con=mysqli_connect($dbhost,$dbusername,$dbpwd,$db);
         $result = mysqli_query($con,$query);
         if($result)
         {

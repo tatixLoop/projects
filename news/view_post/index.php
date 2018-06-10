@@ -78,7 +78,7 @@ h1 {
 
 <div style="background-color:#4ac475;padding:15px;text-align:center;">
   
-<a href='<?php echo $host?>/<?php echo $appdir; ?>/' style="text-decoration:none;"><h1>Good News</h1> </a>
+<a href='<?php echo $host?>/<?php echo $appdir; ?>/' style="text-decoration:none;"><h1>Tea Tales</h1> </a>
 </div>
 
 <div style="overflow:auto">
@@ -93,7 +93,17 @@ h1 {
 ?>
   <div class="main">
     <h2><?php  echo $row['heading']; ?></h2>
-author  | date
+<?php
+$phptime=strtotime($row['datetime']);
+$newsdate=date("d-M-Y",$phptime);
+$query="SELECT nickname from table_user WHERE id=".$row['userid'];
+$userdata=mysqli_query($con, $query);
+$userrow=mysqli_fetch_array($userdata);
+$author=$userrow['nickname'];
+?>
+
+<?php echo $author." | ". $newsdate."</br>";?>
+
 </br>
 </br>
 		<?php
