@@ -513,7 +513,7 @@ $img_preview = getImagePreview($row_ptag['id'], $con);
                                                                                 $img_preview = getImagePreview($row_ptag['id'], $con);
 ?>
 												<div class="thumb">
-													<img src="img/e2.jpg" alt="">
+<img width="100px" height="100px" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
 												</div>
 												<div class="detail">
 													<a href="image-post.html"><h6><?php echo $row_ptag['heading']; ?></h6></a>
@@ -530,7 +530,7 @@ $img_preview = getImagePreview($row_ptag['id'], $con);
                                                                                 $img_preview = getImagePreview($row_ptag['id'], $con);
 ?>
                                                                                                 <div class="thumb">
-                                                                                                        <img src="img/e2.jpg" alt="">
+<img width="100px" height="100px" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
                                                                                                 </div>
                                                                                                 <div class="detail">
                                                                                                         <a href="image-post.html"><h6><?php echo $row_ptag['heading']; ?></h6></a>
@@ -546,7 +546,7 @@ $img_preview = getImagePreview($row_ptag['id'], $con);
                                                                                 $img_preview = getImagePreview($row_ptag['id'], $con);
 ?>
                                                                                                 <div class="thumb">
-                                                                                                        <img src="img/e2.jpg" alt="">
+<img width="100px" height="100px" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
                                                                                                 </div>
                                                                                                 <div class="detail">
                                                                                                         <a href="image-post.html"><h6><?php echo $row_ptag['heading']; ?></h6></a>
@@ -591,7 +591,7 @@ $img_preview = getImagePreview($row_ptag['id'], $con);
                                                                                 $img_preview = getImagePreview($row_ptag['id'], $con);
 ?>
 										<div class="thumb">
-											<img src="img/m1.jpg" alt="">
+<img width="100px" height="100px" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
 										</div>
 										<div class="details">
 											<a href="image-post.html">
@@ -609,7 +609,7 @@ $img_preview = getImagePreview($row_ptag['id'], $con);
                                                                                 $img_preview = getImagePreview($row_ptag['id'], $con);
 ?>
                                                                                 <div class="thumb">
-                                                                                        <img src="img/m1.jpg" alt="">
+<img width="100px" height="100px" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
                                                                                 </div>
                                                                                 <div class="details">
                                                                                         <a href="image-post.html">
@@ -628,7 +628,7 @@ $img_preview = getImagePreview($row_ptag['id'], $con);
                                                                                 $img_preview = getImagePreview($row_ptag['id'], $con);
 ?>
                                                                                 <div class="thumb">
-                                                                                        <img src="img/m1.jpg" alt="">
+<img width="100px" height="100px" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
                                                                                 </div>
                                                                                 <div class="details">
                                                                                         <a href="image-post.html">
@@ -647,7 +647,7 @@ $img_preview = getImagePreview($row_ptag['id'], $con);
                                                                                 $img_preview = getImagePreview($row_ptag['id'], $con);
 ?>
                                                                                 <div class="thumb">
-                                                                                        <img src="img/m1.jpg" alt="">
+<img width="100px" height="100px" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
                                                                                 </div>
                                                                                 <div class="details">
                                                                                         <a href="image-post.html">
