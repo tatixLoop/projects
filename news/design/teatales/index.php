@@ -2,27 +2,36 @@
 <?php
 	include ('connection.php');
 	$con=mysqli_connect($dbhost,$dbusername,$dbpwd,$db);
-	$result_img = mysqli_query($con,"SELECT * FROM table_newsimg where id=(SELECT max(id) from table_news)");
-	$row_img_tag = mysqli_fetch_array($result_img);
-	$img_preview=$row_img_tag['img'];
-	$result_p = mysqli_query($con,"SELECT * FROM `table_news` WHERE id=".$row_img_tag['id']);
-	$row_ptag = mysqli_fetch_array($result_p);
-	$title=$row_ptag['heading'];
-	$author_topnews= getAuthorName($row_ptag['userid'], $con);
-	$topnewsdate=getFormatedNewsDate($row_ptag['datetime']);
-	$catagorytopnews=getCatagoryNews($row_ptag['catagory']);
-	$numCommentstopnews=getNumComments($row_ptag['id']);
 
 
 	$selectIdQuery= "SELECT * FROM table_news ORDER BY id DESC LIMIT 3";
 	$result_selectedNews = mysqli_query($con, $selectIdQuery);
-	$i = 0;
-	while($i <3)
-	{
-		$row_ptag = mysqli_fetch_array($result_selectedNews);
-		$i++;
-		
-	}
+
+	$selectLatestQuery = "SELECT * FROM table_news ORDER BY id DESC";
+	$result_latestNews = mysqli_query($con, $selectLatestQuery);
+
+	
+	$row_ptag = mysqli_fetch_array($result_latestNews);
+	$row_ptag = mysqli_fetch_array($result_latestNews);
+
+
+	$selectPopQuery = "SELECT * FROM table_news ORDER BY id ASC";
+	$result_popNews = mysqli_query($con, $selectPopQuery);
+
+	$selectEditorQuery = "SELECT * FROM table_news ORDER BY id ASC";
+	$result_EditorNews = mysqli_query($con, $selectEditorQuery);
+
+	$selectMostPopQuery = "SELECT * FROM table_news ORDER BY id ASC";
+	$result_MostPopNews = mysqli_query($con, $selectMostPopQuery);
+
+function getImagePreview($id, $con)
+{
+	$query ="SELECT * FROM table_newsimg where id=".$id;
+	$result_img = mysqli_query($con,$query);
+	$row_img_tag = mysqli_fetch_array($result_img);
+	return $row_img_tag['img'];
+ 
+}
 
 function getNumComments($id)
 {
@@ -158,21 +167,25 @@ function getCatagoryNews($catagory)
 					<div class="row small-gutters">
 						<div class="col-lg-8 top-post-left mt-10">
 							<div class="feature-image-thumb relative">
+	<?php	$row_ptag = mysqli_fetch_array($result_selectedNews); ?>
 								<div class="overlay overlay-bg"></div>
+<?php
+$img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 								<img class="img-fluid" src="<?php echo $host."/".$appdir."/img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/img/".$img_preview;?>">
 							</div>
 							<div class="top-post-details">
 
 								<ul class="tags">
-									<li><a href="#"><?php echo $catagorytopnews?></a></li>
+									<li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
 								</ul>
 								<a href="image-post.html">
-									<h3><?php echo $title; ?></h3>
+									<h3><?php echo $row_ptag['heading']; ?></h3>
 								</a>
 								<ul class="meta">
-									<li><a href="#"><span class="lnr lnr-user"></span><?php echo $author_topnews; ?></a></li>
-									<li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo $topnewsdate; ?></a></li>
-									<li><a href="#"><span class="lnr lnr-bubble"></span><?php echo $numCommentstopnews." Comments"; ?></a></li>
+									<li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+									<li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+									<li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
 								</ul>
 							</div>
 						</div>
@@ -181,48 +194,61 @@ function getCatagoryNews($catagory)
 
 							<div class="single-top-post mt-10">
 								<div class="feature-image-thumb relative">
+<?php
+									$row_ptag = mysqli_fetch_array($result_selectedNews);
+									$img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 									<div class="overlay overlay-bg"></div>
-									<img class="img-fluid" src="img/top-post2.jpg" alt="">
+									<img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
+
 								</div>
 								<div class="top-post-details">
 									<ul class="tags">
-										<li><a href="#">Food Habit</a></li>
+										<li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
 									</ul>
 									<a href="image-post.html">
-										<h4>A Discount Toner Cartridge Is Better Than Ever.2</h4>
+										<h4><?php echo $row_ptag['heading']; ?></h4>
 									</a>
 									<ul class="meta">
-										<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-										<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-										<li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
+										<li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+										<li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+										<li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
 									</ul>
 								</div>
 							</div>
-							<div class="single-top-post mt-10">
-								<div class="feature-image-thumb relative">
-									<div class="overlay overlay-bg"></div>
-									<img class="img-fluid" src="img/top-post3.jpg" alt="">
-								</div>
-								<div class="top-post-details">
-									<ul class="tags">
-										<li><a href="#">Food Habit</a></li>
-									</ul>
-									<a href="image-post.html">
-										<h4>A Discount Toner Cartridge Is Better 3</h4>
-									</a>
-									<ul class="meta">
-										<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-										<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-										<li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
-									</ul>
-								</div>
-							</div>
+                                                        <div class="single-top-post mt-10">
+                                                                <div class="feature-image-thumb relative">
+<?php
+                                                                        $row_ptag = mysqli_fetch_array($result_selectedNews);
+                                                                        $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                        <div class="overlay overlay-bg"></div>
+                                                                        <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
+
+                                                                </div>
+                                                                <div class="top-post-details">
+                                                                        <ul class="tags">
+                                                                                <li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
+                                                                        </ul>
+                                                                        <a href="image-post.html">
+                                                                                <h4><?php echo $row_ptag['heading']; ?></h4>
+                                                                        </a>
+                                                                        <ul class="meta">
+                                                                                <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
+                                                                        </ul>
+                                                                </div>
+                                                        </div>
+
 						</div>
+<!--
 						<div class="col-lg-12">
 							<div class="news-tracker-wrap">
 								<h6><span>Breaking News:</span>   <a href="#">Astronomy Binoculars A Great Alternative</a></h6>
 							</div>
 						</div>
+!-->
 					</div>
 				</div>
 			</section>
@@ -236,105 +262,123 @@ function getCatagoryNews($catagory)
 							<div class="latest-post-wrap">
 								<h4 class="cat-title">Latest News</h4>
 								<div class="single-latest-post row align-items-center">
+<?php
+
+
+									$row_ptag = mysqli_fetch_array($result_latestNews);
+                                                                        $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 									<div class="col-lg-5 post-left">
 										<div class="feature-img relative">
-											<div class="overlay overlay-bg"></div>
-											<img class="img-fluid" src="img/l1.jpg" alt="">
+                                                                                        <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
 										</div>
 										<ul class="tags">
-											<li><a href="#">Lifestyle</a></li>
+											<li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
 										</ul>
 									</div>
 									<div class="col-lg-7 post-right">
 										<a href="image-post.html">
-											<h4>A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
+											<h4><?php echo $row_ptag['heading']; ?></h4>
 										</a>
 										<ul class="meta">
-											<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											<li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
+											<li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+											<li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+											<li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
 										</ul>
 										<p class="excert">
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
+<?php echo$row_ptag['subheading']; ?>
 										</p>
 									</div>
 								</div>
-								<div class="single-latest-post row align-items-center">
-									<div class="col-lg-5 post-left">
-										<div class="feature-img relative">
-											<div class="overlay overlay-bg"></div>
-											<img class="img-fluid" src="img/l2.jpg" alt="">
-										</div>
-										<ul class="tags">
-											<li><a href="#">Science</a></li>
-										</ul>
-									</div>
-									<div class="col-lg-7 post-right">
-										<a href="image-post.html">
-											<h4>A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
-										</a>
-										<ul class="meta">
-											<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											<li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
-										</ul>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-										</p>
-									</div>
-								</div>
-								<div class="single-latest-post row align-items-center">
-									<div class="col-lg-5 post-left">
-										<div class="feature-img relative">
-											<div class="overlay overlay-bg"></div>
-											<img class="img-fluid" src="img/l3.jpg" alt="">
-										</div>
-										<ul class="tags">
-											<li><a href="#">Travel</a></li>
-										</ul>
-									</div>
-									<div class="col-lg-7 post-right">
-										<a href="image-post.html">
-											<h4>A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
-										</a>
-										<ul class="meta">
-											<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											<li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
-										</ul>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-										</p>
-									</div>
-								</div>
-								<div class="single-latest-post row align-items-center">
-									<div class="col-lg-5 post-left">
-										<div class="feature-img relative">
-											<div class="overlay overlay-bg"></div>
-											<img class="img-fluid" src="img/l4.jpg" alt="">
-										</div>
-										<ul class="tags">
-											<li><a href="#">Fashion</a></li>
-										</ul>
-									</div>
-									<div class="col-lg-7 post-right">
-										<a href="image-post.html">
-											<h4>A Discount Toner Cartridge Is
-											Better Than Ever.</h4>
-										</a>
-										<ul class="meta">
-											<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											<li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
-										</ul>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-										</p>
-									</div>
-								</div>
+
+                                                                 <div class="single-latest-post row align-items-center">
+<?php
+
+
+                                                                        $row_ptag = mysqli_fetch_array($result_latestNews);
+                                                                        $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                        <div class="col-lg-5 post-left">
+                                                                                <div class="feature-img relative">
+                                                                                        <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
+                                                                                </div>
+                                                                                <ul class="tags">
+                                                                                        <li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
+                                                                                </ul>
+                                                                        </div>
+                                                                        <div class="col-lg-7 post-right">
+                                                                                <a href="image-post.html">
+                                                                                        <h4><?php echo $row_ptag['heading']; ?></h4>
+                                                                                </a>
+                                                                                <ul class="meta">
+                                                                                        <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
+                                                                                </ul>
+                                                                                <p class="excert">
+<?php echo$row_ptag['subheading']; ?>
+                                                                                </p>
+                                                                        </div>
+                                                                </div>
+
+                                                                 <div class="single-latest-post row align-items-center">
+<?php
+
+
+                                                                        $row_ptag = mysqli_fetch_array($result_latestNews);
+                                                                        $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                        <div class="col-lg-5 post-left">
+                                                                                <div class="feature-img relative">
+                                                                                        <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
+                                                                                </div>
+                                                                                <ul class="tags">
+                                                                                        <li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
+                                                                                </ul>
+                                                                        </div>
+                                                                        <div class="col-lg-7 post-right">
+                                                                                <a href="image-post.html">
+                                                                                        <h4><?php echo $row_ptag['heading']; ?></h4>
+                                                                                </a>
+                                                                                <ul class="meta">
+                                                                                        <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
+                                                                                </ul>
+                                                                                <p class="excert">
+<?php echo$row_ptag['subheading']; ?>
+                                                                                </p>
+                                                                        </div>
+                                                                </div>
+
+
+								 <div class="single-latest-post row align-items-center">
+<?php
+                                                                        $row_ptag = mysqli_fetch_array($result_latestNews);
+                                                                        $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                        <div class="col-lg-5 post-left">
+                                                                                <div class="feature-img relative">
+                                                                                        <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
+                                                                                </div>
+                                                                                <ul class="tags">
+                                                                                        <li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
+                                                                                </ul>
+                                                                        </div>
+                                                                        <div class="col-lg-7 post-right">
+                                                                                <a href="image-post.html">
+                                                                                        <h4><?php echo $row_ptag['heading']; ?></h4>
+                                                                                </a>
+                                                                                <ul class="meta">
+                                                                                        <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
+                                                                                </ul>
+                                                                                <p class="excert">
+<?php echo$row_ptag['subheading']; ?>
+                                                                                </p>
+                                                                        </div>
+                                                                </div>
 							</div>
 							<!-- End latest-post Area -->
 							
@@ -348,20 +392,24 @@ function getCatagoryNews($catagory)
 								<h4 class="title">Popular Posts</h4>
 								<div class="feature-post relative">
 									<div class="feature-img relative">
+<?php
+	                                                                        $row_ptag = mysqli_fetch_array($result_popNews);
+        	                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 										<div class="overlay overlay-bg"></div>
-										<img class="img-fluid" src="img/f1.jpg" alt="">
+                                                                                <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
 									</div>
 									<div class="details">
 										<ul class="tags">
-											<li><a href="#">Food Habit</a></li>
+											<li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
 										</ul>
 										<a href="image-post.html">
-											<h3>A Discount Toner Cartridge Is Better Than Ever. 4</h3>
+											<h3><?php echo $row_ptag['heading']; ?></h3>
 										</a>
 										<ul class="meta">
-											<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-											<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-											<li><a href="#"><span class="lnr lnr-bubble"></span>06 Comments</a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
 										</ul>
 									</div>
 								</div>
@@ -369,53 +417,59 @@ function getCatagoryNews($catagory)
 									<div class="col-lg-6 single-popular-post">
 										<div class="feature-img-wrap relative">
 											<div class="feature-img relative">
+<?php
+	                                                                        $row_ptag = mysqli_fetch_array($result_popNews);
+        	                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/f2.jpg" alt="">
+                                                                                <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
 											</div>
 											<ul class="tags">
-												<li><a href="#">Travel</a></li>
+												<li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
 											</ul>
 										</div>
 										<div class="details">
 											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
+												<h4><?php echo $row_ptag['heading']; ?></h4>
 											</a>
 											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-												<li><a href="#"><span class="lnr lnr-bubble"></span>06 </a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
 											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
+											<p class="excert"> <?php echo $row_ptag['subheading']; ?>
 											</p>
 										</div>
 									</div>
-									<div class="col-lg-6 single-popular-post">
-										<div class="feature-img-wrap relative">
-											<div class="feature-img relative">
-												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/f3.jpg" alt="">
-											</div>
-											<ul class="tags">
-												<li><a href="#">Travel</a></li>
-											</ul>
-										</div>
-										<div class="details">
-											<a href="image-post.html">
-												<h4>A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-												<li><a href="#"><span class="lnr lnr-bubble"></span>06 </a></li>
-											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
-											</p>
-										</div>
-									</div>
+                                                                        <div class="col-lg-6 single-popular-post">
+                                                                                <div class="feature-img-wrap relative">
+                                                                                        <div class="feature-img relative">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_popNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                                                <div class="overlay overlay-bg"></div>
+                                                                                <img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
+                                                                                        </div>
+                                                                                        <ul class="tags">
+                                                                                                <li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
+                                                                                        </ul>
+                                                                                </div>
+                                                                                <div class="details">
+                                                                                        <a href="image-post.html">
+                                                                                                <h4><?php echo $row_ptag['heading']; ?></h4>
+                                                                                        </a>
+                                                                                        <ul class="meta">
+                                                                                        <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
+                                                                                        </ul>
+                                                                                        <p class="excert"> <?php echo $row_ptag['subheading']; ?>
+                                                                                        </p>
+                                                                                </div>
+                                                                        </div>
+
+
 								</div>
 							</div>
 							<!-- End popular-post Area -->
@@ -428,74 +482,87 @@ function getCatagoryNews($catagory)
 									<h6 class="title">Editor’s Pick</h6>
 									<div class="editors-pick-post">
 										<div class="feature-img-wrap relative">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_EditorNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 											<div class="feature-img relative">
 												<div class="overlay overlay-bg"></div>
-												<img class="img-fluid" src="img/e1.jpg" alt="">
+                                                                                		<img class="img-fluid" src="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>" alt="<?php echo $host."/".$appdir."/../../img/".$img_preview;?>">
 											</div>
 											<ul class="tags">
-												<li><a href="#">Travel</a></li>
+												<li><a href="#"><?php echo getCatagoryNews($row_ptag['catagory']); ?></a></li>
 											</ul>
 										</div>
 										<div class="details">
 											<a href="image-post.html">
-												<h4 class="mt-20">A Discount Toner Cartridge Is
-												Better Than Ever.</h4>
+												<h4 class="mt-20"><?php echo $row_ptag['heading']; ?></h4>
 											</a>
 											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-user"></span>Mark wiens</a></li>
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-												<li><a href="#"><span class="lnr lnr-bubble"></span>06 </a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-user"></span><?php echo  getAuthorName($row_ptag['userid'], $con); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                        <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id'])." Comments"; ?></a></li>
 											</ul>
-											<p class="excert">
-												Lorem ipsum dolor sit amet, consecteturadip isicing elit, sed do eiusmod tempor incididunt ed do eius.
+											<p class="excert"> <?php echo $row_ptag['subheading']; ?>
 											</p>
 										</div>
 										<div class="post-lists">
 											<div class="single-post d-flex flex-row">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_EditorNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 												<div class="thumb">
 													<img src="img/e2.jpg" alt="">
 												</div>
 												<div class="detail">
-													<a href="image-post.html"><h6>Help Finding Information
-													Online is so easy</h6></a>
+													<a href="image-post.html"><h6><?php echo $row_ptag['heading']; ?></h6></a>
 													<ul class="meta">
-														<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-														<li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
+														<li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+														<li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id']);?></a></li>
 													</ul>
 												</div>
 											</div>
-											<div class="single-post d-flex flex-row">
-												<div class="thumb">
-													<img src="img/e3.jpg" alt="">
-												</div>
-												<div class="detail">
-													<a href="image-post.html"><h6>Compatible Inkjet Cartr
-													world famous</h6></a>
-													<ul class="meta">
-														<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-														<li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
-													</ul>
-												</div>
-											</div>
-											<div class="single-post d-flex flex-row">
-												<div class="thumb">
-													<img src="img/e4.jpg" alt="">
-												</div>
-												<div class="detail">
-													<a href="image-post.html"><h6>5 Tips For Offshore Soft
-													Development </h6></a>
-													<ul class="meta">
-														<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-														<li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
-													</ul>
-												</div>
-											</div>
+
+<div class="single-post d-flex flex-row">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_EditorNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                                                <div class="thumb">
+                                                                                                        <img src="img/e2.jpg" alt="">
+                                                                                                </div>
+                                                                                                <div class="detail">
+                                                                                                        <a href="image-post.html"><h6><?php echo $row_ptag['heading']; ?></h6></a>
+                                                                                                        <ul class="meta">
+                                                                                                                <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                                                <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id']);?></a></li>
+                                                                                                        </ul>
+                                                                                                </div>
+                                                                                        </div>
+<div class="single-post d-flex flex-row">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_EditorNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                                                <div class="thumb">
+                                                                                                        <img src="img/e2.jpg" alt="">
+                                                                                                </div>
+                                                                                                <div class="detail">
+                                                                                                        <a href="image-post.html"><h6><?php echo $row_ptag['heading']; ?></h6></a>
+                                                                                                        <ul class="meta">
+                                                                                                                <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                                                <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id']);?></a></li>
+                                                                                                        </ul>
+                                                                                                </div>
+                                                                                        </div>
 										</div>
 									</div>
 								</div>
 								<div class="single-sidebar-widget ads-widget">
 									<img class="img-fluid" src="img/sidebar-ads.jpg" alt="">
 								</div>
+<!--
 								<div class="single-sidebar-widget newsletter-widget">
 									<h6 class="title">Newsletter</h6>
 									<p>
@@ -515,68 +582,83 @@ function getCatagoryNews($catagory)
 										You can unsubscribe us at any time
 									</p>
 								</div>
+--!>
 								<div class="single-sidebar-widget most-popular-widget">
 									<h6 class="title">Most Popular</h6>
 									<div class="single-list flex-row d-flex">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_MostPopNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
 										<div class="thumb">
 											<img src="img/m1.jpg" alt="">
 										</div>
 										<div class="details">
 											<a href="image-post.html">
-												<h6>Help Finding Information
-												Online is so easy</h6>
+												<h6><?php echo $row_ptag['heading']; ?></h6>
 											</a>
 											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-												<li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
+												<li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+												<li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id']);?></a></li>
 											</ul>
 										</div>
 									</div>
-									<div class="single-list flex-row d-flex">
-										<div class="thumb">
-											<img src="img/m2.jpg" alt="">
-										</div>
-										<div class="details">
-											<a href="image-post.html">
-												<h6>Compatible Inkjet Cartr
-												world famous</h6>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-												<li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="single-list flex-row d-flex">
-										<div class="thumb">
-											<img src="img/m3.jpg" alt="">
-										</div>
-										<div class="details">
-											<a href="image-post.html">
-												<h6>5 Tips For Offshore Soft
-												Development </h6>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-												<li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="single-list flex-row d-flex">
-										<div class="thumb">
-											<img src="img/m4.jpg" alt="">
-										</div>
-										<div class="details">
-											<a href="image-post.html">
-												<h6>5 Tips For Offshore Soft
-												Development </h6>
-											</a>
-											<ul class="meta">
-												<li><a href="#"><span class="lnr lnr-calendar-full"></span>03 April, 2018</a></li>
-												<li><a href="#"><span class="lnr lnr-bubble"></span>06</a></li>
-											</ul>
-										</div>
-									</div>
+                                                                        <div class="single-list flex-row d-flex">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_MostPopNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                                <div class="thumb">
+                                                                                        <img src="img/m1.jpg" alt="">
+                                                                                </div>
+                                                                                <div class="details">
+                                                                                        <a href="image-post.html">
+                                                                                                <h6><?php echo $row_ptag['heading']; ?></h6>
+                                                                                        </a>
+                                                                                        <ul class="meta">
+                                                                                                <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                                <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id']);?></a></li>
+                                                                                        </ul>
+                                                                                </div>
+                                                                        </div>
+
+                                                                        <div class="single-list flex-row d-flex">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_MostPopNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                                <div class="thumb">
+                                                                                        <img src="img/m1.jpg" alt="">
+                                                                                </div>
+                                                                                <div class="details">
+                                                                                        <a href="image-post.html">
+                                                                                                <h6><?php echo $row_ptag['heading']; ?></h6>
+                                                                                        </a>
+                                                                                        <ul class="meta">
+                                                                                                <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                                <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id']);?></a></li>
+                                                                                        </ul>
+                                                                                </div>
+                                                                        </div>
+
+                                                                        <div class="single-list flex-row d-flex">
+<?php
+                                                                                $row_ptag = mysqli_fetch_array($result_MostPopNews);
+                                                                                $img_preview = getImagePreview($row_ptag['id'], $con);
+?>
+                                                                                <div class="thumb">
+                                                                                        <img src="img/m1.jpg" alt="">
+                                                                                </div>
+                                                                                <div class="details">
+                                                                                        <a href="image-post.html">
+                                                                                                <h6><?php echo $row_ptag['heading']; ?></h6>
+                                                                                        </a>
+                                                                                        <ul class="meta">
+                                                                                                <li><a href="#"><span class="lnr lnr-calendar-full"></span><?php echo getFormatedNewsDate($row_ptag['datetime']); ?></a></li>
+                                                                                                <li><a href="#"><span class="lnr lnr-bubble"></span><?php echo getNumComments($row_ptag['id']);?></a></li>
+                                                                                        </ul>
+                                                                                </div>
+                                                                        </div>
 								</div>
 								<div class="single-sidebar-widget social-network-widget">
 									<h6 class="title">Social Networks</h6>
