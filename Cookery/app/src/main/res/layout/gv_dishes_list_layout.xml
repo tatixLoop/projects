@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="170dp"
         android:layout_height="0dp"
-        android:background="@android:color/darker_gray">
+        android:background="@color/redDark">
 
         <TextView
             android:id="@+id/txt_cooktimegv"
@@ -18,9 +18,9 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/txt_recipeName"
-            android:textColor="@android:color/white"
             android:layout_marginStart="5dp"
-            android:text="200min" />
+            android:text="200min"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/txt_calgv"
@@ -28,19 +28,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
             android:layout_below="@+id/txt_recipeName"
-            android:textColor="@android:color/white"
-            android:text="0" />
+            android:layout_marginEnd="5dp"
+            android:text="0"
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/txt_recipeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
             android:paddingTop="170dp"
             android:text="TextView"
-            android:layout_marginStart="5dp"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 

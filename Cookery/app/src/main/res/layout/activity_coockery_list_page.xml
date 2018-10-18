@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/lightbg"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -39,10 +40,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
             android:paddingBottom="5dp"
-            android:paddingTop="10dp"
-             />
+            android:scrollbars="vertical" />
 
     </LinearLayout>
 
