@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
@@ -64,6 +65,8 @@ public class CoockeryPreparation extends AppCompatActivity {
         gDish = data.getName();
         gId = data.getId();
 
+        TextView title_text = findViewById(R.id.txt_recipeTitle);
+        title_text.setText(""+data.getName());
         String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                 data.getImg_path() + "/title_image.jpg";
         RelativeLayout title = findViewById(R.id.rel_title);
@@ -78,6 +81,10 @@ public class CoockeryPreparation extends AppCompatActivity {
         author = findViewById(R.id.txt_author);
         calory = findViewById(R.id.txt_calories);
 
+        cookTime.setText(data.getCooktimeinsec() + "sec");
+        calory.setText(data.getCalory() + "cal");
+        serveCount.setText("serves "+data.getServeCount());
+        author.setText(data.getAuthor());
 
 
         new GetDishInfo().execute();
@@ -131,7 +138,7 @@ public class CoockeryPreparation extends AppCompatActivity {
                     int success = json.getInt(TAG_SUCCESS);
 
                     if (success == 1) {
-                        dishlist = json.getJSONArray(TAG_DISH);
+                        /*dishlist = json.getJSONArray(TAG_DISH);
 
                         for (int i = 0; i < dishlist.length(); i++) {
                             JSONObject c = dishlist.getJSONObject(i);
@@ -152,6 +159,7 @@ public class CoockeryPreparation extends AppCompatActivity {
                             );
 
                         }
+*/
                         ingredientlist = json.getJSONArray(TAG_INGREDIENTS);
                         cookRecipe.setNumIngredients(ingredientlist.length());
                         String [] ingredients = new String[ingredientlist.length()];
@@ -220,10 +228,12 @@ public class CoockeryPreparation extends AppCompatActivity {
 
             runOnUiThread(new Runnable() {
                 public void run() {
+/*
                     cookTime.setText(cookRecipe.getCooktimeinsec() + "sec");
                     calory.setText(cookRecipe.getCalory() + "cal");
                     serveCount.setText("serves "+cookRecipe.getServeCount());
                     author.setText(cookRecipe.getAuthor());
+*/
 
                     ListView lv_steps = findViewById(R.id.lv_listSteps);
                     adapterStepList  = new AdapterStepListView(getApplicationContext(), cookRecipe.getStepList());
@@ -234,6 +244,10 @@ public class CoockeryPreparation extends AppCompatActivity {
                     adapterIngredientList  = new AdapterIngredientList(getApplicationContext(), cookRecipe.getIngredientList());
                     lv_ingredient.setAdapter(adapterIngredientList);
                     setListViewHeightBasedOnChildren(lv_ingredient);
+
+                    ScrollView preps = findViewById(R.id.scroll);
+                    preps.scrollTo(0,0);
+                    preps.fullScroll( View.FOCUS_UP);
 
                 }
             });

@@ -11,14 +11,73 @@ public class ListItemDishes implements Serializable {
     int type;
     String name;
     String img_path;
-
+    int cooktimeinsec;
+    int serveCount;
+    int calory;
+    int rating;
+    String author;
     String box_preview;
+
+
+    public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, String author) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.img_path = img_path;
+        this.cooktimeinsec = cooktimeinsec;
+        this.serveCount = serveCount;
+        this.calory = calory;
+        this.rating = rating;
+        this.author = author;
+    }
+
+
 
     public ListItemDishes(int id, int type, String name, String img_path) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.img_path = img_path;
+    }
+
+    public int getCooktimeinsec() {
+        return cooktimeinsec;
+    }
+
+    public void setCooktimeinsec(int cooktimeinsec) {
+        this.cooktimeinsec = cooktimeinsec;
+    }
+
+    public int getServeCount() {
+        return serveCount;
+    }
+
+    public void setServeCount(int serveCount) {
+        this.serveCount = serveCount;
+    }
+
+    public int getCalory() {
+        return calory;
+    }
+
+    public void setCalory(int calory) {
+        this.calory = calory;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public int getId() {

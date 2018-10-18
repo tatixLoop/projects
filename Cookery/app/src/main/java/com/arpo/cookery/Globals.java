@@ -7,10 +7,19 @@ package com.arpo.cookery;
 public class Globals {
 
 
-    static String host="http://192.168.43.207/";
-    static String appdir="/app/news/cookery/";
+    static String host="http://tatixtech.com/";
+    static String appdir="/cookery/";
     static String apipath="/api/";
     static String img_path="/img/";
+
+/*    static String host="http://192.168.43.207/";
+    static String appdir="/app/news/cookery/";
+    static String apipath="/api/";
+    static String img_path="/img/";*/
+
+
+
+
 
     static  String dishName[] = {
             "unknown recipe",

@@ -146,13 +146,24 @@ public class CoockeryListPage extends AppCompatActivity {
 
                             //print("Id="+c.getInt("id")+ " DishName = "+c.getString("dishname")+ " img_path="+c.getString("img_path"));
 
-                            ListItemDishes dish = new ListItemDishes(
+                            /*ListItemDishes dish = new ListItemDishes(
                                     c.getInt("id"),
                                     c.getInt("type"),
                                     c.getString("dishname"),
                                     c.getString("img_path")
-                                    );
-
+                                    );*/
+                            print("Adding "+c.getString("dishname"));
+                            ListItemDishes dish = new ListItemDishes(
+                                    c.getInt("id"),
+                                    c.getInt("type"),
+                                    c.getString("dishname"),
+                                    c.getString("img_path"),
+                                    c.getInt("cooktimeinsec"),
+                                    c.getInt("serves"),
+                                    c.getInt("calory"),
+                                    c.getInt("rating"),
+                                    c.getString("author")
+                            );
                             listOfDishes.add(dish);
                         }
                     } else {

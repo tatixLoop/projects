@@ -16,7 +16,7 @@
             android:id="@+id/rel_dishlist"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/colorPrimary">
+            android:background="@android:color/white">
 
             <TextView
                 android:id="@+id/txt_dishType"
