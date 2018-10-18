@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CoockeryListPage extends AppCompatActivity {
+public class CoockeryListPage extends AppCompatActivity implements AdapterDishGridView.ItemListener {
 
     void print(String str)
     {
@@ -69,27 +72,23 @@ public class CoockeryListPage extends AppCompatActivity {
 
         new GetDishesList().execute();
 
-        GridView gv_dishes = findViewById(R.id.gv_dishlist);
+       // GridView gv_dishes = findViewById(R.id.gv_dishlist);
 
-        adapterDishList = new AdapterDishGridView(this, listOfDishes);
-        gv_dishes.setAdapter(adapterDishList);
-        gv_dishes.setNumColumns(2);
-        gv_dishes.setVerticalSpacing(50);
+        adapterDishList = new AdapterDishGridView(this, listOfDishes, this);
 
-        gv_dishes.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?>parent, View v, int position, long id)
-            {
+        RecyclerView rv_dishes = findViewById(R.id.recyclerView);
+        rv_dishes.setAdapter(adapterDishList);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,  StaggeredGridLayoutManager.VERTICAL);
+        rv_dishes.setLayoutManager(manager);
 
-                Intent preparationPage = new Intent(CoockeryListPage.this, CoockeryPreparation.class);
-                preparationPage.putExtra("data",listOfDishes.get(position) );
-                startActivity(preparationPage);
-
-            }
-        });
 
     }
-
+    @Override
+    public void onItemClick(ListItemDishes item) {
+        Intent preparationPage = new Intent(CoockeryListPage.this, CoockeryPreparation.class);
+        preparationPage.putExtra("data",item );
+        startActivity(preparationPage);
+    }
     /**
      * Background Async Task to Load all Dishes by making HTTP Request
      * */

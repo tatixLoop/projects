@@ -34,16 +34,16 @@
 
         </RelativeLayout>
 
-        <GridView
-            android:id="@+id/gv_dishlist"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scrollbars="vertical"
             android:paddingBottom="5dp"
-            android:paddingEnd="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingStart="20dp"
-            android:paddingTop="10dp"></GridView>
+            android:paddingTop="10dp"
+             />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
