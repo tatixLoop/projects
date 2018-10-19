@@ -14,33 +14,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/lightbg"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rel_title"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                android:background="@android:color/holo_blue_bright">
+                android:background="@color/lightbg">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_alignParentBottom="true"
-                    android:background="?android:attr/colorButtonNormal">
+                    android:background="@color/lightbg">
 
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="350dp"
                     android:layout_height="150dp"
-                    android:layout_alignParentBottom="true"
 
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="13dp"
                     android:alpha="0.7"
                     android:background="@android:drawable/dialog_holo_light_frame"
-                    android:orientation="vertical"
-                    android:id="@+id/linearLayout">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -70,8 +71,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="80dp"
-                                    android:layout_marginStart="80dp"
-                                    android:text="Cooktime" />
+                                    android:layout_marginStart="80dp" />
                             </RelativeLayout>
                         </RelativeLayout>
 
@@ -99,8 +99,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="80dp"
-                                    android:layout_marginStart="80dp"
-                                    android:text="Calories" />
+                                    android:layout_marginStart="80dp" />
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -135,8 +134,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="80dp"
-                                    android:layout_marginStart="80dp"
-                                    android:text="Serves 2" />
+                                    android:layout_marginStart="80dp" />
                             </RelativeLayout>
                         </RelativeLayout>
 
@@ -164,8 +162,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="80dp"
-                                    android:layout_marginStart="80dp"
-                                    android:text="Share" />
+                                    android:layout_marginStart="80dp" />
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -229,6 +226,10 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignStart="@+id/linearLayout"
                     android:layout_marginTop="13dp"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
                     android:text="TextView"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
@@ -294,7 +295,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -324,7 +325,8 @@
                             android:layout_alignBottom="@+id/txt_author"
                             android:layout_marginEnd="12dp"
                             android:layout_toStartOf="@+id/txt_author"
-                            android:text="Author :" />
+                            android:text="Author :"
+                            android:textColor="@android:color/white" />
 
                         <TextView
                             android:id="@+id/txt_author"
@@ -333,7 +335,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="17dp"
-                            android:text="Cookery app" />
+                            android:textColor="@android:color/white" />
                     </RelativeLayout>
 
                 </RelativeLayout>
@@ -354,19 +356,23 @@
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:layout_alignParentStart="true"
-                            android:layout_marginStart="56dp"
+                            android:layout_marginStart="46dp"
                             android:background="@android:color/black"></RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="15dp"
+                            android:layout_height="wrap_content"
                             android:layout_toRightOf="@id/relshareimg"
                             android:paddingLeft="20dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="SHARE" />
+                                android:layout_alignParentTop="true"
+                                android:layout_centerVertical="true"
+                                android:text="Rate recipe   "
+                                android:textColor="@android:color/white"
+                                android:textStyle="bold" />
 
                         </RelativeLayout>
                     </RelativeLayout>

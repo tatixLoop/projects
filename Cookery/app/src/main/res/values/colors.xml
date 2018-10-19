@@ -6,4 +6,5 @@
     <color name="greenColor">#38DE56</color>
     <color name="redDark">#3d484c</color>
     <color name="lightbg">#66757a</color>
+    <color name="text_shadow">#000000</color>
 </resources>

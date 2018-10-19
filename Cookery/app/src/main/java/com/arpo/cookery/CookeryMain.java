@@ -21,6 +21,24 @@ public class CookeryMain extends AppCompatActivity {
         RelativeLayout relLunch = findViewById(R.id.rel_lunchRec);
         RelativeLayout snckRel = findViewById(R.id.rel_snacksRec);
 
+        String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/1.jpg";
+
+        Runnable imgFetch1 = new DishImageFetcher(title_image, relBreakfast, this);
+        new Thread(imgFetch1).start();
+
+        title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/2.jpg";
+
+        Runnable imgFetch2 = new DishImageFetcher(title_image, relLunch, this);
+        new Thread(imgFetch2).start();
+
+        title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/3.jpg";
+
+        Runnable imgFetch3 = new DishImageFetcher(title_image, snckRel, this);
+        new Thread(imgFetch3).start();
+
         relBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

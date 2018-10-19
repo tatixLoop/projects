@@ -6,11 +6,13 @@ package com.arpo.cookery;
 
 public class ListItemIngredients {
     int qty;
+    int selected;
     String ingredient;
 
     public ListItemIngredients(int qty, String ingredient) {
         this.qty = qty;
         this.ingredient = ingredient;
+        selected = 0;
     }
 
     public int getQty() {

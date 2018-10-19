@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightbg"
     tools:context="com.arpo.cookery.CoockeryListPage">
 
 
@@ -17,7 +18,8 @@
             android:id="@+id/rel_dishlist"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@android:color/white">
+            android:layout_marginBottom="10dp"
+            android:background="@color/lightbg">
 
             <TextView
                 android:id="@+id/txt_dishType"
@@ -30,6 +32,10 @@
                 android:textColor="@android:color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
                 tools:text="DISH NAME" />
 
 

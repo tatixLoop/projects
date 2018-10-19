@@ -54,6 +54,22 @@ public class AdapterIngredientList extends BaseAdapter {
             TextView txt_ingredient = convertView.findViewById(R.id.txt_ingredient);
             txt_ingredient.setText(item.getIngredient());
 
+            final RelativeLayout checkBox = convertView.findViewById(R.id.chkBox);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(item.selected == 0) {
+                        item.selected = 1;
+                        checkBox.setBackground(context.getResources().getDrawable(R.drawable.laout_bg_green));
+                    }
+                    else
+                    {
+                        checkBox.setBackground(context.getResources().getDrawable(R.drawable.red_circle));
+                        item.selected = 0;
+                    }
+
+                }
+            });
 
         }
         return convertView;

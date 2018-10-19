@@ -18,21 +18,23 @@
             android:id="@+id/rel_breakfastRec"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@android:color/holo_green_light">
+            android:background="@color/lightbg">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="18dp"
                 android:text="Break Fast Receipe"
                 android:textColor="@android:color/background_light"
                 android:textColorLink="@android:color/background_light"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
         </RelativeLayout>
 
 
@@ -40,21 +42,24 @@
             android:id="@+id/rel_lunchRec"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@android:color/holo_red_dark">
+            android:background="@color/lightbg">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="18dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="22dp"
                 android:text="Lunch Receipe"
                 android:textColor="@android:color/background_light"
                 android:textColorLink="@android:color/background_light"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
         </RelativeLayout>
 
 
@@ -62,7 +67,7 @@
             android:id="@+id/rel_snacksRec"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="?android:attr/colorActivatedHighlight">
+            android:background="@color/lightbg">
 
             <TextView
                 android:id="@+id/textView3"
@@ -76,7 +81,11 @@
                 android:textColor="@android:color/background_light"
                 android:textColorLink="@android:color/background_light"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>
