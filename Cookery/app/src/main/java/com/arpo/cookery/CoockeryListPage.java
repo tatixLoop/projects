@@ -40,6 +40,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     JSONArray dishlist = null;
 
     int gType = 0;
+    int gloadType = 0;
 
     List<ListItemDishes> listOfDishes;
     AdapterDishGridView  adapterDishList;
@@ -56,32 +57,38 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        gType = getIntent().getIntExtra("type",-1);
-        print("Type is "+gType);
-
         TextView txt_dishType = findViewById(R.id.txt_dishType);
-
-        txt_dishType.setText(Globals.dishName[gType]);
+        RelativeLayout title = findViewById(R.id.rel_dishlist);
+        RecyclerView rv_dishes = findViewById(R.id.recyclerView);
         listOfDishes = new ArrayList<>();
 
-        String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
-               "title" + "/"+gType+".jpg";
-        RelativeLayout title = findViewById(R.id.rel_dishlist);
+        gloadType = getIntent().getIntExtra("loadtype",-1);
+        if(gloadType == 0) {
+            gType = getIntent().getIntExtra("type", -1);
+            print("Type is " + gType);
 
-        Runnable imgFetch = new DishImageFetcher(title_image, title, this);
-        new Thread(imgFetch).start();
+            txt_dishType.setText(Globals.dishName[gType]);
 
-        new GetDishesList().execute();
+            String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                    "title" + "/" + gType + ".jpg";
 
-       // GridView gv_dishes = findViewById(R.id.gv_dishlist);
+            Runnable imgFetch = new DishImageFetcher(title_image, title, this);
+            new Thread(imgFetch).start();
 
-        adapterDishList = new AdapterDishGridView(this, listOfDishes, this);
+            new GetDishesList().execute();
 
-        RecyclerView rv_dishes = findViewById(R.id.recyclerView);
-        rv_dishes.setAdapter(adapterDishList);
-        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,  StaggeredGridLayoutManager.VERTICAL);
-        rv_dishes.setLayoutManager(manager);
+            // GridView gv_dishes = findViewById(R.id.gv_dishlist);
 
+            adapterDishList = new AdapterDishGridView(this, listOfDishes, this);
+
+            rv_dishes.setAdapter(adapterDishList);
+            StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            rv_dishes.setLayoutManager(manager);
+        }
+        else if (gloadType == 1)
+        {
+
+        }
 
     }
     @Override

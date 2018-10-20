@@ -89,6 +89,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
             public void onClick(View view) {
                 Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
                 cookeryListPage.putExtra("type",1);
+                cookeryListPage.putExtra("loadtype",0);
                 startActivity(cookeryListPage);
             }
         });
@@ -98,6 +99,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
             public void onClick(View view) {
                 Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
                 cookeryListPage.putExtra("type",2);
+                cookeryListPage.putExtra("loadtype",0);
                 startActivity(cookeryListPage);
             }
         });
@@ -107,6 +109,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
             public void onClick(View view) {
                 Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
                 cookeryListPage.putExtra("type",3);
+                cookeryListPage.putExtra("loadtype",0);
                 startActivity(cookeryListPage);
             }
         });
@@ -146,6 +149,20 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
     public boolean onQueryTextSubmit(String query) {
 
         print("Search for "+query);
+
+        Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+
+        cookeryListPage.putExtra("type",1);
+        cookeryListPage.putExtra("loadtype",1);
+        //cookeryListPage.put("list",listOfDishesForSearch);
+       // startActivity(cookeryListPage);
+
+        for (ListItemDishes dish: listOfDishesForSearch
+             ) {
+            print("Pass "+dish.getName());
+        }
+        print("JKS");
+
         return false;
     }
 
@@ -322,7 +339,7 @@ class AdapterListSearch extends BaseAdapter {
 
             TextView search = convertView.findViewById(R.id.txt_searchQuery);
             search.setText("");
-            print("Setting "+list.get(position).getName() + " from "+position);
+
             search.setText(list.get(position).getName());
 
 
@@ -337,7 +354,7 @@ class AdapterListSearch extends BaseAdapter {
         charText = charText.toLowerCase(Locale.getDefault());
 
         list.clear();
-        print("JKS list item size "+list.size());
+       // print("JKS list item size "+list.size());
 
 
 
@@ -348,19 +365,18 @@ class AdapterListSearch extends BaseAdapter {
             notifyDataSetChanged();
         }
         else {
-            print("JKS size of original list = "+origianlList.size());
             for (int i = 0; i < origianlList.size(); i++) {
                 ListItemDishes data = origianlList.get(i);
                 if (data.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     list.add(data);
 
                     notifyDataSetChanged();
-                    print("JKS list contains "+data.getName());
+                    //print("JKS list contains "+data.getName());
                     count++;
                 }
                 else
                 {
-                    print("skip "+data.getName());
+                 //   print("skip "+data.getName());
                 }
 
             }
