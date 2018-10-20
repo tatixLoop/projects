@@ -64,7 +64,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="43dp"
-                                    app:srcCompat="@android:color/holo_orange_dark" />
+                                    app:srcCompat="@drawable/clock1" />
 
                                 <TextView
                                     android:id="@+id/txt_cooktime"
@@ -92,7 +92,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="43dp"
-                                    app:srcCompat="@android:color/holo_orange_dark" />
+                                    app:srcCompat="@drawable/calorie" />
 
                                 <TextView
                                     android:id="@+id/txt_calories"
@@ -127,7 +127,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="43dp"
-                                    app:srcCompat="@android:color/holo_orange_dark" />
+                                    app:srcCompat="@drawable/servings" />
 
                                 <TextView
                                     android:id="@+id/txt_servings"
@@ -155,14 +155,16 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="43dp"
-                                    app:srcCompat="@android:color/holo_orange_dark" />
+                                    app:srcCompat="@drawable/share" />
 
                                 <TextView
                                     android:id="@+id/txt_share"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="80dp"
-                                    android:layout_marginStart="80dp" />
+                                    android:layout_marginStart="80dp"
+                                    android:text="Share"
+                                    android:textStyle="bold" />
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -316,7 +318,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="14dp"
-                            android:background="@android:color/black"></RelativeLayout>
+                            android:background="@drawable/author"></RelativeLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -357,7 +359,7 @@
                             android:layout_height="15dp"
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="46dp"
-                            android:background="@android:color/black"></RelativeLayout>
+                            android:background="@drawable/star"></RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
@@ -370,7 +372,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
                                 android:layout_centerVertical="true"
-                                android:text="Rate recipe   "
+                                android:text="Rate Recipe   "
                                 android:textColor="@android:color/white"
                                 android:textStyle="bold" />
 

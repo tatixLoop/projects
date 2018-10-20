@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -81,10 +82,67 @@ public class CoockeryPreparation extends AppCompatActivity {
         author = findViewById(R.id.txt_author);
         calory = findViewById(R.id.txt_calories);
 
-        cookTime.setText(data.getCooktimeinsec() + "sec");
-        calory.setText(data.getCalory() + "cal");
+
+        calory.setText(data.getCalory() + " cal");
         serveCount.setText("serves "+data.getServeCount());
         author.setText(data.getAuthor());
+
+        int seconds = data.getCooktimeinsec();
+        int mins = seconds/60;
+
+        cookTime.setText(mins + " Minutes");
+
+        //Rating calcuation
+        int rating = data.getRating();
+
+        ImageView star1 = findViewById(R.id.img_star1);
+        ImageView star2 = findViewById(R.id.img_star2);
+        ImageView star3 = findViewById(R.id.img_star3);
+        ImageView star4 = findViewById(R.id.img_star4);
+        ImageView star5 = findViewById(R.id.img_star5);
+
+        rating = rating/2;
+        switch (rating)
+        {
+            case 1:
+                star1.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star2.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                star3.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                star4.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                star5.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                break;
+            case 2:
+                star1.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star2.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star3.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                star4.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                star5.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                break;
+            case 3:
+                star1.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star2.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star3.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star4.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                star5.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                break;
+            case 4:
+                star1.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star2.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star3.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star4.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star5.setImageDrawable(getResources().getDrawable(R.drawable.unratingstar));
+                break;
+            case 5:
+                star1.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star2.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star3.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star4.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                star5.setImageDrawable(getResources().getDrawable(R.drawable.star));
+                break;
+
+        }
+
+
 
 
         new GetDishInfo().execute();

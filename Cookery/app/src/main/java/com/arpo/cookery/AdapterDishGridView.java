@@ -94,7 +94,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
                     item.getImg_path() + "/box_preview.jpg";
 
             //print("Setting "+box_preview_url);
-            print("Set image of "+item.getName() + "Id "+item.getId() + " from"+item.getImg_path() );
+            //print("Set image of "+item.getName() + "Id "+item.getId() + " from"+item.getImg_path() );
 
 
             recipeName.setText(item.getName()+"");
@@ -105,7 +105,6 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             cukTime.setText(mins+" Mins");
             calory.setText(item.getCalory()+ "Cal");
             author.setText(item.getAuthor());
-            print("Rating ="+item.getRating());
             rating.setText(""+(float)item.getRating()/2);
 
 
