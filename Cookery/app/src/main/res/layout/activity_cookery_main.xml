@@ -11,8 +11,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1500dp"
+        android:focusableInTouchMode="true"
         android:background="@android:color/holo_blue_bright"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightbg"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="18dp"
+                    app:srcCompat="@drawable/menu" />
+
+                <SearchView
+                    android:id="@+id/search_query"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:queryHint="Search Recipes"
+                    android:paddingStart="40dp" >
+
+                </SearchView>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ListView
+                    android:id="@+id/lv_searchData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rel_breakfastRec"
@@ -26,15 +71,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
                 android:text="Break Fast Receipe"
                 android:textColor="@android:color/background_light"
                 android:textColorLink="@android:color/background_light"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:shadowColor="@color/text_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"/>
+                android:textStyle="bold" />
         </RelativeLayout>
 
 
