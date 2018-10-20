@@ -70,6 +70,8 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
         public TextView cukTime ;
         public TextView recipeName ;
         public ListItemDishes item;
+        public TextView author;
+        public TextView rating;
 
         public CookeryViewHolder(View v) {
 
@@ -80,6 +82,8 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             calory = v.findViewById(R.id.txt_calgv);
             cukTime = v.findViewById(R.id.txt_cooktimegv);
             recipeName = v.findViewById(R.id.txt_recipeName);
+            author = v.findViewById(R.id.txt_author_gi);
+            rating = v.findViewById(R.id.txt_rating_gi);
         }
 
         public void setData(ListItemDishes item) {
@@ -100,7 +104,9 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
 
             cukTime.setText(mins+" Mins");
             calory.setText(item.getCalory()+ "Cal");
-
+            author.setText(item.getAuthor());
+            print("Rating ="+item.getRating());
+            rating.setText(""+(float)item.getRating()/2);
 
 
             Runnable imgFetch = new DishImageFetcher(box_preview_url,rel_dishbox, context);
