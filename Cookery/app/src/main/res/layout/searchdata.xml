@@ -5,10 +5,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp">
+
         <TextView
             android:id="@+id/txt_searchQuery"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingStart="50dp"
+            android:textColor="@android:color/white" />
 
     </RelativeLayout>
 
