@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -151,7 +152,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                                     c.getString("dishname"),
                                     c.getString("img_path")
                                     );*/
-                            print("Adding "+c.getString("dishname"));
+                            print("Adding " + c.getString("dishname"));
                             ListItemDishes dish = new ListItemDishes(
                                     c.getInt("id"),
                                     c.getInt("type"),
@@ -165,6 +166,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                             );
                             listOfDishes.add(dish);
                         }
+                        Collections.shuffle(listOfDishes);
                     } else {
                         print("No dishes found");
                     }
