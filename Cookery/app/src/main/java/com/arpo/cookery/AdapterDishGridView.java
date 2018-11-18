@@ -2,6 +2,8 @@ package com.arpo.cookery;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,7 +48,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
         ListItemDishes data = list.get(position);
         Vholder.item = data;
 
-        Vholder.setData(data);
+        Vholder.setData(data, position);
 
     }
     @Override
@@ -86,7 +88,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             rating = v.findViewById(R.id.txt_rating_gi);
         }
 
-        public void setData(ListItemDishes item) {
+        public void setData(ListItemDishes item, int position) {
             this.item = item;
 
             rel_dishbox.setBackgroundColor(Color.parseColor("#c4bebe"));
@@ -107,9 +109,19 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             author.setText(item.getAuthor());
             rating.setText(""+(float)item.getRating()/2);
 
+            if(list.get(position).getPreviewSet() == 1)
+            {
+                Drawable dr = new BitmapDrawable(list.get(position).getPreviewImg());
+                rel_dishbox.setBackground(dr);
 
-            Runnable imgFetch = new DishImageFetcher(box_preview_url,rel_dishbox, context);
-            new Thread(imgFetch).start();
+            }
+            else {
+
+                
+                Runnable imgFetch = new DishImageFetcher(box_preview_url, rel_dishbox, context, list, position);
+                //Runnable imgFetch = new DishImageFetcher(box_preview_url, rel_dishbox, context);
+                new Thread(imgFetch).start();
+            }
 
         }
 

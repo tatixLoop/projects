@@ -1,5 +1,11 @@
 package com.arpo.cookery;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -17,7 +23,29 @@ public class ListItemDishes implements Serializable {
     int rating;
     String author;
     String box_preview;
+    byte[] byteArray;
+    int previewSet;
 
+
+    public int getPreviewSet() {
+        return previewSet;
+    }
+
+    public void setPreviewSet(int previewSet) {
+        this.previewSet = previewSet;
+    }
+
+    public Bitmap getPreviewImg() {
+        return BitmapFactory.decodeByteArray(this.byteArray , 0, this.byteArray.length);
+    }
+
+    public void setPreviewImg(Bitmap previewImg) {
+
+        //this.previewImg = previewImg;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        previewImg.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        this.byteArray = stream.toByteArray();
+    }
 
     public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, String author) {
         this.id = id;
@@ -29,6 +57,7 @@ public class ListItemDishes implements Serializable {
         this.calory = calory;
         this.rating = rating;
         this.author = author;
+        this.previewSet = 0;
     }
 
 
