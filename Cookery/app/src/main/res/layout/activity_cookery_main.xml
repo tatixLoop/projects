@@ -51,7 +51,9 @@
                 <ListView
                     android:id="@+id/lv_searchData"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"/>
 
             </RelativeLayout>
 
@@ -66,7 +68,7 @@
             android:background="@color/lightbg">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/main_txtbreakfast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -90,7 +92,7 @@
             android:background="@color/lightbg">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/main_txtlunch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -115,7 +117,7 @@
             android:background="@color/lightbg">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/main_txtsnx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"

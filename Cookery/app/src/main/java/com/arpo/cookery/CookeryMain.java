@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +50,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
     private static final String TAG_DISH = "dishes";
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +59,30 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                String.format(Locale.US, "fonts/%s", "font.ttf"));
+
+        ((TextView) findViewById(R.id.main_txtbreakfast)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtlunch)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtsnx)).setTypeface(typeface);
+
+
         SearchView searchRecipe = findViewById(R.id.search_query);
         searchRecipe.setOnQueryTextListener(this);
+        TextView txt_searchText = ((TextView) searchRecipe.findViewById(android.support.v7.appcompat.R.id.search_src_text));
+        if(txt_searchText != null)
+        {
+            txt_searchText.setTypeface(typeface);
+        }
+        else
+        {
+            int id = searchRecipe.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+            TextView searchText = (TextView) searchRecipe.findViewById(id);
+            if(searchText != null)
+            {
+                searchText.setTypeface(typeface);
+            }
+        }
 
 
         RelativeLayout relBreakfast = findViewById(R.id.rel_breakfastRec);
@@ -342,7 +367,10 @@ class AdapterListSearch extends BaseAdapter {
             search.setText("");
 
             search.setText(list.get(position).getName());
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),
+                    String.format(Locale.US, "fonts/%s", "font.ttf"));
 
+            search.setTypeface(typeface);
 
         }
         return convertView;

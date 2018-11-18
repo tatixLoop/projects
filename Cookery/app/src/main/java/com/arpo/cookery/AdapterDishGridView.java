@@ -2,6 +2,7 @@ package com.arpo.cookery;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by jithin on 10/9/18.
@@ -108,6 +110,15 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             calory.setText(item.getCalory()+ "Cal");
             author.setText(item.getAuthor());
             rating.setText(""+(float)item.getRating()/2);
+
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),
+                    String.format(Locale.US, "fonts/%s", "font.ttf"));
+
+            recipeName.setTypeface(typeface);
+            cukTime.setTypeface(typeface);
+            calory.setTypeface(typeface);
+            author.setTypeface(typeface);
+            rating.setTypeface(typeface);
 
             if(list.get(position).getPreviewSet() == 1)
             {

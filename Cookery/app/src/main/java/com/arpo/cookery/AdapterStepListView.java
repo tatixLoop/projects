@@ -1,6 +1,7 @@
 package com.arpo.cookery;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by jithin on 11/9/18.
@@ -59,6 +61,13 @@ public class AdapterStepListView extends BaseAdapter {
 
             txt_stepNo.setText("Step "+item.getStepNo()+"");
             txt_steps.setText(item.getStep());
+
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),
+                    String.format(Locale.US, "fonts/%s", "font.ttf"));
+
+            txt_stepNo.setTypeface(typeface);
+            txt_steps.setTypeface(typeface);
+
 
         }
         return convertView;

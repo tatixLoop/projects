@@ -3,6 +3,7 @@ package com.arpo.cookery;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 
 public class CoockeryListPage extends AppCompatActivity implements AdapterDishGridView.ItemListener {
@@ -61,6 +63,11 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         RelativeLayout title = findViewById(R.id.rel_dishlist);
         RecyclerView rv_dishes = findViewById(R.id.recyclerView);
         listOfDishes = new ArrayList<>();
+
+        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                String.format(Locale.US, "fonts/%s", "font.ttf"));
+
+        txt_dishType.setTypeface(typeface);
 
         gloadType = getIntent().getIntExtra("loadtype",-1);
         if(gloadType == 0) {

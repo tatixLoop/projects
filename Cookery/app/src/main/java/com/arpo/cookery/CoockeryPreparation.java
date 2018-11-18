@@ -3,6 +3,7 @@ package com.arpo.cookery;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CoockeryPreparation extends AppCompatActivity {
 
@@ -97,6 +99,24 @@ public class CoockeryPreparation extends AppCompatActivity {
 
         //Rating calcuation
         int rating = data.getRating();
+
+        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                String.format(Locale.US, "fonts/%s", "font.ttf"));
+
+        ((TextView) findViewById(R.id.txt_prep_prepsteps)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.txt_prep_ingredients)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.txt_share)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.txt_prep_author_title)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.txt_prep_rateRecipeTitle)).setTypeface(typeface);
+
+
+        title_text.setTypeface(typeface);
+        cookTime.setTypeface(typeface);
+        calory.setTypeface(typeface);
+        serveCount.setTypeface(typeface);
+        author.setTypeface(typeface);
+
+
 
         ImageView star1 = findViewById(R.id.img_star1);
         ImageView star2 = findViewById(R.id.img_star2);
