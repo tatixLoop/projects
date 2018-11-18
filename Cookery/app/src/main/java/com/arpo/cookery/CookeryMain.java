@@ -248,6 +248,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
                                     c.getInt("serves"),
                                     c.getInt("calory"),
                                     c.getInt("rating"),
+                                    c.getInt("numRating"),
                                     c.getString("author")
                             );
                             listOfDishesForSearch.add(dish);

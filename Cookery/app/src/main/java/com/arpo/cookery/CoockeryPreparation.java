@@ -2,6 +2,7 @@ package com.arpo.cookery;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -53,6 +54,8 @@ public class CoockeryPreparation extends AppCompatActivity {
     TextView serveCount;
     TextView author;
 
+    ListItemDishes data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +63,7 @@ public class CoockeryPreparation extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        ListItemDishes data = (ListItemDishes)getIntent().getSerializableExtra("data");
+        data = (ListItemDishes)getIntent().getSerializableExtra("data");
         print("Id = "+data.getId() + " Name : "+data.getName());
 
         gDish = data.getName();
@@ -143,6 +146,19 @@ public class CoockeryPreparation extends AppCompatActivity {
         }
 
 
+        RelativeLayout share = findViewById(R.id.rel_rateRecipie);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                print("Share is clicked");
+                Intent popUp = new Intent(getApplicationContext(), RatePopUp.class);
+                popUp.putExtra("rating",data.getRating());
+                popUp.putExtra("numRating", data.getNumRating());
+                popUp.putExtra("id", data.getId());
+                startActivity(popUp);
+
+            }
+        });
 
 
         new GetDishInfo().execute();
@@ -229,8 +245,7 @@ public class CoockeryPreparation extends AppCompatActivity {
                             listIngredient.add(ingredientItem);
 
                             ingredients[i] = c.getString("ingredient");
-                            print(c.getString("ingredient")
-                            );
+                            //print(c.getString("ingredient"));
                         }
                         cookRecipe.setIngredientList(listIngredient);
                         cookRecipe.setIngredientsp(ingredients);
@@ -250,9 +265,9 @@ public class CoockeryPreparation extends AppCompatActivity {
 
                             listStepItem.add(data);
 
-                            print("step no : "+c.getInt("stepno") +
+                            /*print("step no : "+c.getInt("stepno") +
                                     "step : "+c.getString("step")
-                            );
+                            );*/
 
                         }
                         cookRecipe.setStepList(listStepItem);

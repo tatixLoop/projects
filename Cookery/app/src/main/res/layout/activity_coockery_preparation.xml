@@ -343,6 +343,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rel_rateRecipie"
                     android:layout_width="190dp"
                     android:layout_height="match_parent">
 

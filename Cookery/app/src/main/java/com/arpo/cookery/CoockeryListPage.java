@@ -169,6 +169,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                                     c.getInt("serves"),
                                     c.getInt("calory"),
                                     c.getInt("rating"),
+                                    c.getInt("numRating"),
                                     c.getString("author")
                             );
                             listOfDishes.add(dish);

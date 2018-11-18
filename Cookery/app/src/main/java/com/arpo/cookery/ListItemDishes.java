@@ -25,7 +25,15 @@ public class ListItemDishes implements Serializable {
     String box_preview;
     byte[] byteArray;
     int previewSet;
+    int numRating;
 
+    public int getNumRating() {
+        return numRating;
+    }
+
+    public void setNumRating(int numRating) {
+        this.numRating = numRating;
+    }
 
     public int getPreviewSet() {
         return previewSet;
@@ -47,7 +55,7 @@ public class ListItemDishes implements Serializable {
         this.byteArray = stream.toByteArray();
     }
 
-    public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, String author) {
+    public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, int numRating, String author) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -58,6 +66,7 @@ public class ListItemDishes implements Serializable {
         this.rating = rating;
         this.author = author;
         this.previewSet = 0;
+        this.numRating = numRating;
     }
 
 
