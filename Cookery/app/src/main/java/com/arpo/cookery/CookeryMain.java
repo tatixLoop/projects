@@ -10,10 +10,14 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -59,6 +63,8 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 String.format(Locale.US, "fonts/%s", "font.ttf"));
 
@@ -67,23 +73,34 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         ((TextView) findViewById(R.id.main_txtsnx)).setTypeface(typeface);
 
 
-        SearchView searchRecipe = findViewById(R.id.search_query);
-        searchRecipe.setOnQueryTextListener(this);
-        TextView txt_searchText = ((TextView) searchRecipe.findViewById(android.support.v7.appcompat.R.id.search_src_text));
-        if(txt_searchText != null)
-        {
-            txt_searchText.setTypeface(typeface);
-        }
-        else
-        {
-            int id = searchRecipe.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-            TextView searchText = (TextView) searchRecipe.findViewById(id);
-            if(searchText != null)
-            {
-                searchText.setTypeface(typeface);
-            }
-        }
+        //SearchView searchRecipe = findViewById(R.id.search_query);
+        //searchRecipe.setOnQueryTextListener(this);
 
+        EditText searchText = findViewById(R.id.search_query);
+        searchText.setTypeface(typeface);
+        searchText.clearFocus();
+        searchText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = s.toString();
+
+                print(s.toString());
+                lv_searchData.setAdapter(null);
+                int countS = searchAdapter.filter(s.toString());
+                lv_searchData.setAdapter(searchAdapter);
+                setRelativeLayoutHeightBasedOnChildren(rel_search, countS ,lv_searchData);
+            }
+        });
 
         RelativeLayout relBreakfast = findViewById(R.id.rel_breakfastRec);
         RelativeLayout relLunch = findViewById(R.id.rel_lunchRec);
@@ -159,12 +176,24 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
                 ListItemDishes data = (ListItemDishes) lv_searchData.getItemAtPosition(position);
                 preparationPage.putExtra("data", data );
                 startActivity(preparationPage);
+                EditText searchText = findViewById(R.id.search_query);
+                searchText.setText("");
             }
         });
 
 
         new GetDishesForSearch().execute();
 
+        relBreakfast.requestFocus();
+        hideSoftKeyboard();
+
+    }
+    private void hideSoftKeyboard(){
+        View view = getCurrentFocus ();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService (Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow (view.getWindowToken (), 0);
+        }
     }
     void print(String str)
     {

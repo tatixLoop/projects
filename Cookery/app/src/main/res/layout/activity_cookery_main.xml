@@ -21,7 +21,10 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true">
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="26dp"
@@ -31,15 +34,28 @@
                     android:layout_marginStart="18dp"
                     app:srcCompat="@drawable/menu" />
 
-                <SearchView
+                <EditText
                     android:id="@+id/search_query"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="35dp"
                     android:layout_alignParentTop="true"
-                    android:queryHint="Search Recipes"
-                    android:paddingStart="40dp" >
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:paddingStart="5dp"
+                    android:queryHint="Search Recipes">
 
-                </SearchView>
+                </EditText>
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@+id/search_query"
+                    android:layout_marginEnd="5dp"
+                    app:srcCompat="@android:drawable/ic_menu_search" />
 
             </RelativeLayout>
 
