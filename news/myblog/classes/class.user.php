@@ -21,8 +21,7 @@ class User extends Password{
 	private function get_user_hash($username){
 
 		try {
-
-			$stmt = $this->_db->prepare('SELECT memberID, username, password FROM blog_members WHERE username = :username');
+			$stmt = $this->_db->prepare('SELECT id, username, password, access FROM news_tbl_accounts WHERE username = :username');
 			$stmt->execute(array('username' => $username));
 
 			return $stmt->fetch();
@@ -36,11 +35,10 @@ class User extends Password{
 	public function login($username,$password){
 
 		$user = $this->get_user_hash($username);
-
 		if($this->password_verify($password,$user['password']) == 1){
 
 		    $_SESSION['loggedin'] = true;
-		    $_SESSION['memberID'] = $user['memberID'];
+		    $_SESSION['id'] = $user['id'];
 		    $_SESSION['username'] = $user['username'];
 		    return true;
 		}

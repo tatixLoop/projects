@@ -11,8 +11,8 @@ if(isset($_GET['deluser'])){
 	//if user id is 1 ignore
 	if($_GET['deluser'] !='1'){
 
-		$stmt = $db->prepare('DELETE FROM blog_members WHERE memberID = :memberID') ;
-		$stmt->execute(array(':memberID' => $_GET['deluser']));
+		$stmt = $db->prepare('DELETE FROM news_tbl_accounts WHERE id = :id') ;
+		$stmt->execute(array(':id' => $_GET['deluser']));
 
 		header('Location: users.php?action=deleted');
 		exit;
@@ -73,24 +73,28 @@ if(isset($_GET['deluser'])){
 	<table>
 	<tr>
 		<th>Username</th>
+		<th>Firstname</th>
+		<th>Lastname</th>
 		<th>Email</th>
 		<th>Action</th>
 	</tr>
 	<?php
 		try {
 
-			$stmt = $db->query('SELECT memberID, username, email FROM blog_members ORDER BY username');
+			$stmt = $db->query('SELECT id, username, name, lastname, email FROM news_tbl_accounts ORDER BY username');
 			while($row = $stmt->fetch()){
 				
 				echo '<tr>';
 				echo '<td>'.$row['username'].'</td>';
+				echo '<td>'.$row['name'].'</td>';
+				echo '<td>'.$row['lastname'].'</td>';
 				echo '<td>'.$row['email'].'</td>';
 				?>
 
 				<td>
-					<a href="edit-user.php?id=<?php echo $row['memberID'];?>"><i class="small material-icons">edit</i></a> 
-					<?php if($row['memberID'] != 1){?>
-						| <a href="javascript:deluser('<?php echo $row['memberID'];?>','<?php echo $row['username'];?>')"><i class="small material-icons">delete</i></a>
+					<a href="edit-user.php?id=<?php echo $row['id'];?>"><i class="small material-icons">edit</i></a> 
+					<?php if($row['id'] != 1){?>
+						| <a href="javascript:deluser('<?php echo $row['id'];?>','<?php echo $row['username'];?>')"><i class="small material-icons">delete</i></a>
 					<?php } ?>
 				</td>
 				

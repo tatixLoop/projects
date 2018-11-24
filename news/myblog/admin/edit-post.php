@@ -61,19 +61,19 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		extract($_POST);
 
 		//very basic validation
-		if($postID ==''){
+		if($id ==''){
 			$error[] = 'This post is missing a valid id!.';
 		}
 
-		if($postTitle ==''){
+		if($title ==''){
 			$error[] = 'Please enter the title.';
 		}
 
-		if($postDesc ==''){
+		if($Description ==''){
 			$error[] = 'Please enter the description.';
 		}
 
-		if($postCont ==''){
+		if($content ==''){
 			$error[] = 'Please enter the content.';
 		}
 
@@ -112,10 +112,10 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 
 		try {
 
-			$stmt = $db->prepare('SELECT postID, postImage, postTitle, postDesc, postCont FROM blog_posts WHERE postID = :postID') ;
-			$stmt->execute(array(':postID' => $_GET['id']));
+			$stmt = $db->prepare('SELECT id, imgdir, title, Description, content FROM news_tbl_datainput WHERE id = :id') ;
+			$stmt->execute(array(':id' => $_GET['id']));
 			$row = $stmt->fetch(); 
-			$del_name=$row['postImage'];
+			$del_name=$row['imgdir'];
 
 		} catch(PDOException $e) {
 		    echo $e->getMessage();
@@ -129,13 +129,13 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 				  move_uploaded_file($file_tmp,"../assets/uploads/".$file_name);
 
 				  //insert into database
-				$stmt = $db->prepare('UPDATE blog_posts SET postTitle = :postTitle, postImage = :postImage, postDesc = :postDesc, postCont = :postCont WHERE postID = :postID') ;
+				$stmt = $db->prepare('UPDATE news_tbl_datainput SET title = :title, imgdir = :imgdir, Description = :Description, content = :content WHERE id = :id') ;
 				$stmt->execute(array(
-					':postTitle' => $postTitle,
-					':postImage' =>$file_name,
-					':postDesc' => $postDesc,
-					':postCont' => $postCont,
-					':postID' => $postID
+					':title' => $title,
+					':imgdir' =>$file_name,
+					':Description' => $Description,
+					':content' => $content,
+					':id' => $id
 				));
 
 				//redirect to index page
@@ -147,12 +147,12 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 						
 					
 				//insert into database
-				$stmt = $db->prepare('UPDATE blog_posts SET postTitle = :postTitle, postDesc = :postDesc, postCont = :postCont WHERE postID = :postID') ;
+				$stmt = $db->prepare('UPDATE news_tbl_datainput SET title = :title, Description = :Description, content = :content WHERE id = :id') ;
 				$stmt->execute(array(
-					':postTitle' => $postTitle,
-					':postDesc' => $postDesc,
-					':postCont' => $postCont,
-					':postID' => $postID
+					':title' => $title,
+					':Description' => $Description,
+					':content' => $content,
+					':id' => $id
 				));
 
 				//redirect to index page
@@ -181,8 +181,8 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 
 		try {
 
-			$stmt = $db->prepare('SELECT postID, postImage, postTitle, postDesc, postCont FROM blog_posts WHERE postID = :postID') ;
-			$stmt->execute(array(':postID' => $_GET['id']));
+			$stmt = $db->prepare('SELECT id, imgdir, title, Description, content FROM news_tbl_datainput WHERE id = :id') ;
+			$stmt->execute(array(':id' => $_GET['id']));
 			$row = $stmt->fetch(); 
 			
 
@@ -197,22 +197,22 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 	<div class="container">
 
 	<form action='' method='post' enctype='multipart/form-data'>
-		<input type='hidden' name='postID' value='<?php echo $row['postID'];?>'>
+		<input type='hidden' name='id' value='<?php echo $row['id'];?>'>
 
 		<div class="row">
-			<div class="input-field col s12 m12 l12 xl12"><input id="title" type="text" name="postTitle" value='<?php echo $row['postTitle'];?>'>
+			<div class="input-field col s12 m12 l12 xl12"><input id="title" type="text" name="title" value='<?php echo $row['title'];?>'>
 				<label for="title">Title</label>
      		</div>
 		</div>
 <div class="row">
-    <img src="../assets/uploads/<?php echo $row['postImage'];?>" width='25%'; height='25%';>
+    <img src="../assets/uploads/<?php echo $row['imgdir'];?>" width='25%'; height='25%';>
 		<div class="file-field input-field">
       <div class="btn">
         <span>Image</span>
         <input type="file" name="imageUpload" id="imageUpload">
       </div>
       <div class="file-path-wrapper">
-        <input class="file-path validate" type="text" value='<?php echo $row['postImage'];?>'>
+        <input class="file-path validate" type="text" value='<?php echo $row['imgdir'];?>'>
       </div>
     </div>
  </div>   
@@ -220,7 +220,7 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		<div class="row">
         <div class="col s12">
         	<label for="description">Description</label>
-          <textarea id="description" name='postDesc' class="materialize-textarea"><?php echo $row['postDesc'];?></textarea>
+          <textarea id="description" name='Description' class="materialize-textarea"><?php echo $row['Description'];?></textarea>
           
         </div>
       </div>	
@@ -228,7 +228,7 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
       <div class="row">
         <div class="col s12">
         	<label for="content">Detailed Content</label>
-          <textarea id="content" name='postCont' class="materialize-textarea"><?php echo $row['postCont'];?></textarea>
+          <textarea id="content" name='content' class="materialize-textarea"><?php echo $row['content'];?></textarea>
           
         </div>
       </div>	
