@@ -34,6 +34,8 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 
 	//if form has been submitted process it
 	if(isset($_POST['submit'])){
+                // Only Editor right is given by default
+                $access=14;
 
 		//collect form data
 		extract($_POST);
@@ -73,10 +75,16 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 			try {
 
 				//insert into database
-				$stmt = $db->prepare('INSERT INTO news_tbl_accounts (name, username, password, email) VALUES (:username, :username, :password, :email)') ;
+                                $sql = "INSERT INTO news_tbl_accounts (name, lastname, username, access, password, email) VALUES ('".$firstname."','".$lastname."', '".$username."', ".$access.", '".$hashedpassword."','".$email."')";
+//                                $sql = "INSERT INTO news_tbl_accounts (name, lastname, username, access, password, email) VALUES (:firstname, :lastname, :username, ".$access.", :password, :email)";
+
+				$stmt = $db->prepare($sql);
+
 				$stmt->execute(array(
-					':name' => $name,
+					':name' => $firstname,
+					':lastname' => $lastname,
 					':username' => $username,
+					':access' => $access,
 					':password' => $hashedpassword,
 					':email' => $email
 				));
@@ -109,6 +117,18 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		<div class="row">
 			<div class="input-field col s12 m12 l12 xl12"><input id="name" type='text' name='username' value='<?php if(isset($error)){ echo $_POST['username'];}?>'></p>
      		 <label for="name" >Username</label>
+     		</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12 m12 l12 xl12"><input id="firstname" type='text' name='firstname' value='<?php if(isset($error)){ echo $_POST['firstname'];}?>'></p>
+     		 <label for="firstname" > First name</label>
+     		</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12 m12 l12 xl12"><input id="lastname" type='text' name='lastname' value='<?php if(isset($error)){ echo $_POST['lastname'];}?>'></p>
+     		 <label for="lastname" > Last name</label>
      		</div>
 		</div>
 
