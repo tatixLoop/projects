@@ -58,6 +58,9 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 			}
 
 		}
+                else {
+                        unset($password);
+                }
 		
 
 		if($email ==''){
@@ -69,7 +72,6 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 		}	
 
 
-
 		if(!isset($error)){
 
 			try {
@@ -79,21 +81,25 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 					$hashedpassword = $user->password_hash($password, PASSWORD_BCRYPT);
 
 					//update into database
-					$stmt = $db->prepare('UPDATE blog_members SET  password = :password, email = :email WHERE memberID = :memberID') ;
+					$stmt = $db->prepare('UPDATE news_tbl_accounts SET  password = :password, email = :email, name = :name , lastname = :lastname WHERE id = :id') ;
 					$stmt->execute(array(
 						':password' => $hashedpassword,
 						':email' => $email,
-						':memberID' => $memberID
+						':name' => $name,
+						':lastname' => $lastname,
+						':id' => $id
 					));
 
 
 				} else {
 
 					//update database
-					$stmt = $db->prepare('UPDATE blog_members SET email = :email WHERE memberID = :memberID') ;
+					$stmt = $db->prepare('UPDATE news_tbl_accounts SET email = :email, name = :name , lastname = :lastname  WHERE id = :id') ;
 					$stmt->execute(array(
 						':email' => $email,
-						':memberID' => $memberID
+						':name' => $name,
+						':lastname' => $lastname,
+						':id' => $id
 					));
 
 				}
@@ -124,8 +130,8 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 
 		try {
 
-			$stmt = $db->prepare('SELECT memberID, username, email FROM blog_members WHERE memberID = :memberID') ;
-			$stmt->execute(array(':memberID' => $_GET['id']));
+			$stmt = $db->prepare('SELECT id, username, name, lastname, email FROM news_tbl_accounts WHERE id = :id') ;
+			$stmt->execute(array(':id' => $_GET['id']));
 			$row = $stmt->fetch(); 
 
 		} catch(PDOException $e) {
@@ -139,10 +145,24 @@ if(!$user->is_logged_in()){ header('Location: login.php'); }
 	<form action='' method='post'>
 
 
-		<input type='hidden' name='memberID' value='<?php echo $row['memberID'];?>'>
+		<input type='hidden' name='id' value='<?php echo $row['id'];?>'>
 
 		<p><label>Username</label><label ><h5><?php echo $row['username'];?></h5></label><br />
 		</p>
+
+		<div class="row">
+			<div class="input-field col s12 m12 l12 xl12"><input id="name" type='text' name='name' value='<?php echo $row['name'];?>'></p></p>
+     		 <label for="name" >First Name</label>
+     		</div>
+		</div>
+
+
+		<div class="row">
+			<div class="input-field col s12 m12 l12 xl12"><input id="lastname" type='text' name='lastname' value='<?php echo $row['lastname'];?>'></p></p>
+     		 <label for="lastname" >Last Name</label>
+     		</div>
+		</div>
+
 
 		<div class="row">
 			<div class="input-field col s12 m12 l12 xl12"><input id="password" type='password' name='password' value='<?php if(isset($error)){ echo $_POST['password'];}?>'></p>
