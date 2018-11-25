@@ -40,6 +40,7 @@ class User extends Password{
 		    $_SESSION['loggedin'] = true;
 		    $_SESSION['id'] = $user['id'];
 		    $_SESSION['username'] = $user['username'];
+		    $_SESSION['access'] = $user['access'];
 		    return true;
 		}
 	}
