@@ -66,7 +66,7 @@ if(isset($_GET['delpost'])){
 
   <div class="container">
   	<div class="row">
-  		<div class="col s6 m6 l8 xl8"><h1>Article Details</h1></div>
+  		<div class="col s6 m6 l8 xl8"><h1>Articles For Editing </h1></div>
   		<div class="col s6 m6 l4 xl4 right-align"><h1 ><a class="btn-floating btn-large cyan pulse" href='add-post.php'><i class="material-icons">add</i></a></h1></div>
   		
   	</div>
@@ -110,7 +110,61 @@ if(isset($_GET['delpost'])){
 
 	
 </div>
-    	<!-- Footer -->
+ 
+<?php
+if ($_SESSION['access'] == 15)
+{
+?>
+  <div class="container">
+  	<div class="row">
+  		<div class="col s6 m6 l8 xl8"><h1>Articles Pending For Approval</h1></div>
+  		<div class="col s6 m6 l4 xl4 right-align"><h1 ><a class="btn-floating btn-large cyan pulse" href='add-post.php'><i class="material-icons">add</i></a></h1></div>
+  		
+  	</div>
+  	 <div class="divider"></div>
+  </div>
+
+<!-- Display -->
+
+ <div class="container">
+
+<?php
+			try {
+
+				$stmt = $db->query('SELECT id, title, Description, date FROM news_tbl_datainput ORDER BY id DESC');
+				while($row = $stmt->fetch()){
+					
+					echo '<div class="row">';
+					echo '<div class ="col s12 m6 l6 xl6 ">';
+						echo '<h5><a href="">'.$row['title'].'</a></h3>';
+						echo '</div>';
+						echo '<div class ="col s12 m3 l3 xl3 ">';
+						echo '<p>Created on '.date('jS M Y H:i:s', strtotime($row['date'])).'</p>';
+						echo '</div>';
+						echo '<div class ="col s12 m3 l3 xl3 right-align">';
+						?>
+						<a href="edit-post.php?id=<?php echo $row['id'];?>"><i class="small material-icons">edit</i></a>  
+						<a href="javascript:delpost('<?php echo $row['id'];?>','<?php echo $row['title'];?>')"><i class="small material-icons">delete</i></a>
+						<?php
+						echo '</div>';
+					echo '</div>';	
+					echo '<div class="divider"></div>';
+					
+                   
+				}
+
+			} catch(PDOException $e) {
+			    echo $e->getMessage();
+			}
+		?>
+
+
+	
+</div>
+<?php
+}
+?>
+   	<!-- Footer -->
 <?php include('../footer.php');  ?>
 
 </div>
