@@ -93,7 +93,7 @@ if(isset($_GET['deluser'])){
 
 				<td>
 					<a href="edit-user.php?id=<?php echo $row['id'];?>"><i class="small material-icons">edit</i></a> 
-					<?php if($row['id'] != 1){?>
+					<?php if($row['username'] != 'admin'){?>
 						| <a href="javascript:deluser('<?php echo $row['id'];?>','<?php echo $row['username'];?>')"><i class="small material-icons">delete</i></a>
 					<?php } ?>
 				</td>
