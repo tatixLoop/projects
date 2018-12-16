@@ -23,8 +23,10 @@ public class Globals {
 
     static  String dishName[] = {
             "unknown recipe",
-            "Breakfast recipe's",
-            "Lunch recipe's",
-            "Snacks recipe's",
+/* type1 */ "Breakfast recipe's",
+/* type2 */ "Lunch recipe's",
+/* type3 */ "Snacks recipe's",
+/* type4 */ "Juice recipe's",
+/* type5 */ "Cookie recipe's",
     };
 }

@@ -71,6 +71,8 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         ((TextView) findViewById(R.id.main_txtbreakfast)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtlunch)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtsnx)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtjuice)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtCookie)).setTypeface(typeface);
 
 
         //SearchView searchRecipe = findViewById(R.id.search_query);
@@ -105,6 +107,8 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         RelativeLayout relBreakfast = findViewById(R.id.rel_breakfastRec);
         RelativeLayout relLunch = findViewById(R.id.rel_lunchRec);
         RelativeLayout snckRel = findViewById(R.id.rel_snacksRec);
+        RelativeLayout snckJuice = findViewById(R.id.rel_juice);
+        RelativeLayout snckCookie = findViewById(R.id.rel_snacksCookie);
 
         relBreakfast.requestFocus();
 
@@ -125,6 +129,18 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
 
         Runnable imgFetch3 = new DishImageFetcher(title_image, snckRel, this);
         new Thread(imgFetch3).start();
+
+        title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/4.jpg";
+
+        Runnable imgFetch4 = new DishImageFetcher(title_image, snckJuice, this);
+        new Thread(imgFetch4).start();
+
+        title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/5.jpg";
+
+        Runnable imgFetch5 = new DishImageFetcher(title_image, snckCookie, this);
+        new Thread(imgFetch5).start();
 
         relBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +167,26 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
             public void onClick(View view) {
                 Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
                 cookeryListPage.putExtra("type",3);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
+
+        snckJuice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",4);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
+
+        snckCookie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",5);
                 cookeryListPage.putExtra("loadtype",0);
                 startActivity(cookeryListPage);
             }
