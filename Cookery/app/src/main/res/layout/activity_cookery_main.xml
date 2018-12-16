@@ -78,6 +78,29 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rel_todaySpecial"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txttodaySpecial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="Today's Special"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rel_breakfastRec"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -200,6 +223,336 @@
                 android:shadowDy="1"
                 android:shadowRadius="2"/>
         </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rel_omlets"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtomlets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Your Favorite Omlets"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_eggDishes"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txteggDishes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Egg Recipes"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_chicken"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtchicken"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Chicken Recipes"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:id="@+id/rel_coffee"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtcoffee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Coffee Recipes"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_desert"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtdeserts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Deserts"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_healthy"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txthealthy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Healthy"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_icecream"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txticecream"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Ice cream"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_pizza"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtpizza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Pizza Recipes"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_salad"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtsalads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Salads"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_seafood"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtseafood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Sea Food Delicacy"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_indian"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtindian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Indian Recipes"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_chinese"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtchinesene"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="Chinese"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rel_american"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/lightbg">
+
+            <TextView
+                android:id="@+id/main_txtamerican"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="18dp"
+                android:text="American"
+                android:textColor="@android:color/background_light"
+                android:textColorLink="@android:color/background_light"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+        </RelativeLayout>
+
     </LinearLayout>
 </ScrollView>
 
