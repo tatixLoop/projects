@@ -8,13 +8,16 @@ import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -55,15 +58,25 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_DISH = "dishes";
 
+    ///////////     navigation Drawer
+
+    private DrawerLayout mdrawerLayout;
+    private ActionBarDrawerToggle mtoggle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cookery_main);
+        setContentView(R.layout.navigationdrawer);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        mdrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mtoggle= new ActionBarDrawerToggle(this,mdrawerLayout,R.string.open,R.string.close);
+        mdrawerLayout.addDrawerListener(mtoggle);
+        mtoggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /*ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();*/
+
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -73,7 +86,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         //SearchView searchRecipe = findViewById(R.id.search_query);
         //searchRecipe.setOnQueryTextListener(this);
 
-        EditText searchText = findViewById(R.id.search_query);
+      /*  EditText searchText = findViewById(R.id.search_query);
         searchText.setTypeface(typeface);
         searchText.clearFocus();
         searchText.addTextChangedListener(new TextWatcher() {
@@ -98,7 +111,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
                 setRelativeLayoutHeightBasedOnChildren(rel_search, countS ,lv_searchData);
             }
         });
-
+*/
 
         ((TextView) findViewById(R.id.main_txtbreakfast)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtlunch)).setTypeface(typeface);
@@ -398,7 +411,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         });
 
         // Fill in search data
-        listOfDishesForSearch = new ArrayList<>();
+       /* listOfDishesForSearch = new ArrayList<>();
 
 
         searchAdapter = new AdapterListSearch(this, listOfDishesForSearch);
@@ -421,14 +434,24 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
                 searchText.setText("");
             }
         });
+*/
 
-
-        new GetDishesForSearch().execute();
+       /* new GetDishesForSearch().execute();*/
 
         relBreakfast.requestFocus();
         hideSoftKeyboard();
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(mtoggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void hideSoftKeyboard(){
         View view = getCurrentFocus ();
         if (view != null) {
