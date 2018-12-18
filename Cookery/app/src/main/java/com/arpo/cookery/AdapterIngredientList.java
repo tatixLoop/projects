@@ -32,7 +32,13 @@ public class AdapterIngredientList extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size(); //returns total of items in the list
+        if (list != null) {
+            return list.size(); //returns total of items in the list
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     @Override
