@@ -43,7 +43,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
     int gType = 0;
     int gloadType = 0;
-
+    int gCount = 0;
     List<ListItemDishes> listOfDishes;
     AdapterDishGridView  adapterDishList;
 
@@ -135,30 +135,37 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
          * */
         protected String doInBackground(String... args) {
             // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            boolean b_exit = false;
+            gCount = 0;
+            do {
 
-            params.add(new BasicNameValuePair(TAG_TYPE, gType+""));
-            // getting JSON string from URL
-            String apiname = "";
-            apiname ="getDishesFromType.php";
 
-            JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
-                                                      "GET", params);
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-            // Check your log cat for JSON reponse
-            if(json != null) {
-                //print( json.toString());
-                try {
-                    // Checking for SUCCESS TAG
-                    int success = json.getInt(TAG_SUCCESS);
+                params.add(new BasicNameValuePair(TAG_TYPE, gType + ""));
+                params.add(new BasicNameValuePair("limit", (gCount * 20 + 1) + ""));
+                gCount ++;
+                // getting JSON string from URL
+                String apiname = "";
+                apiname = "getDishesFromType.php";
 
-                    if (success == 1) {
-                        dishlist = json.getJSONArray(TAG_DISH);
+                JSONObject json = jParser.makeHttpRequest(Globals.host + Globals.appdir + Globals.apipath + apiname,
+                        "GET", params);
 
-                        for (int i = 0; i < dishlist.length(); i++) {
-                            JSONObject c = dishlist.getJSONObject(i);
+                // Check your log cat for JSON reponse
+                if (json != null) {
+                    //print( json.toString());
+                    try {
+                        // Checking for SUCCESS TAG
+                        int success = json.getInt(TAG_SUCCESS);
 
-                            //print("Id="+c.getInt("id")+ " DishName = "+c.getString("dishname")+ " img_path="+c.getString("img_path"));
+                        if (success == 1) {
+                            dishlist = json.getJSONArray(TAG_DISH);
+
+                            for (int i = 0; i < dishlist.length(); i++) {
+                                JSONObject c = dishlist.getJSONObject(i);
+
+                                //print("Id="+c.getInt("id")+ " DishName = "+c.getString("dishname")+ " img_path="+c.getString("img_path"));
 
                             /*ListItemDishes dish = new ListItemDishes(
                                     c.getInt("id"),
@@ -166,37 +173,39 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                                     c.getString("dishname"),
                                     c.getString("img_path")
                                     );*/
-                            print("Adding " + c.getString("dishname"));
-                            ListItemDishes dish = new ListItemDishes(
-                                    c.getInt("id"),
-                                    c.getInt("type"),
-                                    c.getString("dishname"),
-                                    c.getString("img_path"),
-                                    c.getInt("cooktimeinsec"),
-                                    c.getInt("serves"),
-                                    c.getInt("calory"),
-                                    c.getInt("rating"),
-                                    c.getInt("numRating"),
-                                    c.getString("author")
-                            );
-                            listOfDishes.add(dish);
+                                print("Adding " + c.getString("dishname"));
+                                ListItemDishes dish = new ListItemDishes(
+                                        c.getInt("id"),
+                                        c.getInt("type"),
+                                        c.getString("dishname"),
+                                        c.getString("img_path"),
+                                        c.getInt("cooktimeinsec"),
+                                        c.getInt("serves"),
+                                        c.getInt("calory"),
+                                        c.getInt("rating"),
+                                        c.getInt("numRating"),
+                                        c.getString("author")
+                                );
+                                listOfDishes.add(dish);
+                            }
+                            //Collections.shuffle(listOfDishes);
+                        } else {
+                            b_exit = true;
+                            print("No dishes found");
                         }
-                        Collections.shuffle(listOfDishes);
-                    } else {
-                        print("No dishes found");
+                    } catch (JSONException e) {
+                        b_exit = true;
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        b_exit = true;
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else {
+                    b_exit = true;
+                    print("Error in making http request");
                 }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else
-            {
-                print("Error in making http request");
-            }
+            } while (b_exit == false);
+            print("Got all the dishes info");
             return null;
         }
 
