@@ -16,10 +16,16 @@
 
 
 
+
+
     <RelativeLayout
         android:layout_width="170dp"
         android:layout_height="0dp"
         android:background="@color/redDark">
+
+
+
+
         <LinearLayout
             android:id="@+id/lin_layout"
             android:layout_width="match_parent"
@@ -65,7 +71,6 @@
 
         </LinearLayout>
 
-
         <TextView
             android:id="@+id/txt_recipeName"
             android:layout_width="wrap_content"
@@ -77,13 +82,13 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
-        <LinearLayout
+       <LinearLayout
             android:id="@+id/lin_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lin_layout"
             android:orientation="horizontal">
-            <TextView
+           <TextView
                 android:id="@+id/txt_author_gi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +114,6 @@
                 android:text="4.5"
                 />
         </LinearLayout>
-
 
     </RelativeLayout>
 

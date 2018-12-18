@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
@@ -21,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -98,7 +100,6 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         });
 
 
-
         ((TextView) findViewById(R.id.main_txtbreakfast)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtlunch)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtsnx)).setTypeface(typeface);
@@ -119,6 +120,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         ((TextView) findViewById(R.id.main_txtindian)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtchinesene)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtamerican)).setTypeface(typeface);
+
 
 
         RelativeLayout relBreakfast = findViewById(R.id.rel_breakfastRec);
