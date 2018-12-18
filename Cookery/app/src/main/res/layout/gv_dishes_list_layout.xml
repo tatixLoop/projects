@@ -82,37 +82,13 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
-       <LinearLayout
+        <LinearLayout
             android:id="@+id/lin_layout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="5dp"
             android:layout_below="@+id/lin_layout"
             android:orientation="horizontal">
-           <TextView
-                android:id="@+id/txt_author_gi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="5dp"
-                android:text="TextView"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
-            <ImageView
-                android:id="@+id/img_rat_gi"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="65dp"
-                android:layout_marginTop="2dp"
-                app:srcCompat="@drawable/star" />
 
-            <TextView
-                android:id="@+id/txt_rating_gi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:textColor="@android:color/white"
-                android:text="4.5"
-                />
         </LinearLayout>
 
     </RelativeLayout>

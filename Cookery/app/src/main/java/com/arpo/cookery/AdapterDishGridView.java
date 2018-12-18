@@ -74,8 +74,8 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
         public TextView cukTime ;
         public TextView recipeName ;
         public ListItemDishes item;
-        public TextView author;
-        public TextView rating;
+        //public TextView author;
+        //public TextView rating;
 
         public CookeryViewHolder(View v) {
 
@@ -86,8 +86,8 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             calory = v.findViewById(R.id.txt_calgv);
             cukTime = v.findViewById(R.id.txt_cooktimegv);
             recipeName = v.findViewById(R.id.txt_recipeName);
-            author = v.findViewById(R.id.txt_author_gi);
-            rating = v.findViewById(R.id.txt_rating_gi);
+            //author = v.findViewById(R.id.txt_author_gi);
+            //rating = v.findViewById(R.id.txt_rating_gi);
         }
 
         public void setData(ListItemDishes item, int position) {
@@ -108,8 +108,8 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
 
             cukTime.setText(mins+" Mins");
             calory.setText(item.getCalory()+ "Cal");
-            author.setText(item.getAuthor());
-            rating.setText(""+(float)item.getRating()/2);
+            //author.setText(item.getAuthor());
+            //rating.setText(""+(float)item.getRating()/2);
 
             Typeface typeface = Typeface.createFromAsset(context.getAssets(),
                     String.format(Locale.US, "fonts/%s", "font.ttf"));
@@ -117,8 +117,8 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             recipeName.setTypeface(typeface);
             cukTime.setTypeface(typeface);
             calory.setTypeface(typeface);
-            author.setTypeface(typeface);
-            rating.setTypeface(typeface);
+            //author.setTypeface(typeface);
+            //rating.setTypeface(typeface);
 
             if(list.get(position).getPreviewSet() == 1)
             {
