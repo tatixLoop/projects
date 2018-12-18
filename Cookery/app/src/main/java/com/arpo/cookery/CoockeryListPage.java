@@ -143,7 +143,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
 
                 params.add(new BasicNameValuePair(TAG_TYPE, gType + ""));
-                params.add(new BasicNameValuePair("limit", (gCount * 20 + 1) + ""));
+                params.add(new BasicNameValuePair("limit", (gCount * 20 ) + ""));
                 gCount ++;
                 // getting JSON string from URL
                 String apiname = "";
