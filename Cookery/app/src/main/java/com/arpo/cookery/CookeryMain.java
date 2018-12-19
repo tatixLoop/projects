@@ -7,16 +7,24 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +37,10 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -54,6 +64,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
 
     JSONParser jParser = new JSONParser();
     JSONArray dishlist = null;
+    ScrollView scrolllayout;
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_DISH = "dishes";
@@ -64,18 +75,29 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
     private ActionBarDrawerToggle mtoggle;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationdrawer);
+
+
+
+        ///Navigation Drawer
 
         mdrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mtoggle= new ActionBarDrawerToggle(this,mdrawerLayout,R.string.open,R.string.close);
         mdrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        scrolllayout=findViewById(R.id.scrollViewMain);
+
         /*ActionBar actionBar = getSupportActionBar();
         actionBar.hide();*/
+
+
+        isNetworkConnected();  //tocheck internet is available or not
 
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -443,6 +465,69 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
 
     }
 
+
+    // Search bar Mateerial Design
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater =getMenuInflater();
+        inflater.inflate(R.menu.menu_search,menu);
+        MenuItem item=menu.findItem(R.id.menusearch);
+        SearchView searchView=(SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //  snack bar
+    public static void setSnackBar(View root, String snackTitle) {
+        Snackbar snackbar = Snackbar.make(root, snackTitle, BaseTransientBottomBar.LENGTH_SHORT);
+        snackbar.show();
+        View view = snackbar.getView();
+        TextView txtv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        txtv.setGravity(Gravity.CENTER_HORIZONTAL);
+    }
+
+
+    //Network Connection  alert box
+
+
+    private void isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+if (cm.getActiveNetworkInfo()==null)
+{
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+    builder.setTitle("No Internet Connetion");
+    builder.setMessage("Please Check Your Internet Connectivity");
+
+    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+        public void onClick(DialogInterface dialog, int which) {
+            // Do nothing but close the dialog
+
+            dialog.dismiss();
+        }
+    });
+
+
+    AlertDialog alert = builder.create();
+    alert.show();
+}
+
+    }
+
+    //Navigation Drawer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mtoggle.onOptionsItemSelected(item))

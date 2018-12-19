@@ -2,10 +2,16 @@ package com.arpo.cookery;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.provider.DocumentsContract;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
+import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +25,7 @@ import java.util.Locale;
 public class AdapterIngredientList extends BaseAdapter {
     List<ListItemIngredients> list;
     Context context;
+   LinearLayout layout;  // for snack bar
 
     AdapterIngredientList(Context ctx, List<ListItemIngredients> l) {
         list = l;
@@ -28,6 +35,15 @@ public class AdapterIngredientList extends BaseAdapter {
     void print(String str)
     {
         //Log.d("JKS",str);
+    }
+
+    //  snack bar
+    public static void setSnackBar(View root, String snackTitle) {
+        Snackbar snackbar = Snackbar.make(root, snackTitle, BaseTransientBottomBar.LENGTH_SHORT);
+        snackbar.show();
+        View view = snackbar.getView();
+        TextView txtv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        txtv.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
     @Override
@@ -52,12 +68,14 @@ public class AdapterIngredientList extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(context).
                     inflate(R.layout.layout_ingredientlist, parent, false);
 
             final ListItemIngredients item = list.get(position);
+
+            layout=convertView.findViewById(R.id.linearIngredient); // for snack bar
 
             TextView txt_ingredient = convertView.findViewById(R.id.txt_ingredient);
             txt_ingredient.setText(item.getIngredient());
@@ -68,7 +86,6 @@ public class AdapterIngredientList extends BaseAdapter {
             ((TextView) convertView.findViewById(R.id.txt_qty)).setTypeface(typeface);
             txt_ingredient.setTypeface(typeface);
 
-
             final RelativeLayout checkBox = convertView.findViewById(R.id.chkBox);
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,11 +93,13 @@ public class AdapterIngredientList extends BaseAdapter {
                     if(item.selected == 0) {
                         item.selected = 1;
                         checkBox.setBackground(context.getResources().getDrawable(R.drawable.laout_bg_green));
+                        setSnackBar(layout,"Ingredient Added To Your Shopping List");
                     }
                     else
                     {
                         checkBox.setBackground(context.getResources().getDrawable(R.drawable.red_circle));
                         item.selected = 0;
+                        setSnackBar(layout,"Ingredient Removed From Your Shopping List");
                     }
 
                 }
