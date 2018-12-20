@@ -16,7 +16,7 @@
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
             android:text="Step 1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/darker_gray" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -30,7 +30,7 @@
             android:layout_marginBottom="10dp"
             android:paddingBottom="5dp"
             android:text="Step"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/redDark" />
     </RelativeLayout>
 
 </LinearLayout>

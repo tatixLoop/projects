@@ -92,12 +92,12 @@ public class AdapterIngredientList extends BaseAdapter {
                 public void onClick(View view) {
                     if(item.selected == 0) {
                         item.selected = 1;
-                        checkBox.setBackground(context.getResources().getDrawable(R.drawable.laout_bg_green));
+                        checkBox.setBackground(context.getResources().getDrawable(R.drawable.tickcarty));
                         setSnackBar(layout,"Ingredient Added To Your Shopping List");
                     }
                     else
                     {
-                        checkBox.setBackground(context.getResources().getDrawable(R.drawable.red_circle));
+                        checkBox.setBackground(context.getResources().getDrawable(R.drawable.carty));
                         item.selected = 0;
                         setSnackBar(layout,"Ingredient Removed From Your Shopping List");
                     }

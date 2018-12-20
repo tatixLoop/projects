@@ -15,7 +15,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/red_circle">
+        android:background="@drawable/carty">
 
     </RelativeLayout>
 
@@ -33,7 +33,7 @@
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
             android:text="Onion"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/redDark" />
     </RelativeLayout>
 
     <RelativeLayout
