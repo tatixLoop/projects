@@ -51,6 +51,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     private static final String TAG_DISH = "dishes";
     private static final String TAG_TYPE = "type";
 
+    GetDishesList asyncFetch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,8 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             Runnable imgFetch = new DishImageFetcher(title_image, title, this);
             new Thread(imgFetch).start();
 
-            new GetDishesList().execute();
+            asyncFetch =  new GetDishesList();
+            asyncFetch.execute();
 
             // GridView gv_dishes = findViewById(R.id.gv_dishlist);
 
@@ -104,6 +106,14 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         preparationPage.putExtra("data",item );
         startActivity(preparationPage);
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        print("On back pressed");
+
+        super.onBackPressed();
+    }
     /**
      * Background Async Task to Load all Dishes by making HTTP Request
      * */
@@ -120,7 +130,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                     "Please wait...",
                     "Loading "+Globals.dishName[gType],
                     false,
-                    false,
+                    true,
                     new DialogInterface.OnCancelListener(){
                         @Override
                         public void onCancel(DialogInterface dialog) {
@@ -128,6 +138,19 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                         }
                     }
             );
+            pDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    print("Cancel pressed");
+                    if (asyncFetch != null)
+                    {
+                        print("Async fetch is not null cancelling");
+                        asyncFetch.cancel(true);
+                        jParser.cancelReq();
+                        finish();
+                    }
+                }
+            });
         }
 
         /**

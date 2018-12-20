@@ -58,6 +58,8 @@ public class CoockeryPreparation extends AppCompatActivity {
 
     ListItemDishes data;
 
+    GetDishInfo asyncFetch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -181,7 +183,8 @@ public class CoockeryPreparation extends AppCompatActivity {
         });
 
 
-        new GetDishInfo().execute();
+        asyncFetch = new GetDishInfo();
+        asyncFetch.execute();
 
 
     }
@@ -199,7 +202,7 @@ public class CoockeryPreparation extends AppCompatActivity {
                     "Please wait...",
                     "Loading Info about "+gDish,
                     false,
-                    false,
+                    true,
                     new DialogInterface.OnCancelListener(){
                         @Override
                         public void onCancel(DialogInterface dialog) {
@@ -207,6 +210,19 @@ public class CoockeryPreparation extends AppCompatActivity {
                         }
                     }
             );
+            pDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    print("Cancel pressed");
+                    if (asyncFetch != null)
+                    {
+                        print("Async fetch is not null cancelling");
+                        asyncFetch.cancel(true);
+                        jParser.cancelReq();
+                        finish();
+                    }
+                }
+            });
         }
 
         /**
