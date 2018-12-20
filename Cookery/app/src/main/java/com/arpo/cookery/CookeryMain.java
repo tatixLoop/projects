@@ -103,7 +103,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
-                String.format(Locale.US, "fonts/%s", "font.ttf"));
+                String.format(Locale.US, "fonts/%s", "fontfront.ttf"));
 
         //SearchView searchRecipe = findViewById(R.id.search_query);
         //searchRecipe.setOnQueryTextListener(this);
