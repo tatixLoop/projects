@@ -70,15 +70,17 @@ public class DishImageFetcher implements Runnable
                 URL url = new URL(this.url);
                 myImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
 
-                // save the image as string in shared preferences
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                myImage.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
-                byte[] b = baos.toByteArray();
-                String encoded = Base64.encodeToString(b, Base64.DEFAULT);
+                if(fetchType != Globals.FETCHTYPE_DISH_TITLE && fetchType != Globals.FETCHTYPE_DISH) {
+                    // save the image as string in shared preferences
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    myImage.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
+                    byte[] b = baos.toByteArray();
+                    String encoded = Base64.encodeToString(b, Base64.DEFAULT);
 
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString(sharedPrefKey,encoded);
-                editor.apply();
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString(sharedPrefKey, encoded);
+                    editor.apply();
+                }
             }
             if(this.position != -1) {
 
