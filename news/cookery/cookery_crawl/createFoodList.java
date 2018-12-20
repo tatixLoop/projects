@@ -89,7 +89,7 @@ class createFoodList
             }
             else
             {
-printf("JKS not executing");
+                printf("JKS not executing");
             }
         }
     }
@@ -170,12 +170,11 @@ class CreateFoodListCrawl
                                     int numDirections = getDirection(recipePage, listDir);
                                     if (numDirections != 0)
                                     {
-                                         added++;
                                          int upload = 1;
                                          if(upload == 1)
                                          {
                                          String sourceFileNameForUpload = getPreviewImage(recipePage);
-                                         uploadDatatoDatabaseFromJava(recipeName,
+                                         added += uploadDatatoDatabaseFromJava(recipeName,
                                                               type,
                                                               cookTime,
                                                               serveCount,
@@ -345,8 +344,8 @@ class CreateFoodListCrawl
     }
 
 
-    public void uploadDatatoDatabaseFromJava(String name,
-                                             int type,
+    public int    uploadDatatoDatabaseFromJava(String name,
+                                              int type,
                                               int cookTime,
                                               int serveCount,
                                               int calory,
@@ -367,7 +366,7 @@ class CreateFoodListCrawl
         DataOutputStream  dos  = null;
         HttpURLConnection httpConn = null;
 
-        printf("Upload from java");
+        printf("Upload data from java: Make sure you have added your ip address to remote mysql list");
         String dir_path = "";
         String query = "";
         try {
@@ -379,10 +378,11 @@ class CreateFoodListCrawl
              if ( recipiePresentInDB(stmt, name) )
              {
                 printf("Recipe already present \n");
+                return 0 ;
              }
              else
              {
-
+                 printf("JKS add it to database");
                  query = "SELECT max(id) from tbl_dishes";
                  ResultSet rs = stmt.executeQuery(query) ;
                  rs.next();
@@ -505,7 +505,9 @@ class CreateFoodListCrawl
                  } catch (Exception e) {
                      printf("JKS EXCEPTION");
                      e.printStackTrace();
+                     return 1;
                  }
+                 return 1;
             }
 
        }
@@ -513,12 +515,33 @@ class CreateFoodListCrawl
        {
            printf("Exception ");
            e.printStackTrace();
+           return 1;
        }
     }
 
     public boolean recipiePresentInDB(Statement stmt, String name)
     {
-        return false;
+        String query = "SELECT count(*) from tbl_dishes where dishname='"+name+"'";
+        try
+            {
+            ResultSet rs = stmt.executeQuery(query) ;
+            rs.next();
+            int count = rs.getInt("count(*)");;
+            if ( count != 0 )
+            {
+                /* already present */
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return true;// return true on error condition 
+        }
     }
     
 }
