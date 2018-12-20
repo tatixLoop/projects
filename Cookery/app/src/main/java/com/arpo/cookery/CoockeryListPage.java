@@ -80,7 +80,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                     "title" + "/" + gType + ".jpg";
 
-            Runnable imgFetch = new DishImageFetcher(title_image, title, this);
+            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, title, this);
             new Thread(imgFetch).start();
 
             asyncFetch =  new GetDishesList();

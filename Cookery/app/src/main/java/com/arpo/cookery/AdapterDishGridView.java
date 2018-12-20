@@ -129,7 +129,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             else {
 
                 
-                Runnable imgFetch = new DishImageFetcher(box_preview_url, rel_dishbox, context, list, position);
+                Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISH, item.getId(), box_preview_url, rel_dishbox, context, list, position);
                 //Runnable imgFetch = new DishImageFetcher(box_preview_url, rel_dishbox, context);
                 new Thread(imgFetch).start();
             }

@@ -18,7 +18,9 @@ public class Globals {
     static String img_path="/img/";*/
 
 
-
+    static int FETCHTYPE_DISHCATAGORY = 1;
+    static int FETCHTYPE_DISH = 2;
+    static int FETCHTYPE_DISH_TITLE = 3;
 
 
     static  String dishName[] = {

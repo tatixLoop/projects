@@ -2,13 +2,17 @@ package com.arpo.cookery;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.util.List;
 
@@ -24,27 +28,58 @@ public class DishImageFetcher implements Runnable
     List<ListItemDishes> dishList;
     int position;
 
-    public DishImageFetcher(String url, RelativeLayout rel, Context context)
+    int fetchType;
+    int fetchId;
+
+    public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context)
     {
         this.url = url;
         this.layout = rel;
         this.ctx = context;
         this.position = -1;
+        this.fetchType = fetchType;
+        this.fetchId = fetchId;
     }
-    public DishImageFetcher(String url, RelativeLayout rel, Context context, List<ListItemDishes> list, int position)
+    public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context, List<ListItemDishes> list, int position)
     {
         this.url = url;
         this.layout = rel;
         this.ctx = context;
         this.dishList = list;
         this.position = position;
+        this.fetchType = fetchType;
+        this.fetchId = fetchId;
     }
     public void run()
     {
         DishImageSetterUI imgSetRunnable;
         try {
-            URL url = new URL(this.url);
-            Bitmap myImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            Bitmap myImage;
+            // check if image is present in shared preference cache
+            String sharedPrefKey = "SHCache_"+fetchType+"_"+fetchId;
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+            String value = preferences.getString(sharedPrefKey, "defaultValue");
+
+            if( !value.equals("defaultValue"))
+            {
+                Log.d("JKS", "Decrypt shared preference to bitmap");
+                byte[] imageAsBytes = Base64.decode(value.getBytes(), Base64.DEFAULT);
+                myImage = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+            }
+            else {
+                URL url = new URL(this.url);
+                myImage = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                // save the image as string in shared preferences
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                myImage.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
+                byte[] b = baos.toByteArray();
+                String encoded = Base64.encodeToString(b, Base64.DEFAULT);
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString(sharedPrefKey,encoded);
+                editor.apply();
+            }
             if(this.position != -1) {
 
                 Drawable dr = new BitmapDrawable(myImage);
