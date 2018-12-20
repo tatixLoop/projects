@@ -250,29 +250,29 @@ class CreateFoodListCrawl
     }
     private  String getImages(String src) throws IOException {
 
-      String folder = null;
-      //Exctract the name of the image from the src attribute
-      int indexname = src.lastIndexOf("/");
-      if (indexname == src.length()) {
-          src = src.substring(1, indexname);
-      }
-
-      indexname = src.lastIndexOf("/");
-      String name = src.substring(indexname, src.length());
-
-      //Open a URL Stream
-      URL url = new URL(src);
-      InputStream in = url.openStream();
-      OutputStream out = new BufferedOutputStream(new FileOutputStream( folderPath + name));
-      incomingImg = in;
-
-      for (int b; (b = in.read()) != -1;) {
-          out.write(b);
-      }
-      out.close();
-      in.close();
-      return folderPath + name;
-  }
+        String folder = null;
+        //Exctract the name of the image from the src attribute
+        int indexname = src.lastIndexOf("/");
+        if (indexname == src.length()) {
+            src = src.substring(1, indexname);
+        }
+       
+        indexname = src.lastIndexOf("/");
+        String name = src.substring(indexname, src.length());
+       
+        //Open a URL Stream
+        URL url = new URL(src);
+        InputStream in = url.openStream();
+        OutputStream out = new BufferedOutputStream(new FileOutputStream( folderPath + name));
+        incomingImg = in;
+       
+        for (int b; (b = in.read()) != -1;) {
+            out.write(b);
+        }
+        out.close();
+        in.close();
+        return folderPath + name;
+    }
 
 
     public int getDirection( Document doc, List<String> list)
@@ -343,6 +343,8 @@ class CreateFoodListCrawl
         for (Element paragraph : doc.select("article[itemprop=articleBody]"))
             System.out.println(paragraph.text());
     }
+
+
     public void uploadDatatoDatabaseFromJava(String name,
                                              int type,
                                               int cookTime,
@@ -369,297 +371,154 @@ class CreateFoodListCrawl
         String dir_path = "";
         String query = "";
         try {
-        Class.forName("com.mysql.jdbc.Driver") ;
-        Connection conn = DriverManager.getConnection("jdbc:mysql://tatixtech.com:3306/sg_news", "jks", "Jithin123") ;
-        Statement stmt = conn.createStatement() ;
-
-        query = "SELECT max(id) from tbl_dishes";
-        ResultSet rs = stmt.executeQuery(query) ;
-        rs.next();
-        int id = rs.getInt("max(id)");
-        int nextId = id+1;
-
-        dir_path = "recipe_"+nextId;
-        name = name.replace("'", "''");
-        author = author.replace("'", "''");
-        query = "INSERT INTO tbl_dishes (type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating) VALUES ("+
-					type+", '"+name+"', '"+ dir_path +"', "+calory+", "+cookTime+", "+serveCount+", '"+author+"', "+rating+", 1)";
-        stmt.executeUpdate(query) ;
-        printf(query);
-        for (int i = 0; i < listIngr.size(); i++)
-        {
-            String ingr = listIngr.get(i);
-            ingr = ingr.replace("'", "''");
-            query = "INSERT INTO tbl_ingredients (id, ingredient) VALUES ("+nextId+", '"+ingr+"')";
-            stmt.executeUpdate(query) ;
-        printf(query);
-        }
-        for (int i = 0; i < listDir.size(); i++)
-        {
-            String step = listDir.get(i);
-            step = step.replace("'", "''");
-            query = "INSERT INTO tbl_steps (id, stepno, step) VALUES ("+nextId + ","+ (i + 1) +",'"+ step +"')";
-            stmt.executeUpdate(query) ;
-        printf(query);
-        }
-        String upLoadServerUri = "http://tatixtech.com/cookery/upload/imgupload.php";
-
-        //Uploading image to web
-        String web_url;
-
-        web_url = upLoadServerUri ;
-        
-        try {
-             printf(web_url);
-
-             FileInputStream fileInputStream = new FileInputStream(img_path_box);
-             URL url = new URL(web_url);
-             
-             // Open a HTTP  connection to  the URL
-             httpConn = (HttpURLConnection) url.openConnection(); 
-             httpConn.setDoInput(true); // Allow Inputs
-             httpConn.setDoOutput(true); // Allow Outputs
-             httpConn.setUseCaches(false); // Don't use a Cached Copy
-             httpConn.setRequestMethod("POST");
-             httpConn.setRequestProperty("Connection", "Keep-Alive");
-             httpConn.setRequestProperty("ENCTYPE", "multipart/form-data");
-             httpConn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-/*
-*/
-
-             httpConn.setRequestProperty("image", "preview.jpg");
-             httpConn.setRequestProperty("image_food", "preview.jpg");
-             
-             dos = new DataOutputStream(httpConn.getOutputStream());
-             
-             dos.writeBytes(twoHyphens + boundary + lineEnd); 
-             dos.writeBytes("Content-Disposition: form-data; name='image';filename="
-                           + "preview.jpg" + "" + lineEnd);
-             
-             dos.writeBytes(lineEnd);
-             
-             // create a buffer of  maximum size
-             bytesAvailable = fileInputStream.available(); 
-             bufferSize = Math.min(bytesAvailable, maxBufferSize);
-             buffer = new byte[bufferSize];
-             // read file and write it into form...
-             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-             
-             while (bytesRead > 0) {
-                 dos.write(buffer, 0, bufferSize);
-                 bytesAvailable = fileInputStream.available();
-                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+             Class.forName("com.mysql.jdbc.Driver") ;
+             Connection conn = DriverManager.getConnection("jdbc:mysql://tatixtech.com:3306/sg_news", "jks", "Jithin123") ;
+             Statement stmt = conn.createStatement() ;
+ 
+             /* check if recipie is already present */
+             if ( recipiePresentInDB(stmt, name) )
+             {
+                printf("Recipe already present \n");
              }
-             // send multipart form data necesssary after file data...
-             dos.writeBytes(lineEnd);
-             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-             
-             FileInputStream fileInputStream2 = new FileInputStream(img_path_main);
-             dos.writeBytes(twoHyphens + boundary + lineEnd); 
-             dos.writeBytes("Content-Disposition: form-data; name='image_food';filename="
-                           + "preview2.jpg" + "" + lineEnd);
-             
-             dos.writeBytes(lineEnd);
-             
-             // create a buffer of  maximum size
-             bytesAvailable = fileInputStream2.available(); 
-             bufferSize = Math.min(bytesAvailable, maxBufferSize);
-             buffer = new byte[bufferSize];
-             // read file and write it into form...
-             bytesRead = fileInputStream2.read(buffer, 0, bufferSize);
-             
-             while (bytesRead > 0) {
-                 dos.write(buffer, 0, bufferSize);
-                 bytesAvailable = fileInputStream2.available();
-                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                 bytesRead = fileInputStream2.read(buffer, 0, bufferSize);
-             }
-             // send multipart form data necesssary after file data...
-             dos.writeBytes(lineEnd);
-             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-             
-             // Responses from the server (code and message)
-             serverResponseCode = httpConn.getResponseCode();
-             String serverResponseMessage = httpConn.getResponseMessage();
-             printf( "HTTP Response is : "
-                       + serverResponseMessage + ": " + serverResponseCode);
-             BufferedReader in = new BufferedReader(
-                                         new InputStreamReader(httpConn.getInputStream()));
-             String inputLine;
-             StringBuffer response = new StringBuffer();
-             
-             while ((inputLine = in.readLine()) != null) {
-                 response.append(inputLine);
-             }
-             in.close();
-             printf(response.toString());
-        } catch (Exception e) {
-            printf("JKS EXCEPTION");
-            e.printStackTrace();
-        }
+             else
+             {
+
+                 query = "SELECT max(id) from tbl_dishes";
+                 ResultSet rs = stmt.executeQuery(query) ;
+                 rs.next();
+                 int id = rs.getInt("max(id)");
+                 int nextId = id+1;
+              
+                 dir_path = "recipe_"+nextId;
+                 name = name.replace("'", "''");
+                 author = author.replace("'", "''");
+                 query = "INSERT INTO tbl_dishes (type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating) VALUES ("+
+                 				type+", '"+name+"', '"+ dir_path +"', "+calory+", "+cookTime+", "+serveCount+", '"+author+"', "+rating+", 1)";
+                 stmt.executeUpdate(query) ;
+                 printf(query);
+                 for (int i = 0; i < listIngr.size(); i++)
+                 {
+                     String ingr = listIngr.get(i);
+                     ingr = ingr.replace("'", "''");
+                     query = "INSERT INTO tbl_ingredients (id, ingredient) VALUES ("+nextId+", '"+ingr+"')";
+                     stmt.executeUpdate(query) ;
+                     printf(query);
+                 }
+                 for (int i = 0; i < listDir.size(); i++)
+                 {
+                     String step = listDir.get(i);
+                     step = step.replace("'", "''");
+                     query = "INSERT INTO tbl_steps (id, stepno, step) VALUES ("+nextId + ","+ (i + 1) +",'"+ step +"')";
+                     stmt.executeUpdate(query) ;
+                     printf(query);
+                 }
+                 String upLoadServerUri = "http://tatixtech.com/cookery/upload/imgupload.php";
+              
+                 //Uploading image to web
+                 String web_url;
+              
+                 web_url = upLoadServerUri ;
+                 
+                 try {
+                      printf(web_url);
+              
+                      FileInputStream fileInputStream = new FileInputStream(img_path_box);
+                      URL url = new URL(web_url);
+                      
+                      // Open a HTTP  connection to  the URL
+                      httpConn = (HttpURLConnection) url.openConnection(); 
+                      httpConn.setDoInput(true); // Allow Inputs
+                      httpConn.setDoOutput(true); // Allow Outputs
+                      httpConn.setUseCaches(false); // Don't use a Cached Copy
+                      httpConn.setRequestMethod("POST");
+                      httpConn.setRequestProperty("Connection", "Keep-Alive");
+                      httpConn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                      httpConn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+              
+                      httpConn.setRequestProperty("image", "preview.jpg");
+                      httpConn.setRequestProperty("image_food", "preview.jpg");
+                      
+                      dos = new DataOutputStream(httpConn.getOutputStream());
+                      
+                      dos.writeBytes(twoHyphens + boundary + lineEnd); 
+                      dos.writeBytes("Content-Disposition: form-data; name='image';filename="
+                                    + "preview.jpg" + "" + lineEnd);
+                      
+                      dos.writeBytes(lineEnd);
+                      
+                      // create a buffer of  maximum size
+                      bytesAvailable = fileInputStream.available(); 
+                      bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                      buffer = new byte[bufferSize];
+                      // read file and write it into form...
+                      bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                      
+                      while (bytesRead > 0) {
+                          dos.write(buffer, 0, bufferSize);
+                          bytesAvailable = fileInputStream.available();
+                          bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                          bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                      }
+                      // send multipart form data necesssary after file data...
+                      dos.writeBytes(lineEnd);
+                      dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                      
+                      FileInputStream fileInputStream2 = new FileInputStream(img_path_main);
+                      dos.writeBytes(twoHyphens + boundary + lineEnd); 
+                      dos.writeBytes("Content-Disposition: form-data; name='image_food';filename="
+                                    + "preview2.jpg" + "" + lineEnd);
+                      
+                      dos.writeBytes(lineEnd);
+                      
+                      // create a buffer of  maximum size
+                      bytesAvailable = fileInputStream2.available(); 
+                      bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                      buffer = new byte[bufferSize];
+                      // read file and write it into form...
+                      bytesRead = fileInputStream2.read(buffer, 0, bufferSize);
+                      
+                      while (bytesRead > 0) {
+                          dos.write(buffer, 0, bufferSize);
+                          bytesAvailable = fileInputStream2.available();
+                          bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                          bytesRead = fileInputStream2.read(buffer, 0, bufferSize);
+                      }
+                      // send multipart form data necesssary after file data...
+                      dos.writeBytes(lineEnd);
+                      dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                      
+                      // Responses from the server (code and message)
+                      serverResponseCode = httpConn.getResponseCode();
+                      String serverResponseMessage = httpConn.getResponseMessage();
+                      printf( "HTTP Response is : "
+                                + serverResponseMessage + ": " + serverResponseCode);
+                      BufferedReader in = new BufferedReader(
+                                                  new InputStreamReader(httpConn.getInputStream()));
+                      String inputLine;
+                      StringBuffer response = new StringBuffer();
+                      
+                      while ((inputLine = in.readLine()) != null) {
+                          response.append(inputLine);
+                      }
+                      in.close();
+                      printf(response.toString());
+                 } catch (Exception e) {
+                     printf("JKS EXCEPTION");
+                     e.printStackTrace();
+                 }
+            }
 
        }
        catch (Exception e)
        {
-printf("Exception ");
-e.printStackTrace();
+           printf("Exception ");
+           e.printStackTrace();
        }
     }
 
-    public void uploadDatatoDatabase(String name, int type, int cookTime, int serveCount, int calory, int rating, String author, List<String> listIngr , List<String> listDir, String img_path_box, String img_path_main)
+    public boolean recipiePresentInDB(Statement stmt, String name)
     {
-//        String upLoadServerUri = "http://localhost/app/news/cookery/web/tmp.php";
-        String upLoadServerUri = "http://tatixtech.com/cookery/upload/dataupload.php";
-        String extraData = "";
-                 try
-                 {
-            extraData = "?type="+ type+
-                           "&timeToCook="+cookTime+
-                           "&calory="+  calory+
-                           "&recipe_name="+ URLEncoder.encode( name,  java.nio.charset.StandardCharsets.UTF_8.toString())+
-                           "&serve_count="+ serveCount+
-                           "&author="+URLEncoder.encode( author,  java.nio.charset.StandardCharsets.UTF_8.toString())+
-                           "&rating="+ rating;
-                 } catch (Exception e)
-                 {
-                 }
-
-
-        DataOutputStream  dos  = null;
-        HttpURLConnection conn = null;
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
-        String boundary = "*****";
-        int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
-        int serverResponseCode = 0;
-        String ingredients ="";
-        String step = "";
-
-             for(int i = 0; i < listIngr.size(); i++)
-             {
-                 try
-                 {
-                            printf(""+listIngr.get(i));
-                     ingredients += "&ingr"+i+"="+URLEncoder.encode(listIngr.get(i),  java.nio.charset.StandardCharsets.UTF_8.toString());
-                 } catch (Exception e)
-                 {
-                 }
-             }
-             for(int i = 0; i < listDir.size(); i++)
-             {
-                 try
-                 {
-                            printf("Step " +(i+1) + " : "+listDir.get(i));
-                     step += "&step"+i+"="+ URLEncoder.encode(listDir.get(i),  java.nio.charset.StandardCharsets.UTF_8.toString());
-                 } catch (Exception e)
-                 {
-                 }
-             }
-        String web_url;
-
-        web_url = upLoadServerUri + extraData + step + ingredients;
-
-        try {
-             printf(web_url);
-
-             FileInputStream fileInputStream = new FileInputStream(img_path_box);
-             URL url = new URL(web_url);
-             
-             // Open a HTTP  connection to  the URL
-             conn = (HttpURLConnection) url.openConnection(); 
-             conn.setDoInput(true); // Allow Inputs
-             conn.setDoOutput(true); // Allow Outputs
-             conn.setUseCaches(false); // Don't use a Cached Copy
-             conn.setRequestMethod("POST");
-             conn.setRequestProperty("Connection", "Keep-Alive");
-             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-/*
-             conn.setRequestProperty("recipe_name", recipeName );
-             conn.setRequestProperty("serve_count", ""+2 );
-             conn.setRequestProperty("calory",""+ cal );
-             conn.setRequestProperty("timeToCook", ""+2000 );
-             conn.setRequestProperty("rating", ""+9 );
-             conn.setRequestProperty("author", "Jithin" );
-             conn.setRequestProperty("type", ""+1 );
-*/
-
-             conn.setRequestProperty("image", "preview.jpg");
-             conn.setRequestProperty("image_food", "preview.jpg");
-             
-             dos = new DataOutputStream(conn.getOutputStream());
-             
-             dos.writeBytes(twoHyphens + boundary + lineEnd); 
-             dos.writeBytes("Content-Disposition: form-data; name='image';filename="
-                           + "preview.jpg" + "" + lineEnd);
-             
-             dos.writeBytes(lineEnd);
-             
-             // create a buffer of  maximum size
-             bytesAvailable = fileInputStream.available(); 
-             bufferSize = Math.min(bytesAvailable, maxBufferSize);
-             buffer = new byte[bufferSize];
-             // read file and write it into form...
-             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-             
-             while (bytesRead > 0) {
-                 dos.write(buffer, 0, bufferSize);
-                 bytesAvailable = fileInputStream.available();
-                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-             }
-             // send multipart form data necesssary after file data...
-             dos.writeBytes(lineEnd);
-             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-             
-             FileInputStream fileInputStream2 = new FileInputStream(img_path_main);
-             dos.writeBytes(twoHyphens + boundary + lineEnd); 
-             dos.writeBytes("Content-Disposition: form-data; name='image_food';filename="
-                           + "preview2.jpg" + "" + lineEnd);
-             
-             dos.writeBytes(lineEnd);
-             
-             // create a buffer of  maximum size
-             bytesAvailable = fileInputStream2.available(); 
-             bufferSize = Math.min(bytesAvailable, maxBufferSize);
-             buffer = new byte[bufferSize];
-             // read file and write it into form...
-             bytesRead = fileInputStream2.read(buffer, 0, bufferSize);
-             
-             while (bytesRead > 0) {
-                 dos.write(buffer, 0, bufferSize);
-                 bytesAvailable = fileInputStream2.available();
-                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                 bytesRead = fileInputStream2.read(buffer, 0, bufferSize);
-             }
-             // send multipart form data necesssary after file data...
-             dos.writeBytes(lineEnd);
-             dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-             
-             // Responses from the server (code and message)
-             serverResponseCode = conn.getResponseCode();
-             String serverResponseMessage = conn.getResponseMessage();
-             printf( "HTTP Response is : "
-                       + serverResponseMessage + ": " + serverResponseCode);
-             BufferedReader in = new BufferedReader(
-                                         new InputStreamReader(conn.getInputStream()));
-             String inputLine;
-             StringBuffer response = new StringBuffer();
-             
-             while ((inputLine = in.readLine()) != null) {
-                 response.append(inputLine);
-             }
-             in.close();
-             printf(response.toString());
-        } catch (Exception e) {
-            printf("JKS EXCEPTION");
-            e.printStackTrace();
-        }
- 
+        return false;
     }
-
-
+    
 }
