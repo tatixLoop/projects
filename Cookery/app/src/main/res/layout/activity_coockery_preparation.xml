@@ -18,11 +18,18 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/rel_title"
+                android:id="@+id/rel_titleX"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
                 android:background="@color/cardview_light_background">
+                <RelativeLayout
+                    android:id="@+id/rel_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/cardview_light_background">
 
+                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
