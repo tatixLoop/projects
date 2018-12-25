@@ -3,6 +3,7 @@ package com.arpo.cookery;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 /**
@@ -12,17 +13,32 @@ import android.widget.RelativeLayout;
 public class DishImageSetterUI implements Runnable {
     RelativeLayout layout;
     Bitmap bitmap;
+    ImageView img;
+    boolean imgSet;
 
     public DishImageSetterUI(Bitmap bmp, RelativeLayout rel) {
         this.bitmap = bmp;
         this.layout = rel;
+        imgSet = false;
+    }
+
+    public DishImageSetterUI(Bitmap bmp, ImageView img) {
+        this.bitmap = bmp;
+        this.img = img;
+        imgSet = true;
     }
 
     public void run()
     {
         try {
             Drawable dr = new BitmapDrawable(this.bitmap);
-            this.layout.setBackgroundDrawable(dr);
+            if (imgSet)
+            {
+                this.img.setImageDrawable(dr);
+            }
+            else {
+                this.layout.setBackgroundDrawable(dr);
+            }
         }
         catch (Exception e)
         {

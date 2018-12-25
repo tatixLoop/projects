@@ -3,6 +3,7 @@ package com.arpo.cookery;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
@@ -13,10 +14,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -57,32 +61,53 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coockery_list_page);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+/*        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();*/
 
-        TextView txt_dishType = findViewById(R.id.txt_dishType);
-        RelativeLayout title = findViewById(R.id.rel_dishlist);
+        android.support.v7.widget.Toolbar tb = findViewById(R.id.toolBar_title);
+        setSupportActionBar(tb);
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        //TextView txt_dishType = findViewById(R.id.txt_dishType);
+        //RelativeLayout title = findViewById(R.id.rel_dishlist);
         RecyclerView rv_dishes = findViewById(R.id.recyclerView);
         listOfDishes = new ArrayList<>();
 
         Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 String.format(Locale.US, "fonts/%s", "font.ttf"));
+        Window vindow = this.getWindow();
+        vindow.setStatusBarColor(Color.BLACK);
+        // txt_dishType.setTypeface(typeface);
+        for(int i = 0; i < tb.getChildCount(); i ++)
+        {
+            View v = tb.getChildAt(i);
+            if (v instanceof TextView)
+            {
+                TextView txt = (TextView)v;
+                ((TextView) v).setTypeface(typeface);
+                txt.setShadowLayer(2,1,1, Color.parseColor("#000000"));
+            }
+        }
 
-        txt_dishType.setTypeface(typeface);
 
         gloadType = getIntent().getIntExtra("loadtype",-1);
         if(gloadType == 0) {
             gType = getIntent().getIntExtra("type", -1);
             print("Type is " + gType);
 
-            txt_dishType.setText(Globals.dishName[gType]);
+            //txt_dishType.setText(Globals.dishName[gType]);
+
+            getSupportActionBar().setTitle(Globals.dishName[gType]);
 
             String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                     "title" + "/" + gType + ".jpg";
 
-            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, title, this);
+            ImageView img = findViewById(R.id.img_title);
+            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, img, this);
             new Thread(imgFetch).start();
-
             asyncFetch =  new GetDishesList();
             asyncFetch.execute();
 

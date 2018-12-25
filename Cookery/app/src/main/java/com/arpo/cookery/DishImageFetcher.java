@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.io.ByteArrayOutputStream;
@@ -27,6 +28,8 @@ public class DishImageFetcher implements Runnable
     Context ctx;
     List<ListItemDishes> dishList;
     int position;
+    ImageView img;
+    boolean setImgView;
 
     int fetchType;
     int fetchId;
@@ -39,6 +42,7 @@ public class DishImageFetcher implements Runnable
         this.position = -1;
         this.fetchType = fetchType;
         this.fetchId = fetchId;
+        this.setImgView = false;
     }
     public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context, List<ListItemDishes> list, int position)
     {
@@ -49,7 +53,21 @@ public class DishImageFetcher implements Runnable
         this.position = position;
         this.fetchType = fetchType;
         this.fetchId = fetchId;
+        this.setImgView = false;
     }
+
+    public DishImageFetcher(int fetchType, int fetchId, String url, ImageView img, Context context)
+    {
+        this.url = url;
+        this.img = img;
+        this.ctx = context;
+        this.position = -1;
+        this.fetchType = fetchType;
+        this.fetchId = fetchId;
+        this.setImgView = true;
+    }
+
+
     public void run()
     {
         DishImageSetterUI imgSetRunnable;
@@ -90,8 +108,14 @@ public class DishImageFetcher implements Runnable
                 Log.d("JKS","Setting preview image for "+this.dishList.get(this.position).getName());
             }
 
-            imgSetRunnable = new DishImageSetterUI(myImage, this.layout);
-            ((Activity) ctx).runOnUiThread(imgSetRunnable);
+            if (this.setImgView ) {
+                imgSetRunnable = new DishImageSetterUI(myImage, this.img);
+                ((Activity) ctx).runOnUiThread(imgSetRunnable);
+            }
+            else {
+                imgSetRunnable = new DishImageSetterUI(myImage, this.layout);
+                ((Activity) ctx).runOnUiThread(imgSetRunnable);
+            }
 
         }
         catch (Exception e)
