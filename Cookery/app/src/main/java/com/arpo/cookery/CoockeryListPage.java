@@ -98,9 +98,6 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                 Typeface Boldtypeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
                         String.format(Locale.US, "fonts/%s", "fontfront.ttf"));
                 TextView txt = (TextView)v;
-                txt.setTypeface(Boldtypeface);
-                txt.setShadowLayer(2,1,1, Color.parseColor("#00000000"));
-                txt.setBackground(getResources().getDrawable(R.drawable.gradientblack));
 
             }
         }
@@ -121,7 +118,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
             ImageView img = findViewById(R.id.img_title);
             RelativeLayout layout = findViewById(R.id.img_tltle_layout);
-            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this);
+            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, false);
             new Thread(imgFetch).start();
             asyncFetch =  new GetDishesList();
             asyncFetch.execute();

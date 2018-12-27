@@ -1,12 +1,14 @@
 package com.arpo.cookery;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +76,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
         public TextView cukTime ;
         public TextView recipeName ;
         public ListItemDishes item;
+        public RelativeLayout details;
         //public TextView author;
         //public TextView rating;
 
@@ -86,6 +89,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             calory = v.findViewById(R.id.txt_calgv);
             cukTime = v.findViewById(R.id.txt_cooktimegv);
             recipeName = v.findViewById(R.id.txt_recipeName);
+            details = v.findViewById(R.id.rel_details);
             //author = v.findViewById(R.id.txt_author_gi);
             //rating = v.findViewById(R.id.txt_rating_gi);
         }
@@ -125,13 +129,28 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
                 Drawable dr = new BitmapDrawable(list.get(position).getPreviewImg());
                 rel_dishbox.setBackground(dr);
 
+                int width = list.get(position).getPreviewImg().getWidth();
+                int height = list.get(position).getPreviewImg().getHeight();
+
+                Resources r = context.getResources();
+                float px = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        170,
+                        r.getDisplayMetrics()
+                );
+                float newHeight = px * height / width;
+                rel_dishbox.getLayoutParams().height = (int) newHeight;
+                details.setPadding(0, (int)newHeight, 0, 0);
+
+
             }
             else {
 
-                
-                Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISH, item.getId(), box_preview_url, rel_dishbox, context, list, position);
+                Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISH, item.getId(), box_preview_url, rel_dishbox, details, context, list, position, true);
                 //Runnable imgFetch = new DishImageFetcher(box_preview_url, rel_dishbox, context);
                 new Thread(imgFetch).start();
+
+
             }
 
         }

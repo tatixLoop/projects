@@ -30,11 +30,13 @@ public class DishImageFetcher implements Runnable
     int position;
     ImageView img;
     boolean setImgView;
+    boolean stretching;
 
     int fetchType;
     int fetchId;
+    RelativeLayout support;
 
-    public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context)
+    public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context, boolean stretch)
     {
         this.url = url;
         this.layout = rel;
@@ -43,8 +45,10 @@ public class DishImageFetcher implements Runnable
         this.fetchType = fetchType;
         this.fetchId = fetchId;
         this.setImgView = false;
+        this.stretching = stretch;
+        support = null;
     }
-    public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context, List<ListItemDishes> list, int position)
+    public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, RelativeLayout supportLayout, Context context, List<ListItemDishes> list, int position, boolean stretch)
     {
         this.url = url;
         this.layout = rel;
@@ -54,9 +58,11 @@ public class DishImageFetcher implements Runnable
         this.fetchType = fetchType;
         this.fetchId = fetchId;
         this.setImgView = false;
+        this.stretching = stretch;
+        support = supportLayout;
     }
 
-    public DishImageFetcher(int fetchType, int fetchId, String url, ImageView img, Context context)
+    public DishImageFetcher(int fetchType, int fetchId, String url, ImageView img, Context context, boolean stretch)
     {
         this.url = url;
         this.img = img;
@@ -65,6 +71,8 @@ public class DishImageFetcher implements Runnable
         this.fetchType = fetchType;
         this.fetchId = fetchId;
         this.setImgView = true;
+        this.stretching = stretch;
+        support = null;
     }
 
 
@@ -109,11 +117,11 @@ public class DishImageFetcher implements Runnable
             }
 
             if (this.setImgView ) {
-                imgSetRunnable = new DishImageSetterUI(myImage, this.img);
+                imgSetRunnable = new DishImageSetterUI(myImage, this.img, ctx, stretching);
                 ((Activity) ctx).runOnUiThread(imgSetRunnable);
             }
             else {
-                imgSetRunnable = new DishImageSetterUI(myImage, this.layout);
+                imgSetRunnable = new DishImageSetterUI(myImage, this.layout, this.support, ctx, stretching);
                 ((Activity) ctx).runOnUiThread(imgSetRunnable);
             }
 
