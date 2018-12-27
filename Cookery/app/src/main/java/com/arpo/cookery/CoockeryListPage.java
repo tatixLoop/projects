@@ -71,24 +71,37 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        tb.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //onBackPressed()
+                finish();
+            }
+        });
+
         //TextView txt_dishType = findViewById(R.id.txt_dishType);
         //RelativeLayout title = findViewById(R.id.rel_dishlist);
         RecyclerView rv_dishes = findViewById(R.id.recyclerView);
         listOfDishes = new ArrayList<>();
 
         Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
-                String.format(Locale.US, "fonts/%s", "font.ttf"));
+                                    String.format(Locale.US, "fonts/%s", "font.ttf"));
         Window vindow = this.getWindow();
         vindow.setStatusBarColor(Color.BLACK);
+
         // txt_dishType.setTypeface(typeface);
         for(int i = 0; i < tb.getChildCount(); i ++)
         {
             View v = tb.getChildAt(i);
             if (v instanceof TextView)
             {
+                Typeface Boldtypeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                        String.format(Locale.US, "fonts/%s", "fontfront.ttf"));
                 TextView txt = (TextView)v;
-                ((TextView) v).setTypeface(typeface);
-                txt.setShadowLayer(2,1,1, Color.parseColor("#000000"));
+                txt.setTypeface(Boldtypeface);
+                txt.setShadowLayer(2,1,1, Color.parseColor("#00000000"));
+                txt.setBackground(getResources().getDrawable(R.drawable.gradientblack));
+
             }
         }
 
@@ -102,11 +115,13 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
             getSupportActionBar().setTitle(Globals.dishName[gType]);
 
+
             String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                     "title" + "/" + gType + ".jpg";
 
             ImageView img = findViewById(R.id.img_title);
-            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, img, this);
+            RelativeLayout layout = findViewById(R.id.img_tltle_layout);
+            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this);
             new Thread(imgFetch).start();
             asyncFetch =  new GetDishesList();
             asyncFetch.execute();
@@ -221,7 +236,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                                     c.getString("dishname"),
                                     c.getString("img_path")
                                     );*/
-                                print("Adding " + c.getString("dishname"));
+                                //print("Adding " + c.getString("dishname"));
                                 ListItemDishes dish = new ListItemDishes(
                                         c.getInt("id"),
                                         c.getInt("type"),
