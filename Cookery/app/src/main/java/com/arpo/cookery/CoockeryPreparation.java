@@ -79,7 +79,9 @@ public class CoockeryPreparation extends AppCompatActivity {
                 data.getImg_path() + "/title_image.jpg";
         RelativeLayout title = findViewById(R.id.rel_title);
 
-        Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISH_TITLE, gId, title_image, title, this, true);
+        float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+        DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISH_TITLE, gId, title_image, title, this, true);
+        imgFetch.setWidth((int)dpWidth);
         new Thread(imgFetch).start();
 
         cookRecipe = new recipe();
