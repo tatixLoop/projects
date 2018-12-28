@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
@@ -36,6 +37,11 @@ public class DishImageFetcher implements Runnable
     int fetchId;
     RelativeLayout support;
 
+    int width;
+    ImageView img_listPageLayoutGrad;
+    CollapsingToolbarLayout colLayout;
+    boolean listPageLayoutGradSet;
+
     public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context, boolean stretch)
     {
         this.url = url;
@@ -47,6 +53,8 @@ public class DishImageFetcher implements Runnable
         this.setImgView = false;
         this.stretching = stretch;
         support = null;
+        width = 170;
+        listPageLayoutGradSet = false;
     }
     public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, RelativeLayout supportLayout, Context context, List<ListItemDishes> list, int position, boolean stretch)
     {
@@ -60,6 +68,8 @@ public class DishImageFetcher implements Runnable
         this.setImgView = false;
         this.stretching = stretch;
         support = supportLayout;
+        width = 170;
+        listPageLayoutGradSet = false;
     }
 
     public DishImageFetcher(int fetchType, int fetchId, String url, ImageView img, Context context, boolean stretch)
@@ -73,8 +83,21 @@ public class DishImageFetcher implements Runnable
         this.setImgView = true;
         this.stretching = stretch;
         support = null;
+        width = 170;
+        listPageLayoutGradSet = false;
     }
 
+    public void setWidth(int width)
+    {
+        this.width = width;
+    }
+    public void setImgListPageLayoutGrad(ImageView img, CollapsingToolbarLayout colLayout)
+    {
+        listPageLayoutGradSet = true;
+        this.img_listPageLayoutGrad = img;
+        this.colLayout = colLayout;
+
+    }
 
     public void run()
     {
@@ -113,15 +136,17 @@ public class DishImageFetcher implements Runnable
                 Drawable dr = new BitmapDrawable(myImage);
                 this.dishList.get(this.position).setPreviewImg(myImage);
                 this.dishList.get(this.position).setPreviewSet(1);
-                Log.d("JKS","Setting preview image for "+this.dishList.get(this.position).getName());
-            }
+           }
 
             if (this.setImgView ) {
-                imgSetRunnable = new DishImageSetterUI(myImage, this.img, ctx, stretching);
+                imgSetRunnable = new DishImageSetterUI(myImage, this.img, ctx, stretching, this.width);
                 ((Activity) ctx).runOnUiThread(imgSetRunnable);
             }
             else {
-                imgSetRunnable = new DishImageSetterUI(myImage, this.layout, this.support, ctx, stretching);
+                imgSetRunnable = new DishImageSetterUI(myImage, this.layout, this.support, ctx, stretching,this.width);
+                if(listPageLayoutGradSet) {
+                    imgSetRunnable.setListPageImage(this.img_listPageLayoutGrad, this.colLayout);
+                }
                 ((Activity) ctx).runOnUiThread(imgSetRunnable);
             }
 

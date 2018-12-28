@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -116,9 +118,15 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                     "title" + "/" + gType + ".jpg";
 
-            ImageView img = findViewById(R.id.img_title);
+            //get screen width
+            float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+
             RelativeLayout layout = findViewById(R.id.img_tltle_layout);
-            Runnable imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, false);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, true);
+
+            imgFetch.setWidth((int)dpWidth);
+            imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
+
             new Thread(imgFetch).start();
             asyncFetch =  new GetDishesList();
             asyncFetch.execute();
