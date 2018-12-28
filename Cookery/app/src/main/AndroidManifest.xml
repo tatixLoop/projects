@@ -17,9 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".CookeryMain"
-            android:screenOrientation="portrait">
+        <activity android:name=".Splashscreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,17 +28,22 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".CookeryMain"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
             android:name=".CoockeryListPage"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".CoockeryPreparation"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".RatePopUp"
+        <activity
+            android:name=".RatePopUp"
+            android:parentActivityName=".CoockeryPreparation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"
-            android:parentActivityName=".CoockeryPreparation"></activity>
+            android:theme="@style/Theme.MyDialog" />
 
     </application>
 
