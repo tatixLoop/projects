@@ -11,6 +11,7 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Created by jithin on 10/9/18.
@@ -30,6 +31,9 @@ public class DishImageSetterUI implements Runnable {
     CollapsingToolbarLayout colLayout;
     boolean listPageImgSet;
 
+    TextView layoutFrnt;
+    boolean layoutFrontSet;
+
     public DishImageSetterUI(Bitmap bmp, RelativeLayout rel, RelativeLayout support, Context ctx, boolean strech, int width) {
         this.bitmap = bmp;
         this.layout = rel;
@@ -39,6 +43,7 @@ public class DishImageSetterUI implements Runnable {
         this.support = support;
         this.width = width;
         listPageImgSet = false;
+        this.layoutFrontSet = false;
     }
 
     public DishImageSetterUI(Bitmap bmp, ImageView img, Context ctx, boolean strech, int width) {
@@ -49,6 +54,7 @@ public class DishImageSetterUI implements Runnable {
         this.stretching = strech;
         this.width = width;
         listPageImgSet = false;
+        this.layoutFrontSet = false;
     }
 
     public void setListPageImage(ImageView view, CollapsingToolbarLayout colLayout)
@@ -56,6 +62,12 @@ public class DishImageSetterUI implements Runnable {
         listPageImgSet = true;
         this.imgListPageGrad = view;
         this.colLayout = colLayout;
+    }
+
+    public void setLayoutFront(TextView layout)
+    {
+        this.layoutFrnt = layout;
+        this.layoutFrontSet = true;
     }
     public void run()
     {
@@ -92,6 +104,10 @@ public class DishImageSetterUI implements Runnable {
                     {
                         this.imgListPageGrad.getLayoutParams().height = (int)newHeight;
                         this.colLayout.getLayoutParams().height = (int)newHeight;
+                    }
+                    if(layoutFrontSet)
+                    {
+                        this.layoutFrnt.getLayoutParams().height = (int)newHeight;
                     }
                 }
 

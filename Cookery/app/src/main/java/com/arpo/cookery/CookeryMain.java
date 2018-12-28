@@ -177,68 +177,123 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         RelativeLayout eggRecipes = findViewById(R.id.rel_eggDishes);
 
 
+        float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+
+
         relBreakfast.requestFocus();
 
         String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                 "title" + "/1.jpg";
 
-        Runnable imgFetch1 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 1, title_image, relBreakfast, this, false);
+        DishImageFetcher imgFetch1 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 1, title_image, relBreakfast, this, true);
+        imgFetch1.setWidth((int)dpWidth);
+        imgFetch1.setLayoutFront(((TextView) findViewById(R.id.main_txtbreakfast)));
         new Thread(imgFetch1).start();
 
         title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                 "title" + "/2.jpg";
 
-        Runnable imgFetch2 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 2, title_image, relLunch, this, false);
+        DishImageFetcher imgFetch2 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 2, title_image, relLunch, this, true);
+        imgFetch2.setWidth((int)dpWidth);
+        imgFetch2.setLayoutFront(((TextView) findViewById(R.id.main_txtlunch)));
         new Thread(imgFetch2).start();
 
         title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                 "title" + "/3.jpg";
 
-        Runnable imgFetch3 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 3, title_image, snckRel, this, false);
+        DishImageFetcher imgFetch3 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 3, title_image, snckRel, this, true);
+        imgFetch3.setWidth((int)dpWidth);
+        imgFetch3.setLayoutFront(((TextView) findViewById(R.id.main_txtsnx)));
         new Thread(imgFetch3).start();
 
         title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                 "title" + "/4.jpg";
 
-        Runnable imgFetch4 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 4,  title_image, snckJuice, this, false);
+        DishImageFetcher imgFetch4 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 4,  title_image, snckJuice, this, true);
+        imgFetch4.setWidth((int)dpWidth);
+        imgFetch4.setLayoutFront(((TextView) findViewById(R.id.main_txtjuice)));
         new Thread(imgFetch4).start();
 
         title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                 "title" + "/5.jpg";
 
-        Runnable imgFetch5 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 5, title_image, snckCookie, this, false);
+        DishImageFetcher imgFetch5 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 5, title_image, snckCookie, this, true);
+        imgFetch5.setWidth((int)dpWidth);
+        imgFetch5.setLayoutFront(((TextView) findViewById(R.id.main_txtCookie)));
         new Thread(imgFetch5).start();
 
 
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 6,  Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/6.jpg", todaySpecial, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 7, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/7.jpg", omlet, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 8, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/8.jpg", eggRecipes, this, false)).start();
+        DishImageFetcher imgFetch6 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 6,  Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/6.jpg", todaySpecial, this, true);
+        imgFetch6.setWidth((int)dpWidth);
+        imgFetch6.setLayoutFront(((TextView) findViewById(R.id.main_txttodaySpecial)));
+        new Thread(imgFetch6).start();
+        DishImageFetcher imgFetch7 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 7, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/7.jpg", omlet, this, true);
+        imgFetch7.setWidth((int)dpWidth);
+        imgFetch7.setLayoutFront(((TextView) findViewById(R.id.main_txtomlets)));
+        new Thread(imgFetch7).start();
+        DishImageFetcher imgFetch8 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 8, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/8.jpg", eggRecipes, this, true);
+        imgFetch8.setWidth((int)dpWidth);
+        imgFetch8.setLayoutFront(((TextView) findViewById(R.id.main_txteggDishes)));
+        new Thread(imgFetch8).start();
 
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 9, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/9.jpg", chicken, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 10, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/10.jpg", coffee, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 11, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/11.jpg", desert, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 12, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/12.jpg", healty, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 13, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/13.jpg", icecream, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 14,  Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/14.jpg", pizza, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 15, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/15.jpg", seafood, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 16, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/16.jpg", indian, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 17, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/17.jpg", chinese, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 18, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/18.jpg", american, this, false)).start();
-        new Thread(new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 19, Globals.host + Globals.appdir + Globals.img_path + "/" +
-                "title" + "/19.jpg", salad, this, false)).start();
+        DishImageFetcher imgFetch9 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 9, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/9.jpg", chicken, this, true);
+        imgFetch9.setWidth((int)dpWidth);
+        imgFetch9.setLayoutFront(((TextView) findViewById(R.id.main_txtchicken)));
+        new Thread(imgFetch9).start();
+        DishImageFetcher imgFetch10 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 10, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/10.jpg", coffee, this, true);
+        imgFetch10.setWidth((int)dpWidth);
+        imgFetch10.setLayoutFront(((TextView) findViewById(R.id.main_txtcoffee)));
+        new Thread(imgFetch10).start();
+        DishImageFetcher imgFetch11 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 11, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/11.jpg", desert, this, true);
+        imgFetch11.setWidth((int)dpWidth);
+        imgFetch11.setLayoutFront(((TextView) findViewById(R.id.main_txtdeserts)));
+        new Thread(imgFetch11).start();
+        DishImageFetcher imgFetch12 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 12, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/12.jpg", healty, this, true);
+        imgFetch12.setWidth((int)dpWidth);
+        imgFetch12.setLayoutFront(((TextView) findViewById(R.id.main_txthealthy)));
+        new Thread(imgFetch12).start();
+        DishImageFetcher imgFetch13 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 13, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/13.jpg", icecream, this, true);
+        imgFetch13.setWidth((int)dpWidth);
+        imgFetch13.setLayoutFront(((TextView) findViewById(R.id.main_txticecream)));
+        new Thread(imgFetch13).start();
+        DishImageFetcher imgFetch14 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 14,  Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/14.jpg", pizza, this, true);
+        imgFetch14.setWidth((int)dpWidth);
+        imgFetch14.setLayoutFront(((TextView) findViewById(R.id.main_txtpizza)));
+        new Thread(imgFetch14).start();
+        DishImageFetcher imgFetch15 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 15, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/15.jpg", seafood, this, true);
+        imgFetch15.setWidth((int)dpWidth);
+        imgFetch15.setLayoutFront(((TextView) findViewById(R.id.main_txtseafood)));
+        new Thread(imgFetch15).start();
+        DishImageFetcher imgFetch16 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 16, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/16.jpg", indian, this, true);
+        imgFetch16.setWidth((int)dpWidth);
+        imgFetch16.setLayoutFront(((TextView) findViewById(R.id.main_txtindian)));
+        new Thread(imgFetch16).start();
+        DishImageFetcher imgFetch17 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 17, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/17.jpg", chinese, this, true);
+        imgFetch17.setWidth((int)dpWidth);
+        imgFetch17.setLayoutFront(((TextView) findViewById(R.id.main_txtchinesene)));
+        new Thread(imgFetch17).start();
+        DishImageFetcher imgFetch18 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 18, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/18.jpg", american, this, true);
+        imgFetch18.setWidth((int)dpWidth);
+        imgFetch18.setLayoutFront(((TextView) findViewById(R.id.main_txtamerican)));
+        new Thread(imgFetch18).start();
+        DishImageFetcher imgFetch19 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 19, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/19.jpg", salad, this, true);
+        imgFetch19.setWidth((int)dpWidth);
+        imgFetch19.setLayoutFront(((TextView) findViewById(R.id.main_txtsalads)));
+        new Thread(imgFetch19).start();
 
         relBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override

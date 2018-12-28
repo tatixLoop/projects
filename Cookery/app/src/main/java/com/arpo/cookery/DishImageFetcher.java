@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
@@ -42,6 +43,10 @@ public class DishImageFetcher implements Runnable
     CollapsingToolbarLayout colLayout;
     boolean listPageLayoutGradSet;
 
+    TextView layoutFrnt;
+    boolean layoutFrontSet;
+
+
     public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, Context context, boolean stretch)
     {
         this.url = url;
@@ -55,6 +60,7 @@ public class DishImageFetcher implements Runnable
         support = null;
         width = 170;
         listPageLayoutGradSet = false;
+        this.layoutFrontSet = false;
     }
     public DishImageFetcher(int fetchType, int fetchId, String url, RelativeLayout rel, RelativeLayout supportLayout, Context context, List<ListItemDishes> list, int position, boolean stretch)
     {
@@ -70,6 +76,7 @@ public class DishImageFetcher implements Runnable
         support = supportLayout;
         width = 170;
         listPageLayoutGradSet = false;
+        this.layoutFrontSet = false;
     }
 
     public DishImageFetcher(int fetchType, int fetchId, String url, ImageView img, Context context, boolean stretch)
@@ -85,6 +92,7 @@ public class DishImageFetcher implements Runnable
         support = null;
         width = 170;
         listPageLayoutGradSet = false;
+        this.layoutFrontSet = false;
     }
 
     public void setWidth(int width)
@@ -97,6 +105,12 @@ public class DishImageFetcher implements Runnable
         this.img_listPageLayoutGrad = img;
         this.colLayout = colLayout;
 
+    }
+
+    public void setLayoutFront(TextView layout)
+    {
+        this.layoutFrnt = layout;
+        this.layoutFrontSet = true;
     }
 
     public void run()
@@ -146,6 +160,10 @@ public class DishImageFetcher implements Runnable
                 imgSetRunnable = new DishImageSetterUI(myImage, this.layout, this.support, ctx, stretching,this.width);
                 if(listPageLayoutGradSet) {
                     imgSetRunnable.setListPageImage(this.img_listPageLayoutGrad, this.colLayout);
+                }
+                if (layoutFrontSet)
+                {
+                    imgSetRunnable.setLayoutFront(this.layoutFrnt);
                 }
                 ((Activity) ctx).runOnUiThread(imgSetRunnable);
             }
