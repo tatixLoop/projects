@@ -32,11 +32,19 @@ public class JSONParser {
     static JSONObject jObj = null;
     static String json = "";
 
+    DefaultHttpClient httpClient;
+
     // constructor
     public JSONParser() {
 
     }
 
+    public void cancelReq()
+    {
+        if(httpClient != null) {
+            httpClient.getConnectionManager().shutdown();
+        }
+    }
     // function get json from url
     // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method,
@@ -49,7 +57,7 @@ public class JSONParser {
             if(method == "POST"){
                 // request method is POST
                 // defaultHttpClient
-                DefaultHttpClient httpClient = new DefaultHttpClient();
+                httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
 
@@ -59,7 +67,7 @@ public class JSONParser {
 
             }else if(method == "GET"){
                 // request method is GET
-                DefaultHttpClient httpClient = new DefaultHttpClient();
+                httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, "utf-8");
                 url += "?" + paramString;
                 Log.d("JKS","URL executed is "+url);

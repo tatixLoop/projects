@@ -16,31 +16,41 @@
     android:layout_height="wrap_content">
 
 
-
-
-
     <RelativeLayout
+        android:id="@+id/rel_details"
         android:layout_width="170dp"
         android:layout_height="0dp"
-        android:background="@color/Darkbg">
+        android:layout_below="@+id/rel_dishbox"
+        android:background="@color/Darkbg"
+        android:paddingTop="70dp">
 
-
-
+        <TextView
+            android:id="@+id/txt_recipeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:text="TextView"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/lin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_recipeName"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/img_ckTime_gi"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="2dp"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/txt_recipeName"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"
                 app:srcCompat="@drawable/clock1" />
 
             <TextView
@@ -48,9 +58,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:textSize="11sp"
                 android:text="200min"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="11sp" />
 
             <ImageView
                 android:id="@+id/img_cal_gi"
@@ -67,33 +77,13 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="2dp"
                 android:layout_marginStart="5dp"
-                android:textSize="11sp"
                 android:text="0000Cal"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="11sp" />
 
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_recipeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="5dp"
-            android:paddingTop="170dp"
-            android:text="TextView"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:id="@+id/lin_layout2"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@+id/lin_layout"
-            android:orientation="horizontal">
-
-        </LinearLayout>
 
     </RelativeLayout>
 
