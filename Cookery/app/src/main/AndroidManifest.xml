@@ -38,7 +38,13 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".CoockeryPreparation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProgDialog"
+            android:parentActivityName=".CoockeryPreparation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ProgressDialog"
+            android:launchMode="singleTop"
+            />
         <activity
             android:name=".RatePopUp"
             android:parentActivityName=".CoockeryPreparation"

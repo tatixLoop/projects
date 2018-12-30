@@ -36,7 +36,6 @@ public class CoockeryPreparation extends AppCompatActivity {
     }
 
     String gDish = "";
-    private ProgressDialog pDialog;
     JSONParser jParser = new JSONParser();
     JSONArray dishlist = null;
     JSONArray ingredientlist = null;
@@ -79,8 +78,8 @@ public class CoockeryPreparation extends AppCompatActivity {
                 data.getImg_path() + "/title_image.jpg";
         RelativeLayout title = findViewById(R.id.rel_title);
 
-        float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
         DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISH_TITLE, gId, title_image, title, this, true);
+        float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
         imgFetch.setWidth((int)dpWidth);
         new Thread(imgFetch).start();
 
@@ -199,32 +198,9 @@ public class CoockeryPreparation extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = ProgressDialog.show(
-                    CoockeryPreparation.this,
-                    "Please wait...",
-                    "Loading Info about "+gDish,
-                    false,
-                    true,
-                    new DialogInterface.OnCancelListener(){
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            //GetPookkalamList.this.cancel(true);
-                        }
-                    }
-            );
-            pDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialogInterface) {
-                    print("Cancel pressed");
-                    if (asyncFetch != null)
-                    {
-                        print("Async fetch is not null cancelling");
-                        asyncFetch.cancel(true);
-                        jParser.cancelReq();
-                        finish();
-                    }
-                }
-            });
+            Intent dial = new Intent(getApplicationContext(), ProgDialog.class);
+            dial.putExtra("keep", true);
+            startActivity(dial);
         }
 
         /**
@@ -334,8 +310,10 @@ public class CoockeryPreparation extends AppCompatActivity {
          * **/
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all dishlist
-            pDialog.dismiss();
             //adapterDishList.notifyDataSetChanged();
+            Intent dial = new Intent(getApplicationContext(), ProgDialog.class);
+            dial.putExtra("keep", false);
+            startActivity(dial);
 
             runOnUiThread(new Runnable() {
                 public void run() {
