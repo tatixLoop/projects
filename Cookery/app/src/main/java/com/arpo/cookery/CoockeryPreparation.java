@@ -1,14 +1,20 @@
 package com.arpo.cookery;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +23,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -59,6 +66,8 @@ public class CoockeryPreparation extends AppCompatActivity {
 
     GetDishInfo asyncFetch;
 
+    boolean isFav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +78,38 @@ public class CoockeryPreparation extends AppCompatActivity {
         data = (ListItemDishes)getIntent().getSerializableExtra("data");
         print("Id = "+data.getId() + " Name : "+data.getName());
 
+
         gDish = data.getName();
         gId = data.getId();
+
+        isFav = isFavorite(data.getId());
+        final FloatingActionButton faButton;
+        faButton = findViewById(R.id.fab);
+
+        if (!isFav)
+        {
+            faButton.setImageResource(R.drawable.favorites);
+        }
+
+        faButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isFav)
+                {
+                    clearFavorite(gId);
+                    faButton.setImageResource(R.drawable.favorites);
+                    isFav = false;
+                    Toast.makeText(getApplicationContext(),"Recipe removed from favorites", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    setFavorite(gId);
+                    faButton.setImageResource(R.drawable.favoritesred);
+                    isFav = true;
+                    Toast.makeText(getApplicationContext(),"Recipe added to favorites list", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         TextView title_text = findViewById(R.id.txt_recipeTitle);
         title_text.setText(""+data.getName());
@@ -188,6 +227,46 @@ public class CoockeryPreparation extends AppCompatActivity {
         asyncFetch.execute();
 
 
+    }
+    //  snack bar
+    public static void setSnackBar(View root, String snackTitle) {
+        Snackbar snackbar = Snackbar.make(root, snackTitle, BaseTransientBottomBar.LENGTH_SHORT);
+        snackbar.show();
+        View view = snackbar.getView();
+        TextView txtv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        txtv.setGravity(Gravity.CENTER_HORIZONTAL);
+    }
+    boolean isFavorite(int id)
+    {
+        String sharedPrefKey = "FAV_PREF"+id;
+        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+        int value = preferences.getInt(sharedPrefKey, -1);
+
+        if( value == 1 )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    void setFavorite(int id)
+    {
+        String sharedPrefKey = "FAV_PREF"+id;
+        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(sharedPrefKey, 1);
+        editor.apply();
+    }
+
+    void clearFavorite(int id)
+    {
+        String sharedPrefKey = "FAV_PREF"+id;
+        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(sharedPrefKey, -1);
+        editor.apply();
     }
 
     class GetDishInfo extends AsyncTask<String, String, String> {
