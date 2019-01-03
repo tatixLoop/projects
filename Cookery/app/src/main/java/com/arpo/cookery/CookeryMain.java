@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -488,6 +489,29 @@ public class CookeryMain extends AppCompatActivity {
         relBreakfast.requestFocus();
         hideSoftKeyboard();
 
+
+        NavigationView navigation;
+        navigation = findViewById(R.id.nav_view);
+        navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                boolean ret;
+                switch (id) {
+                    case R.id.fav:Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                        cookeryListPage.putExtra("loadtype",1);
+                        startActivity(cookeryListPage);
+                        menuItem.setChecked(false);
+                        ret = true;
+                        break;
+                        default:
+                            ret = false;
+
+                }
+
+                return ret;
+            }
+        });
     }
 
 

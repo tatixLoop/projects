@@ -141,6 +141,20 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         }
         else if (gloadType == 1)
         {
+            getSupportActionBar().setTitle("My Favorite Dishes");
+            getSupportActionBar().setTitle(" ");
+            String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                    "title/fav.jpg";
+            //get screen width
+            float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+
+            RelativeLayout layout = findViewById(R.id.img_tltle_layout);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, true);
+
+            imgFetch.setWidth((int)dpWidth);
+            imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
+
+            new Thread(imgFetch).start();
 
         }
 
