@@ -503,6 +503,7 @@ public class CookeryMain extends AppCompatActivity {
                         startActivity(cookeryListPage);
                         menuItem.setChecked(false);
                         ret = true;
+                        break;
                     case R.id.feed:
                         ret = false;
                         Intent intent = new Intent(Intent.ACTION_SEND);
