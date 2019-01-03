@@ -2,18 +2,15 @@
 <!-- Use DrawerLayout as root container for activity -->
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.arpo.cookery.CookeryMain"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="false">
 
     <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
-
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.arpo.cookery.CookeryMain"
+        <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -68,7 +65,7 @@
 
                 </RelativeLayout>-->
 
-              <!--  <RelativeLayout
+                <RelativeLayout
                     android:id="@+id/rel_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -80,7 +77,7 @@
                         android:divider="@null"
                         android:dividerHeight="0dp"/>
 
-                </RelativeLayout>-->
+                </RelativeLayout>
 
 
 
@@ -628,7 +625,6 @@
 
     </ScrollView>
 
-
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
@@ -636,6 +632,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_view" />
 
 </android.support.v4.widget.DrawerLayout>

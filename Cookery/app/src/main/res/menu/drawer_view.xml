@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/home"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="Home" />
-        <item
-            android:id="@+id/account"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="MY account" />
+
         <item
             android:id="@+id/fav"
             android:icon="@drawable/ic_launcher_background"
@@ -22,17 +15,17 @@
             android:icon="@drawable/ic_launcher_background"
             android:title="Share app" />
         <item
-            android:id="@+id/Lan"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="Languages" />
-        <item
             android:id="@+id/feed"
             android:icon="@drawable/ic_launcher_background"
             android:title="Feedback" />
         <item
-            android:id="@+id/Settings"
+            android:id="@+id/licence"
             android:icon="@drawable/ic_launcher_background"
-            android:title="Settings" />
+            android:title="Licence" />
+        <item
+            android:id="@+id/privpolicy"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="Privacy policy" />
 
     </group>
 </menu>
