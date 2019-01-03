@@ -30,6 +30,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:padding="10dp"
+            android:paddingEnd="10dp"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
             android:text="Onion"
