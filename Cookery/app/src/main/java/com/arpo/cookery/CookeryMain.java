@@ -486,7 +486,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         });
 
         // Fill in search data
-       /* listOfDishesForSearch = new ArrayList<>();
+        listOfDishesForSearch = new ArrayList<>();
 
 
         searchAdapter = new AdapterListSearch(this, listOfDishesForSearch);
@@ -505,13 +505,12 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
                 ListItemDishes data = (ListItemDishes) lv_searchData.getItemAtPosition(position);
                 preparationPage.putExtra("data", data );
                 startActivity(preparationPage);
-                EditText searchText = findViewById(R.id.search_query);
-                searchText.setText("");
+                //EditText searchText = findViewById(R.id.search_query);
+                //searchText.setText("");
             }
         });
-*/
 
-       /* new GetDishesForSearch().execute();*/
+        new GetDishesForSearch().execute();
 
         relBreakfast.requestFocus();
         hideSoftKeyboard();
@@ -536,6 +535,14 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
 
             @Override
             public boolean onQueryTextChange(String s) {
+
+                String text = s;
+
+                print(s);
+                lv_searchData.setAdapter(null);
+                int count = searchAdapter.filter(s);
+                lv_searchData.setAdapter(searchAdapter);
+                setRelativeLayoutHeightBasedOnChildren(rel_search, count,lv_searchData);
                 return false;
             }
         });
@@ -673,11 +680,20 @@ if (cm.getActiveNetworkInfo()==null)
          * */
         protected String doInBackground(String... args) {
             // Building Parameters
+
+            boolean b_exit = false;
+            int lCount = 0;
+
+            do {
+
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
             // getting JSON string from URL
             String apiname = "";
             apiname ="getAllDishes.php";
+            params.add(new BasicNameValuePair("limit", (lCount * 20 ) + ""));
+            lCount++;
+
 
             JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
                     "GET", params);
@@ -711,20 +727,26 @@ if (cm.getActiveNetworkInfo()==null)
                         }
                         Collections.shuffle(listOfDishesForSearch);
                     } else {
+                        b_exit = true;
                         print("No dishes found");
                     }
                 } catch (JSONException e) {
+                    b_exit = true;
                     e.printStackTrace();
                 }
                 catch (Exception e)
                 {
+                    b_exit = true;
                     e.printStackTrace();
                 }
             }
             else
             {
+                b_exit = true;
                 print("Error in making http request");
             }
+                searchAdapter.updateOriginals(listOfDishesForSearch);
+            } while (b_exit == false);
             return null;
         }
 
@@ -736,7 +758,7 @@ if (cm.getActiveNetworkInfo()==null)
             //pDialog.dismiss();
 
             searchAdapter.updateOriginals(listOfDishesForSearch);
-            searchAdapter.clearData();
+            //searchAdapter.clearData();
             searchAdapter.notifyDataSetChanged();
         }
     }
