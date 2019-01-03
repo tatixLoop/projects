@@ -120,7 +120,7 @@ public class DishImageFetcher implements Runnable
             Bitmap myImage;
             // check if image is present in shared preference cache
             String sharedPrefKey = "SHCache_"+fetchType+"_"+fetchId;
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
+            SharedPreferences preferences = ctx.getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
             String value = preferences.getString(sharedPrefKey, "defaultValue");
 
             if( !value.equals("defaultValue"))
