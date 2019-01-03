@@ -503,7 +503,17 @@ public class CookeryMain extends AppCompatActivity {
                         startActivity(cookeryListPage);
                         menuItem.setChecked(false);
                         ret = true;
+                    case R.id.feed:
+                        ret = false;
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_EMAIL, "arpoapps@gmail.com");
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Feed back For Cookery App");
+                        intent.putExtra(Intent.EXTRA_TEXT, "Hello Developer, \n\n\n\n Thanks & Regards,\n");
+
+                        startActivity(Intent.createChooser(intent, "Select Email App"));
                         break;
+
                         default:
                             ret = false;
 
