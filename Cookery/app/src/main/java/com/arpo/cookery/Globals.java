@@ -1,5 +1,7 @@
 package com.arpo.cookery;
 
+import java.util.List;
+
 /**
  * Created by jithin on 10/9/18.
  */
@@ -21,6 +23,8 @@ public class Globals {
     static int FETCHTYPE_DISHCATAGORY = 1;
     static int FETCHTYPE_DISH = 2;
     static int FETCHTYPE_DISH_TITLE = 3;
+
+    static List<ListItemDishes> FullDishList;
 
 
     static  String dishName[] = {

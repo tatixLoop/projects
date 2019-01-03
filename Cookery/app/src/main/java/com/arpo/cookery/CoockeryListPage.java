@@ -133,11 +133,6 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
             // GridView gv_dishes = findViewById(R.id.gv_dishlist);
 
-            adapterDishList = new AdapterDishGridView(this, listOfDishes, this);
-
-            rv_dishes.setAdapter(adapterDishList);
-            StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-            rv_dishes.setLayoutManager(manager);
         }
         else if (gloadType == 1)
         {
@@ -156,7 +151,24 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
             new Thread(imgFetch).start();
 
+            for(int i = 0; i < Globals.FullDishList.size() ; i++)
+            {
+                ListItemDishes dishes = Globals.FullDishList.get(i);
+                if(dishes.isFav())
+                {
+                    print("Dish "+dishes.getName() +" is Favorite");
+                    print("Id :"+dishes.getId());
+                    listOfDishes.add(dishes);
+                }
+            }
         }
+
+
+        adapterDishList = new AdapterDishGridView(this, listOfDishes, this);
+
+        rv_dishes.setAdapter(adapterDishList);
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        rv_dishes.setLayoutManager(manager);
 
     }
     @Override

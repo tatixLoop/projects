@@ -1,6 +1,8 @@
 package com.arpo.cookery;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -40,6 +42,7 @@ public class Splashscreen extends AppCompatActivity {
 
         // Fill in search data
         listOfDishesForSearch = new ArrayList<>();
+        Globals.FullDishList = new ArrayList<>();
 
         new GetDishesForSearch().execute();
 
@@ -128,6 +131,16 @@ public class Splashscreen extends AppCompatActivity {
                                         c.getString("author")
                                 );
                                 listOfDishesForSearch.add(dish);
+                                Globals.FullDishList.add(dish);
+
+                                if(isFavorite(c.getInt("id")))
+                                {
+                                    dish.setFav(true);
+                                }
+                                else
+                                {
+                                    dish.setFav(false);
+                                }
                             }
                             Collections.shuffle(listOfDishesForSearch);
                         } else {
@@ -164,7 +177,24 @@ public class Splashscreen extends AppCompatActivity {
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
             //mainIntent.putExtra("list",(Serializable)listOfDishesForSearch);
             Splashscreen.this.startActivity(mainIntent);
+
+            print("Size of Items SPLASH SCREEN : "+Globals.FullDishList.size());
             finish();
+        }
+        boolean isFavorite(int id)
+        {
+            String sharedPrefKey = "FAV_PREF"+id;
+            SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+            int value = preferences.getInt(sharedPrefKey, -1);
+
+            if( value == 1 )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 

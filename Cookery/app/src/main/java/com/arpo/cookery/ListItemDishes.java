@@ -26,6 +26,15 @@ public class ListItemDishes implements Serializable {
     byte[] byteArray;
     int previewSet;
     int numRating;
+    boolean fav;
+
+    public boolean isFav() {
+        return fav;
+    }
+
+    public void setFav(boolean fav) {
+        this.fav = fav;
+    }
 
     public int getNumRating() {
         return numRating;
