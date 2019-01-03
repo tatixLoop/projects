@@ -53,7 +53,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class CookeryMain extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class CookeryMain extends AppCompatActivity {
 
 
     AdapterListSearch searchAdapter;
@@ -62,25 +62,22 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
     ListView lv_searchData;
     RelativeLayout rel_search;
 
-    JSONParser jParser = new JSONParser();
-    JSONArray dishlist = null;
     ScrollView scrolllayout;
 
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_DISH = "dishes";
 
     ///////////     navigation Drawer
 
     private DrawerLayout mdrawerLayout;
     private ActionBarDrawerToggle mtoggle;
 
+    SearchView searchView;
+    MenuItem item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationdrawer);
-
-
 
         ///Navigation Drawer
 
@@ -103,35 +100,6 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
                 String.format(Locale.US, "fonts/%s", "fontfront.ttf"));
 
-        //SearchView searchRecipe = findViewById(R.id.search_query);
-        //searchRecipe.setOnQueryTextListener(this);
-
-      /*  EditText searchText = findViewById(R.id.search_query);
-        searchText.setTypeface(typeface);
-        searchText.clearFocus();
-        searchText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = s.toString();
-
-                print(s.toString());
-                lv_searchData.setAdapter(null);
-                int countS = searchAdapter.filter(s.toString());
-                lv_searchData.setAdapter(searchAdapter);
-                setRelativeLayoutHeightBasedOnChildren(rel_search, countS ,lv_searchData);
-            }
-        });
-*/
 
         ((TextView) findViewById(R.id.main_txtbreakfast)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtlunch)).setTypeface(typeface);
@@ -488,6 +456,7 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         // Fill in search data
         listOfDishesForSearch = new ArrayList<>();
 
+        listOfDishesForSearch = Splashscreen.listOfDishesForSearch;
 
         searchAdapter = new AdapterListSearch(this, listOfDishesForSearch);
 
@@ -495,7 +464,9 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
         lv_searchData.setAdapter(searchAdapter);
 
         rel_search = findViewById(R.id.rel_search);
+        searchAdapter.updateOriginals(listOfDishesForSearch);
         searchAdapter.clearData();
+        searchAdapter.notifyDataSetChanged();
         setRelativeLayoutHeightBasedOnChildren(rel_search, 0,lv_searchData);
         lv_searchData.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -507,10 +478,12 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
                 startActivity(preparationPage);
                 //EditText searchText = findViewById(R.id.search_query);
                 //searchText.setText("");
+                searchView.clearFocus();
+                searchView.setQuery("", false);
+                item.collapseActionView();
             }
         });
 
-        new GetDishesForSearch().execute();
 
         relBreakfast.requestFocus();
         hideSoftKeyboard();
@@ -525,8 +498,9 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater =getMenuInflater();
         inflater.inflate(R.menu.menu_search,menu);
-        MenuItem item=menu.findItem(R.id.menusearch);
-        SearchView searchView=(SearchView) item.getActionView();
+        item=menu.findItem(R.id.menusearch);
+
+         searchView=(SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -538,11 +512,19 @@ public class CookeryMain extends AppCompatActivity implements SearchView.OnQuery
 
                 String text = s;
 
-                print(s);
-                lv_searchData.setAdapter(null);
-                int count = searchAdapter.filter(s);
-                lv_searchData.setAdapter(searchAdapter);
-                setRelativeLayoutHeightBasedOnChildren(rel_search, count,lv_searchData);
+                //print(s);
+                if( s.length() >= 3 ) {
+                    lv_searchData.setAdapter(null);
+                    int count = searchAdapter.filter(s);
+                    lv_searchData.setAdapter(searchAdapter);
+                    setRelativeLayoutHeightBasedOnChildren(rel_search, count, lv_searchData);
+                }
+                else
+                {
+                    print("Clear data");
+                    searchAdapter.clearDataSet();
+                    setRelativeLayoutHeightBasedOnChildren(rel_search, 0, lv_searchData);
+                }
                 return false;
             }
         });
@@ -606,40 +588,11 @@ if (cm.getActiveNetworkInfo()==null)
     }
     void print(String str)
     {
-        //Log.d("JKS",str);
-    }
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-
-        print("Search for "+query);
-
-        Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
-
-        cookeryListPage.putExtra("type",1);
-        cookeryListPage.putExtra("loadtype",1);
-        //cookeryListPage.put("list",listOfDishesForSearch);
-       // startActivity(cookeryListPage);
-
-        for (ListItemDishes dish: listOfDishesForSearch
-             ) {
-            print("Pass "+dish.getName());
-        }
-        print("JKS");
-
-        return false;
+        Log.d("JKS",str);
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        String text = newText;
 
-        print(newText);
-        lv_searchData.setAdapter(null);
-        int count = searchAdapter.filter(newText);
-        lv_searchData.setAdapter(searchAdapter);
-        setRelativeLayoutHeightBasedOnChildren(rel_search, count,lv_searchData);
-        return false;
-    }
+
 
     public static void setRelativeLayoutHeightBasedOnChildren(RelativeLayout layout_rel, int Count, ListView lv) {
         ListAdapter listAdapter = lv.getAdapter();
@@ -662,106 +615,7 @@ if (cm.getActiveNetworkInfo()==null)
         layout_rel.setLayoutParams(params);
     }
 
-    /**
-     * Background Async Task to Load all Dishes by making HTTP Request
-     * */
-    class GetDishesForSearch extends AsyncTask<String, String, String> {
 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        /**
-         * getting All dishlist from url
-         * */
-        protected String doInBackground(String... args) {
-            // Building Parameters
-
-            boolean b_exit = false;
-            int lCount = 0;
-
-            do {
-
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-            // getting JSON string from URL
-            String apiname = "";
-            apiname ="getAllDishes.php";
-            params.add(new BasicNameValuePair("limit", (lCount * 20 ) + ""));
-            lCount++;
-
-
-            JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
-                    "GET", params);
-
-            // Check your log cat for JSON reponse
-            if(json != null) {
-                //print( json.toString());
-                try {
-                    // Checking for SUCCESS TAG
-                    int success = json.getInt(TAG_SUCCESS);
-
-                    if (success == 1) {
-                        dishlist = json.getJSONArray(TAG_DISH);
-
-                        for (int i = 0; i < dishlist.length(); i++) {
-                            JSONObject c = dishlist.getJSONObject(i);
-
-                            ListItemDishes dish = new ListItemDishes(
-                                    c.getInt("id"),
-                                    c.getInt("type"),
-                                    c.getString("dishname"),
-                                    c.getString("img_path"),
-                                    c.getInt("cooktimeinsec"),
-                                    c.getInt("serves"),
-                                    c.getInt("calory"),
-                                    c.getInt("rating"),
-                                    c.getInt("numRating"),
-                                    c.getString("author")
-                            );
-                            listOfDishesForSearch.add(dish);
-                        }
-                        Collections.shuffle(listOfDishesForSearch);
-                    } else {
-                        b_exit = true;
-                        print("No dishes found");
-                    }
-                } catch (JSONException e) {
-                    b_exit = true;
-                    e.printStackTrace();
-                }
-                catch (Exception e)
-                {
-                    b_exit = true;
-                    e.printStackTrace();
-                }
-            }
-            else
-            {
-                b_exit = true;
-                print("Error in making http request");
-            }
-                searchAdapter.updateOriginals(listOfDishesForSearch);
-            } while (b_exit == false);
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all dishlist
-            //pDialog.dismiss();
-
-            searchAdapter.updateOriginals(listOfDishesForSearch);
-            //searchAdapter.clearData();
-            searchAdapter.notifyDataSetChanged();
-        }
-    }
 }
 
 class AdapterListSearch extends BaseAdapter {
@@ -829,6 +683,11 @@ class AdapterListSearch extends BaseAdapter {
         return convertView;
     }
 
+    public void clearDataSet()
+    {
+        list.clear();
+        notifyDataSetChanged();
+    }
 
     // Filter Class
     public int filter(String charText) {

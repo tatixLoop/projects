@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <ImageView android:id="@+id/splashscreen" android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:src="@drawable/calorie"
-        android:layout_gravity="center"/>
-
-    <TextView android:layout_width="fill_parent"
+    <ImageView
+        android:id="@+id/splashscreen"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World, splash"/>
+        android:layout_marginTop="200dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/calorie" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txt_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/splashscreen"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="50dp"
+        android:gravity="center"
+        android:text="Hello World, splash" />
+
+</RelativeLayout>
