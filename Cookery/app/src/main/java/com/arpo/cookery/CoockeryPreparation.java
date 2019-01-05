@@ -334,7 +334,7 @@ public class CoockeryPreparation extends AppCompatActivity {
                         List<ListItemIngredients> listIngredient = new ArrayList<>();
                         for (int i = 0; i < ingredientlist.length(); i++) {
                             JSONObject c = ingredientlist.getJSONObject(i);
-                            ListItemIngredients ingredientItem = new ListItemIngredients(0,c.getString("ingredient"));
+                            ListItemIngredients ingredientItem = new ListItemIngredients(0,c.getString("ingredient"), data.getName(), data.getId());
                             listIngredient.add(ingredientItem);
 
                             ingredients[i] = c.getString("ingredient");

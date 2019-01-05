@@ -93,13 +93,15 @@ public class AdapterIngredientList extends BaseAdapter {
                     if(item.selected == 0) {
                         item.selected = 1;
                         checkBox.setBackground(context.getResources().getDrawable(R.drawable.tickcarty));
-                        setSnackBar(layout,"Ingredient Added To Your Shopping List");
+                        setSnackBar(layout,item.getIngredient() +" added To Your Shopping List");
+                        Globals.addIngredientToShopList(context, item.getIngredient(), item.getDishName(), item.getId());
                     }
                     else
                     {
                         checkBox.setBackground(context.getResources().getDrawable(R.drawable.carty));
                         item.selected = 0;
-                        setSnackBar(layout,"Ingredient Removed From Your Shopping List");
+                        setSnackBar(layout,item.getIngredient()+" removed From Your Shopping List");
+                        Globals.removeIngredientFromShopList(context, item.getIngredient(),  item.getId());
                     }
 
                 }
