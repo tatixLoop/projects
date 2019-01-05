@@ -125,7 +125,7 @@ public class CookeryMain extends AppCompatActivity {
 
 
 
-        RelativeLayout relBreakfast = findViewById(R.id.rel_breakfastRec);
+        final RelativeLayout relBreakfast = findViewById(R.id.rel_breakfastRec);
         RelativeLayout relLunch = findViewById(R.id.rel_lunchRec);
         RelativeLayout snckRel = findViewById(R.id.rel_snacksRec);
         RelativeLayout snckJuice = findViewById(R.id.rel_juice);
@@ -504,6 +504,19 @@ public class CookeryMain extends AppCompatActivity {
                         menuItem.setChecked(false);
                         ret = true;
                         break;
+                    case R.id.shopping:
+                        ret = true;
+                        Intent list = new Intent(getApplicationContext(), CookeryShopList.class );
+                        startActivity(list);
+                        break;
+                    case R.id.Shareapp:
+                        ret = false;
+                        Intent intentShare = new Intent();
+                        intentShare.setAction(Intent.ACTION_SEND);
+                        intentShare.putExtra(Intent.EXTRA_TEXT,"I suggest this app for you : https://play.google.com/store/apps/details?id=com.android.chrome");
+                        intentShare.setType("text/plain");
+                        startActivity(intentShare);
+                        break;
                     case R.id.feed:
                         ret = false;
                         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -514,8 +527,19 @@ public class CookeryMain extends AppCompatActivity {
 
                         startActivity(Intent.createChooser(intent, "Select Email App"));
                         break;
-
-                        default:
+                    case R.id.licence:
+                        ret = false;
+                        Intent licence = new Intent(getApplicationContext(), CookeryPrivPolicyLicence.class );
+                        licence.putExtra("type",1);
+                        startActivity(licence);
+                        break;
+                    case R.id.privpolicy:
+                        Intent privPolicy = new Intent(getApplicationContext(), CookeryPrivPolicyLicence.class);
+                        privPolicy.putExtra("type",2);
+                        startActivity(privPolicy);
+                        ret = false;
+                        break;
+                    default:
                             ret = false;
 
                 }

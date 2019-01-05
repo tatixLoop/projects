@@ -17,10 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splashscreen"
+        <activity
+            android:name=".Splashscreen"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,28 +29,34 @@
         </activity>
         <activity
             android:name=".CookeryMain"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CoockeryListPage"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".CoockeryPreparation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ProgDialog"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProgDialog"
+            android:launchMode="singleTop"
             android:parentActivityName=".CoockeryPreparation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.ProgressDialog"
-            android:launchMode="singleTop"
-            />
+            android:theme="@style/Theme.ProgressDialog" />
         <activity
             android:name=".RatePopUp"
             android:parentActivityName=".CoockeryPreparation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MyDialog" />
-
+        <activity
+            android:name=".CookeryPrivPolicyLicence"
+            android:parentActivityName=".CookeryMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyDialog" />
+        <activity android:name=".CookeryShopList"
+            android:parentActivityName=".CookeryMain"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyDialog"></activity>
     </application>
 
 </manifest>
