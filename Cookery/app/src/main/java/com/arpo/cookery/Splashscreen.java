@@ -76,18 +76,17 @@ public class Splashscreen extends AppCompatActivity {
         protected String doInBackground(String... args) {
             // Building Parameters
 
-            boolean b_exit = false;
 
             final int total = getCount();
 
-            do {
+
 
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
 
                 // getting JSON string from URL
                 String apiname = "";
                 apiname ="getAllDishes.php";
-                params.add(new BasicNameValuePair("limit", (lCount * 40 ) + ""));
+                //params.add(new BasicNameValuePair("limit", (lCount * 40 ) + ""));
                 lCount++;
                 runOnUiThread(new Runnable() {
                     @Override
@@ -144,26 +143,22 @@ public class Splashscreen extends AppCompatActivity {
                             }
                             Collections.shuffle(listOfDishesForSearch);
                         } else {
-                            b_exit = true;
                             print("No dishes found");
                         }
                     } catch (JSONException e) {
-                        b_exit = true;
                         e.printStackTrace();
                     }
                     catch (Exception e)
                     {
-                        b_exit = true;
                         e.printStackTrace();
                     }
                 }
                 else
                 {
-                    b_exit = true;
                     print("Error in making http request");
                 }
 
-            } while (b_exit == false);
+            //} while (b_exit == false);
             return null;
         }
 
@@ -178,6 +173,9 @@ public class Splashscreen extends AppCompatActivity {
             //mainIntent.putExtra("list",(Serializable)listOfDishesForSearch);
             Splashscreen.this.startActivity(mainIntent);
 
+
+            TextView txtLoading = findViewById(R.id.txt_loading);
+            txtLoading.setText("Loading Data    "+100+ " %");
             print("Size of Items SPLASH SCREEN : "+Globals.FullDishList.size());
             finish();
         }

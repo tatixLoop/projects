@@ -128,9 +128,14 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
 
             new Thread(imgFetch).start();
-            asyncFetch =  new GetDishesList();
-            asyncFetch.execute();
-
+            for(int i = 0; i < Globals.FullDishList.size() ; i++)
+            {
+                ListItemDishes dishes = Globals.FullDishList.get(i);
+                if(dishes.getType() == gType)
+                {
+                    listOfDishes.add(dishes);
+                }
+            }
             // GridView gv_dishes = findViewById(R.id.gv_dishlist);
 
         }
