@@ -20,11 +20,11 @@
             android:title="Feedback" />
         <item
             android:id="@+id/licence"
-            android:icon="@drawable/calorieblack"
-            android:title="Licence" />
+            android:icon="@drawable/iconfinder_icon_terms_and_conditions"
+            android:title="Terms and Conditions" />
         <item
             android:id="@+id/privpolicy"
-            android:icon="@android:drawable/ic_dialog_alert"
+            android:icon="@drawable/privacypolicy"
             android:title="Privacy policy" />
 
     </group>
