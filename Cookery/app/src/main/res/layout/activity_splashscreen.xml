@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <ImageView
         android:id="@+id/splashscreen"
@@ -9,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/cookertlemon" />
+        android:src="@drawable/splachgreentest" />
 
     <TextView
         android:id="@+id/txt_loading"
@@ -19,6 +20,6 @@
         android:layout_alignParentBottom="true"
         android:paddingBottom="50dp"
         android:gravity="center"
-        android:text="Hello World, splash" />
+        android:text="Welcome" />
 
 </RelativeLayout>

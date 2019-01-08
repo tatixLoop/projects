@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@drawable/navdraw"
+
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="16dp"
@@ -17,7 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        app:srcCompat="@drawable/cookertlemon" />
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_logo_c" />
 
     <TextView
         android:layout_width="match_parent"
