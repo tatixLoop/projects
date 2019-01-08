@@ -54,6 +54,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.microedition.khronos.opengles.GL;
+
 public class CookeryMain extends AppCompatActivity {
 
 
@@ -457,7 +459,12 @@ public class CookeryMain extends AppCompatActivity {
         // Fill in search data
         listOfDishesForSearch = new ArrayList<>();
 
-        listOfDishesForSearch = Splashscreen.listOfDishesForSearch;
+        if (Globals.FullDishList != null) {
+            for (ListItemDishes dish : Globals.FullDishList
+                    ) {
+                listOfDishesForSearch.add(dish);
+            }
+        }
 
         searchAdapter = new AdapterListSearch(this, listOfDishesForSearch);
 

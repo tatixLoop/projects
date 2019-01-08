@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.microedition.khronos.opengles.GL;
+
 public class CoockeryPreparation extends AppCompatActivity {
 
     void print(String str)
@@ -257,6 +259,14 @@ public class CoockeryPreparation extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(sharedPrefKey, 1);
+        for (ListItemDishes dish: Globals.FullDishList
+             ) {
+            if (dish.getId() == id)
+            {
+                dish.setFav(true);
+                break;
+            }
+        }
         editor.apply();
     }
 
@@ -267,6 +277,14 @@ public class CoockeryPreparation extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(sharedPrefKey, -1);
         editor.apply();
+        for (ListItemDishes dish: Globals.FullDishList
+                ) {
+            if (dish.getId() == id)
+            {
+                dish.setFav(false);
+                break;
+            }
+        }
     }
 
     class GetDishInfo extends AsyncTask<String, String, String> {
