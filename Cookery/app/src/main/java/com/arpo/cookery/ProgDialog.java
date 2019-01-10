@@ -45,7 +45,7 @@ public class ProgDialog extends AppCompatActivity
     public void onBackPressed()
     {
         Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_CANCELED, returnIntent);
+        setResult(Activity.RESULT_OK, returnIntent);
         super.onBackPressed();
     }
     @Override

@@ -326,7 +326,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="190dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
                     <RelativeLayout
@@ -336,16 +336,14 @@
                         android:layout_centerVertical="true">
 
 
-
-
                         <TextView
                             android:id="@+id/txt_prep_author_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/txt_author"
                             android:layout_alignBottom="@+id/txt_author"
-                            android:layout_marginEnd="12dp"
-                            android:layout_toStartOf="@+id/txt_author"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="20dp"
                             android:text="Author :"
                             android:textColor="@android:color/darker_gray" />
 
@@ -353,51 +351,10 @@
                             android:id="@+id/txt_author"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginEnd="17dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/txt_prep_author_title"
                             android:textColor="@color/redDark" />
-                    </RelativeLayout>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rel_rateRecipie"
-                    android:layout_width="190dp"
-                    android:layout_height="match_parent">
-
-                    <RelativeLayout
-                        android:id="@+id/rel_shareClick"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true">
-
-                        <RelativeLayout
-                            android:id="@+id/relshareimg"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_alignParentStart="true"
-                            android:layout_marginStart="46dp"
-                            android:background="@drawable/star"></RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@id/relshareimg"
-                            android:paddingLeft="20dp">
-
-                            <TextView
-                                android:id="@+id/txt_prep_rateRecipeTitle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_centerVertical="true"
-                                android:text="Rate Recipe   "
-                                android:textColor="@android:color/darker_gray"
-                                android:textStyle="bold" />
-
-                        </RelativeLayout>
                     </RelativeLayout>
 
                 </RelativeLayout>

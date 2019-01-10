@@ -1,5 +1,6 @@
 package com.arpo.cookery;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -159,7 +160,6 @@ public class CoockeryPreparation extends AppCompatActivity {
         ((TextView) findViewById(R.id.txt_prep_ingredients)).setTypeface(typeface);
         ((TextView) findViewById(R.id.txt_share)).setTypeface(typeface);
         ((TextView) findViewById(R.id.txt_prep_author_title)).setTypeface(typeface);
-        ((TextView) findViewById(R.id.txt_prep_rateRecipeTitle)).setTypeface(typeface);
 
 
        /* title_text.setTypeface(typeface);*/
@@ -218,19 +218,6 @@ public class CoockeryPreparation extends AppCompatActivity {
         }
 
 
-        RelativeLayout share = findViewById(R.id.rel_rateRecipie);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                print("Share is clicked");
-                Intent popUp = new Intent(getApplicationContext(), RatePopUp.class);
-                popUp.putExtra("rating",data.getRating());
-                popUp.putExtra("numRating", data.getNumRating());
-                popUp.putExtra("id", data.getId());
-                startActivity(popUp);
-
-            }
-        });
 
 
         asyncFetch = new GetDishInfo();
@@ -593,10 +580,12 @@ public class CoockeryPreparation extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == 100) {
-            if (asyncFetch != null) {
-                asyncFetch.cancel(true);
-                jParser.cancelReq();
-                finish();
+            if (resultCode == Activity.RESULT_OK) {
+                if (asyncFetch != null) {
+                    asyncFetch.cancel(true);
+                    jParser.cancelReq();
+                    finish();
+                }
             }
         }
     }
