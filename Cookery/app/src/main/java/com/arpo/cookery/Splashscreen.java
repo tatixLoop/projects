@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import javax.microedition.khronos.opengles.GL;
+
 public class Splashscreen extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 1000;
 
@@ -30,10 +33,15 @@ public class Splashscreen extends AppCompatActivity {
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_DISH = "dishes";
     JSONParser jParser = new JSONParser();
+    JSONParser jParser2 = new JSONParser();
     JSONArray dishlist = null;
+    JSONArray maxCountList = null;
     static List<ListItemDishes> listOfDishesForSearch;
 
     int lCount = 0;
+
+    int lastLocalId;
+    int lastRemoteId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +52,101 @@ public class Splashscreen extends AppCompatActivity {
         listOfDishesForSearch = new ArrayList<>();
         Globals.FullDishList = new ArrayList<>();
 
-        new GetDishesForSearch().execute();
+        //new GetDishesForSearch().execute();
+
+        Globals.gContext = getApplicationContext();
+        Globals.sqlData = new CookeryData(this);
+        Globals.sqlData.openConnection();
+
+        lastLocalId = Globals.sqlData.getLastId();
+        new GetMaxCount().execute();
 
     }
+
     void print(String str)
     {
-        //Log.d("JKS",str);
+        Log.d("JKS",str);
     }
 
+    /**
+     *  Background async task to get the last ID
+     */
+    class GetMaxCount extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected String doInBackground(String... args) {
+            // Building Parameters
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+            // getting JSON string from URL
+            String apiname = "";
+            apiname ="getMaxCount.php";
+
+            JSONObject json = jParser2.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
+                    "GET", params);
+
+            // Check your log cat for JSON reponse
+            if(json != null) {
+                //print( json.toString());
+                try {
+                    // Checking for SUCCESS TAG
+                    int success = json.getInt(TAG_SUCCESS);
+
+                    if (success == 1) {
+                        maxCountList = json.getJSONArray("maxcount");
+
+                        for (int i = 0; i < maxCountList.length(); i++) {
+
+                            JSONObject c = maxCountList.getJSONObject(i);
+                            lastRemoteId = c.getInt("maxid");
+                        }
+                    } else {
+                        print("No maxId found");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                print("Error in making http request");
+            }
+
+            //} while (b_exit == false);
+            return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            print("JKS last remote Id is "+lastRemoteId);
+            print("JKS last local Id" + lastLocalId);
+            if (lastLocalId < lastRemoteId)
+            {
+                print("do sync");
+                new GetDishesForSearch().execute();
+            }
+            else
+            {
+                Globals.sqlData.getDishList(Globals.FullDishList);
+
+                Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                Splashscreen.this.startActivity(mainIntent);
+                finish();
+            }
+        }
+
+
+    }
     /**
      * Background Async Task to Load all Dishes by making HTTP Request
      * */
@@ -86,6 +181,7 @@ public class Splashscreen extends AppCompatActivity {
                 // getting JSON string from URL
                 String apiname = "";
                 apiname ="getAllDishes.php";
+                params.add(new BasicNameValuePair("lastid", lastLocalId+ ""));
                 //params.add(new BasicNameValuePair("limit", (lCount * 40 ) + ""));
                 lCount++;
                 runOnUiThread(new Runnable() {
@@ -168,6 +264,8 @@ public class Splashscreen extends AppCompatActivity {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all dishlist
             //pDialog.dismiss();
+
+            Globals.sqlData.syncDB(Globals.FullDishList);
 
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
             //mainIntent.putExtra("list",(Serializable)listOfDishesForSearch);

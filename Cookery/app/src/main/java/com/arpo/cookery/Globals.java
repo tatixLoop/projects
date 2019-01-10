@@ -30,6 +30,9 @@ public class Globals {
 
     static List<ListItemDishes> FullDishList;
 
+    static Context gContext;
+    static CookeryData sqlData;
+
 
     static  String dishName[] = {
             "unknown recipe",
