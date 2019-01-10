@@ -75,11 +75,19 @@ public class CoockeryPreparation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coockery_preparation);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        /*actionBar.hide();*/
+
+
+
 
         data = (ListItemDishes)getIntent().getSerializableExtra("data");
         print("Id = "+data.getId() + " Name : "+data.getName());
 
+        actionBar.setTitle(data.getName());
 
         gDish = data.getName();
         gId = data.getId();
@@ -112,9 +120,9 @@ public class CoockeryPreparation extends AppCompatActivity {
             }
         });
 
+/* TextView title_text = findViewById(R.id.txt_recipeTitle);
+        title_text.setText(""+data.getName());*/
 
-        TextView title_text = findViewById(R.id.txt_recipeTitle);
-        title_text.setText(""+data.getName());
         String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                 data.getImg_path() + "/title_image.jpg";
         RelativeLayout title = findViewById(R.id.rel_title);
@@ -154,7 +162,7 @@ public class CoockeryPreparation extends AppCompatActivity {
         ((TextView) findViewById(R.id.txt_prep_rateRecipeTitle)).setTypeface(typeface);
 
 
-        title_text.setTypeface(typeface);
+       /* title_text.setTypeface(typeface);*/
         cookTime.setTypeface(typeface);
         calory.setTypeface(typeface);
         serveCount.setTypeface(typeface);
@@ -229,6 +237,13 @@ public class CoockeryPreparation extends AppCompatActivity {
         asyncFetch.execute();
 
 
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
     //  snack bar
     public static void setSnackBar(View root, String snackTitle) {

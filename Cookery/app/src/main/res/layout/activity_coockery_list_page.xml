@@ -17,7 +17,7 @@
             android:id="@+id/colLayOut"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            app:contentScrim="@android:color/transparent"
+            app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="exitUntilCollapsed|scroll">
 
             <RelativeLayout
