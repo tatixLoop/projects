@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
+import static com.arpo.cookery.Globals.print;
+
 /**
  * Created by jithin on 30/12/18.
  */
@@ -37,6 +39,14 @@ public class ProgDialog extends AppCompatActivity
             init();
             changeImageSlider();
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        super.onBackPressed();
     }
     @Override
     protected void onNewIntent(Intent intent)

@@ -312,7 +312,7 @@ public class CoockeryPreparation extends AppCompatActivity {
             super.onPreExecute();
             Intent dial = new Intent(getApplicationContext(), ProgDialog.class);
             dial.putExtra("keep", true);
-            startActivity(dial);
+            startActivityForResult(dial, 100);
         }
 
         /**
@@ -586,6 +586,18 @@ public class CoockeryPreparation extends AppCompatActivity {
 
         public void setAuthor(String author) {
             this.author = author;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 100) {
+            if (asyncFetch != null) {
+                asyncFetch.cancel(true);
+                jParser.cancelReq();
+                finish();
+            }
         }
     }
 }
