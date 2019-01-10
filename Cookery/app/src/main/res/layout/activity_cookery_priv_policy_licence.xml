@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/licPolHeading"
+                android:justificationMode="inter_word"
                 android:paddingTop="20dp"
                 android:text="Paul shaji will fill in the contentt" />
 
