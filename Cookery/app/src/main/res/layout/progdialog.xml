@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="500dp"
-    android:layout_height="570dp"
+    android:layout_width="match_parent"
+    android:layout_height="850dp"
     android:layout_alignParentEnd="true"
     android:layout_alignParentStart="true"
     android:layout_gravity="center_horizontal"
-    android:background="@drawable/red_transparentbg"
+    android:background="@android:color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="500dp">
 
     <ImageView
         android:id="@+id/progAnimImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:background="@android:color/transparent"
-        android:src="@drawable/p1" />
+        android:background="@android:color/white"
+        android:src="@drawable/p1" /></RelativeLayout>
+
 </RelativeLayout>

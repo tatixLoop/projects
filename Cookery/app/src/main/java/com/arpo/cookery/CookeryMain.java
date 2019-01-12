@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -75,6 +76,8 @@ public class CookeryMain extends AppCompatActivity {
 
     SearchView searchView;
     MenuItem item;
+
+    boolean doubleBackToExitPressedOnce= false;
 
 
     @Override
@@ -635,6 +638,25 @@ if (cm.getActiveNetworkInfo()==null)
 
     }
 
+
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+
     //Navigation Drawer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -791,6 +813,8 @@ class AdapterListSearch extends BaseAdapter {
 
         return  count;
     }
+
+
 
     void print(String str)
     {

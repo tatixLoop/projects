@@ -3,6 +3,8 @@ package com.arpo.cookery;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -22,9 +24,17 @@ public class CookeryPrivPolicyLicence extends AppCompatActivity {
 
         TextView txtHeading = findViewById(R.id.licPolHeading);
         TextView txtContent = findViewById(R.id.licPolContent);
+        ImageView txtclose = findViewById(R.id.txtclose);
 
         txtContent.setTypeface(typeface);
         txtHeading.setTypeface(typeface);
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         if( type == 1)
         {

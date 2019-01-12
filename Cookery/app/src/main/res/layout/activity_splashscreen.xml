@@ -18,8 +18,18 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/splashscreen"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="50dp"
+        android:paddingBottom="70dp"
         android:gravity="center"
         android:text="Welcome" />
+    <TextView
+        android:id="@+id/txt_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/txt_loading"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="30dp"
+        android:textSize="10dp"
+        android:gravity="center"
+        android:text="Version" />
 
 </RelativeLayout>
