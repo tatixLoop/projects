@@ -133,8 +133,6 @@ class CreateFoodListCrawl
         Elements links = li.select("a[href]");
         int set = 0;
 
-        List<String> listIngr = new ArrayList<>();
-        List<String> listDir  = new ArrayList<>();
 
         /* hard coding for now */
         int cookTime = 2000;
@@ -163,10 +161,12 @@ class CreateFoodListCrawl
                             int cal = Integer.parseInt(calory);
                             if (cal != 0)
                             {
+                                List<String> listIngr = new ArrayList<>();
                                 printf("JKS calory = "+cal);
                                 int numIngredient = getIngredients(recipePage, listIngr);
                                 if (numIngredient != 0)
                                 {
+                                    List<String> listDir  = new ArrayList<>();
                                     int numDirections = getDirection(recipePage, listDir);
                                     if (numDirections != 0)
                                     {
