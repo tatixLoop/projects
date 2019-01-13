@@ -87,6 +87,12 @@ public class CookeryData  extends SQLiteOpenHelper {
         return lastId;
     }
 
+    public void clearDB()
+    {
+        String query = "DELETE FROM tbl_dishes";
+        sqldb.execSQL(query);
+    }
+
     public void syncDB(List<ListItemDishes> list)
     {
         for ( ListItemDishes dish:

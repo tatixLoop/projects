@@ -37,18 +37,22 @@ public class Splashscreen extends AppCompatActivity {
     JSONParser jParser2 = new JSONParser();
     JSONArray dishlist = null;
     JSONArray maxCountList = null;
-    static List<ListItemDishes> listOfDishesForSearch;
+    JSONArray flagList = null;
 
     int lCount = 0;
 
     int lastLocalId;
     int lastRemoteId;
+    int updateFlag = -1;
+    int updateTag;
+    boolean doUpdate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
+        updateFlag = -1;
         // Get Version
         String versionName = "";
         try {
@@ -60,7 +64,6 @@ public class Splashscreen extends AppCompatActivity {
         versionname.setText("Version:"+versionName);
 
         // Fill in search data
-        listOfDishesForSearch = new ArrayList<>();
         Globals.FullDishList = new ArrayList<>();
 
         //new GetDishesForSearch().execute();
@@ -95,7 +98,7 @@ public class Splashscreen extends AppCompatActivity {
 
             // getting JSON string from URL
             String apiname = "";
-            apiname ="getMaxCount.php";
+            apiname ="getUpdate.php";
 
             JSONObject json = jParser2.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
                     "GET", params);
@@ -114,6 +117,14 @@ public class Splashscreen extends AppCompatActivity {
 
                             JSONObject c = maxCountList.getJSONObject(i);
                             lastRemoteId = c.getInt("maxid");
+                        }
+
+                        flagList = json.getJSONArray("flag");
+
+                        for (int i = 0; i < flagList.length(); i++) {
+
+                            JSONObject c = flagList.getJSONObject(i);
+                            updateFlag = c.getInt("flag");
                         }
                     } else {
                         print("No maxId found");
@@ -141,18 +152,59 @@ public class Splashscreen extends AppCompatActivity {
         protected void onPostExecute(String file_url) {
             print("JKS last remote Id is "+lastRemoteId);
             print("JKS last local Id" + lastLocalId);
-            if (lastLocalId < lastRemoteId)
-            {
-                print("do sync");
-                new GetDishesForSearch().execute();
+            doUpdate = false;
+            updateTag = updateFlag >> 8;
+
+            if ( updateTag > getUpdateTag() ) {
+
+                if ((updateFlag & 0x4) != 0) {
+                    print("UPDATE THE IMAGES");
+
+                    for (int i = 1; i < 20; i++) {
+                        String sharedPrefKey = "SHCache_" + Globals.FETCHTYPE_DISHCATAGORY + "_" + i;
+                        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(sharedPrefKey, "defaultValue");
+                        editor.apply();
+                    }
+                    setUpdateTag(updateTag);
+
+                    Globals.sqlData.getDishList(Globals.FullDishList);
+
+                    Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                    Splashscreen.this.startActivity(mainIntent);
+                    finish();
+                } else if ((updateFlag & 0x2) != 0) {
+                    doUpdate = true;
+                    print("UPDATE NEW DISHES ");
+                    print("do sync");
+
+                    Globals.sqlData.getDishList(Globals.FullDishList);
+                    new GetDishesForSearch().execute();
+
+                } else if ((updateFlag & 0x1) != 0) {
+                    doUpdate = true;
+                    print("UPDATE ENTIRE DATABASE");
+                    lastLocalId = 0;
+
+                    Globals.sqlData.clearDB();
+                    new GetDishesForSearch().execute();
+                }
             }
             else
             {
-                Globals.sqlData.getDishList(Globals.FullDishList);
+                if (lastLocalId < lastRemoteId) {
+                    print("do sync");
+                    new GetDishesForSearch().execute();
+                }
+                else {
+                    print("update tag is same ; no update");
+                    Globals.sqlData.getDishList(Globals.FullDishList);
 
-                Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
-                Splashscreen.this.startActivity(mainIntent);
-                finish();
+                    Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                    Splashscreen.this.startActivity(mainIntent);
+                    finish();
+                }
             }
         }
 
@@ -162,6 +214,8 @@ public class Splashscreen extends AppCompatActivity {
      * Background Async Task to Load all Dishes by making HTTP Request
      * */
     class GetDishesForSearch extends AsyncTask<String, String, String> {
+
+        boolean erroSet = false;
 
         /**
          * Before starting background thread Show Progress Dialog
@@ -236,7 +290,6 @@ public class Splashscreen extends AppCompatActivity {
                                         c.getInt("numRating"),
                                         c.getString("author")
                                 );
-                                listOfDishesForSearch.add(dish);
                                 Globals.FullDishList.add(dish);
 
                                 if(isFavorite(c.getInt("id")))
@@ -248,9 +301,9 @@ public class Splashscreen extends AppCompatActivity {
                                     dish.setFav(false);
                                 }
                             }
-                            Collections.shuffle(listOfDishesForSearch);
                         } else {
                             print("No dishes found");
+                            erroSet = true;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -276,8 +329,13 @@ public class Splashscreen extends AppCompatActivity {
             // dismiss the dialog after getting all dishlist
             //pDialog.dismiss();
 
-            Globals.sqlData.syncDB(Globals.FullDishList);
+            if (erroSet == false) {
+                Globals.sqlData.syncDB(Globals.FullDishList);
 
+            }
+            if (doUpdate){
+                setUpdateTag(updateTag);
+            }
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
             //mainIntent.putExtra("list",(Serializable)listOfDishesForSearch);
             Splashscreen.this.startActivity(mainIntent);
@@ -312,5 +370,25 @@ public class Splashscreen extends AppCompatActivity {
         super.onBackPressed();
         finish();
 
+    }
+
+    int getUpdateTag()
+    {
+        // check if image is present in shared preference cache
+        String sharedPrefKey = "SHCache_updateTag";
+        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+        int value = preferences.getInt(sharedPrefKey, -1);
+
+        return value;
+    }
+
+    void setUpdateTag(int tag)
+    {
+        // check if image is present in shared preference cache
+        String sharedPrefKey = "SHCache_updateTag";
+        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(sharedPrefKey, tag);
+        editor.apply();
     }
 }
