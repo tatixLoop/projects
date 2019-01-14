@@ -29,6 +29,8 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="1sp"
+            android:layout_marginStart="5dp"
+
             android:paddingEnd="2dp"
             android:paddingRight="2dp"
             android:text="TextView"
