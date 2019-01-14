@@ -141,8 +141,8 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         }
         else if (gloadType == 1)
         {
-            getSupportActionBar().setTitle("My Favorite Dishes");
-            getSupportActionBar().setTitle(" ");
+            getSupportActionBar().setTitle("Favourites");
+            /*getSupportActionBar().setTitle(" ");*/
             String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
                     "title/fav.jpg";
             //get screen width
