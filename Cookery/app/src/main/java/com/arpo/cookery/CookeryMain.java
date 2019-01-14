@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -502,6 +503,17 @@ public class CookeryMain extends AppCompatActivity {
 
         NavigationView navigation;
         navigation = findViewById(R.id.nav_view);
+         View header = navigation.getHeaderView(0);
+        // Get Version
+        String versionName = "";
+        try {
+            versionName = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        TextView versionname = (TextView) header.findViewById(R.id.nav_version);
+        versionname.setText("Version:"+versionName);
+
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
