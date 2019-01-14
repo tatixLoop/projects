@@ -83,7 +83,7 @@ public class AdapterIngredientList extends BaseAdapter {
             Typeface typeface = Typeface.createFromAsset(context.getAssets(),
                     String.format(Locale.US, "fonts/%s", "font.ttf"));
 
-            ((TextView) convertView.findViewById(R.id.txt_qty)).setTypeface(typeface);
+           /* ((TextView) convertView.findViewById(R.id.txt_qty)).setTypeface(typeface);*/
             txt_ingredient.setTypeface(typeface);
 
             final RelativeLayout checkBox = convertView.findViewById(R.id.chkBox);
