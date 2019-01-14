@@ -63,9 +63,9 @@ public class CookeryData  extends SQLiteOpenHelper {
                     data.getInt(1),
                     data.getString(2),
                     data.getString(3),
-                    data.getInt(4),
                     data.getInt(5),
                     data.getInt(6),
+                    data.getInt(4),
                     data.getInt(7),
                     data.getInt(9),
                     data.getString(8)
