@@ -175,11 +175,17 @@ public class Splashscreen extends AppCompatActivity {
                     }
                     setUpdateTag(updateTag);
 
-                    Globals.sqlData.getDishList(Globals.FullDishList);
+                    if (lastLocalId < lastRemoteId) {
+                        print("do sync");
+                        new GetDishesForSearch().execute();
+                    }
+                    else {
+                        Globals.sqlData.getDishList(Globals.FullDishList);
 
-                    Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
-                    Splashscreen.this.startActivity(mainIntent);
-                    finish();
+                        Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                        Splashscreen.this.startActivity(mainIntent);
+                        finish();
+                    }
                 } else if ((updateFlag & 0x2) != 0) {
                     doUpdate = true;
                     print("UPDATE NEW DISHES ");
