@@ -70,6 +70,7 @@ public class CoockeryPreparation extends AppCompatActivity {
     GetDishInfo asyncFetch;
 
     boolean isFav;
+    boolean gExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -305,6 +306,7 @@ public class CoockeryPreparation extends AppCompatActivity {
          * getting All dishlist from url
          * */
         protected String doInBackground(String... args) {
+            gExit = false;
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
@@ -387,18 +389,25 @@ public class CoockeryPreparation extends AppCompatActivity {
 
                     } else {
                         print("No dishes found");
+                        gExit = true;
                     }
                 } catch (JSONException e) {
+
+                    print("Excption 1");
                     e.printStackTrace();
+                    gExit = true;
                 }
                 catch (Exception e)
                 {
+                    print("Excption 2");
                     e.printStackTrace();
+                    gExit = true;
                 }
             }
             else
             {
                 print("Error in making http request");
+                gExit = true;
             }
             return null;
         }
@@ -413,8 +422,18 @@ public class CoockeryPreparation extends AppCompatActivity {
             dial.putExtra("keep", false);
             startActivity(dial);
 
-            runOnUiThread(new Runnable() {
-                public void run() {
+            if (gExit)
+            {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Network issue: Cannot access internet", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+            }
+            else {
+                runOnUiThread(new Runnable() {
+                    public void run() {
 /*
                     cookTime.setText(cookRecipe.getCooktimeinsec() + "sec");
                     calory.setText(cookRecipe.getCalory() + "cal");
@@ -422,22 +441,23 @@ public class CoockeryPreparation extends AppCompatActivity {
                     author.setText(cookRecipe.getAuthor());
 */
 
-                    ListView lv_steps = findViewById(R.id.lv_listSteps);
-                    adapterStepList  = new AdapterStepListView(getApplicationContext(), cookRecipe.getStepList());
-                    lv_steps.setAdapter(adapterStepList);
-                    setListViewHeightBasedOnChildren(lv_steps);
+                        ListView lv_steps = findViewById(R.id.lv_listSteps);
+                        adapterStepList = new AdapterStepListView(getApplicationContext(), cookRecipe.getStepList());
+                        lv_steps.setAdapter(adapterStepList);
+                        setListViewHeightBasedOnChildren(lv_steps);
 
-                    ListView lv_ingredient = findViewById(R.id.lv_ingredient);
-                    adapterIngredientList  = new AdapterIngredientList(getApplicationContext(), cookRecipe.getIngredientList());
-                    lv_ingredient.setAdapter(adapterIngredientList);
-                    setListViewHeightBasedOnChildren(lv_ingredient);
+                        ListView lv_ingredient = findViewById(R.id.lv_ingredient);
+                        adapterIngredientList = new AdapterIngredientList(getApplicationContext(), cookRecipe.getIngredientList());
+                        lv_ingredient.setAdapter(adapterIngredientList);
+                        setListViewHeightBasedOnChildren(lv_ingredient);
 
-                    ScrollView preps = findViewById(R.id.scroll);
-                    preps.scrollTo(0,0);
-                    preps.fullScroll( View.FOCUS_UP);
+                        ScrollView preps = findViewById(R.id.scroll);
+                        preps.scrollTo(0, 0);
+                        preps.fullScroll(View.FOCUS_UP);
 
-                }
-            });
+                    }
+                });
+            }
         }
     }
 
