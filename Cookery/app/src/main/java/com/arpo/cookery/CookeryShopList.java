@@ -2,6 +2,7 @@ package com.arpo.cookery;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,9 @@ public class CookeryShopList extends AppCompatActivity {
             finish();
         }
 
+
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("Shopping List");
 
         ListView lv = findViewById(R.id.lv_shopList);
         AdapterShoppingList shpAdapter = new AdapterShoppingList(this, shoppingList);
