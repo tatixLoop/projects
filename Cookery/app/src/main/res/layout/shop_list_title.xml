@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="10dp">
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/greenColor"
         android:layout_height="40dp">
 
         <TextView
@@ -11,6 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
             android:textSize="20sp" />
 
     </RelativeLayout>

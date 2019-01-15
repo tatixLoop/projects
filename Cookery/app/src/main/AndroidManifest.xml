@@ -50,8 +50,7 @@
             android:theme="@style/Theme.MyDialog" />
         <activity android:name=".CookeryShopList"
             android:parentActivityName=".CookeryMain"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"></activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
