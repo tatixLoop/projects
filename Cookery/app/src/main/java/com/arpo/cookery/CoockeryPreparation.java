@@ -142,14 +142,13 @@ public class CoockeryPreparation extends AppCompatActivity {
 
 
         calory.setText(data.getCalory() + " cal");
-        serveCount.setText("serves "+data.getServeCount());
+        serveCount.setText("Serves "+data.getServeCount());
         author.setText(data.getAuthor());
 
         int seconds = data.getCooktimeinsec();
         int mins = seconds/60;
 
         cookTime.setText(mins + " Minutes");
-
         //Rating calcuation
         int rating = data.getRating();
 
@@ -170,7 +169,7 @@ public class CoockeryPreparation extends AppCompatActivity {
 
 
 
-        ImageView star1 = findViewById(R.id.img_star1);
+       /* ImageView star1 = findViewById(R.id.img_star1);
         ImageView star2 = findViewById(R.id.img_star2);
         ImageView star3 = findViewById(R.id.img_star3);
         ImageView star4 = findViewById(R.id.img_star4);
@@ -215,7 +214,7 @@ public class CoockeryPreparation extends AppCompatActivity {
                 star5.setImageDrawable(getResources().getDrawable(R.drawable.star));
                 break;
 
-        }
+        }*/
 
 
 

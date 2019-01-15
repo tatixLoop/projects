@@ -44,11 +44,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ProgressDialog" />
         <activity
-            android:name=".RatePopUp"
-            android:parentActivityName=".CoockeryPreparation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog" />
-        <activity
             android:name=".CookeryPrivPolicyLicence"
             android:parentActivityName=".CookeryMain"
             android:screenOrientation="portrait"
