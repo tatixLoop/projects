@@ -12,7 +12,21 @@
         android:layout_gravity="center_vertical"
         android:src="@drawable/cookerylogo111splash" />
 
-    <TextView
+    <ProgressBar
+        android:id="@+id/splashprogressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/splashscreen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:indeterminate="true"
+        android:indeterminateTint="#ffa500"
+        android:indeterminateTintMode="src_in"
+        android:minWidth="250dp"
+        android:minHeight="10dp" />
+
+    <!--<TextView
         android:id="@+id/txt_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,12 +34,12 @@
         android:layout_alignParentBottom="true"
         android:paddingBottom="70dp"
         android:gravity="center"
-        android:text="Welcome" />
+        android:text="Welcome" />-->
     <TextView
         android:id="@+id/txt_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/txt_loading"
+        android:layout_alignBottom="@id/splashprogressBar"
         android:layout_alignParentBottom="true"
         android:paddingBottom="30dp"
         android:textSize="10dp"

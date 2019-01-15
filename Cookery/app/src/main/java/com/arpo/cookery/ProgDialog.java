@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import static com.arpo.cookery.Globals.print;
 
@@ -25,6 +26,7 @@ import static com.arpo.cookery.Globals.print;
 public class ProgDialog extends AppCompatActivity
 {
     ImageView imageV;
+    ProgressBar progressBar;
     int position=0;
     View view;
     private AlertDialog.Builder builder;
@@ -37,7 +39,7 @@ public class ProgDialog extends AppCompatActivity
         boolean keep = getIntent().getExtras().getBoolean("keep");
         if(keep) {
             init();
-            changeImageSlider();
+           /* changeImageSlider();*/
         }
     }
 
@@ -66,21 +68,22 @@ public class ProgDialog extends AppCompatActivity
     }*/
 
     private void init() {
-        imageV = ((ImageView) findViewById(R.id.progAnimImage));
+        progressBar = (ProgressBar) findViewById(R.id.progAnimImage);
+      //  imageV = ((ImageView) findViewById(R.id.progAnimImage));
         //builder = new AlertDialog.Builder(view.getContext());
     }
     public void show() {
         builder.setView(view);
         dialog = builder.create();
         dialog.show();
-        changeImageSlider();
+        /*changeImageSlider();*/
     }
 
     public void dismiss() {
         dialog.dismiss();
     }
 
-    private void changeImageSlider() {
+   /* private void changeImageSlider() {
         position++;
         switch (position)
         {
@@ -103,5 +106,5 @@ public class ProgDialog extends AppCompatActivity
                 changeImageSlider();
             }
         }, 100);
-    }
+    }*/
 }

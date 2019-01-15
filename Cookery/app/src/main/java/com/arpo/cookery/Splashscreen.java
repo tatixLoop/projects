@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
@@ -46,6 +47,7 @@ public class Splashscreen extends AppCompatActivity {
     int updateFlag = -1;
     int updateTag;
     boolean doUpdate = false;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,10 @@ public class Splashscreen extends AppCompatActivity {
         setContentView(R.layout.activity_splashscreen);
 
         updateFlag = -1;
+        //ProgressBar
+        progressBar = (ProgressBar) findViewById(R.id.splashprogressBar);
+
+
         // Get Version
         String versionName = "";
         try {
@@ -248,7 +254,7 @@ public class Splashscreen extends AppCompatActivity {
                 apiname ="getAllDishes.php";
                 params.add(new BasicNameValuePair("lastid", lastLocalId+ ""));
                 //params.add(new BasicNameValuePair("limit", (lCount * 40 ) + ""));
-                lCount++;
+               /* lCount++;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -261,7 +267,7 @@ public class Splashscreen extends AppCompatActivity {
 
                         txtLoading.setText("Loading Data    "+percent+ " %");
                     }
-                });
+                });*/
                 JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
                         "GET", params);
 
@@ -341,8 +347,8 @@ public class Splashscreen extends AppCompatActivity {
             Splashscreen.this.startActivity(mainIntent);
 
 
-            TextView txtLoading = findViewById(R.id.txt_loading);
-            txtLoading.setText("Loading Data    "+100+ " %");
+           /* TextView txtLoading = findViewById(R.id.txt_loading);
+            txtLoading.setText("Loading Data    "+100+ " %");*/
             print("Size of Items SPLASH SCREEN : "+Globals.FullDishList.size());
             finish();
         }
