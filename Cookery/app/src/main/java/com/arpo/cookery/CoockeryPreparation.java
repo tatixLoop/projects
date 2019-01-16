@@ -158,7 +158,7 @@ public class CoockeryPreparation extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.txt_prep_prepsteps)).setTypeface(typeface);
         ((TextView) findViewById(R.id.txt_prep_ingredients)).setTypeface(typeface);
-        ((TextView) findViewById(R.id.txt_share)).setTypeface(typeface);
+        //((TextView) findViewById(R.id.txt_share)).setTypeface(typeface);
         ((TextView) findViewById(R.id.txt_prep_author_title)).setTypeface(typeface);
 
 

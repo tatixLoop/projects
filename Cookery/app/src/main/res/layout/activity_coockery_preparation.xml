@@ -120,13 +120,13 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="50dp"
+                        android:paddingLeft="55dp">
 
                         <RelativeLayout
                             android:layout_width="175dp"
                             android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentStart="true">
+                            android:gravity="center">
 
                             <RelativeLayout
                                 android:layout_width="wrap_content"
@@ -147,41 +147,12 @@
                                     android:id="@+id/txt_servings"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="80dp"
-                                    android:textStyle="bold"
-                                    android:layout_marginStart="80dp" />
-                            </RelativeLayout>
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="175dp"
-                            android:layout_height="match_parent">
-
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerVertical="true">
-
-                                <ImageView
-                                    android:id="@+id/img_share"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="43dp"
-                                    app:srcCompat="@drawable/share" />
-
-                                <TextView
-                                    android:id="@+id/txt_share"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="80dp"
                                     android:layout_marginStart="80dp"
-                                    android:text="Share"
+                                    android:layout_marginLeft="80dp"
                                     android:textStyle="bold" />
                             </RelativeLayout>
                         </RelativeLayout>
+
                     </LinearLayout>
 
                   <!--  <LinearLayout
