@@ -1,5 +1,7 @@
 package com.example.sony.pushupchallenge;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -80,17 +82,26 @@ public class Pushupchallenge_home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_workoutchart) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            Intent workoutchart=new Intent(this,Workoutchart_pushupchallenge.class);
+            startActivity(workoutchart);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_howtotakepushup)
+        {
+            Intent howtotakepushup=new Intent(this,Howtotakepushup_pushupchallenge.class);
+            startActivity(howtotakepushup);
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_challengestatus)
+        {
+            Intent challengestatus=new Intent(this,Challengestatus_pushupchallenge.class);
+            startActivity(challengestatus);
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_invitechallenge) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_feedback) {
+
+        } else if (id == R.id.nav_policy) {
 
         }
 

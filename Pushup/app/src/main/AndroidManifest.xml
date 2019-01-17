@@ -19,7 +19,10 @@
         <activity
             android:name=".Pushupchallenge_home"
             android:label="@string/title_activity_pushupchallenge_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Workoutchart_pushupchallenge" />
+        <activity android:name=".Howtotakepushup_pushupchallenge" />
+        <activity android:name=".Challengestatus_pushupchallenge"></activity>
     </application>
 
 </manifest>

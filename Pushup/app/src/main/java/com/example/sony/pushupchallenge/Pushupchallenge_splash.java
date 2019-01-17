@@ -24,8 +24,9 @@ public class Pushupchallenge_splash extends AppCompatActivity {
                Pushupchallenge_splash.this.finish();
 
             }
-        },5000);
+        },2000);
 
     }
+
 
 }
