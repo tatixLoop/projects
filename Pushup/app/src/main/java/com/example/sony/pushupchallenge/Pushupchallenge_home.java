@@ -98,10 +98,22 @@ public class Pushupchallenge_home extends AppCompatActivity
             startActivity(challengestatus);
 
         } else if (id == R.id.nav_invitechallenge) {
+            Intent intentShare = new Intent();
+            intentShare.setAction(Intent.ACTION_SEND);
+            intentShare.putExtra(Intent.EXTRA_TEXT,"I suggest this app for you : https://play.google.com/store/apps/details?id=com.android.chrome");
+            intentShare.setType("text/plain");
+            startActivity(intentShare);
 
         } else if (id == R.id.nav_feedback) {
+            Intent intentfeedback = new Intent();
+            intentfeedback.setAction(Intent.ACTION_SEND);
+            intentfeedback.putExtra(Intent.EXTRA_TEXT,"I suggest this app for you : https://play.google.com/store/apps/details?id=com.android.chrome");
+            intentfeedback.setType("text/plain");
+            startActivity(intentfeedback);
 
         } else if (id == R.id.nav_policy) {
+            Intent privacypolicy =new Intent(this,privacy_pushupchallenge.class);
+            startActivity(privacypolicy);
 
         }
 
