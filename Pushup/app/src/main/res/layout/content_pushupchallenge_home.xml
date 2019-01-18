@@ -8,4 +8,53 @@
     tools:context=".Pushupchallenge_home"
     tools:showIn="@layout/app_bar_pushupchallenge_home">
 
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50 Days Pushup Challenge"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv1"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completed 10 days!!!"
+            android:textSize="35dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv2"
+            android:layout_marginLeft="150dp"
+            android:layout_below="@id/tv1"
+            android:layout_marginTop="65dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="40 more days to go !!!"
+            android:layout_marginTop="60dp"
+            android:textSize="25dp"
+        android:layout_centerHorizontal="true"
+            android:id="@+id/tv3"
+            android:layout_below="@id/tv2"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:id="@+id/btn_gotochallenge"
+            android:layout_centerHorizontal="true"
+            android:text="Go to my challenge"
+            android:layout_below="@id/tv3"/>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

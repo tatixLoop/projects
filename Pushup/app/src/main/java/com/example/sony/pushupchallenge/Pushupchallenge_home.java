@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,13 +15,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class Pushupchallenge_home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Button bt_challenge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        bt_challenge =findViewById(R.id.btn_gotochallenge);
+
+
         setContentView(R.layout.activity_pushupchallenge_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -31,8 +39,18 @@ public class Pushupchallenge_home extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                bt_challenge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent =new Intent(Pushupchallenge_home.this,Pushupchallenge_challenge.class);
+                        startActivity(intent);
+                    }
+                });
+
             }
         });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -42,7 +60,11 @@ public class Pushupchallenge_home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -84,17 +106,17 @@ public class Pushupchallenge_home extends AppCompatActivity
 
         if (id == R.id.nav_workoutchart) {
             // Handle the camera action
-            Intent workoutchart=new Intent(this,Workoutchart_pushupchallenge.class);
+            Intent workoutchart=new Intent(this,Pushupchallenge_workoutchart.class);
             startActivity(workoutchart);
 
         } else if (id == R.id.nav_howtotakepushup)
         {
-            Intent howtotakepushup=new Intent(this,Howtotakepushup_pushupchallenge.class);
+            Intent howtotakepushup=new Intent(this,Pushupchallenge_howtotakepushup.class);
             startActivity(howtotakepushup);
 
         } else if (id == R.id.nav_challengestatus)
         {
-            Intent challengestatus=new Intent(this,Challengestatus_pushupchallenge.class);
+            Intent challengestatus=new Intent(this,Pushupchallenge_challengestatus.class);
             startActivity(challengestatus);
 
         } else if (id == R.id.nav_invitechallenge) {
@@ -112,7 +134,7 @@ public class Pushupchallenge_home extends AppCompatActivity
             startActivity(intentfeedback);
 
         } else if (id == R.id.nav_policy) {
-            Intent privacypolicy =new Intent(this,privacy_pushupchallenge.class);
+            Intent privacypolicy =new Intent(this,Pushupchallenge_privacy.class);
             startActivity(privacypolicy);
 
         }
