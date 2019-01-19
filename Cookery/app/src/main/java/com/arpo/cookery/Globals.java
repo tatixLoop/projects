@@ -42,7 +42,7 @@ public class Globals {
             /* type4 */ "Juice recipe's",
             /* type5 */ "Cookie recipe's",
             /* type6 */ "Todays Special",
-            /* type7 */ "Your Favorite Omlet Recipes",
+            /* type7 */ "Omlet Recipes",
             /* type8 */ "Egg Dishes",
             /* type9 */ "Chicken Recipes",
             /* type10 */ "Coffee Recipes",
@@ -281,5 +281,37 @@ public class Globals {
     static void print(String str)
     {
         Log.d("JKS",str);
+    }
+
+    static boolean isFavorite(int id)
+    {
+        return Globals.sqlData.isFavorite(id);
+    }
+
+    static void clearFavorite(int id)
+    {
+        Globals.sqlData.clearFavorite(id);
+
+        for (ListItemDishes dish: FullDishList
+                ) {
+            if (dish.getId() == id)
+            {
+                dish.setFav(false);
+                break;
+            }
+        }
+    }
+
+    static void setFavorite(int id)
+    {
+        Globals.sqlData.setFavorite(id);
+        for (ListItemDishes dish: FullDishList
+             ) {
+            if (dish.getId() == id)
+            {
+                dish.setFav(true);
+                break;
+            }
+        }
     }
 }

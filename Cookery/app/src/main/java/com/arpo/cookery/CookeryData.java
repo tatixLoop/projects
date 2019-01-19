@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
@@ -45,6 +46,11 @@ public class CookeryData  extends SQLiteOpenHelper {
                 "rating INTEGER NOT NULL,"+
                 "author varchar(64) NOT NULL,"+
                 "numRating INTEGER NOT NULL)";
+
+        sqldb.execSQL(qury);
+
+        //Create table where favorites dishes are kept
+        qury = "CREATE TABLE  IF NOT EXISTS  tbl_fav(id INTEGER NOT NULL)";
         sqldb.execSQL(qury);
     }
 
@@ -56,6 +62,14 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
         String query = "SELECT * FROM tbl_dishes";
         Cursor data = sqldb.rawQuery(query, null);
+        Cursor favorite = sqldb.rawQuery("SELECT * FROM tbl_fav", null);
+        List<Integer> favArray = new ArrayList<>(favorite.getCount());
+        int sizeFav = favorite.getCount();
+
+        while (favorite.moveToNext())
+        {
+            favArray.add(favorite.getInt(0));
+        }
 
         while (data.moveToNext())
         {
@@ -71,7 +85,17 @@ public class CookeryData  extends SQLiteOpenHelper {
                     data.getString(8)
                     );
             list.add(dish);
+
+            for ( int i = 0; i < sizeFav; i++)
+            {
+                if (dish.getId() == favArray.get(i))
+                {
+                    dish.setFav(true);
+                    print(dish.getId() + " is favrite");
+                }
+            }
         }
+
     }
 
     public int getLastId()
@@ -122,6 +146,32 @@ public class CookeryData  extends SQLiteOpenHelper {
     private void print(String str)
     {
         Log.d("JKS",str);
+    }
+
+    public boolean isFavorite(int id)
+    {
+        String query = "SELECT id FROM tbl_fav WHERE id="+id;
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+        print("JKS count = "+checkDatax.getCount());
+        if (sqldb.rawQuery(query, null).getCount() == 0) {
+            checkDatax.close();
+            return false;
+        }
+        else {
+            checkDatax.close();
+            return true;
+        }
+    }
+    public void clearFavorite(int id)
+    {
+        String query = "Delete from tbl_fav where id="+id;
+        sqldb.execSQL(query);
+    }
+
+    public void setFavorite(int id)
+    {
+        String query = "INSERT into tbl_fav VALUES ("+id+")";
+        sqldb.execSQL(query);
     }
 
 }

@@ -304,7 +304,7 @@ public class Splashscreen extends AppCompatActivity {
                                 );
                                 Globals.FullDishList.add(dish);
 
-                                if(isFavorite(c.getInt("id")))
+                                if(Globals.isFavorite(c.getInt("id")))
                                 {
                                     dish.setFav(true);
                                 }
@@ -358,21 +358,7 @@ public class Splashscreen extends AppCompatActivity {
             print("Size of Items SPLASH SCREEN : "+Globals.FullDishList.size());
             finish();
         }
-        boolean isFavorite(int id)
-        {
-            String sharedPrefKey = "FAV_PREF"+id;
-            SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
-            int value = preferences.getInt(sharedPrefKey, -1);
 
-            if( value == 1 )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 
     @Override
