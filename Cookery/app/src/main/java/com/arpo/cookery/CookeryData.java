@@ -52,6 +52,10 @@ public class CookeryData  extends SQLiteOpenHelper {
         //Create table where favorites dishes are kept
         qury = "CREATE TABLE  IF NOT EXISTS  tbl_fav(id INTEGER NOT NULL)";
         sqldb.execSQL(qury);
+
+        //Create table to save the shopping list
+        qury = "CREATE TABLE  IF NOT EXISTS  tbl_shopList(id INTEGER NOT NULL, type INTEGER, data varchar(128))";
+        sqldb.execSQL(qury);
     }
 
     @Override
@@ -96,6 +100,8 @@ public class CookeryData  extends SQLiteOpenHelper {
             }
         }
 
+        data.close();
+        favorite.close();
     }
 
     public int getLastId()
@@ -174,4 +180,48 @@ public class CookeryData  extends SQLiteOpenHelper {
         sqldb.execSQL(query);
     }
 
+    public void addItemToShopList(String igrd, String dish, int id)
+    {
+        String query = "SELECT id FROM tbl_shopList WHERE id="+id;
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+        if (checkDatax.getCount() == 0)
+        {
+            query = "INSERT into tbl_shopList (id, type, data)VALUES ("+id+", 0, '"+dish+"')";
+            sqldb.execSQL(query);
+        }
+
+        query = "INSERT into tbl_shopList (id, type, data)VALUES ("+id+", 1, '"+igrd+"')";
+        sqldb.execSQL(query);
+        checkDatax.close();
+    }
+
+    public void removeItemFromShopList(String ingredient, int id)
+    {
+        String query = "DELETE from tbl_shopList where id="+id + " AND data like '"+ingredient+"'";
+        sqldb.execSQL(query);
+
+        //Check if last entry is removed
+        query = "SELECT id FROM tbl_shopList WHERE id="+id;
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+        if (checkDatax.getCount() == 1)
+        {
+            query = "DELETE from tbl_shopList where id="+id;
+            sqldb.execSQL(query);
+        }
+        checkDatax.close();
+    }
+
+    public void getShopListData(List<ShoppingListItem> list) {
+        String query = "SELECT * from tbl_shopList";
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+
+        while (checkDatax.moveToNext()) {
+            ShoppingListItem listItemData = new ShoppingListItem();
+            listItemData.id = checkDatax.getInt(0);
+            listItemData.type = checkDatax.getInt(1);
+            listItemData.data = checkDatax.getString(2);
+            list.add(listItemData);
+        }
+        checkDatax.close();
+    }
 }
