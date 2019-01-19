@@ -180,7 +180,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     public void onItemClick(ListItemDishes item) {
         Intent preparationPage = new Intent(CoockeryListPage.this, CoockeryPreparation.class);
         preparationPage.putExtra("data",item );
-        startActivity(preparationPage);
+        startActivityForResult(preparationPage, 100);
     }
 
     @Override
@@ -317,4 +317,24 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             adapterDishList.notifyDataSetChanged();
         }
     }
-}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if  (gloadType == 1) {
+            listOfDishes.clear();
+            for(int i = 0; i < Globals.FullDishList.size() ; i++)
+            {
+                ListItemDishes dishes = Globals.FullDishList.get(i);
+                if(dishes.isFav())
+                {
+                    print("Dish "+dishes.getName() +" is Favorite");
+                    print("Id :"+dishes.getId());
+                    listOfDishes.add(dishes);
+                }
+            }
+            adapterDishList.notifyDataSetChanged();
+        }
+    }
+    }
