@@ -20,18 +20,26 @@ import android.widget.Toast;
 
 public class Pushupchallenge_home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Button btnchallenge;
 
-    Button bt_challenge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bt_challenge =findViewById(R.id.btn_gotochallenge);
-
-
         setContentView(R.layout.activity_pushupchallenge_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        btnchallenge  =(Button) findViewById(R.id.btn_gotochallenge);
+
+        btnchallenge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(Pushupchallenge_home.this,Pushupchallenge_challenge.class);
+                startActivity(i);
+
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -39,14 +47,6 @@ public class Pushupchallenge_home extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                bt_challenge.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        Intent intent =new Intent(Pushupchallenge_home.this,Pushupchallenge_challenge.class);
-                        startActivity(intent);
-                    }
-                });
 
             }
         });
