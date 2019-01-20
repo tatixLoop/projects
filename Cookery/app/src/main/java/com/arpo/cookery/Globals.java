@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL;
@@ -30,7 +31,7 @@ public class Globals {
     static int FETCHTYPE_DISH = 2;
     static int FETCHTYPE_DISH_TITLE = 3;
 
-    static List<ListItemDishes> FullDishList;
+    static List<ListItemDishes> FullDishList = new ArrayList<>();
 
     static Context gContext;
     static CookeryData sqlData;

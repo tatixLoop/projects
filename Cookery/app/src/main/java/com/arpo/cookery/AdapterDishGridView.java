@@ -112,6 +112,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
 
             cukTime.setText(mins+" Mins");
             calory.setText(item.getCalory()+ "Cal");
+            cukTime.setText(item.getCuktime()+"");
             //author.setText(item.getAuthor());
             //rating.setText(""+(float)item.getRating()/2);
 

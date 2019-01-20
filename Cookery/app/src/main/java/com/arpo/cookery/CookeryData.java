@@ -45,7 +45,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                 "serves INTEGER NOT NULL,"+
                 "rating INTEGER NOT NULL,"+
                 "author varchar(64) NOT NULL,"+
-                "numRating INTEGER NOT NULL)";
+                "numRating INTEGER NOT NULL," +
+                "cuktime varchar (16))";
 
         sqldb.execSQL(qury);
 
@@ -86,7 +87,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                     data.getInt(4),
                     data.getInt(7),
                     data.getInt(9),
-                    data.getString(8)
+                    data.getString(8),
+                    data.getString(10)
                     );
             list.add(dish);
 
@@ -129,7 +131,7 @@ public class CookeryData  extends SQLiteOpenHelper {
               list) {
             String name = dish.getName().replace("'","''");
             String author = dish.getAuthor().replace("'","''");
-            String query="INSERT INTO tbl_dishes (id, type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating) VALUES ("+
+            String query="INSERT INTO tbl_dishes (id, type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating, cuktime) VALUES ("+
                     dish.getId() +", "+
                     dish.getType() + ", '"+
                     name +"','"+
@@ -139,8 +141,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                     dish.getServeCount() +",'"+
                     author + "',"+
                     dish.getRating() + ","+
-                    dish.getNumRating()+
-                    ")";
+                    dish.getNumRating()+",'"+
+                    dish.getCuktime() +"')";
             sqldb.execSQL(query);
         }
     }
@@ -158,7 +160,6 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
         String query = "SELECT id FROM tbl_fav WHERE id="+id;
         Cursor checkDatax = sqldb.rawQuery(query, null);
-        print("JKS count = "+checkDatax.getCount());
         if (sqldb.rawQuery(query, null).getCount() == 0) {
             checkDatax.close();
             return false;

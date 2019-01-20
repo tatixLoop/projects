@@ -150,6 +150,7 @@ public class CoockeryPreparation extends AppCompatActivity {
         int mins = seconds/60;
 
         cookTime.setText(mins + " Minutes");
+        cookTime.setText(data.getCuktime()+"");
         //Rating calcuation
         int rating = data.getRating();
 
