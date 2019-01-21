@@ -10,6 +10,7 @@ import java.io.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
@@ -170,21 +171,51 @@ class CreateFoodListCrawl
                                     int numDirections = getDirection(recipePage, listDir);
                                     if (numDirections != 0)
                                     {
-                                         int upload = 1;
-                                         if(upload == 1)
+                                         String cukTime = getCookTime(recipePage);
+//                                         cookTime = covertCookTimeToSec(cukTime);
+                                         if ( !cukTime.equals(""))
                                          {
-                                         String sourceFileNameForUpload = getPreviewImage(recipePage);
-                                         added += uploadDatatoDatabaseFromJava(recipeName,
-                                                              type,
-                                                              cookTime,
-                                                              serveCount,
-                                                              cal,
-                                                              rating,
-                                                              recipieAuthorName,
-                                                              listIngr ,
-                                                              listDir,
-                                                              sourceFileNameForUpload,
-                                                              sourceFileNameForUpload);
+                                             serveCount = getServings(recipePage);
+                                             printf("Serve Count = "+serveCount);
+                                             if (serveCount != 0)
+                                             {
+                                                 String sourceFileNameForUpload = getPreviewImage(recipePage);
+                                                 if ( !sourceFileNameForUpload.equals(""))
+                                                 {
+                                                     int upload = 1;
+                                                     if(upload == 1)
+                                                     {
+                                                     added += uploadDatatoDatabaseFromJava(recipeName,
+                                                                          type,
+                                                                          cookTime,
+                                                                          serveCount,
+                                                                          cal,
+                                                                          rating,
+                                                                          recipieAuthorName,
+                                                                          listIngr ,
+                                                                          listDir,
+                                                                          sourceFileNameForUpload,
+                                                                          sourceFileNameForUpload,
+                                                                          cukTime);
+                                                     }
+                                                     else 
+                                                     {
+                                                         printf("JKS not uploading data\n");
+                                                     }
+                                                 }
+                                                 else
+                                                 {
+                                                     printf("JKS could not grab image");
+                                                 }
+                                             }
+                                             else
+                                             {
+                                                 printf("JKS problem with serve count");
+                                             }
+                                         }
+                                         else
+                                         {
+                                             printf("JKS invalid cookTime");
                                          }
 
                                     }
@@ -202,7 +233,6 @@ class CreateFoodListCrawl
                             {
                                 printf("ERROR : error in fetching calory");
                             }
-                            getCookTime(recipePage);
                             
                         }
                         else
@@ -243,6 +273,8 @@ class CreateFoodListCrawl
                 return getImages(src);
             } catch (IOException ex) {
                 printf("EXCEPTION");
+                ex.printStackTrace();
+                return "";
             }
         }
         return "";
@@ -295,14 +327,42 @@ class CreateFoodListCrawl
         return li.size();
     }
 
+    public int covertCookTimeToSec (String time)
+    {
+        int sec = 0;
+        StringTokenizer st = new StringTokenizer(time, "h");
+
+        if ( time.contains("h"))
+        {
+            while (st.hasMoreElements()) {
+                String data = st.nextElement().toString();
+                sec = Integer.parseInt(data) * 60 * 60;
+                printf("Length = "+data.length());
+                break;
+            }
+        }
+
+        StringTokenizer st2 = new StringTokenizer(time, "m");
+
+        while (st2.hasMoreElements()) {
+            System.out.println(st2.nextElement());
+        }
+        return 2000;
+    }
     public String getCookTime (Document doc)
     {
         String cookTime = "";
-        Elements recipe = doc.select("span[itemprop=ready-in-time]");
+        Elements recipe = doc.select("span.ready-in-time");
         cookTime = recipe.text();
         printf("cookTime = "+cookTime);
         return cookTime;
 
+    }
+    public int getServings (Document doc)
+    {
+        Elements recipe = doc.select("meta[itemprop=recipeYield]");
+
+        return Integer.parseInt(recipe.attr("content"));
     }
 
     public String getCalory(Document doc)
@@ -354,7 +414,8 @@ class CreateFoodListCrawl
                                               List<String> listIngr ,
                                               List<String> listDir,
                                               String img_path_box,
-                                              String img_path_main)
+                                              String img_path_main,
+                                              String cookTimeString)
     {
         String lineEnd = "\r\n";
         String twoHyphens = "--";
@@ -392,8 +453,8 @@ class CreateFoodListCrawl
                  dir_path = "recipe_"+nextId;
                  name = name.replace("'", "''");
                  author = author.replace("'", "''");
-                 query = "INSERT INTO tbl_dishes (type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating) VALUES ("+
-                 				type+", '"+name+"', '"+ dir_path +"', "+calory+", "+cookTime+", "+serveCount+", '"+author+"', "+rating+", 1)";
+                 query = "INSERT INTO tbl_dishes (type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating, cuktime) VALUES ("+
+                 				type+", '"+name+"', '"+ dir_path +"', "+calory+", "+cookTime+", "+serveCount+", '"+author+"', "+rating+", 1, '"+cookTimeString+"')";
                  stmt.executeUpdate(query) ;
                  printf(query);
                  for (int i = 0; i < listIngr.size(); i++)

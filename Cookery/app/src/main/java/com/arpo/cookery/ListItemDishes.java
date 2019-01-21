@@ -27,6 +27,23 @@ public class ListItemDishes implements Serializable {
     int previewSet;
     int numRating;
     boolean fav;
+    String cuktime;
+
+    public byte[] getByteArray() {
+        return byteArray;
+    }
+
+    public void setByteArray(byte[] byteArray) {
+        this.byteArray = byteArray;
+    }
+
+    public String getCuktime() {
+        return cuktime;
+    }
+
+    public void setCuktime(String cuktime) {
+        this.cuktime = cuktime;
+    }
 
     public boolean isFav() {
         return fav;
@@ -64,7 +81,7 @@ public class ListItemDishes implements Serializable {
         this.byteArray = stream.toByteArray();
     }
 
-    public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, int numRating, String author) {
+    public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, int numRating, String author, String cuktime) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -76,6 +93,7 @@ public class ListItemDishes implements Serializable {
         this.author = author;
         this.previewSet = 0;
         this.numRating = numRating;
+        this.cuktime = cuktime;
     }
 
 

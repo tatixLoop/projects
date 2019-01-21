@@ -128,14 +128,29 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
 
             new Thread(imgFetch).start();
+            if (Globals.FullDishList == null)
+            {
+                print("Dish list is null");
+            }
+
+            print("Total size on dishList is "+Globals.FullDishList.size());
+            if (Globals.FullDishList != null && Globals.FullDishList.size()  == 0)
+            {
+                Globals.sqlData.getDishList(Globals.FullDishList);
+            }
+            print("Total size on dishList is "+Globals.FullDishList.size());
+            int lCount =0;
+
             for(int i = 0; i < Globals.FullDishList.size() ; i++)
             {
                 ListItemDishes dishes = Globals.FullDishList.get(i);
                 if(dishes.getType() == gType)
                 {
                     listOfDishes.add(dishes);
+                    lCount ++;
                 }
             }
+            print("dish of particular type count is "+lCount);
             // GridView gv_dishes = findViewById(R.id.gv_dishlist);
 
         }
@@ -180,7 +195,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     public void onItemClick(ListItemDishes item) {
         Intent preparationPage = new Intent(CoockeryListPage.this, CoockeryPreparation.class);
         preparationPage.putExtra("data",item );
-        startActivity(preparationPage);
+        startActivityForResult(preparationPage, 100);
     }
 
     @Override
@@ -283,7 +298,8 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                                         c.getInt("calory"),
                                         c.getInt("rating"),
                                         c.getInt("numRating"),
-                                        c.getString("author")
+                                        c.getString("author"),
+                                        c.getString("cuktime")
                                 );
                                 listOfDishes.add(dish);
                             }
@@ -317,4 +333,24 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             adapterDishList.notifyDataSetChanged();
         }
     }
-}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+
+        if  (gloadType == 1) {
+            listOfDishes.clear();
+            for(int i = 0; i < Globals.FullDishList.size() ; i++)
+            {
+                ListItemDishes dishes = Globals.FullDishList.get(i);
+                if(dishes.isFav())
+                {
+                    print("Dish "+dishes.getName() +" is Favorite");
+                    print("Id :"+dishes.getId());
+                    listOfDishes.add(dishes);
+                }
+            }
+            adapterDishList.notifyDataSetChanged();
+        }
+    }
+    }

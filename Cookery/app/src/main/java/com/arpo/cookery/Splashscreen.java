@@ -49,6 +49,8 @@ public class Splashscreen extends AppCompatActivity {
     boolean doUpdate = false;
     ProgressBar progressBar;
 
+    List<ListItemDishes> DishList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class Splashscreen extends AppCompatActivity {
         versionname.setText("Version:"+versionName);
 
         // Fill in search data
-        Globals.FullDishList = new ArrayList<>();
+        DishList = new ArrayList<>();
 
         //new GetDishesForSearch().execute();
 
@@ -180,7 +182,7 @@ public class Splashscreen extends AppCompatActivity {
                         new GetDishesForSearch().execute();
                     }
                     else {
-                        Globals.sqlData.getDishList(Globals.FullDishList);
+                        //Globals.sqlData.getDishList(Globals.FullDishList);
 
                         Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
                         Splashscreen.this.startActivity(mainIntent);
@@ -191,7 +193,7 @@ public class Splashscreen extends AppCompatActivity {
                     print("UPDATE NEW DISHES ");
                     print("do sync");
 
-                    Globals.sqlData.getDishList(Globals.FullDishList);
+                    //Globals.sqlData.getDishList(Globals.FullDishList);
                     new GetDishesForSearch().execute();
 
                 } else if ((updateFlag & 0x1) != 0) {
@@ -211,7 +213,7 @@ public class Splashscreen extends AppCompatActivity {
                 }
                 else {
                     print("update tag is same ; no update");
-                    Globals.sqlData.getDishList(Globals.FullDishList);
+                    //Globals.sqlData.getDishList(Globals.FullDishList);
 
                     Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
                     Splashscreen.this.startActivity(mainIntent);
@@ -290,6 +292,7 @@ public class Splashscreen extends AppCompatActivity {
                             for (int i = 0; i < dishlist.length(); i++) {
                                 JSONObject c = dishlist.getJSONObject(i);
 
+                                print("Fetching dish "+c.getInt("id"));
                                 ListItemDishes dish = new ListItemDishes(
                                         c.getInt("id"),
                                         c.getInt("type"),
@@ -300,18 +303,11 @@ public class Splashscreen extends AppCompatActivity {
                                         c.getInt("calory"),
                                         c.getInt("rating"),
                                         c.getInt("numRating"),
-                                        c.getString("author")
+                                        c.getString("author"),
+                                        c.getString("cuktime")
                                 );
-                                Globals.FullDishList.add(dish);
-
-                                if(isFavorite(c.getInt("id")))
-                                {
-                                    dish.setFav(true);
-                                }
-                                else
-                                {
-                                    dish.setFav(false);
-                                }
+                                DishList.add(dish);
+                                
                             }
                         } else {
                             print("No dishes found");
@@ -342,7 +338,7 @@ public class Splashscreen extends AppCompatActivity {
             //pDialog.dismiss();
 
             if (erroSet == false) {
-                Globals.sqlData.syncDB(Globals.FullDishList);
+                Globals.sqlData.syncDB(DishList);
 
             }
             if (doUpdate){
@@ -355,24 +351,10 @@ public class Splashscreen extends AppCompatActivity {
 
            /* TextView txtLoading = findViewById(R.id.txt_loading);
             txtLoading.setText("Loading Data    "+100+ " %");*/
-            print("Size of Items SPLASH SCREEN : "+Globals.FullDishList.size());
+            print("Size of Items SPLASH SCREEN : "+DishList.size());
             finish();
         }
-        boolean isFavorite(int id)
-        {
-            String sharedPrefKey = "FAV_PREF"+id;
-            SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
-            int value = preferences.getInt(sharedPrefKey, -1);
 
-            if( value == 1 )
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
     }
 
     @Override

@@ -94,7 +94,7 @@ public class CoockeryPreparation extends AppCompatActivity {
         gDish = data.getName();
         gId = data.getId();
 
-        isFav = isFavorite(data.getId());
+        isFav = Globals.isFavorite(data.getId());
         final FloatingActionButton faButton;
         faButton = findViewById(R.id.fab);
 
@@ -108,13 +108,13 @@ public class CoockeryPreparation extends AppCompatActivity {
             public void onClick(View view) {
                 if(isFav)
                 {
-                    clearFavorite(gId);
+                    Globals.clearFavorite(gId);
                     faButton.setImageResource(R.drawable.favorites);
                     isFav = false;
                     Toast.makeText(getApplicationContext(),"Recipe removed from favorites", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    setFavorite(gId);
+                    Globals.setFavorite(gId);
                     faButton.setImageResource(R.drawable.favoritesred);
                     isFav = true;
                     Toast.makeText(getApplicationContext(),"Recipe added to favorites list", Toast.LENGTH_SHORT).show();
@@ -150,6 +150,7 @@ public class CoockeryPreparation extends AppCompatActivity {
         int mins = seconds/60;
 
         cookTime.setText(mins + " Minutes");
+        cookTime.setText(data.getCuktime()+"");
         //Rating calcuation
         int rating = data.getRating();
 
@@ -239,54 +240,6 @@ public class CoockeryPreparation extends AppCompatActivity {
         View view = snackbar.getView();
         TextView txtv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         txtv.setGravity(Gravity.CENTER_HORIZONTAL);
-    }
-    boolean isFavorite(int id)
-    {
-        String sharedPrefKey = "FAV_PREF"+id;
-        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
-        int value = preferences.getInt(sharedPrefKey, -1);
-
-        if( value == 1 )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    void setFavorite(int id)
-    {
-        String sharedPrefKey = "FAV_PREF"+id;
-        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(sharedPrefKey, 1);
-        for (ListItemDishes dish: Globals.FullDishList
-             ) {
-            if (dish.getId() == id)
-            {
-                dish.setFav(true);
-                break;
-            }
-        }
-        editor.apply();
-    }
-
-    void clearFavorite(int id)
-    {
-        String sharedPrefKey = "FAV_PREF"+id;
-        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(sharedPrefKey, -1);
-        editor.apply();
-        for (ListItemDishes dish: Globals.FullDishList
-                ) {
-            if (dish.getId() == id)
-            {
-                dish.setFav(false);
-                break;
-            }
-        }
     }
 
     class GetDishInfo extends AsyncTask<String, String, String> {

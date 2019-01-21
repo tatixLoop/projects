@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
@@ -44,7 +45,17 @@ public class CookeryData  extends SQLiteOpenHelper {
                 "serves INTEGER NOT NULL,"+
                 "rating INTEGER NOT NULL,"+
                 "author varchar(64) NOT NULL,"+
-                "numRating INTEGER NOT NULL)";
+                "numRating INTEGER NOT NULL," +
+                "cuktime varchar (16))";
+
+        sqldb.execSQL(qury);
+
+        //Create table where favorites dishes are kept
+        qury = "CREATE TABLE  IF NOT EXISTS  tbl_fav(id INTEGER NOT NULL)";
+        sqldb.execSQL(qury);
+
+        //Create table to save the shopping list
+        qury = "CREATE TABLE  IF NOT EXISTS  tbl_shopList(id INTEGER NOT NULL, type INTEGER, data varchar(128))";
         sqldb.execSQL(qury);
     }
 
@@ -56,6 +67,14 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
         String query = "SELECT * FROM tbl_dishes";
         Cursor data = sqldb.rawQuery(query, null);
+        Cursor favorite = sqldb.rawQuery("SELECT * FROM tbl_fav", null);
+        List<Integer> favArray = new ArrayList<>(favorite.getCount());
+        int sizeFav = favorite.getCount();
+
+        while (favorite.moveToNext())
+        {
+            favArray.add(favorite.getInt(0));
+        }
 
         while (data.moveToNext())
         {
@@ -68,10 +87,23 @@ public class CookeryData  extends SQLiteOpenHelper {
                     data.getInt(4),
                     data.getInt(7),
                     data.getInt(9),
-                    data.getString(8)
+                    data.getString(8),
+                    data.getString(10)
                     );
             list.add(dish);
+
+            for ( int i = 0; i < sizeFav; i++)
+            {
+                if (dish.getId() == favArray.get(i))
+                {
+                    dish.setFav(true);
+                    print(dish.getId() + " is favrite");
+                }
+            }
         }
+
+        data.close();
+        favorite.close();
     }
 
     public int getLastId()
@@ -99,7 +131,7 @@ public class CookeryData  extends SQLiteOpenHelper {
               list) {
             String name = dish.getName().replace("'","''");
             String author = dish.getAuthor().replace("'","''");
-            String query="INSERT INTO tbl_dishes (id, type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating) VALUES ("+
+            String query="INSERT INTO tbl_dishes (id, type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating, cuktime) VALUES ("+
                     dish.getId() +", "+
                     dish.getType() + ", '"+
                     name +"','"+
@@ -109,8 +141,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                     dish.getServeCount() +",'"+
                     author + "',"+
                     dish.getRating() + ","+
-                    dish.getNumRating()+
-                    ")";
+                    dish.getNumRating()+",'"+
+                    dish.getCuktime() +"')";
             sqldb.execSQL(query);
         }
     }
@@ -124,4 +156,73 @@ public class CookeryData  extends SQLiteOpenHelper {
         Log.d("JKS",str);
     }
 
+    public boolean isFavorite(int id)
+    {
+        String query = "SELECT id FROM tbl_fav WHERE id="+id;
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+        if (sqldb.rawQuery(query, null).getCount() == 0) {
+            checkDatax.close();
+            return false;
+        }
+        else {
+            checkDatax.close();
+            return true;
+        }
+    }
+    public void clearFavorite(int id)
+    {
+        String query = "Delete from tbl_fav where id="+id;
+        sqldb.execSQL(query);
+    }
+
+    public void setFavorite(int id)
+    {
+        String query = "INSERT into tbl_fav VALUES ("+id+")";
+        sqldb.execSQL(query);
+    }
+
+    public void addItemToShopList(String igrd, String dish, int id)
+    {
+        String query = "SELECT id FROM tbl_shopList WHERE id="+id;
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+        if (checkDatax.getCount() == 0)
+        {
+            query = "INSERT into tbl_shopList (id, type, data)VALUES ("+id+", 0, '"+dish+"')";
+            sqldb.execSQL(query);
+        }
+
+        query = "INSERT into tbl_shopList (id, type, data)VALUES ("+id+", 1, '"+igrd+"')";
+        sqldb.execSQL(query);
+        checkDatax.close();
+    }
+
+    public void removeItemFromShopList(String ingredient, int id)
+    {
+        String query = "DELETE from tbl_shopList where id="+id + " AND data like '"+ingredient+"'";
+        sqldb.execSQL(query);
+
+        //Check if last entry is removed
+        query = "SELECT id FROM tbl_shopList WHERE id="+id;
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+        if (checkDatax.getCount() == 1)
+        {
+            query = "DELETE from tbl_shopList where id="+id;
+            sqldb.execSQL(query);
+        }
+        checkDatax.close();
+    }
+
+    public void getShopListData(List<ShoppingListItem> list) {
+        String query = "SELECT * from tbl_shopList";
+        Cursor checkDatax = sqldb.rawQuery(query, null);
+
+        while (checkDatax.moveToNext()) {
+            ShoppingListItem listItemData = new ShoppingListItem();
+            listItemData.id = checkDatax.getInt(0);
+            listItemData.type = checkDatax.getInt(1);
+            listItemData.data = checkDatax.getString(2);
+            list.add(listItemData);
+        }
+        checkDatax.close();
+    }
 }
