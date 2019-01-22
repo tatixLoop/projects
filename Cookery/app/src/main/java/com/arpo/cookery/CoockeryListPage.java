@@ -104,6 +104,12 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             }
         }
 
+        print("Total size on dishList is "+Globals.FullDishList.size());
+        if (Globals.FullDishList != null && Globals.FullDishList.size()  == 0)
+        {
+            Globals.sqlData.getDishList(Globals.FullDishList);
+        }
+        print("Total size on dishList is "+Globals.FullDishList.size());
 
         gloadType = getIntent().getIntExtra("loadtype",-1);
         if(gloadType == 0) {
@@ -133,12 +139,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                 print("Dish list is null");
             }
 
-            print("Total size on dishList is "+Globals.FullDishList.size());
-            if (Globals.FullDishList != null && Globals.FullDishList.size()  == 0)
-            {
-                Globals.sqlData.getDishList(Globals.FullDishList);
-            }
-            print("Total size on dishList is "+Globals.FullDishList.size());
+
             int lCount =0;
 
             for(int i = 0; i < Globals.FullDishList.size() ; i++)
