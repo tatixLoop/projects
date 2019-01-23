@@ -97,7 +97,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
         public void setData(ListItemDishes item, int position) {
             this.item = item;
 
-            rel_dishbox.setBackgroundColor(Color.parseColor("#c4bebe"));
+            rel_dishbox.setBackgroundColor(Color.parseColor("#212121"));
             String box_preview_url = Globals.host + Globals.appdir + Globals.img_path + "/" +
                     item.getImg_path() + "/box_preview.jpg";
 
