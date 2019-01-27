@@ -56,8 +56,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_DISH = "dishes";
     private static final String TAG_TYPE = "type";
-
-    GetDishesList asyncFetch;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,134 +204,6 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         print("On back pressed");
 
         super.onBackPressed();
-    }
-    /**
-     * Background Async Task to Load all Dishes by making HTTP Request
-     * */
-    class GetDishesList extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = ProgressDialog.show(
-                    CoockeryListPage.this,
-                    "Please wait...",
-                    "Loading "+Globals.dishName[gType],
-                    false,
-                    true,
-                    new DialogInterface.OnCancelListener(){
-                        @Override
-                        public void onCancel(DialogInterface dialog) {
-                            //GetPookkalamList.this.cancel(true);
-                        }
-                    }
-            );
-            pDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialogInterface) {
-                    print("Cancel pressed");
-                    if (asyncFetch != null)
-                    {
-                        print("Async fetch is not null cancelling");
-                        asyncFetch.cancel(true);
-                        jParser.cancelReq();
-                        finish();
-                    }
-                }
-            });
-        }
-
-        /**
-         * getting All dishlist from url
-         * */
-        protected String doInBackground(String... args) {
-            // Building Parameters
-            boolean b_exit = false;
-            gCount = 0;
-            do {
-
-
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-                params.add(new BasicNameValuePair(TAG_TYPE, gType + ""));
-                params.add(new BasicNameValuePair("limit", (gCount * 20 ) + ""));
-                gCount ++;
-                // getting JSON string from URL
-                String apiname = "";
-                apiname = "getDishesFromType.php";
-
-                JSONObject json = jParser.makeHttpRequest(Globals.host + Globals.appdir + Globals.apipath + apiname,
-                        "GET", params);
-
-                // Check your log cat for JSON reponse
-                if (json != null) {
-                    //print( json.toString());
-                    try {
-                        // Checking for SUCCESS TAG
-                        int success = json.getInt(TAG_SUCCESS);
-
-                        if (success == 1) {
-                            dishlist = json.getJSONArray(TAG_DISH);
-
-                            for (int i = 0; i < dishlist.length(); i++) {
-                                JSONObject c = dishlist.getJSONObject(i);
-
-                                //print("Id="+c.getInt("id")+ " DishName = "+c.getString("dishname")+ " img_path="+c.getString("img_path"));
-
-                            /*ListItemDishes dish = new ListItemDishes(
-                                    c.getInt("id"),
-                                    c.getInt("type"),
-                                    c.getString("dishname"),
-                                    c.getString("img_path")
-                                    );*/
-                                //print("Adding " + c.getString("dishname"));
-                                ListItemDishes dish = new ListItemDishes(
-                                        c.getInt("id"),
-                                        c.getInt("type"),
-                                        c.getString("dishname"),
-                                        c.getString("img_path"),
-                                        c.getInt("cooktimeinsec"),
-                                        c.getInt("serves"),
-                                        c.getInt("calory"),
-                                        c.getInt("rating"),
-                                        c.getInt("numRating"),
-                                        c.getString("author"),
-                                        c.getString("cuktime")
-                                );
-                                listOfDishes.add(dish);
-                            }
-                            //Collections.shuffle(listOfDishes);
-                        } else {
-                            b_exit = true;
-                            print("No dishes found");
-                        }
-                    } catch (JSONException e) {
-                        b_exit = true;
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        b_exit = true;
-                        e.printStackTrace();
-                    }
-                } else {
-                    b_exit = true;
-                    print("Error in making http request");
-                }
-            } while (b_exit == false);
-            print("Got all the dishes info");
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all dishlist
-            pDialog.dismiss();
-            adapterDishList.notifyDataSetChanged();
-        }
     }
 
     @Override
