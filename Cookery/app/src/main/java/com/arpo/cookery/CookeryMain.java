@@ -52,6 +52,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -463,6 +464,11 @@ public class CookeryMain extends AppCompatActivity {
         // Fill in search data
         listOfDishesForSearch = new ArrayList<>();
 
+        if (Globals.FullDishList != null && Globals.FullDishList.size()  == 0)
+        {
+            Globals.sqlData.getDishList(Globals.FullDishList);
+        }
+
         if (Globals.FullDishList != null) {
             for (ListItemDishes dish : Globals.FullDishList
                     ) {
@@ -794,22 +800,37 @@ class AdapterListSearch extends BaseAdapter {
         int count = 0;
         charText = charText.toLowerCase(Locale.getDefault());
 
-        list.clear();
-       // print("JKS list item size "+list.size());
-
-
-
-        notifyDataSetChanged();
-
-        if (charText.length() == 0) {
+        long millisStart = Calendar.getInstance().getTimeInMillis();
+        if (charText.length() == 3)
+        {
             list.clear();
+            // print("JKS list item size "+list.size());
             notifyDataSetChanged();
-        }
-        else {
+            print("Size = "+origianlList.size());
+
+
             for (int i = 0; i < origianlList.size(); i++) {
                 ListItemDishes data = origianlList.get(i);
                 if (data.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     list.add(data);
+
+                    notifyDataSetChanged();
+                    //print("JKS list contains "+data.getName());
+                    count++;
+                }
+                else
+                {
+                    //   print("skip "+data.getName());
+                }
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < list.size(); i++) {
+                ListItemDishes data = list.get(i);
+                if (!data.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    list.remove(data);
 
                     notifyDataSetChanged();
                     //print("JKS list contains "+data.getName());
@@ -822,6 +843,9 @@ class AdapterListSearch extends BaseAdapter {
 
             }
         }
+        long millisEnd = Calendar.getInstance().getTimeInMillis();
+
+        print("Took "+(millisEnd - millisStart) + " milliseconds");
 
         return  count;
     }
