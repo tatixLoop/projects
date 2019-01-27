@@ -37,7 +37,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         String qury = "CREATE TABLE  IF NOT EXISTS  tbl_dishes(id INTEGER NOT NULL,"+
-                "type INTEGER NOT NULL,"+
+                "type INTEGER (64) NOT NULL,"+
                 "dishname varchar(56) NOT NULL,"+
                 "img_path varchar(56) NOT NULL,"+
                 "calory INTEGER NOT NULL,"+

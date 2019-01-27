@@ -48,6 +48,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     JSONArray dishlist = null;
 
     int gType = 0;
+    int gIndexFromType = 0;
     int gloadType = 0;
     int gCount = 0;
     List<ListItemDishes> listOfDishes;
@@ -56,7 +57,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_DISH = "dishes";
     private static final String TAG_TYPE = "type";
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,19 +116,23 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             gType = getIntent().getIntExtra("type", -1);
             print("Type is " + gType);
 
+            gIndexFromType = gType;
+
+            gType = 1 << (gType - 1);
+
             //txt_dishType.setText(Globals.dishName[gType]);
 
-            getSupportActionBar().setTitle(Globals.dishName[gType]);
+            getSupportActionBar().setTitle(Globals.dishName[gIndexFromType]);
 
 
             String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
-                    "title" + "/" + gType + ".jpg";
+                    "title" + "/" + gIndexFromType + ".jpg";
 
             //get screen width
             float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
 
             RelativeLayout layout = findViewById(R.id.img_tltle_layout);
-            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, true);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gIndexFromType, title_image, layout, this, true);
 
             imgFetch.setWidth((int)dpWidth);
             imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
@@ -144,7 +149,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             for(int i = 0; i < Globals.FullDishList.size() ; i++)
             {
                 ListItemDishes dishes = Globals.FullDishList.get(i);
-                if(dishes.getType() == gType)
+                if((dishes.getType() & gType) != 0)
                 {
                     listOfDishes.add(dishes);
                     lCount ++;
@@ -201,8 +206,6 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     @Override
     public void onBackPressed()
     {
-        print("On back pressed");
-
         super.onBackPressed();
     }
 
