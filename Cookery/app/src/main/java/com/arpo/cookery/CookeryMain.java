@@ -94,7 +94,6 @@ public class CookeryMain extends AppCompatActivity {
         mdrawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        scrolllayout=findViewById(R.id.scrollViewMain);
 
         /*ActionBar actionBar = getSupportActionBar();
         actionBar.hide();*/
@@ -130,6 +129,13 @@ public class CookeryMain extends AppCompatActivity {
         ((TextView) findViewById(R.id.main_txtchinesene)).setTypeface(typeface);
         ((TextView) findViewById(R.id.main_txtamerican)).setTypeface(typeface);
 
+        ((TextView) findViewById(R.id.main_txtcake)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtbread)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtpasta)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtvegan)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtsoup)).setTypeface(typeface);
+        ((TextView) findViewById(R.id.main_txtrice)).setTypeface(typeface);
+
 
 
         final RelativeLayout relBreakfast = findViewById(R.id.rel_breakfastRec);
@@ -152,6 +158,12 @@ public class CookeryMain extends AppCompatActivity {
         RelativeLayout american = findViewById(R.id.rel_american);
         RelativeLayout eggRecipes = findViewById(R.id.rel_eggDishes);
 
+        RelativeLayout cake = findViewById(R.id.rel_cake);
+        RelativeLayout bread = findViewById(R.id.rel_bread);
+        RelativeLayout pasta = findViewById(R.id.rel_pasta);
+        RelativeLayout vegan = findViewById(R.id.rel_vegan);
+        RelativeLayout soup = findViewById(R.id.rel_soup);
+        RelativeLayout rice = findViewById(R.id.rel_rice);
 
         float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
 
@@ -270,6 +282,42 @@ public class CookeryMain extends AppCompatActivity {
         imgFetch19.setWidth((int)dpWidth);
         imgFetch19.setLayoutFront(((TextView) findViewById(R.id.main_txtsalads)));
         new Thread(imgFetch19).start();
+
+        DishImageFetcher imgFetch20 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 20, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/20.jpg", cake, this, true);
+        imgFetch20.setWidth((int)dpWidth);
+        imgFetch20.setLayoutFront(((TextView) findViewById(R.id.main_txtcake)));
+        new Thread(imgFetch20).start();
+
+        DishImageFetcher imgFetch21 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 21, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/21.jpg", bread, this, true);
+        imgFetch21.setWidth((int)dpWidth);
+        imgFetch21.setLayoutFront(((TextView) findViewById(R.id.main_txtbread)));
+        new Thread(imgFetch21).start();
+
+        DishImageFetcher imgFetch22 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 22, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/22.jpg", pasta, this, true);
+        imgFetch22.setWidth((int)dpWidth);
+        imgFetch22.setLayoutFront(((TextView) findViewById(R.id.main_txtpasta)));
+        new Thread(imgFetch22).start();
+
+        DishImageFetcher imgFetch23 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 23, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/23.jpg", vegan, this, true);
+        imgFetch23.setWidth((int)dpWidth);
+        imgFetch23.setLayoutFront(((TextView) findViewById(R.id.main_txtvegan)));
+        new Thread(imgFetch23).start();
+
+        DishImageFetcher imgFetch24 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 24, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/24.jpg", soup, this, true);
+        imgFetch24.setWidth((int)dpWidth);
+        imgFetch24.setLayoutFront(((TextView) findViewById(R.id.main_txtsoup)));
+        new Thread(imgFetch24).start();
+
+        DishImageFetcher imgFetch25 = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 25, Globals.host + Globals.appdir + Globals.img_path + "/" +
+                "title" + "/25.jpg", rice, this, true);
+        imgFetch25.setWidth((int)dpWidth);
+        imgFetch25.setLayoutFront(((TextView) findViewById(R.id.main_txtrice)));
+        new Thread(imgFetch25).start();
 
         relBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -461,6 +509,65 @@ public class CookeryMain extends AppCompatActivity {
             }
         });
 
+        cake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",20);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
+
+        bread.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",21);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
+
+        pasta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",22);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
+
+        vegan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",23);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
+
+        soup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",24);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
+
+        rice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",25);
+                cookeryListPage.putExtra("loadtype",0);
+                startActivity(cookeryListPage);
+            }
+        });
         // Fill in search data
         listOfDishesForSearch = new ArrayList<>();
 

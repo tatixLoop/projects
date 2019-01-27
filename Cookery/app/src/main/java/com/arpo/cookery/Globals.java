@@ -58,6 +58,13 @@ public class Globals {
             /* type17 */ "Chinese",
             /* type18 */ "American",
             /* type19 */ "Salads",
+            /* type20 */ "Cake",
+            /* type21 */ "Bread",
+            /* type22 */ "Pasta",
+            /* type23 */ "Vegan",
+            /* type24 */ "Soup",
+            /* type25 */ "Rice",
+
     };
 
     static void addIngredientToShopList(Context ctx, String igrd, String dish, int id)

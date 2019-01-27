@@ -621,6 +621,171 @@
                     android:shadowRadius="2"/>
             </RelativeLayout>
 
+
+            <RelativeLayout
+                android:id="@+id/rel_cake"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/lightbg">
+
+                <TextView
+                    android:id="@+id/main_txtcake"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:textAlignment="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="20dp"
+                    android:background="@drawable/gradientblack"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="18dp"
+                    android:text="CAKE RECIPES"
+                    android:textColor="@android:color/background_light"
+                    android:textColorLink="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rel_bread"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/lightbg">
+
+                <TextView
+                    android:id="@+id/main_txtbread"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:textAlignment="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="20dp"
+                    android:background="@drawable/gradientblack"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="18dp"
+                    android:text="BREAD RECIPES"
+                    android:textColor="@android:color/background_light"
+                    android:textColorLink="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rel_pasta"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/lightbg">
+
+                <TextView
+                    android:id="@+id/main_txtpasta"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:textAlignment="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="20dp"
+                    android:background="@drawable/gradientblack"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="18dp"
+                    android:text="PASTA RECIPES"
+                    android:textColor="@android:color/background_light"
+                    android:textColorLink="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rel_vegan"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/lightbg">
+
+                <TextView
+                    android:id="@+id/main_txtvegan"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:textAlignment="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="20dp"
+                    android:background="@drawable/gradientblack"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="18dp"
+                    android:text="VEGAN RECIPES"
+                    android:textColor="@android:color/background_light"
+                    android:textColorLink="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rel_soup"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/lightbg">
+
+                <TextView
+                    android:id="@+id/main_txtsoup"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:textAlignment="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="20dp"
+                    android:background="@drawable/gradientblack"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="18dp"
+                    android:text="SOUP RECIPES"
+                    android:textColor="@android:color/background_light"
+                    android:textColorLink="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rel_rice"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/lightbg">
+
+                <TextView
+                    android:id="@+id/main_txtrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:textAlignment="center"
+                    android:gravity="bottom"
+                    android:paddingBottom="20dp"
+                    android:background="@drawable/gradientblack"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="18dp"
+                    android:text="RICE RECIPES"
+                    android:textColor="@android:color/background_light"
+                    android:textColorLink="@android:color/background_light"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"/>
+            </RelativeLayout>
+
+
         </LinearLayout>
 
     </ScrollView>
