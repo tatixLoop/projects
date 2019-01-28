@@ -114,12 +114,12 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         gloadType = getIntent().getIntExtra("loadtype",-1);
         if(gloadType == 0) {
             gType = getIntent().getIntExtra("type", -1);
-            print("Type is " + gType);
 
             gIndexFromType = gType;
 
             gType = 1 << (gType - 1);
 
+            print("Type is " + gType);
             //txt_dishType.setText(Globals.dishName[gType]);
 
             getSupportActionBar().setTitle(Globals.dishName[gIndexFromType]);
@@ -151,6 +151,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
                 ListItemDishes dishes = Globals.FullDishList.get(i);
                 if((dishes.getType() & gType) != 0)
                 {
+                    print(dishes.getName() +" is of type " + dishes.getType()+" Check Type="+gType);
                     listOfDishes.add(dishes);
                     lCount ++;
                 }
