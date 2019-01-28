@@ -1,4 +1,4 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;

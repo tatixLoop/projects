@@ -1,4 +1,4 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import org.junit.Test;
 

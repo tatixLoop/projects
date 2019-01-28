@@ -1,16 +1,13 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,13 +17,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-
-import javax.microedition.khronos.opengles.GL;
 
 public class Splashscreen extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 1000;

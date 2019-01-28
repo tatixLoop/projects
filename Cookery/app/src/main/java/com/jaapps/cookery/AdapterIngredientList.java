@@ -1,11 +1,9 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.provider.DocumentsContract;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;

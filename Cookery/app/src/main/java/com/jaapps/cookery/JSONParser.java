@@ -1,4 +1,4 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import java.io.BufferedReader;
 import java.io.IOException;

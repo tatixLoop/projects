@@ -1,4 +1,4 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,9 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

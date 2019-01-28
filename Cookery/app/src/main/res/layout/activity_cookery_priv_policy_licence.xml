@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="500dp"
-    tools:context="com.arpo.cookery.CookeryPrivPolicyLicence">
+    tools:context="com.jaapps.cookery.CookeryPrivPolicyLicence">
 
     <LinearLayout
         android:layout_width="wrap_content"

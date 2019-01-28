@@ -1,7 +1,6 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,11 +13,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CookeryShopList extends AppCompatActivity {
 

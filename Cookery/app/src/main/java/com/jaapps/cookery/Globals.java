@@ -1,13 +1,10 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.microedition.khronos.opengles.GL;
 
 /**
  * Created by jithin on 10/9/18.

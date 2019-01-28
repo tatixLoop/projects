@@ -1,11 +1,9 @@
-package com.arpo.cookery;
+package com.jaapps.cookery;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
