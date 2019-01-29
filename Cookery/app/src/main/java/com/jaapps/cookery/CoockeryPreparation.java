@@ -31,6 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+
 public class CoockeryPreparation extends AppCompatActivity {
 
     void print(String str)
@@ -65,6 +72,21 @@ public class CoockeryPreparation extends AppCompatActivity {
     boolean isFav;
     boolean gExit;
 
+    InterstitialAd mInterstitialAd;
+    private AdView mAdView;
+
+    @Override
+    public void onBackPressed()
+    {
+
+        super.onBackPressed();
+    }
+    private void showInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +98,62 @@ public class CoockeryPreparation extends AppCompatActivity {
         }
         /*actionBar.hide();*/
 
+        mInterstitialAd = new InterstitialAd(this);
 
+        AdRequest adRequest = new AdRequest.Builder()
+        //.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                .build();
+
+        //AdRequest.Builder.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C");
+        // set the ad unit ID
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_full_screen));
+
+
+        // Load ads into Interstitial Ads
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                showInterstitial();
+            }
+        });
+
+        // BANNER ADS
+        mAdView = (AdView) findViewById(R.id.adView);
+        //mAdView.setAdSize(AdSize.BANNER);
+        //mAdView.setAdUnitId(getString(R.string.banner_home_footer));
+
+        AdRequest adRequestBanner = new AdRequest.Builder()
+                //.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                .build();
+
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                print("Ad is closed!");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                print( "Ad failed to load! error code: " + errorCode);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                print( "Ad left application!");
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });
+
+        mAdView.loadAd(adRequestBanner);
 
 
         data = (ListItemDishes)getIntent().getSerializableExtra("data");
