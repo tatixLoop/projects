@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">The Torch</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_screen_fragment">Hello Screen fragment</string>
+    <string name="hello_disco_fragment">Hello DISCO fragment</string>
+    <string name="hello_torch_fragment">Hello TORCH fragment</string>
+
+    <string name="title_activity_screen_torch">ScreenTorch</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+</resources>
