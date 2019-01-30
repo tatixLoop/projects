@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class Splashscreen extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 1000;
@@ -79,6 +82,13 @@ public class Splashscreen extends AppCompatActivity {
         Globals.sqlData.openConnection();
 
         lastLocalId = Globals.sqlData.getLastId();
+
+        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
+                String.format(Locale.US, "fonts/%s", "font.ttf"));
+
+        ((TextView) findViewById(R.id.txt_launchstat)).setTypeface(typeface);
+
+        ((TextView) findViewById(R.id.txt_launchstat)).setText("Checking for updates");
         new GetMaxCount().execute();
 
     }
@@ -252,7 +262,8 @@ public class Splashscreen extends AppCompatActivity {
             final int total = getCount();
 
 
-
+            ((TextView) findViewById(R.id.txt_launchstat)).setText("Update in progress. Please wait...");
+            long startTime = Calendar.getInstance().getTimeInMillis();
                 List<NameValuePair> params = new ArrayList<NameValuePair>();
 
                 // getting JSON string from URL
@@ -290,7 +301,7 @@ public class Splashscreen extends AppCompatActivity {
                             for (int i = 0; i < dishlist.length(); i++) {
                                 JSONObject c = dishlist.getJSONObject(i);
 
-                                print("Fetching dish "+c.getInt("id"));
+                                //print("Fetching dish "+c.getInt("id"));
                                 ListItemDishes dish = new ListItemDishes(
                                         c.getInt("id"),
                                         c.getInt("type"),
@@ -318,6 +329,8 @@ public class Splashscreen extends AppCompatActivity {
                     {
                         e.printStackTrace();
                     }
+                    long endTime = Calendar.getInstance().getTimeInMillis();
+                    print("JKS took "+(endTime - startTime)+" ms to fetch data");
                 }
                 else
                 {
@@ -334,7 +347,7 @@ public class Splashscreen extends AppCompatActivity {
         protected void onPostExecute(String file_url) {
             // dismiss the dialog after getting all dishlist
             //pDialog.dismiss();
-
+            long startTime = Calendar.getInstance().getTimeInMillis();
             if (erroSet == false) {
                 Globals.sqlData.syncDB(DishList);
 
@@ -342,6 +355,8 @@ public class Splashscreen extends AppCompatActivity {
             if (doUpdate){
                 setUpdateTag(updateTag);
             }
+            long endTime = Calendar.getInstance().getTimeInMillis();
+            print("JKS took "+(endTime - startTime)+" ms to sync data");
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
             //mainIntent.putExtra("list",(Serializable)listOfDishesForSearch);
             Splashscreen.this.startActivity(mainIntent);
