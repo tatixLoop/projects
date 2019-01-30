@@ -629,7 +629,7 @@ public class CookeryMain extends AppCompatActivity {
                         ret = false;
                         Intent intentShare = new Intent();
                         intentShare.setAction(Intent.ACTION_SEND);
-                        intentShare.putExtra(Intent.EXTRA_TEXT,"I suggest this app for you : https://play.google.com/store/apps/details?id=com.android.chrome");
+                        intentShare.putExtra(Intent.EXTRA_TEXT,"I suggest this app for you : https://play.google.com/store/apps/details?id=com.jaapps.cookery");
                         intentShare.setType("text/plain");
                         startActivity(intentShare);
                         break;
