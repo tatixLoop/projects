@@ -28,7 +28,6 @@ public class Globals {
     static int FETCHTYPE_DISH = 2;
     static int FETCHTYPE_DISH_TITLE = 3;
 
-    static List<ListItemDishes> FullDishList = new ArrayList<>();
 
     static Context gContext;
     static CookeryData sqlData;
@@ -92,27 +91,10 @@ public class Globals {
     static void clearFavorite(int id)
     {
         Globals.sqlData.clearFavorite(id);
-
-        for (ListItemDishes dish: FullDishList
-                ) {
-            if (dish.getId() == id)
-            {
-                dish.setFav(false);
-                break;
-            }
-        }
     }
 
     static void setFavorite(int id)
     {
         Globals.sqlData.setFavorite(id);
-        for (ListItemDishes dish: FullDishList
-             ) {
-            if (dish.getId() == id)
-            {
-                dish.setFav(true);
-                break;
-            }
-        }
     }
 }

@@ -552,17 +552,7 @@ public class CookeryMain extends AppCompatActivity {
         // Fill in search data
         listOfDishesForSearch = new ArrayList<>();
 
-        if (Globals.FullDishList != null && Globals.FullDishList.size()  == 0)
-        {
-            Globals.sqlData.getDishList(Globals.FullDishList);
-        }
 
-        if (Globals.FullDishList != null) {
-            for (ListItemDishes dish : Globals.FullDishList
-                    ) {
-                listOfDishesForSearch.add(dish);
-            }
-        }
 
         searchAdapter = new AdapterListSearch(this, listOfDishesForSearch);
 
@@ -679,12 +669,17 @@ public class CookeryMain extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                Intent cookeryListPage = new Intent(getApplicationContext(), CoockeryListPage.class);
+                cookeryListPage.putExtra("type",0);
+                cookeryListPage.putExtra("loadtype",2); // search
+                cookeryListPage.putExtra("search",s); // search
+                startActivity(cookeryListPage);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-
+/*
                 String text = s;
 
                 //print(s);
@@ -696,10 +691,9 @@ public class CookeryMain extends AppCompatActivity {
                 }
                 else
                 {
-                    print("Clear data");
                     searchAdapter.clearDataSet();
                     setRelativeLayoutHeightBasedOnChildren(rel_search, 0, lv_searchData);
-                }
+                }*/
                 return false;
             }
         });
@@ -885,6 +879,10 @@ class AdapterListSearch extends BaseAdapter {
 
     // Filter Class
     public int filter(String charText) {
+
+        list.clear();
+        return Globals.sqlData.getSearchData(list, charText);
+        /*
         int count = 0;
         charText = charText.toLowerCase(Locale.getDefault());
 
@@ -935,7 +933,7 @@ class AdapterListSearch extends BaseAdapter {
 
         print("Took "+(millisEnd - millisStart) + " milliseconds");
 
-        return  count;
+        return  count;*/
     }
 
 

@@ -91,12 +91,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             }
         }
 
-        print("Total size on dishList is "+Globals.FullDishList.size());
-        if (Globals.FullDishList != null && Globals.FullDishList.size()  == 0)
-        {
-            Globals.sqlData.getDishList(Globals.FullDishList);
-        }
-        print("Total size on dishList is "+Globals.FullDishList.size());
+
 
         gloadType = getIntent().getIntExtra("loadtype",-1);
         if(gloadType == 0) {
@@ -125,26 +120,8 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
 
             new Thread(imgFetch).start();
-            if (Globals.FullDishList == null)
-            {
-                print("Dish list is null");
-            }
 
-
-            int lCount =0;
-
-            for(int i = 0; i < Globals.FullDishList.size() ; i++)
-            {
-                ListItemDishes dishes = Globals.FullDishList.get(i);
-                if((dishes.getType() & gType) != 0)
-                {
-                    print(dishes.getName() +" is of type " + dishes.getType()+" Check Type="+gType);
-                    listOfDishes.add(dishes);
-                    lCount ++;
-                }
-            }
-            print("dish of particular type count is "+lCount);
-            // GridView gv_dishes = findViewById(R.id.gv_dishlist);
+            Globals.sqlData.getDishOfType(gType, listOfDishes);
 
         }
         else if (gloadType == 1)
@@ -164,16 +141,29 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
             new Thread(imgFetch).start();
 
-            for(int i = 0; i < Globals.FullDishList.size() ; i++)
-            {
-                ListItemDishes dishes = Globals.FullDishList.get(i);
-                if(dishes.isFav())
-                {
-                    print("Dish "+dishes.getName() +" is Favorite");
-                    print("Id :"+dishes.getId());
-                    listOfDishes.add(dishes);
-                }
-            }
+            Globals.sqlData.getFavList(listOfDishes);
+
+        }
+
+        else if (gloadType == 2)
+        {
+            getSupportActionBar().setTitle("Search Results");
+            String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
+                    "title/fav.jpg";
+            //get screen width
+            float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+
+            RelativeLayout layout = findViewById(R.id.img_tltle_layout);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, true);
+
+            imgFetch.setWidth((int)dpWidth);
+            imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
+
+            new Thread(imgFetch).start();
+
+            //Globals.sqlData.getFavList(listOfDishes);
+            Globals.sqlData.getSearchData(listOfDishes, getIntent().getStringExtra("search"));
+
         }
 
 
@@ -203,16 +193,8 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
         if  (gloadType == 1) {
             listOfDishes.clear();
-            for(int i = 0; i < Globals.FullDishList.size() ; i++)
-            {
-                ListItemDishes dishes = Globals.FullDishList.get(i);
-                if(dishes.isFav())
-                {
-                    print("Dish "+dishes.getName() +" is Favorite");
-                    print("Id :"+dishes.getId());
-                    listOfDishes.add(dishes);
-                }
-            }
+
+            Globals.sqlData.getFavList(listOfDishes);
             adapterDishList.notifyDataSetChanged();
         }
     }
