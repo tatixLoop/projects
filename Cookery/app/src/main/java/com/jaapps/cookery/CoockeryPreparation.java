@@ -3,7 +3,6 @@ package com.jaapps.cookery;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -67,8 +66,6 @@ public class CoockeryPreparation extends AppCompatActivity {
     TextView author;
 
     ListItemDishes data;
-
-    GetDishInfo asyncFetch;
 
     boolean isFav;
     boolean gExit;
@@ -294,8 +291,8 @@ public class CoockeryPreparation extends AppCompatActivity {
 
 
 
-        asyncFetch = new GetDishInfo();
-        asyncFetch.execute();
+        GetDishInfoThread thredDishInfo = new GetDishInfoThread();
+        new Thread(thredDishInfo).start();
 
 
     }
@@ -315,23 +312,18 @@ public class CoockeryPreparation extends AppCompatActivity {
         txtv.setGravity(Gravity.CENTER_HORIZONTAL);
     }
 
-    class GetDishInfo extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
+    class GetDishInfoThread implements  Runnable
+    {
+        public void run()
+        {
+            // Pre execute
             Intent dial = new Intent(getApplicationContext(), ProgDialog.class);
             dial.putExtra("keep", true);
             startActivityForResult(dial, 100);
-        }
 
-        /**
-         * getting All dishlist from url
-         * */
-        protected String doInBackground(String... args) {
+
+            // execution
+
             gExit = false;
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -346,34 +338,12 @@ public class CoockeryPreparation extends AppCompatActivity {
 
             // Check your log cat for JSON reponse
             if(json != null) {
-                //print( json.toString());
                 try {
                     // Checking for SUCCESS TAG
                     int success = json.getInt(TAG_SUCCESS);
 
                     if (success == 1) {
-                        /*dishlist = json.getJSONArray(TAG_DISH);
 
-                        for (int i = 0; i < dishlist.length(); i++) {
-                            JSONObject c = dishlist.getJSONObject(i);
-
-                            cookRecipe.setAuthor(c.getString("author"));
-                            cookRecipe.setId(c.getInt("id"));
-                            cookRecipe.setCooktimeinsec(c.getInt("cooktimeinsec"));
-                            cookRecipe.setCalory(c.getInt("calory"));
-                            cookRecipe.setServeCount(c.getInt("serves"));
-                            cookRecipe.setRating(c.getInt("rating"));
-
-                            print("Id="+c.getInt("id")+
-                                    " cooktime = "+c.getInt("cooktimeinsec")+
-                                    " serves = "+c.getInt("serves")+
-                                    " rating = "+c.getInt("rating")+
-                                    " author = "+c.getString("author")+
-                                    " calory="+c.getInt("calory")
-                            );
-
-                        }
-*/
                         ingredientlist = json.getJSONArray(TAG_INGREDIENTS);
                         cookRecipe.setNumIngredients(ingredientlist.length());
                         String [] ingredients = new String[ingredientlist.length()];
@@ -385,7 +355,6 @@ public class CoockeryPreparation extends AppCompatActivity {
                             listIngredient.add(ingredientItem);
 
                             ingredients[i] = c.getString("ingredient");
-                            //print(c.getString("ingredient"));
                         }
                         cookRecipe.setIngredientList(listIngredient);
                         cookRecipe.setIngredientsp(ingredients);
@@ -404,11 +373,6 @@ public class CoockeryPreparation extends AppCompatActivity {
                                     c.getString("step"));
 
                             listStepItem.add(data);
-
-                            /*print("step no : "+c.getInt("stepno") +
-                                    "step : "+c.getString("step")
-                            );*/
-
                         }
                         cookRecipe.setStepList(listStepItem);
                         cookRecipe.setStep(stepR);
@@ -435,18 +399,13 @@ public class CoockeryPreparation extends AppCompatActivity {
                 print("Error in making http request");
                 gExit = true;
             }
-            return null;
-        }
 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all dishlist
-            //adapterDishList.notifyDataSetChanged();
-            Intent dial = new Intent(getApplicationContext(), ProgDialog.class);
-            dial.putExtra("keep", false);
-            startActivity(dial);
+
+            // post execution
+
+            Intent dialx = new Intent(getApplicationContext(), ProgDialog.class);
+            dialx.putExtra("keep", false);
+            startActivity(dialx);
 
             if (gExit)
             {
@@ -460,12 +419,6 @@ public class CoockeryPreparation extends AppCompatActivity {
             else {
                 runOnUiThread(new Runnable() {
                     public void run() {
-/*
-                    cookTime.setText(cookRecipe.getCooktimeinsec() + "sec");
-                    calory.setText(cookRecipe.getCalory() + "cal");
-                    serveCount.setText("serves "+cookRecipe.getServeCount());
-                    author.setText(cookRecipe.getAuthor());
-*/
 
                         ListView lv_steps = findViewById(R.id.lv_listSteps);
                         adapterStepList = new AdapterStepListView(getApplicationContext(), cookRecipe.getStepList());
@@ -480,12 +433,12 @@ public class CoockeryPreparation extends AppCompatActivity {
                         ScrollView preps = findViewById(R.id.scroll);
                         preps.scrollTo(0, 0);
                         preps.fullScroll(View.FOCUS_UP);
-
                     }
                 });
             }
         }
     }
+
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
@@ -626,11 +579,8 @@ public class CoockeryPreparation extends AppCompatActivity {
 
         if (requestCode == 100) {
             if (resultCode == Activity.RESULT_OK) {
-                if (asyncFetch != null) {
-                    asyncFetch.cancel(true);
                     jParser.cancelReq();
                     finish();
-                }
             }
         }
     }
