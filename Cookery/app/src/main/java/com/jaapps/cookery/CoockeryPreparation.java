@@ -37,6 +37,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 public class CoockeryPreparation extends AppCompatActivity {
 
@@ -98,6 +99,8 @@ public class CoockeryPreparation extends AppCompatActivity {
         }
         /*actionBar.hide();*/
 
+        // initialize the AdMob app
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
         mInterstitialAd = new InterstitialAd(this);
 
         AdRequest adRequest = new AdRequest.Builder()

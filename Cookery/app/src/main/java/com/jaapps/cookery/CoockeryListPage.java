@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.MobileAds;
+
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -54,6 +56,10 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
 /*        ActionBar actionBar = getSupportActionBar();
         actionBar.hide();*/
+
+
+        // initialize the AdMob app
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
 
         android.support.v7.widget.Toolbar tb = findViewById(R.id.toolBar_title);
         setSupportActionBar(tb);

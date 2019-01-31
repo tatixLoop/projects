@@ -35,6 +35,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -68,6 +70,9 @@ public class CookeryMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationdrawer);
 
+
+        // initialize the AdMob app
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
         ///Navigation Drawer
 
         mdrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
