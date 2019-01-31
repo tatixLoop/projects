@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -92,6 +94,12 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         }
 
 
+        Display display = getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+
+        display.getMetrics(outMetrics);
+        float density = getResources().getDisplayMetrics().density;
+        float width = outMetrics.widthPixels/density ;
 
         gloadType = getIntent().getIntExtra("loadtype",-1);
         if(gloadType == 0) {
@@ -167,7 +175,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         }
 
 
-        adapterDishList = new AdapterDishGridView(this, listOfDishes, this);
+        adapterDishList = new AdapterDishGridView(this, listOfDishes, this, width);
 
         rv_dishes.setAdapter(adapterDishList);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);

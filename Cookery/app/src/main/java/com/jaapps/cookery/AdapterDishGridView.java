@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
     List<ListItemDishes> list;
     Context context;
     protected ItemListener mListener;
-
+    float gWidth;
 
 
     AdapterDishGridView(Context ctx, List<ListItemDishes> l) {
@@ -40,10 +41,16 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
         mListener = itemListener;
     }
 
+    AdapterDishGridView(Context ctx, List<ListItemDishes> l, ItemListener itemListener, float width) {
+        list = l;
+        context = ctx;
+        mListener = itemListener;
+        gWidth = width;
+    }
 
     void print(String str)
     {
-        Log.d("JKS",str);
+        //Log.d("JKS",str);
     }
 
     @Override
@@ -76,8 +83,10 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
         public TextView recipeName ;
         public ListItemDishes item;
         public RelativeLayout details;
+        private LinearLayout wrapper;
         //public TextView author;
         //public TextView rating;
+
 
         public CookeryViewHolder(View v) {
 
@@ -89,6 +98,10 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             cukTime = v.findViewById(R.id.txt_cooktimegv);
             recipeName = v.findViewById(R.id.txt_recipeName);
             details = v.findViewById(R.id.rel_details);
+            wrapper = v.findViewById(R.id.relWrapper);
+
+
+
             //author = v.findViewById(R.id.txt_author_gi);
             //rating = v.findViewById(R.id.txt_rating_gi);
         }
@@ -123,6 +136,13 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
             calory.setTypeface(typeface);
             //author.setTypeface(typeface);
             //rating.setTypeface(typeface);
+            float wdPx = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    ((gWidth - 20) / 2),
+                    context.getResources().getDisplayMetrics()
+            );
+            wrapper.getLayoutParams().width = (int )wdPx;
+            print("Wrapper width ="+ ((gWidth - 20) / 2));
 
             if(list.get(position).getPreviewSet() == 1)
             {
@@ -140,9 +160,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
                 );
                 float newHeight = px * height / width;
                 rel_dishbox.getLayoutParams().height = (int) newHeight;
-                details.setPadding(0, (int)newHeight, 0, 0);
-
-
+                //details.setPadding(0, (int)newHeight, 0, 0);
             }
             else {
 

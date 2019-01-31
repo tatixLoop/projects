@@ -95,7 +95,7 @@ public class DishImageSetterUI implements Runnable {
 
                     if( support != null)
                     {
-                        support.setPadding(0, (int)newHeight, 0, 0);
+                       // support.setPadding(0, (int)newHeight, 0, 0);
                     }
 
                     if(listPageImgSet)
