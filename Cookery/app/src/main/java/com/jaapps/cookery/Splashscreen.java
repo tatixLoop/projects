@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -89,27 +88,19 @@ public class Splashscreen extends AppCompatActivity {
         ((TextView) findViewById(R.id.txt_launchstat)).setTypeface(typeface);
 
         ((TextView) findViewById(R.id.txt_launchstat)).setText("Checking for updates");
-        new GetMaxCount().execute();
+
+        GetMaxCountThread threadGetCount = new GetMaxCountThread();
+        new Thread(threadGetCount).start();
 
     }
 
-    void print(String str)
+
+    class GetMaxCountThread implements Runnable
     {
-        Log.d("JKS",str);
-    }
-
-    /**
-     *  Background async task to get the last ID
-     */
-    class GetMaxCount extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected String doInBackground(String... args) {
-            // Building Parameters
-
+        public void run()
+        {
+            //pre execute
+            //execute
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
             // getting JSON string from URL
@@ -158,14 +149,7 @@ public class Splashscreen extends AppCompatActivity {
                 print("Error in making http request");
             }
 
-            //} while (b_exit == false);
-            return null;
-        }
-
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
+            //post execute
             print("JKS last remote Id is "+lastRemoteId);
             print("JKS last local Id" + lastLocalId);
             doUpdate = false;
@@ -176,7 +160,7 @@ public class Splashscreen extends AppCompatActivity {
                 if ((updateFlag & 0x4) != 0) {
                     print("UPDATE THE IMAGES");
 
-                    for (int i = 1; i < 20; i++) {
+                    for (int i = 1; i < 26; i++) {
                         String sharedPrefKey = "SHCache_" + Globals.FETCHTYPE_DISHCATAGORY + "_" + i;
                         SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -187,7 +171,8 @@ public class Splashscreen extends AppCompatActivity {
 
                     if (lastLocalId < lastRemoteId) {
                         print("do sync");
-                        new GetDishesForSearch().execute();
+                        GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
+                        new Thread(getDishesThread).start();
                     }
                     else {
                         //Globals.sqlData.getDishList(Globals.FullDishList);
@@ -202,7 +187,9 @@ public class Splashscreen extends AppCompatActivity {
                     print("do sync");
 
                     //Globals.sqlData.getDishList(Globals.FullDishList);
-                    new GetDishesForSearch().execute();
+
+                    GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
+                    new Thread(getDishesThread).start();
 
                 } else if ((updateFlag & 0x1) != 0) {
                     doUpdate = true;
@@ -210,14 +197,16 @@ public class Splashscreen extends AppCompatActivity {
                     lastLocalId = 0;
 
                     Globals.sqlData.clearDB();
-                    new GetDishesForSearch().execute();
+                    GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
+                    new Thread(getDishesThread).start();
                 }
             }
             else
             {
                 if (lastLocalId < lastRemoteId) {
                     print("do sync");
-                    new GetDishesForSearch().execute();
+                    GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
+                    new Thread(getDishesThread).start();
                 }
                 else {
                     print("update tag is same ; no update");
@@ -228,126 +217,83 @@ public class Splashscreen extends AppCompatActivity {
                     finish();
                 }
             }
+
         }
-
-
     }
-    /**
-     * Background Async Task to Load all Dishes by making HTTP Request
-     * */
-    class GetDishesForSearch extends AsyncTask<String, String, String> {
 
+    class GetDishesForSearchThread implements Runnable
+    {
         boolean erroSet = false;
 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected int getCount()
+        public void run()
         {
-            int nCount = 1600;
-            return nCount;
-        }
-        /**
-         * getting All dishlist from url
-         * */
-        protected String doInBackground(String... args) {
-            // Building Parameters
+            //pre execute
 
-
-            final int total = getCount();
-
+            //execute
 
             ((TextView) findViewById(R.id.txt_launchstat)).setText("Update in progress. Please wait...");
             long startTime = Calendar.getInstance().getTimeInMillis();
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-                // getting JSON string from URL
-                String apiname = "";
-                apiname ="getAllDishes.php";
-                params.add(new BasicNameValuePair("lastid", lastLocalId+ ""));
-                //params.add(new BasicNameValuePair("limit", (lCount * 40 ) + ""));
-               /* lCount++;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int percent;
-                        TextView txtLoading = findViewById(R.id.txt_loading);
-                        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
-                                String.format(Locale.US, "fonts/%s", "font.ttf"));
-                        txtLoading.setTypeface(typeface);
-                        percent = lCount * 40 * 100 / total ;
+            // getting JSON string from URL
+            String apiname = "";
+            apiname ="getAllDishes.php";
+            params.add(new BasicNameValuePair("lastid", lastLocalId+ ""));
 
-                        txtLoading.setText("Loading Data    "+percent+ " %");
-                    }
-                });*/
-                JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
-                        "GET", params);
+            JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
+                    "GET", params);
 
-                // Check your log cat for JSON reponse
-                if(json != null) {
-                    //print( json.toString());
-                    try {
-                        // Checking for SUCCESS TAG
-                        int success = json.getInt(TAG_SUCCESS);
+            // Check your log cat for JSON reponse
+            if(json != null) {
+                //print( json.toString());
+                try {
+                    // Checking for SUCCESS TAG
+                    int success = json.getInt(TAG_SUCCESS);
 
-                        if (success == 1) {
-                            dishlist = json.getJSONArray(TAG_DISH);
+                    if (success == 1) {
+                        dishlist = json.getJSONArray(TAG_DISH);
 
-                            for (int i = 0; i < dishlist.length(); i++) {
-                                JSONObject c = dishlist.getJSONObject(i);
+                        for (int i = 0; i < dishlist.length(); i++) {
+                            JSONObject c = dishlist.getJSONObject(i);
 
-                                //print("Fetching dish "+c.getInt("id"));
-                                ListItemDishes dish = new ListItemDishes(
-                                        c.getInt("id"),
-                                        c.getInt("type"),
-                                        c.getString("dishname"),
-                                        c.getString("img_path"),
-                                        c.getInt("cooktimeinsec"),
-                                        c.getInt("serves"),
-                                        c.getInt("calory"),
-                                        c.getInt("rating"),
-                                        c.getInt("numRating"),
-                                        c.getString("author"),
-                                        c.getString("cuktime")
-                                );
-                                DishList.add(dish);
-                                
-                            }
-                        } else {
-                            print("No dishes found");
-                            erroSet = true;
+                            //print("Fetching dish "+c.getInt("id"));
+                            ListItemDishes dish = new ListItemDishes(
+                                    c.getInt("id"),
+                                    c.getInt("type"),
+                                    c.getString("dishname"),
+                                    c.getString("img_path"),
+                                    c.getInt("cooktimeinsec"),
+                                    c.getInt("serves"),
+                                    c.getInt("calory"),
+                                    c.getInt("rating"),
+                                    c.getInt("numRating"),
+                                    c.getString("author"),
+                                    c.getString("cuktime")
+                            );
+                            DishList.add(dish);
+
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } else {
+                        print("No dishes found");
+                        erroSet = true;
                     }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                    long endTime = Calendar.getInstance().getTimeInMillis();
-                    print("JKS took "+(endTime - startTime)+" ms to fetch data");
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else
+                catch (Exception e)
                 {
-                    print("Error in making http request");
+                    e.printStackTrace();
                 }
+                long endTime = Calendar.getInstance().getTimeInMillis();
+                print("JKS took "+(endTime - startTime)+" ms to fetch data");
+            }
+            else
+            {
+                print("Error in making http request");
+            }
 
-            //} while (b_exit == false);
-            return null;
-        }
+            //post execute
 
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
-        protected void onPostExecute(String file_url) {
-            // dismiss the dialog after getting all dishlist
-            //pDialog.dismiss();
-            long startTime = Calendar.getInstance().getTimeInMillis();
             if (erroSet == false) {
                 Globals.sqlData.syncDB(DishList);
 
@@ -356,18 +302,16 @@ public class Splashscreen extends AppCompatActivity {
                 setUpdateTag(updateTag);
             }
             long endTime = Calendar.getInstance().getTimeInMillis();
-            print("JKS took "+(endTime - startTime)+" ms to sync data");
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
-            //mainIntent.putExtra("list",(Serializable)listOfDishesForSearch);
             Splashscreen.this.startActivity(mainIntent);
 
-
-           /* TextView txtLoading = findViewById(R.id.txt_loading);
-            txtLoading.setText("Loading Data    "+100+ " %");*/
-            print("Size of Items SPLASH SCREEN : "+DishList.size());
+            print("Size of Items fetched : "+DishList.size());
             finish();
         }
-
+    }
+    void print(String str)
+    {
+        Log.d("JKS",str);
     }
 
     @Override
