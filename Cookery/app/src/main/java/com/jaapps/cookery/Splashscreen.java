@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class Splashscreen extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
-
 
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_DISH = "dishes";
@@ -36,7 +34,6 @@ public class Splashscreen extends AppCompatActivity {
     JSONArray maxCountList = null;
     JSONArray flagList = null;
 
-    int lCount = 0;
 
     int lastLocalId;
     int lastRemoteId;
@@ -58,7 +55,7 @@ public class Splashscreen extends AppCompatActivity {
 
         updateFlag = -1;
         //ProgressBar
-        progressBar = (ProgressBar) findViewById(R.id.splashprogressBar);
+        progressBar = findViewById(R.id.splashprogressBar);
 
 
         // Get Version
@@ -68,8 +65,9 @@ public class Splashscreen extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        TextView versionname = (TextView) findViewById(R.id.txt_version);
-        versionname.setText("Version:"+versionName);
+        TextView versionname = findViewById(R.id.txt_version);
+        String versionText = "Version:"+versionName;
+        versionname.setText(versionText);
 
         // Fill in search data
         DishList = new ArrayList<>();
@@ -87,7 +85,8 @@ public class Splashscreen extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.txt_launchstat)).setTypeface(typeface);
 
-        ((TextView) findViewById(R.id.txt_launchstat)).setText("Checking for updates");
+        String updateCheckString = "Checking for updates";
+        ((TextView) findViewById(R.id.txt_launchstat)).setText(updateCheckString);
 
         GetMaxCountThread threadGetCount = new GetMaxCountThread();
         new Thread(threadGetCount).start();
@@ -97,14 +96,33 @@ public class Splashscreen extends AppCompatActivity {
 
     class GetMaxCountThread implements Runnable
     {
+
+        private int getUpdateTag()
+        {
+            // check if image is present in shared preference cache
+            String sharedPrefKey = "SHCache_updateTag";
+            SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+            return preferences.getInt(sharedPrefKey, -1);
+        }
+
+        private void setUpdateTag(int tag)
+        {
+            // check if image is present in shared preference cache
+            String sharedPrefKey = "SHCache_updateTag";
+            SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt(sharedPrefKey, tag);
+            editor.apply();
+        }
+
         public void run()
         {
             //pre execute
             //execute
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            List<NameValuePair> params = new ArrayList<>();
 
             // getting JSON string from URL
-            String apiname = "";
+            String apiname;
             apiname ="getUpdate.php";
 
             JSONObject json = jParser2.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
@@ -171,8 +189,7 @@ public class Splashscreen extends AppCompatActivity {
 
                     if (lastLocalId < lastRemoteId) {
                         print("do sync");
-                        GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
-                        new Thread(getDishesThread).start();
+                        fetchData();
                     }
                     else {
                         //Globals.sqlData.getDishList(Globals.FullDishList);
@@ -187,9 +204,7 @@ public class Splashscreen extends AppCompatActivity {
                     print("do sync");
 
                     //Globals.sqlData.getDishList(Globals.FullDishList);
-
-                    GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
-                    new Thread(getDishesThread).start();
+                    fetchData();
 
                 } else if ((updateFlag & 0x1) != 0) {
                     doUpdate = true;
@@ -197,16 +212,14 @@ public class Splashscreen extends AppCompatActivity {
                     lastLocalId = 0;
 
                     Globals.sqlData.clearDB();
-                    GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
-                    new Thread(getDishesThread).start();
+                    fetchData();
                 }
             }
             else
             {
                 if (lastLocalId < lastRemoteId) {
                     print("do sync");
-                    GetDishesForSearchThread getDishesThread = new GetDishesForSearchThread();
-                    new Thread(getDishesThread).start();
+                    fetchData();
                 }
                 else {
                     print("update tag is same ; no update");
@@ -219,24 +232,28 @@ public class Splashscreen extends AppCompatActivity {
             }
 
         }
-    }
 
-    class GetDishesForSearchThread implements Runnable
-    {
-        boolean erroSet = false;
 
-        public void run()
+
+        private void fetchData()
         {
+            boolean errorSet = false;
             //pre execute
 
             //execute
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    String updateText = "Update in progress. Please wait...";
+                    ((TextView) findViewById(R.id.txt_launchstat)).setText(updateText);
+                    //finish();
+                }
+            });
 
-            ((TextView) findViewById(R.id.txt_launchstat)).setText("Update in progress. Please wait...");
             long startTime = Calendar.getInstance().getTimeInMillis();
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            List<NameValuePair> params = new ArrayList<>();
 
             // getting JSON string from URL
-            String apiname = "";
+            String apiname;
             apiname ="getAllDishes.php";
             params.add(new BasicNameValuePair("lastid", lastLocalId+ ""));
 
@@ -275,7 +292,7 @@ public class Splashscreen extends AppCompatActivity {
                         }
                     } else {
                         print("No dishes found");
-                        erroSet = true;
+                        errorSet = true;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -294,14 +311,13 @@ public class Splashscreen extends AppCompatActivity {
 
             //post execute
 
-            if (erroSet == false) {
+            if (!errorSet) {
                 Globals.sqlData.syncDB(DishList);
 
             }
             if (doUpdate){
                 setUpdateTag(updateTag);
             }
-            long endTime = Calendar.getInstance().getTimeInMillis();
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
             Splashscreen.this.startActivity(mainIntent);
 
@@ -309,6 +325,7 @@ public class Splashscreen extends AppCompatActivity {
             finish();
         }
     }
+
     void print(String str)
     {
         Log.d("JKS",str);
@@ -321,25 +338,5 @@ public class Splashscreen extends AppCompatActivity {
         super.onBackPressed();
         finish();
 
-    }
-
-    int getUpdateTag()
-    {
-        // check if image is present in shared preference cache
-        String sharedPrefKey = "SHCache_updateTag";
-        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
-        int value = preferences.getInt(sharedPrefKey, -1);
-
-        return value;
-    }
-
-    void setUpdateTag(int tag)
-    {
-        // check if image is present in shared preference cache
-        String sharedPrefKey = "SHCache_updateTag";
-        SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(sharedPrefKey, tag);
-        editor.apply();
     }
 }
