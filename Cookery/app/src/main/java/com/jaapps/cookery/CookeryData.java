@@ -125,22 +125,24 @@ public class CookeryData  extends SQLiteOpenHelper {
                 query += " or id= "+favorite.getInt(0);
             }
         }
-        Cursor data = sqldb.rawQuery(query, null);
-        while (data.moveToNext()) {
-            ListItemDishes dish = new ListItemDishes(data.getInt(0),
-                    data.getInt(1),
-                    data.getString(2),
-                    data.getString(3),
-                    data.getInt(5),
-                    data.getInt(6),
-                    data.getInt(4),
-                    data.getInt(7),
-                    data.getInt(9),
-                    data.getString(8),
-                    data.getString(10)
-            );
-            list.add(dish);
+        if (query.length() != 0) {
+            Cursor data = sqldb.rawQuery(query, null);
+            while (data.moveToNext()) {
+                ListItemDishes dish = new ListItemDishes(data.getInt(0),
+                        data.getInt(1),
+                        data.getString(2),
+                        data.getString(3),
+                        data.getInt(5),
+                        data.getInt(6),
+                        data.getInt(4),
+                        data.getInt(7),
+                        data.getInt(9),
+                        data.getString(8),
+                        data.getString(10)
+                );
+                list.add(dish);
 
+            }
         }
     }
 
