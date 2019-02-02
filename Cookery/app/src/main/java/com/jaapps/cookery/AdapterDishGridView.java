@@ -155,7 +155,7 @@ public class AdapterDishGridView  extends RecyclerView.Adapter<AdapterDishGridVi
                 Resources r = context.getResources();
                 float px = TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP,
-                        170,
+                        ((gWidth - 20) / 2),
                         r.getDisplayMetrics()
                 );
                 float newHeight = px * height / width;
