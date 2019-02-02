@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.ads.MobileAds;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,14 +117,13 @@ public class Splashscreen extends AppCompatActivity {
         {
             //pre execute
             //execute
-            List<NameValuePair> params = new ArrayList<>();
 
             // getting JSON string from URL
             String apiname;
             apiname ="getUpdate.php";
 
             JSONObject json = jParser2.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
-                    "GET", params);
+                    "GET", "");
 
             // Check your log cat for JSON reponse
             if(json != null) {
@@ -250,15 +247,14 @@ public class Splashscreen extends AppCompatActivity {
             });
 
             long startTime = Calendar.getInstance().getTimeInMillis();
-            List<NameValuePair> params = new ArrayList<>();
 
             // getting JSON string from URL
             String apiname;
             apiname ="getAllDishes.php";
-            params.add(new BasicNameValuePair("lastid", lastLocalId+ ""));
+            String param = "lastid="+lastLocalId;
 
             JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
-                    "GET", params);
+                    "GET", param);
 
             // Check your log cat for JSON reponse
             if(json != null) {

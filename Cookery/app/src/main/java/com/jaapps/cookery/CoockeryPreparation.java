@@ -20,8 +20,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -325,16 +323,13 @@ public class CoockeryPreparation extends AppCompatActivity {
             // execution
 
             gExit = false;
-            // Building Parameters
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
-
-            params.add(new BasicNameValuePair(TAG_TYPE, gId+""));
+            String param = "id="+gId;
             // getting JSON string from URL
             String apiname = "";
             apiname ="getDishInfo.php";
 
             JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
-                    "GET", params);
+                    "GET", param);
 
             // Check your log cat for JSON reponse
             if(json != null) {

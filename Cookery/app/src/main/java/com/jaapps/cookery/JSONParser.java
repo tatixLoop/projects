@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -32,7 +34,9 @@ public class JSONParser {
     static JSONObject jObj = null;
     static String json = "";
 
-    DefaultHttpClient httpClient;
+
+    HttpURLConnection connect;
+    URL urlObj;
 
     // constructor
     public JSONParser() {
@@ -41,41 +45,39 @@ public class JSONParser {
 
     public void cancelReq()
     {
-        if(httpClient != null) {
-            httpClient.getConnectionManager().shutdown();
+        if (connect != null)
+        {
+            connect.disconnect();
         }
     }
     // function get json from url
     // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method,
-                                      List<NameValuePair> params) {
+                                      String extraParam) {
 
         // Making HTTP request
         try {
 
             // check for request method
             if(method == "POST"){
-                // request method is POST
-                // defaultHttpClient
-                httpClient = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(url);
-                httpPost.setEntity(new UrlEncodedFormEntity(params));
+                //String paramString = URLEncodedUtils.format(params, "utf-8");
+                url += "?" + extraParam;
+                Log.d("JKS","URL executed using POST is "+url);
 
-                HttpResponse httpResponse = httpClient.execute(httpPost);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
+                urlObj = new URL(url);
+                connect = (HttpURLConnection) urlObj.openConnection();
+                is = connect.getInputStream();
 
             }else if(method == "GET"){
                 // request method is GET
-                httpClient = new DefaultHttpClient();
-                String paramString = URLEncodedUtils.format(params, "utf-8");
-                url += "?" + paramString;
-                Log.d("JKS","URL executed is "+url);
-                HttpGet httpGet = new HttpGet(url);
+                //String paramString = URLEncodedUtils.format(params, "utf-8");
+                url += "?" + extraParam;
+                Log.d("JKS","URL executed using GET is "+url);
 
-                HttpResponse httpResponse = httpClient.execute(httpGet);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                is = httpEntity.getContent();
+                urlObj = new URL(url);
+                connect = (HttpURLConnection) urlObj.openConnection();
+                is = connect.getInputStream();
+
             }
 
         } catch (UnsupportedEncodingException e) {
