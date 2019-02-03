@@ -1,9 +1,7 @@
 package com.jaapps.cookery;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,19 +14,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 
 public class CoockeryListPage extends AppCompatActivity implements AdapterDishGridView.ItemListener {
@@ -38,31 +32,23 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         Log.d("JKS",str);
     }
 
-    private ProgressDialog pDialog;
-    JSONParser jParser = new JSONParser();
-    JSONArray dishlist = null;
 
-    int gType = 0;
-    int gIndexFromType = 0;
     int gloadType = 0;
-    int gCount = 0;
+
     List<ListItemDishes> listOfDishes;
     AdapterDishGridView  adapterDishList;
 
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_DISH = "dishes";
-    private static final String TAG_TYPE = "type";
-
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int gType = 0;
+        int gIndexFromType;
+        AdView mAdView;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coockery_list_page);
 
-/*        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();*/
-        mAdView = (AdView) findViewById(R.id.adViewmiddle);
+        mAdView = findViewById(R.id.adViewmiddle);
         AdRequest adRequestBanner = new AdRequest.Builder()
                 .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
                 .build();
@@ -119,23 +105,9 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         RecyclerView rv_dishes = findViewById(R.id.recyclerView);
         listOfDishes = new ArrayList<>();
 
-        Typeface typeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
-                                    String.format(Locale.US, "fonts/%s", "font.ttf"));
         Window vindow = this.getWindow();
         vindow.setStatusBarColor(Color.BLACK);
 
-        // txt_dishType.setTypeface(typeface);
-        for(int i = 0; i < tb.getChildCount(); i ++)
-        {
-            View v = tb.getChildAt(i);
-            if (v instanceof TextView)
-            {
-                Typeface Boldtypeface = Typeface.createFromAsset(getApplicationContext().getAssets(),
-                        String.format(Locale.US, "fonts/%s", "fontfront.ttf"));
-                TextView txt = (TextView)v;
-
-            }
-        }
 
 
         Display display = getWindowManager().getDefaultDisplay();
