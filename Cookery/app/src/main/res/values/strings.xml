@@ -12,5 +12,9 @@
     <!-- AdMob ad unit IDs -->
     <string name="admob_app_id">ca-app-pub-2498468757920270~2676484636</string>
     <string name="banner_home_footer">ca-app-pub-2498468757920270/4539983220</string>
+    <string name="banner_home_menu1">ca-app-pub-2498468757920270/4249839617</string>
+    <string name="banner_home_menu2">ca-app-pub-2498468757920270/8676046071</string>
+    <string name="banner_listpage_footer">ca-app-pub-2498468757920270/8601569048</string>
+
     <string name="interstitial_full_screen">ca-app-pub-2498468757920270/8790219420</string>
 </resources>

@@ -35,6 +35,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
@@ -64,6 +68,9 @@ public class CookeryMain extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce= false;
 
+    private AdView mAdView;
+    private AdView mAdView2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +93,90 @@ public class CookeryMain extends AppCompatActivity {
 
 
         isNetworkConnected();  //tocheck internet is available or not
+
+        RelativeLayout relAdView = findViewById(R.id.rel_adview);
+        RelativeLayout relAdView2 = findViewById(R.id.rel_adview2);
+
+
+        //get screen width
+        float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+
+        mAdView = new AdView(this);
+        relAdView.addView(mAdView);
+        mAdView.setAdUnitId(getResources().getString(R.string.banner_home_menu1));
+
+        AdSize customSize = new AdSize((int)dpWidth, 200);
+        mAdView.setAdSize(customSize);
+
+        AdRequest adRequestBanner = new AdRequest.Builder()
+                .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                .build();
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                print("Ad is closed!");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                print( "Ad failed to load! error code: " + errorCode);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                print( "Ad left application!");
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });
+
+        mAdView.loadAd(adRequestBanner);
+
+        mAdView2 = new AdView(this);
+        relAdView2.addView(mAdView2);
+        mAdView2.setAdUnitId(getResources().getString(R.string.banner_home_menu2));
+
+        mAdView2.setAdSize(customSize);
+
+        AdRequest adRequestBanner2 = new AdRequest.Builder()
+                .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                .build();
+        mAdView2.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                print("Ad is closed!");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                print( "Ad failed to load! error code: " + errorCode);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                print( "Ad left application!");
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });
+
+        mAdView2.loadAd(adRequestBanner);
+
+
 
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -151,7 +242,7 @@ public class CookeryMain extends AppCompatActivity {
         RelativeLayout soup = findViewById(R.id.rel_soup);
         RelativeLayout rice = findViewById(R.id.rel_rice);
 
-        float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+       // float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
 
 
         relBreakfast.requestFocus();

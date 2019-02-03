@@ -70,11 +70,13 @@ public class CoockeryPreparation extends AppCompatActivity {
 
     InterstitialAd mInterstitialAd;
     private AdView mAdView;
+    boolean gAdReady = false;
 
     @Override
     public void onBackPressed()
     {
-
+        if(gAdReady)
+        showInterstitial();
         super.onBackPressed();
     }
     private void showInterstitial() {
@@ -99,7 +101,7 @@ public class CoockeryPreparation extends AppCompatActivity {
         mInterstitialAd = new InterstitialAd(this);
 
         AdRequest adRequest = new AdRequest.Builder()
-        //.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+        .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
                 .build();
 
         //AdRequest.Builder.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C");
@@ -112,7 +114,8 @@ public class CoockeryPreparation extends AppCompatActivity {
 
         mInterstitialAd.setAdListener(new AdListener() {
             public void onAdLoaded() {
-                showInterstitial();
+                gAdReady = true;
+                //showInterstitial();
             }
         });
 
@@ -122,7 +125,7 @@ public class CoockeryPreparation extends AppCompatActivity {
         //mAdView.setAdUnitId(getString(R.string.banner_home_footer));
 
         AdRequest adRequestBanner = new AdRequest.Builder()
-                //.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
                 .build();
 
         mAdView.setAdListener(new AdListener() {

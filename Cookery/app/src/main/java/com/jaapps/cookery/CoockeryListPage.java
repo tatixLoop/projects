@@ -18,11 +18,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,6 +53,8 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
     private static final String TAG_DISH = "dishes";
     private static final String TAG_TYPE = "type";
 
+    private AdView mAdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +62,42 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
 /*        ActionBar actionBar = getSupportActionBar();
         actionBar.hide();*/
+        mAdView = (AdView) findViewById(R.id.adViewmiddle);
+        AdRequest adRequestBanner = new AdRequest.Builder()
+                .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                .build();
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdClosed() {
+                print("Ad is closed!");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                print( "Ad failed to load! error code: " + errorCode);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                print( "Ad left application!");
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });
+
+        mAdView.loadAd(adRequestBanner);
 
 
         // initialize the AdMob app
         MobileAds.initialize(this, getString(R.string.admob_app_id));
+
 
         android.support.v7.widget.Toolbar tb = findViewById(R.id.toolBar_title);
         setSupportActionBar(tb);
@@ -136,6 +174,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             new Thread(imgFetch).start();
 
             Globals.sqlData.getDishOfType(gType, listOfDishes);
+            Collections.shuffle(listOfDishes);
 
         }
         else if (gloadType == 1)
