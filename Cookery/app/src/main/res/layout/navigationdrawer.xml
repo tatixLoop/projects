@@ -342,7 +342,8 @@
             <RelativeLayout
                 android:id="@+id/rel_adview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="@color/Darkbg" />
 
 
             <RelativeLayout
@@ -789,10 +790,12 @@
                     android:shadowDy="1"
                     android:shadowRadius="2"/>
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rel_adview2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="@color/Darkbg" />
 
         </LinearLayout>
 

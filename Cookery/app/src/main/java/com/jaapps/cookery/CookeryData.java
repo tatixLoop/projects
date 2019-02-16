@@ -18,7 +18,6 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 
 public class CookeryData  extends SQLiteOpenHelper {
-    SQLiteDatabase sqldb;
     Context mContext;
 
     public CookeryData (Context C) {
@@ -28,17 +27,18 @@ public class CookeryData  extends SQLiteOpenHelper {
 
     public void openConnection()
     {
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         createTables();
     }
     public void closeConnection()
     {
-        sqldb.close();
+
     }
 
     private void createTables()
     {
 
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         String qury = "CREATE TABLE  IF NOT EXISTS  tbl_dishes(id INTEGER NOT NULL,"+
                 "type INTEGER (64) NOT NULL,"+
                 "dishname varchar(56) NOT NULL,"+
@@ -60,6 +60,7 @@ public class CookeryData  extends SQLiteOpenHelper {
         //Create table to save the shopping list
         qury = "CREATE TABLE  IF NOT EXISTS  tbl_shopList(id INTEGER NOT NULL, type INTEGER, data varchar(128))";
         sqldb.execSQL(qury);
+        sqldb.close();
     }
 
     @Override
@@ -67,6 +68,11 @@ public class CookeryData  extends SQLiteOpenHelper {
     }
 
     public void getDishOfType (int inType , List <ListItemDishes> list) {
+
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
         String query = "SELECT * FROM tbl_dishes Where (type & "+inType+" != 0)";
         Cursor data = sqldb.rawQuery(query, null);
         while (data.moveToNext()) {
@@ -85,9 +91,15 @@ public class CookeryData  extends SQLiteOpenHelper {
             list.add(dish);
 
         }
+        sqldb.close();
     }
 
     public int getSearchData(List<ListItemDishes> list, String text) {
+
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
         String query = "SELECT * FROM tbl_dishes Where dishname like '%" + text + "%'";
         Cursor data = sqldb.rawQuery(query, null);
         while (data.moveToNext()) {
@@ -106,12 +118,16 @@ public class CookeryData  extends SQLiteOpenHelper {
             list.add(dish);
 
         }
+        sqldb.close();
         return list.size();
     }
 
     public void getFavList(List<ListItemDishes> list)
     {
         String query ="";
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
 
         Cursor favorite = sqldb.rawQuery("SELECT * FROM tbl_fav", null);
         while (favorite.moveToNext())
@@ -144,10 +160,15 @@ public class CookeryData  extends SQLiteOpenHelper {
 
             }
         }
+        sqldb.close();
     }
 
     public void getDishList(List <ListItemDishes> list)
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
         String query = "SELECT * FROM tbl_dishes";
         Cursor data = sqldb.rawQuery(query, null);
         Cursor favorite = sqldb.rawQuery("SELECT * FROM tbl_fav", null);
@@ -187,10 +208,14 @@ public class CookeryData  extends SQLiteOpenHelper {
 
         data.close();
         favorite.close();
+        sqldb.close();
     }
 
     public int getLastId()
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         int lastId = 0;
 
         String query = "SELECT max(id) FROM tbl_dishes";
@@ -199,13 +224,20 @@ public class CookeryData  extends SQLiteOpenHelper {
         {
             lastId = checkData.getInt(0);
         }
+        sqldb.close();
         return lastId;
     }
 
     public void clearDB()
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
         String query = "DELETE FROM tbl_dishes";
         sqldb.execSQL(query);
+
+        sqldb.close();
     }
 
     long startTime;
@@ -278,31 +310,48 @@ public class CookeryData  extends SQLiteOpenHelper {
 
     public boolean isFavorite(int id)
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
         String query = "SELECT id FROM tbl_fav WHERE id="+id;
         Cursor checkDatax = sqldb.rawQuery(query, null);
         if (sqldb.rawQuery(query, null).getCount() == 0) {
             checkDatax.close();
+            sqldb.close();
             return false;
         }
         else {
+            sqldb.close();
             checkDatax.close();
             return true;
         }
     }
     public void clearFavorite(int id)
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         String query = "Delete from tbl_fav where id="+id;
         sqldb.execSQL(query);
+        sqldb.close();
     }
 
     public void setFavorite(int id)
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         String query = "INSERT into tbl_fav VALUES ("+id+")";
         sqldb.execSQL(query);
+        sqldb.close();
     }
 
     public void addItemToShopList(String igrd, String dish, int id)
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         String query = "SELECT id FROM tbl_shopList WHERE id="+id;
         Cursor checkDatax = sqldb.rawQuery(query, null);
         if (checkDatax.getCount() == 0)
@@ -314,10 +363,14 @@ public class CookeryData  extends SQLiteOpenHelper {
         query = "INSERT into tbl_shopList (id, type, data)VALUES ("+id+", 1, '"+igrd+"')";
         sqldb.execSQL(query);
         checkDatax.close();
+        sqldb.close();
     }
 
     public void removeItemFromShopList(String ingredient, int id)
     {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         String query = "DELETE from tbl_shopList where id="+id + " AND data like '"+ingredient+"'";
         sqldb.execSQL(query);
 
@@ -330,9 +383,13 @@ public class CookeryData  extends SQLiteOpenHelper {
             sqldb.execSQL(query);
         }
         checkDatax.close();
+        sqldb.close();
     }
 
     public void getShopListData(List<ShoppingListItem> list) {
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
         String query = "SELECT * from tbl_shopList";
         Cursor checkDatax = sqldb.rawQuery(query, null);
 
@@ -344,6 +401,7 @@ public class CookeryData  extends SQLiteOpenHelper {
             list.add(listItemData);
         }
         checkDatax.close();
+        sqldb.close();
     }
 
     class SyncThread implements  Runnable
@@ -364,6 +422,9 @@ public class CookeryData  extends SQLiteOpenHelper {
 
         public void run()
         {
+
+            SQLiteDatabase sqldb;
+            sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
 
             print(" ["+id+"] From ["+startCount + " - "+endCount +"]");
             for (int i = this.startCount ; i < this.endCount  ; i++)
@@ -386,6 +447,7 @@ public class CookeryData  extends SQLiteOpenHelper {
                         dish.getCuktime() +"')";
                 sqldb.execSQL(query);
             }
+            sqldb.close();
             endTime = Calendar.getInstance().getTimeInMillis();
             print(" ["+id+"] sync time = "+(endTime - startTime));
 
