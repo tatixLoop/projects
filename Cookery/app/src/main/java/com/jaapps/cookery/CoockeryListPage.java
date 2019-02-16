@@ -50,7 +50,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
         mAdView = findViewById(R.id.adViewmiddle);
         AdRequest adRequestBanner = new AdRequest.Builder()
-                .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+        //        .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
                 .build();
         mAdView.setAdListener(new AdListener() {
             @Override

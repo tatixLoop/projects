@@ -109,7 +109,7 @@ public class CookeryMain extends AppCompatActivity {
         mAdView.setAdSize(customSize);
 
         AdRequest adRequestBanner = new AdRequest.Builder()
-                .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                //.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
                 .build();
         mAdView.setAdListener(new AdListener() {
             @Override
@@ -146,7 +146,7 @@ public class CookeryMain extends AppCompatActivity {
         mAdView2.setAdSize(customSize);
 
         AdRequest adRequestBanner2 = new AdRequest.Builder()
-                .addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
+                //.addTestDevice("C9DCF6327A4B5E68DCC320AC2E54036C")
                 .build();
         mAdView2.setAdListener(new AdListener() {
             @Override
