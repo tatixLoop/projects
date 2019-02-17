@@ -68,6 +68,70 @@ public class CookeryData  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqldb) {
     }
 
+    int getSubCatagory(int type, List <ListSubCatagory> list)
+    {
+        int subTypeCount = 0;
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
+        print("Get subcatatory of type "+type);
+        String query = "SELECT DISTINCT subtype FROM tbl_dishes Where (type & "+type+" != 0)";
+
+        ListSubCatagory subItemAd = new ListSubCatagory(
+                0, 0, "" ,"");
+        subItemAd.setType(1);
+
+        // advertisemenet section
+        list.add(subItemAd);
+
+        Cursor data = sqldb.rawQuery(query, null);
+        while (data.moveToNext()) {
+            subTypeCount++;
+            int subType = data.getInt(0);
+            String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/egg/" + subType +".jpg";
+            print("subType = "+subType +" img="+imgUrl);
+            ListSubCatagory subItem = new ListSubCatagory(
+                    type, subType, imgUrl ,Globals.subCatagory[subType]);
+            subItem.setType(0);
+            list.add(subItem);
+        }
+
+        // advertisement section
+        list.add(subItemAd);
+
+        sqldb.close();
+        print("subType count returning is "+subTypeCount);
+        return  subTypeCount;
+    }
+
+    public void getDishOfTypeSubType(int inType, int subType, List <ListItemDishes> list) {
+
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
+        String query = "SELECT * FROM tbl_dishes Where (type & "+inType+" != 0) and (subtype ="+subType+")";
+        Cursor data = sqldb.rawQuery(query, null);
+        while (data.moveToNext()) {
+            ListItemDishes dish = new ListItemDishes(data.getInt(0),
+                    data.getInt(1),
+                    data.getString(2),
+                    data.getString(3),
+                    data.getInt(5),
+                    data.getInt(6),
+                    data.getInt(4),
+                    data.getInt(7),
+                    data.getInt(9),
+                    data.getString(8),
+                    data.getString(10),
+                    data.getInt(11)
+            );
+            list.add(dish);
+
+        }
+        sqldb.close();
+    }
+
     public void getDishOfType (int inType , List <ListItemDishes> list) {
 
 

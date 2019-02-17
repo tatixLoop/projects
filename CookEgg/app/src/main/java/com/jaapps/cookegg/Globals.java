@@ -13,6 +13,7 @@ import java.util.List;
 public class Globals {
 
 
+    static int g_type = (1<<7) | (1 << 6);
     static String host="http://tatixtech.com/";
     static String appdir="/cookery/";
     static String apipath="/api/";
@@ -27,10 +28,16 @@ public class Globals {
     static int FETCHTYPE_DISHCATAGORY = 1;
     static int FETCHTYPE_DISH = 2;
     static int FETCHTYPE_DISH_TITLE = 3;
+    static int FETCHTYPE_DISHSUBCATAGORY = 4;
 
 
     static Context gContext;
     static CookeryData sqlData;
+
+    static String subCatagory[] = {
+            "Egg dishes",
+            "Omelette"
+    };
 
 
     static  String dishName[] = {

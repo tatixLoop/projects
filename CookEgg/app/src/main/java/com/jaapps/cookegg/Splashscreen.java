@@ -40,7 +40,7 @@ public class Splashscreen extends AppCompatActivity {
     boolean doUpdate = false;
     ProgressBar progressBar;
 
-    int g_type = (1<<7) | (1 << 6);
+
 
     List<ListItemDishes> DishList;
 
@@ -194,6 +194,7 @@ public class Splashscreen extends AppCompatActivity {
                         //Globals.sqlData.getDishList(Globals.FullDishList);
 
                         Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                        mainIntent.putExtra("type", Globals.g_type);
                         Splashscreen.this.startActivity(mainIntent);
                         finish();
                     }
@@ -225,6 +226,7 @@ public class Splashscreen extends AppCompatActivity {
                     //Globals.sqlData.getDishList(Globals.FullDishList);
 
                     Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                    mainIntent.putExtra("type", Globals.g_type);
                     Splashscreen.this.startActivity(mainIntent);
                     finish();
                 }
@@ -256,7 +258,7 @@ public class Splashscreen extends AppCompatActivity {
             // getting JSON string from URL
             String apiname;
             apiname ="getDishesByType.php";
-            String param = "type="+g_type+"&lastid="+lastLocalId;
+            String param = "type="+Globals.g_type+"&lastid="+lastLocalId;
 
             JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
                     "GET", param);
@@ -339,6 +341,7 @@ public class Splashscreen extends AppCompatActivity {
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
             mainIntent.putExtra("loadType", 1);
             mainIntent.putExtra("numCata", subTypeIndex);
+            mainIntent.putExtra("type", Globals.g_type);
 
             Splashscreen.this.startActivity(mainIntent);
 

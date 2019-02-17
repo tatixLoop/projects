@@ -190,6 +190,28 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             Globals.sqlData.getSearchData(listOfDishes, getIntent().getStringExtra("search"));
 
         }
+        else if (gloadType == 3)
+        {
+            int subtype = getIntent().getIntExtra("subtype", 0);
+            String title_image = getIntent().getStringExtra("url");
+            gType = getIntent().getIntExtra("type", -1);
+            getSupportActionBar().setTitle(Globals.subCatagory[subtype]);
+
+            float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+
+            RelativeLayout layout = findViewById(R.id.img_tltle_layout);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHSUBCATAGORY, subtype, title_image, layout, this, true);
+
+            imgFetch.setWidth((int)dpWidth);
+            imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
+
+            new Thread(imgFetch).start();
+
+
+            Globals.sqlData.getDishOfTypeSubType(gType, subtype, listOfDishes);
+            Collections.shuffle(listOfDishes);
+
+        }
 
 
         adapterDishList = new AdapterDishGridView(this, listOfDishes, this, width);
