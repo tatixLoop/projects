@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single"
+        android:id="@+id/grptop">
+
+        <item
+            android:id="@+id/fav"
+            android:icon="@drawable/favoritesred"
+            android:title="Favorites" />
+        <item
+            android:id="@+id/shopping"
+            android:icon="@drawable/iconfinder_shopping_cart_326700"
+            android:title="Shopping list" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/grpmiddle">
+        <item
+            android:id="@+id/Shareapp"
+            android:icon="@drawable/iconfinder_button_share_352893"
+            android:title="Share app" />
+        <item
+            android:id="@+id/feed"
+            android:icon="@drawable/iconfinder_ic_feedback_48px_3669434"
+            android:title="Feedback" />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/grbottom">
+        <item
+            android:id="@+id/licence"
+            android:icon="@drawable/iconfinder_icon_terms_and_conditions"
+            android:title="Terms and Conditions" />
+        <item
+            android:id="@+id/privpolicy"
+            android:icon="@drawable/privacypolicy"
+            android:title="Privacy policy" />
+
+    </group>
+</menu>
