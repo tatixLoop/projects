@@ -99,10 +99,10 @@ public class CookeryMain extends AppCompatActivity {
         cmtype = getIntent().getIntExtra("type", -1);
         int numCatagory = Globals.sqlData.getSubCatagory(cmtype, subCataList);
 
-        if (numCatagory == 0) {
+        //if (numCatagory == 0) {
             GetSubCatagory thread = new GetSubCatagory();
             new Thread(thread).start();
-        }
+        //}
 
 
         ListView lv_subCata = findViewById(R.id.listSubCata);
@@ -383,13 +383,15 @@ public class CookeryMain extends AppCompatActivity {
                             JSONObject c = dishSubTypeArray.getJSONObject(i);
                             int subtype = c.getInt("subtype");
                             String subTypeName = c.getString("subtypename");
-                            String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/egg/" + subtype +".jpg";
-                            ListSubCatagory subItem = new ListSubCatagory(
-                                    cmtype, subtype, imgUrl ,subTypeName);
-                            subItem.setType(0);
-                            subCataList.add(subItem);
+                            if (!checksubTypePresent(subCataList, subtype)) {
+                                String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/"+Globals.g_subcata_img_dir+"/" + subtype + ".jpg";
+                                ListSubCatagory subItem = new ListSubCatagory(
+                                        cmtype, subtype, imgUrl, subTypeName);
+                                subItem.setType(0);
+                                subCataList.add(subItem);
 
-                            Globals.sqlData.instertIntoTypes(cmtype, subtype, "", subTypeName);
+                                Globals.sqlData.instertIntoTypes(cmtype, subtype, "", subTypeName);
+                            }
                             print("Add subcatagory to local database");
                         }
 
@@ -416,6 +418,18 @@ public class CookeryMain extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public boolean checksubTypePresent(List<ListSubCatagory> list, int subtype)
+    {
+        for (ListSubCatagory item: list
+             ) {
+            if( item.getSubcatagory() == subtype)
+            {
+                return  true;
+            }
+        }
+        return  false;
     }
 }
 

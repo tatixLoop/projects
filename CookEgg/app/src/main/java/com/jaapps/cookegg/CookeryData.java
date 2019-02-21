@@ -101,7 +101,7 @@ public class CookeryData  extends SQLiteOpenHelper {
         while (data.moveToNext()) {
             subTypeCount++;
             int subType = data.getInt(0);
-            String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/egg/" + subType +".jpg";
+            String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/"+Globals.g_subcata_img_dir+"/" + subType +".jpg";
             print("subType = "+subType +" img="+imgUrl);
             ListSubCatagory subItem = new ListSubCatagory(
                     type, subType, imgUrl ,data.getString(1));

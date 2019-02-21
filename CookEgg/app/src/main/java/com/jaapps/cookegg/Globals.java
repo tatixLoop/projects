@@ -14,6 +14,9 @@ public class Globals {
 
 
     static int g_type = (1<<7) | (1 << 6);
+    static String g_subcata_img_dir = "egg/";
+
+
     static String host="http://tatixtech.com/";
     static String appdir="/cookery/";
     static String apipath="/api/";
