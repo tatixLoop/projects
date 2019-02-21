@@ -249,7 +249,7 @@ public class Splashscreen extends AppCompatActivity {
                 public void run() {
                     String updateText = "Update in progress. Please wait...";
                     ((TextView) findViewById(R.id.txt_launchstat)).setText(updateText);
-                    //finish();
+                    //finish();maxCountList
                 }
             });
 

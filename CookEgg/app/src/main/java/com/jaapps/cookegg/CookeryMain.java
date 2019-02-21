@@ -41,6 +41,10 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -57,6 +61,9 @@ public class CookeryMain extends AppCompatActivity {
 
     ScrollView scrolllayout;
 
+    JSONParser jParser = new JSONParser();
+    JSONArray dishSubTypeArray;
+
 
     ///////////     navigation Drawer
 
@@ -70,7 +77,9 @@ public class CookeryMain extends AppCompatActivity {
 
     private AdView mAdView;
     private AdView mAdView2;
-
+    int cmtype;
+    List<ListSubCatagory> subCataList;
+    AdapterCatagoryList adaptorCata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +87,6 @@ public class CookeryMain extends AppCompatActivity {
         setContentView(R.layout.navigationdrawer);
 
 
-        final List<ListSubCatagory> subCataList;
 
         subCataList = new ArrayList<>();
 
@@ -87,13 +95,18 @@ public class CookeryMain extends AppCompatActivity {
             int numSubCata = getIntent().getIntExtra("numCata", -1);
             print("Number of catagories is " + numSubCata);
         }
-        int type;
-        type = getIntent().getIntExtra("type", -1);
-        int numCatagory = Globals.sqlData.getSubCatagory(type, subCataList);
+
+        cmtype = getIntent().getIntExtra("type", -1);
+        int numCatagory = Globals.sqlData.getSubCatagory(cmtype, subCataList);
+
+        if (numCatagory == 0) {
+            GetSubCatagory thread = new GetSubCatagory();
+            new Thread(thread).start();
+        }
 
 
         ListView lv_subCata = findViewById(R.id.listSubCata);
-        AdapterCatagoryList adaptorCata = new AdapterCatagoryList(this, subCataList);
+        adaptorCata = new AdapterCatagoryList(this, subCataList);
         lv_subCata.setAdapter(adaptorCata);
 
         lv_subCata.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,6 +118,7 @@ public class CookeryMain extends AppCompatActivity {
                 cookeryListPage.putExtra("subtype", subCataList.get(position).getSubcatagory());
                 cookeryListPage.putExtra("loadtype", 3);
                 cookeryListPage.putExtra("url", subCataList.get(position).getBgUrl());
+                cookeryListPage.putExtra("title", subCataList.get(position).getText());
 
                 startActivity(cookeryListPage);
             }
@@ -342,6 +356,66 @@ public class CookeryMain extends AppCompatActivity {
 
     void print(String str) {
         Log.d("JKS", str);
+    }
+
+    class GetSubCatagory implements Runnable {
+
+        @Override
+        public void run() {
+            String apiname;
+            apiname ="getSubTypes.php";
+            String param = "type="+cmtype;
+
+            JSONObject json = jParser.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
+                    "GET", param);
+
+            if(json != null) {
+                //print( json.toString());
+                try {
+                    // Checking for SUCCESS TAG
+                    int success = json.getInt("success");
+
+                    if (success == 1) {
+                        dishSubTypeArray = json.getJSONArray("dishsubtypes");
+                        print("Length = "+dishSubTypeArray.length());
+                        for (int i = 0; i < dishSubTypeArray.length(); i++) {
+
+                            JSONObject c = dishSubTypeArray.getJSONObject(i);
+                            int subtype = c.getInt("subtype");
+                            String subTypeName = c.getString("subtypename");
+                            String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/egg/" + subtype +".jpg";
+                            ListSubCatagory subItem = new ListSubCatagory(
+                                    cmtype, subtype, imgUrl ,subTypeName);
+                            subItem.setType(0);
+                            subCataList.add(subItem);
+
+                            Globals.sqlData.instertIntoTypes(cmtype, subtype, "", subTypeName);
+                            print("Add subcatagory to local database");
+                        }
+
+
+                    } else {
+                        print("No maxId found");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                print("Error in making http request");
+            }
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    adaptorCata.notifyDataSetChanged();
+                }
+            });
+        }
     }
 }
 

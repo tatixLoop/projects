@@ -61,11 +61,24 @@ public class CookeryData  extends SQLiteOpenHelper {
         //Create table to save the shopping list
         qury = "CREATE TABLE  IF NOT EXISTS  tbl_shopList(id INTEGER NOT NULL, type INTEGER, data varchar(128))";
         sqldb.execSQL(qury);
+
+        qury = "CREATE TABLE  IF NOT EXISTS  tbl_types (id INTEGER NOT NULL, type INTEGER, subtype INTEGER, typename varchar(32), subtypename varchar(32))";
+        sqldb.execSQL(qury);
         sqldb.close();
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqldb) {
+    }
+
+    void instertIntoTypes(int type, int subtype, String typename, String subtypename)
+    {
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        String query = "INSERT into tbl_types (id, type, subtype, typename, subtypename )VALUES (0, "+type+","+subtype+", '"+typename+"','"+subtypename+"')";
+        sqldb.execSQL(query);
+        sqldb.close();
+
     }
 
     int getSubCatagory(int type, List <ListSubCatagory> list)
@@ -75,14 +88,14 @@ public class CookeryData  extends SQLiteOpenHelper {
         sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
 
         print("Get subcatatory of type "+type);
-        String query = "SELECT DISTINCT subtype FROM tbl_dishes Where (type & "+type+" != 0)";
+        String query = "SELECT subtype, subtypename FROM tbl_types Where (type & "+type+" != 0)";
 
-        ListSubCatagory subItemAd = new ListSubCatagory(
+     /*   ListSubCatagory subItemAd = new ListSubCatagory(
                 0, 0, "" ,"");
         subItemAd.setType(1);
-
+*/
         // advertisemenet section
-        list.add(subItemAd);
+        //list.add(subItemAd);
 
         Cursor data = sqldb.rawQuery(query, null);
         while (data.moveToNext()) {
@@ -91,13 +104,13 @@ public class CookeryData  extends SQLiteOpenHelper {
             String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/egg/" + subType +".jpg";
             print("subType = "+subType +" img="+imgUrl);
             ListSubCatagory subItem = new ListSubCatagory(
-                    type, subType, imgUrl ,Globals.subCatagory[subType]);
+                    type, subType, imgUrl ,data.getString(1));
             subItem.setType(0);
             list.add(subItem);
         }
 
-        // advertisement section
-        list.add(subItemAd);
+        // advertisement sectiongetSubCatagory
+        //list.add(subItemAd);
 
         sqldb.close();
         print("subType count returning is "+subTypeCount);

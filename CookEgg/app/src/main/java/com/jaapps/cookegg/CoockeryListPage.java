@@ -195,7 +195,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             int subtype = getIntent().getIntExtra("subtype", 0);
             String title_image = getIntent().getStringExtra("url");
             gType = getIntent().getIntExtra("type", -1);
-            getSupportActionBar().setTitle(Globals.subCatagory[subtype]);
+            getSupportActionBar().setTitle( getIntent().getStringExtra("title"));
 
             float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
 
