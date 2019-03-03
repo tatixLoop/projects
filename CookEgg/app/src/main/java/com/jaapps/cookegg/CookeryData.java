@@ -106,6 +106,13 @@ public class CookeryData  extends SQLiteOpenHelper {
             ListSubCatagory subItem = new ListSubCatagory(
                     type, subType, imgUrl ,data.getString(1));
             subItem.setType(0);
+
+            if (subTypeCount % 3 ==0)
+            {
+                // set advertisement on every 3rd item
+                subItem.setType(1);
+            }
+
             list.add(subItem);
         }
 
