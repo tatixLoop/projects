@@ -33,8 +33,9 @@ public class AdapterCatagoryList extends BaseAdapter {
         final ListSubCatagory item = list.get(position);
         float dpWidth = context.getResources().getDisplayMetrics().widthPixels / context.getResources().getDisplayMetrics().density;
 
-        if (convertView == null) {
-            if (item.getType() == 0) {
+
+        if( item.getConvertView() == null) {
+            if (item.getType() == 0 && item.getConvertView() == null) {
                 convertView = LayoutInflater.from(context).
                         inflate(R.layout.subcatagory_item, parent, false);
 
@@ -54,11 +55,12 @@ public class AdapterCatagoryList extends BaseAdapter {
                 imgFetch1.setWidth((int) dpWidth);
                 imgFetch1.setLayoutFront(txt_title);
                 new Thread(imgFetch1).start();
-            }
-            else
-            {
+
+                item.setConvertView(convertView);
+            } else {
                 convertView = LayoutInflater.from(context).
                         inflate(R.layout.subcatagory_ad, parent, false);
+
                 AdView mAdView;
                 RelativeLayout relAdView = convertView.findViewById(R.id.rel_adview);
                 mAdView = new AdView(context);
@@ -99,10 +101,14 @@ public class AdapterCatagoryList extends BaseAdapter {
 
 
                 mAdView.loadAd(adRequestBanner);
-
+                item.setConvertView(convertView);
             }
-
         }
+        else
+        {
+            convertView = item.getConvertView();
+        }
+
         return convertView;
     }
 

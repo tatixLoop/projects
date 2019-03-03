@@ -1,11 +1,22 @@
 package com.jaapps.cookegg;
 
+import android.view.View;
+
 public class ListSubCatagory {
     int catagory;
     int subcatagory;
     String bgUrl;
     String text;
     int type;
+    View convertView;
+
+    public View getConvertView() {
+        return convertView;
+    }
+
+    public void setConvertView(View convertView) {
+        this.convertView = convertView;
+    }
 
     public int getType() {
         return type;
