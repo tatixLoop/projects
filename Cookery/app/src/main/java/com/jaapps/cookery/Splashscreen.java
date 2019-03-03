@@ -40,6 +40,8 @@ public class Splashscreen extends AppCompatActivity {
     boolean doUpdate = false;
     ProgressBar progressBar;
 
+
+
     List<ListItemDishes> DishList;
 
     @Override
@@ -192,6 +194,7 @@ public class Splashscreen extends AppCompatActivity {
                         //Globals.sqlData.getDishList(Globals.FullDishList);
 
                         Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                        mainIntent.putExtra("type", Globals.g_type);
                         Splashscreen.this.startActivity(mainIntent);
                         finish();
                     }
@@ -223,6 +226,7 @@ public class Splashscreen extends AppCompatActivity {
                     //Globals.sqlData.getDishList(Globals.FullDishList);
 
                     Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+                    mainIntent.putExtra("type", Globals.g_type);
                     Splashscreen.this.startActivity(mainIntent);
                     finish();
                 }
@@ -235,8 +239,11 @@ public class Splashscreen extends AppCompatActivity {
         private void fetchData()
         {
             boolean errorSet = false;
+            int subTypes[];
+            int subTypeIndex = 0;
             //pre execute
 
+            subTypes = new int[50];
             //execute
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -281,7 +288,8 @@ public class Splashscreen extends AppCompatActivity {
                                     c.getInt("rating"),
                                     c.getInt("numRating"),
                                     c.getString("author"),
-                                    c.getString("cuktime")
+                                    c.getString("cuktime"),
+                                    c.getInt("subtype")
                             );
                             DishList.add(dish);
 
@@ -315,6 +323,10 @@ public class Splashscreen extends AppCompatActivity {
                 setUpdateTag(updateTag);
             }
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
+            mainIntent.putExtra("loadType", 1);
+            mainIntent.putExtra("numCata", subTypeIndex);
+            mainIntent.putExtra("type", Globals.g_type);
+
             Splashscreen.this.startActivity(mainIntent);
 
             print("Size of Items fetched : "+DishList.size());

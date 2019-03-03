@@ -27,6 +27,16 @@ public class ListItemDishes implements Serializable {
     boolean fav;
     String cuktime;
 
+    public int getSubtype() {
+        return subtype;
+    }
+
+    public void setSubtype(int subtype) {
+        this.subtype = subtype;
+    }
+
+    int subtype;
+
     public byte[] getByteArray() {
         return byteArray;
     }
@@ -79,7 +89,7 @@ public class ListItemDishes implements Serializable {
         this.byteArray = stream.toByteArray();
     }
 
-    public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, int numRating, String author, String cuktime) {
+    public ListItemDishes(int id, int type, String name, String img_path, int cooktimeinsec, int serveCount, int calory, int rating, int numRating, String author, String cuktime, int subtype) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -92,6 +102,7 @@ public class ListItemDishes implements Serializable {
         this.previewSet = 0;
         this.numRating = numRating;
         this.cuktime = cuktime;
+        this.subtype = subtype;
     }
 
 

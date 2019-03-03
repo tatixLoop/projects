@@ -17,6 +17,8 @@ import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.util.List;
 
+import static com.jaapps.cookery.Globals.print;
+
 /**
  * Created by jithin on 10/9/18.
  */
@@ -123,6 +125,7 @@ public class DishImageFetcher implements Runnable
 
             if( !value.equals("defaultValue"))
             {
+                print("Image with key is present "+ sharedPrefKey);
                 //Log.d("JKS", "Decrypt shared preference to bitmap");
                 byte[] imageAsBytes = Base64.decode(value.getBytes(), Base64.DEFAULT);
                 myImage = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);

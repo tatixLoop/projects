@@ -128,11 +128,9 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             print("Type is " + gType);
             //txt_dishType.setText(Globals.dishName[gType]);
 
-            getSupportActionBar().setTitle(Globals.dishName[gIndexFromType]);
+            getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
 
-
-            String title_image = Globals.host + Globals.appdir + Globals.img_path + "/" +
-                    "title" + "/" + gIndexFromType + ".jpg";
+            String title_image = getIntent().getStringExtra("url");
 
             //get screen width
             float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
@@ -188,6 +186,28 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
             //Globals.sqlData.getFavList(listOfDishes);
             Globals.sqlData.getSearchData(listOfDishes, getIntent().getStringExtra("search"));
+
+        }
+        else if (gloadType == 3)
+        {
+            int subtype = getIntent().getIntExtra("subtype", 0);
+            String title_image = getIntent().getStringExtra("url");
+            gType = getIntent().getIntExtra("type", -1);
+            getSupportActionBar().setTitle( getIntent().getStringExtra("title"));
+
+            float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
+
+            RelativeLayout layout = findViewById(R.id.img_tltle_layout);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHSUBCATAGORY, subtype, title_image, layout, this, true);
+
+            imgFetch.setWidth((int)dpWidth);
+            imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
+
+            new Thread(imgFetch).start();
+
+
+            Globals.sqlData.getDishOfTypeSubType(gType, subtype, listOfDishes);
+            Collections.shuffle(listOfDishes);
 
         }
 

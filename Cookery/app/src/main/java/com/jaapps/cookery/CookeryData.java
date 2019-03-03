@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -49,7 +48,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                 "rating INTEGER NOT NULL,"+
                 "author varchar(64) NOT NULL,"+
                 "numRating INTEGER NOT NULL," +
-                "cuktime varchar (16))";
+                "cuktime varchar (16), "+
+                "subtype int)";
 
         sqldb.execSQL(qury);
 
@@ -60,11 +60,88 @@ public class CookeryData  extends SQLiteOpenHelper {
         //Create table to save the shopping list
         qury = "CREATE TABLE  IF NOT EXISTS  tbl_shopList(id INTEGER NOT NULL, type INTEGER, data varchar(128))";
         sqldb.execSQL(qury);
+
+        qury = "CREATE TABLE  IF NOT EXISTS  tbl_types (id INTEGER NOT NULL, type INTEGER, subtype INTEGER, typename varchar(32), subtypename varchar(32))";
+        sqldb.execSQL(qury);
         sqldb.close();
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqldb) {
+    }
+
+    void instertIntoTypes(int type, int subtype, String typename, String subtypename)
+    {
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        String query = "INSERT into tbl_types (id, type, subtype, typename, subtypename )VALUES (0, "+type+","+subtype+", '"+typename+"','"+subtypename+"')";
+        sqldb.execSQL(query);
+        sqldb.close();
+
+    }
+
+    int getSubCatagory(int type, List <ListCatagory> list)
+    {
+        int subTypeCount = 0;
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
+        print("Get subcatatory of type "+type);
+        String query = "SELECT subtype, subtypename FROM tbl_types Where (type & "+type+" != 0)";
+
+     /*   ListCatagory subItemAd = new ListCatagory(
+                0, 0, "" ,"");
+        subItemAd.setType(1);
+*/
+        // advertisemenet section
+        //list.add(subItemAd);
+
+        Cursor data = sqldb.rawQuery(query, null);
+        while (data.moveToNext()) {
+            subTypeCount++;
+            int subType = data.getInt(0);
+            String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/title/"+"/" + subType +".jpg";
+            print("subType = "+subType +" img="+imgUrl);
+            ListCatagory subItem = new ListCatagory(
+                    type, imgUrl ,data.getString(1));
+            subItem.setType(0);
+            list.add(subItem);
+        }
+
+        // advertisement sectiongetSubCatagory
+        //list.add(subItemAd);
+
+        sqldb.close();
+        print("subType count returning is "+subTypeCount);
+        return  subTypeCount;
+    }
+
+    public void getDishOfTypeSubType(int inType, int subType, List <ListItemDishes> list) {
+
+
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
+        String query = "SELECT * FROM tbl_dishes Where (type & "+inType+" != 0) and (subtype ="+subType+")";
+        Cursor data = sqldb.rawQuery(query, null);
+        while (data.moveToNext()) {
+            ListItemDishes dish = new ListItemDishes(data.getInt(0),
+                    data.getInt(1),
+                    data.getString(2),
+                    data.getString(3),
+                    data.getInt(5),
+                    data.getInt(6),
+                    data.getInt(4),
+                    data.getInt(7),
+                    data.getInt(9),
+                    data.getString(8),
+                    data.getString(10),
+                    data.getInt(11)
+            );
+            list.add(dish);
+
+        }
+        sqldb.close();
     }
 
     public void getDishOfType (int inType , List <ListItemDishes> list) {
@@ -86,7 +163,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                     data.getInt(7),
                     data.getInt(9),
                     data.getString(8),
-                    data.getString(10)
+                    data.getString(10),
+                    data.getInt(11)
             );
             list.add(dish);
 
@@ -113,7 +191,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                     data.getInt(7),
                     data.getInt(9),
                     data.getString(8),
-                    data.getString(10)
+                    data.getString(10),
+                    data.getInt(11)
             );
             list.add(dish);
 
@@ -154,7 +233,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                         data.getInt(7),
                         data.getInt(9),
                         data.getString(8),
-                        data.getString(10)
+                        data.getString(10),
+                        data.getInt(11)
                 );
                 list.add(dish);
 
@@ -192,7 +272,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                     data.getInt(7),
                     data.getInt(9),
                     data.getString(8),
-                    data.getString(10)
+                    data.getString(10),
+                    data.getInt(11)
                     );
             list.add(dish);
 
@@ -433,7 +514,7 @@ public class CookeryData  extends SQLiteOpenHelper {
                 String name = dish.getName().replace("'","''");
                 String author = dish.getAuthor().replace("'","''");
 
-                String query="INSERT INTO tbl_dishes (id, type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating, cuktime) VALUES ("+
+                String query="INSERT INTO tbl_dishes (id, type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating, cuktime, subtype) VALUES ("+
                         dish.getId() +", "+
                         dish.getType() + ", '"+
                         name +"','"+
@@ -444,7 +525,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                         author + "',"+
                         dish.getRating() + ","+
                         dish.getNumRating()+",'"+
-                        dish.getCuktime() +"')";
+                        dish.getCuktime() +"',"+
+                        dish.getSubtype()+")";
                 sqldb.execSQL(query);
             }
             sqldb.close();
