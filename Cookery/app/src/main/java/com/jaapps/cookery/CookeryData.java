@@ -80,6 +80,50 @@ public class CookeryData  extends SQLiteOpenHelper {
 
     }
 
+    int getCatagory( List <ListCatagory> list)
+    {
+        int subTypeCount = 0;
+        SQLiteDatabase sqldb;
+        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+
+        String query = "SELECT DISTINCT type, typename FROM tbl_types";
+
+
+        Cursor data = sqldb.rawQuery(query, null);
+        while (data.moveToNext()) {
+            subTypeCount++;
+            int type = data.getInt(0);
+            int imgId = getTypeImgId(type);
+            String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/title/"+"/" + imgId +".jpg";
+            ListCatagory subItem = new ListCatagory(
+                    imgId, imgUrl ,data.getString(1));
+            subItem.setViewType(0);
+            if (subTypeCount % 5 == 0)
+            {
+                subItem.setViewType(1);
+            }
+            list.add(subItem);
+        }
+
+        // advertisement sectiongetSubCatagory
+        //list.add(subItemAd);
+
+        sqldb.close();
+        print("subType count returning is "+subTypeCount);
+        return  subTypeCount;
+    }
+
+    public  int getTypeImgId(int type)
+    {
+        int count = 0;
+        while(type != 0)
+        {
+            type = type >>1;
+            count++;
+        }
+        return count;
+    }
+
     int getSubCatagory(int type, List <ListCatagory> list)
     {
         int subTypeCount = 0;

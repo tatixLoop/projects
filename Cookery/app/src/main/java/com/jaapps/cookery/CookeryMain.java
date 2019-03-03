@@ -90,12 +90,12 @@ public class CookeryMain extends AppCompatActivity {
         }
 
         cmtype = getIntent().getIntExtra("type", -1);
-        //int numCatagory = Globals.sqlData.getSubCatagory(cmtype, subCataList);
+        int numCatagory = Globals.sqlData.getCatagory(subCataList);
 
-        //if (numCatagory == 0) {
+//        if (numCatagory == 0) {
             GetSubCatagory thread = new GetSubCatagory();
             new Thread(thread).start();
-        //}
+     //   }
 
 
         lv_subCata = findViewById(R.id.listSubCata);
@@ -378,7 +378,7 @@ public class CookeryMain extends AppCompatActivity {
 
                                 print("Type ; "+type+" TYpename "+typeName+" imgId ="+imgId + " Fetch" + subItem.getType());
 
-                                //Globals.sqlData.instertIntoTypes(cmtype, subtype, "", subTypeName);
+                                Globals.sqlData.instertIntoTypes(type, 0, typeName, "");
                             }
                             //print("Add catagory to local database");
                         }
