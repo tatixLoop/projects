@@ -18,7 +18,7 @@ import com.jaapps.chickenrecipes.ListSubCatagory;
 import java.util.List;
 import java.util.Locale;
 
-import static com.jaapps.drinkrecipes.Globals.print;
+import static com.jaapps.chickenrecipes.Globals.print;
 
 public class AdapterCatagoryList extends BaseAdapter {
     List<ListSubCatagory> list;
