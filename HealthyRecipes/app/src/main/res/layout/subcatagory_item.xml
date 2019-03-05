@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rel_view"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/lightbg">
+
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:textAlignment="center"
+            android:gravity="bottom"
+            android:paddingBottom="20dp"
+            android:background="@drawable/gradientblack"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="TODAY'S SPECIAL"
+            android:textColor="@android:color/background_light"
+            android:textColorLink="@android:color/background_light"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+</RelativeLayout>
