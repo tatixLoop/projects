@@ -188,7 +188,7 @@ public class CookeryData  extends SQLiteOpenHelper {
         sqldb.close();
     }
 
-    public void getDishOfType (int inType , List <ListItemDishes> list) {
+    public void getDishOfType (long inType , List <ListItemDishes> list) {
 
 
         SQLiteDatabase sqldb;
