@@ -1,0 +1,230 @@
+package com.ttx.photopuzzle;
+
+import android.content.ClipData;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.DragEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PuzzleActivity extends AppCompatActivity implements View.OnDragListener {
+
+    PuzzleGridData dataAdapter;
+    List<ListPuzzleData> itemList;
+    GridView gridPuzzle;
+
+    boolean Eventregisterd;
+
+    void print(String str)
+    {
+        Log.d("JKS",str);
+    }
+
+    @Override
+    public boolean onDrag(View view, DragEvent dragEvent) {
+        switch (dragEvent.getAction()) {
+            case DragEvent.ACTION_DRAG_STARTED:
+                print("Drag started");
+                // Ignore this event
+                return true;
+            case DragEvent.ACTION_DRAG_ENTERED:
+                //print("Drage entered");
+                // Ignore this event
+                return true;
+            case DragEvent.ACTION_DRAG_EXITED:
+                //print("Drage exited");
+                // Ignore this event
+                return true;
+            case DragEvent.ACTION_DRAG_LOCATION:
+                //print("Drag location");
+                // Ignore this event
+                return true;
+            case DragEvent.ACTION_DROP:
+                print("Drag drop");
+                // Dropped inside a new view\
+              //  adapter.notifyDataSetChanged();
+               // ImageView v2 = (ImageView)view.getParent();
+              //  final int position1 = gridView.getPositionForView(v2);
+              //  if (position1 >= 0)
+                {
+               //     final long droppedIndex = gridView.getAdapter().getItemId(position1);
+                }
+                //Object item1 = gridView.getAdapter().getItem(draggedIndex);
+                //Object item2 = gridView.getAdapter().getItem(droppedIndex);
+               // drawables.remove(draggedIndex);
+               // drawables.remove(droppedIndex);
+               // drawables.add(droppedIndex,item1);
+               // drawables.add(draggedIndex,item2);
+               // draggedIndex = -1;
+               // droppedIndex = -1;
+               // adapter.notifyDataSetChanged();
+                return true;
+            case DragEvent.ACTION_DRAG_ENDED:
+                print("Drag ened");
+                final int position1 = gridPuzzle.getPositionForView(view);
+                print("pos = "+position1);
+                //
+                view.setOnDragListener(null);
+                view.setVisibility(View.VISIBLE);
+                return true;
+            default: print("ERRROR");
+        }
+        return false;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_puzzle);
+
+        print("App start");
+        gridPuzzle = (GridView)findViewById(R.id.gridPuzzle);
+        gridPuzzle.setNumColumns(3);
+
+        itemList = new ArrayList<>();
+        dataAdapter = new PuzzleGridData(this, itemList);
+
+        int numElements = 9;
+
+        for(int i = 0; i < numElements; i++)
+        {
+            ListPuzzleData item = new ListPuzzleData();
+            item.setText(""+(i+1));
+            itemList.add(item);
+        }
+        gridPuzzle.setAdapter(dataAdapter);
+        Eventregisterd = false;
+
+
+        gridPuzzle.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            public boolean onItemLongClick(AdapterView<?> arg0, View view, int position, long arg3) {
+                ClipData data = ClipData.newPlainText("", "");
+                view.setOnDragListener(PuzzleActivity.this);
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                //view.startDrag(data, shadowBuilder, view, 0);
+                print("start Drag");
+                view.startDrag(data, new View.DragShadowBuilder(view), null, 0);
+                view.setVisibility(View.GONE);
+                return true;
+            }
+        });
+     /*   gridPuzzle.setOnTouchListener(new View.OnTouchListener() {
+
+                                          @Override
+                                          public boolean onTouch(View view, MotionEvent event) {
+                                              ClipData data = ClipData.newPlainText("", "");
+                                              view.setOnDragListener(PuzzleActivity.this);
+                                              View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                                              //view.startDrag(data, shadowBuilder, view, 0);
+                                              view.startDrag(data, new View.DragShadowBuilder(view), null, 0);
+                                              view.setVisibility(View.INVISIBLE);
+                                              return true;
+                                          }
+                                      });*/
+/*
+        gridPuzzle.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+//                print("Touch event");
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    GridView parent = (GridView) v;
+
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
+
+                    //print("ACtion down");
+                    int position = parent.pointToPosition(x, y);
+                    if(!Eventregisterd) {
+                        Eventregisterd = true;
+                        if (position > AdapterView.INVALID_POSITION) {
+                            print("this location");
+
+                            int count = parent.getChildCount();
+                            print("count = " + count);
+                            for (int i = 0; i < count; i++) {
+                               // print("set drag listner");
+                                View curr = parent.getChildAt(i);
+                                curr.setOnDragListener(new View.OnDragListener() {
+
+                                    @Override
+                                    public boolean onDrag(View v, DragEvent event) {
+
+                                        print("Drag");
+                                        boolean result = true;
+                                        int action = event.getAction();
+                                        switch (action) {
+                                            case DragEvent.ACTION_DRAG_STARTED:
+                                                print("drag started");
+                                                break;
+                                            case DragEvent.ACTION_DRAG_LOCATION:
+                                                break;
+                                            case DragEvent.ACTION_DRAG_ENTERED:
+                                                print("JKS drag exited");
+                                                //    v.setBackgroundResource(R.drawable.shape_image_view_small_gallery_selected);
+                                                break;
+                                            case DragEvent.ACTION_DRAG_EXITED:
+                                                print("JKS drag exited");
+                                                //    v.setBackgroundResource(R.drawable.shape_image_view_small_gallery_unselected);
+                                                break;
+                                            case DragEvent.ACTION_DROP:
+                                                print("Drag drop");
+                                                if (event.getLocalState() == v) {
+                                                    result = false;
+                                                } else {
+
+                                                    Log.d("JKS", "Drag and Drop");
+                                     *//*           View droped = (View) event.getLocalState();
+                                                GridItem dropItem = ((DragGridItemHolder) droped.getTag()).item;
+
+                                                GridView parent = (GridView) droped.getParent();
+                                                PuzzleGridData adapter = (PuzzleGridData) parent.getAdapter();
+                                                List<ListPuzzleData> items = adapter.getItems();
+
+                                                View target = v;
+                                                GridItem targetItem = ((DragGridItemHolder) target.getTag()).item;
+                                                int index = items.indexOf(targetItem);
+                                                items.remove(dropItem);
+                                                items.add(index, dropItem);
+                                                dataAdapter.notifyDataSetChanged();*//*
+                                                }
+                                                break;
+                                            case DragEvent.ACTION_DRAG_ENDED:
+                                                //        v.setBackgroundResource(R.drawable.shape_image_view_small_gallery_unselected);
+                                                break;
+                                            default:
+                                                result = false;
+                                                break;
+                                        }
+                                        return result;
+                                    }
+                                });
+                            }
+
+                            int relativePosition = position - parent.getFirstVisiblePosition();
+
+
+                            View target = (View) parent.getChildAt(relativePosition);
+
+                       *//* DragGridItemHolder holder = (DragGridItemHolder) target.getTag();
+                        GridItem currentItem = holder.item;
+                        String text = currentItem.getFile().getAbsolutePath();
+
+                        ClipData data = ClipData.newPlainText("DragData", text);
+                        target.startDrag(data, new View.DragShadowBuilder(target), target, 0);*//*
+                        }
+                    }
+                }
+                return false;
+            }
+        });*/
+    }
+}
