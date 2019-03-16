@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ttx.photopuzzle.PuzzleActivity">
+
+    <RelativeLayout
+        android:layout_width="400dp"
+        android:layout_height="495dp">
+        <ImageView
+            android:id="@+id/imgView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"></ImageView>
+
+        <Button
+            android:id="@+id/buttonLoadPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="Load Picture"
+            android:layout_gravity="center"
+            android:layout_above="@+id/gridPuzzle2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="38dp"
+            android:layout_marginBottom="47dp"></Button>
+
+        <GridView
+            android:id="@+id/gridPuzzle2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:overScrollMode="never"
+            android:layout_marginBottom="44dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/buttonLoadPicture"
+            android:layout_marginEnd="29dp" />
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

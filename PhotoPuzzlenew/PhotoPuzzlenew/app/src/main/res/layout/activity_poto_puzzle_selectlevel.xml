@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_poto_puzzle_selectlevel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    tools:context="com.ttx.photopuzzle.PotoPuzzle_selectlevel"
+   >
+   <!-- <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_heading"
+        android:text="SELECT LEVEL"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="35dp"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center"
+        />-->
+    <RelativeLayout
+        android:id="@+id/rel_diff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_above="@+id/relative1"
+       android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/difficultymode"
+            android:src="@drawable/difficultymode">
+        </ImageView>
+    </RelativeLayout>
+
+
+  <!--  <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollview1"
+        android:scrollbars="none"
+       >-->
+    <RelativeLayout
+        android:id="@+id/relative1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/rel_btnbottom"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp">
+
+
+        <ImageView
+            android:id="@+id/two"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/two" />
+
+
+        <ImageView
+            android:id="@+id/three"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="200dp"
+            android:src="@drawable/three" />
+
+        <ImageView
+            android:id="@+id/four"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/two"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/four" />
+
+        <ImageView
+            android:id="@+id/five"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/three"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/five" />
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/four"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/start" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_btnbottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="41dp">
+
+        <Button
+            android:id="@+id/btn_gallery"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignLeft="@+id/btn_trophy"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="110dp"
+            android:background="@drawable/gallery_1245283" />
+
+        <Button
+            android:id="@+id/btn_trophy"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/trophy1" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="280dp"
+            android:background="@drawable/exit1" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+   <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linear2"
+        android:paddingLeft="15dp"
+        android:paddingRight="50dp"
+        android:orientation="vertical"
+        >
+        <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/two"
+        android:layout_gravity="top"
+        android:layout_marginLeft="110dp"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/two"/>
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="125dp"
+        android:id="@+id/three"
+        android:layout_gravity="top"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/three" />
+        <ImageView
+            android:layout_width="175dp"
+            android:layout_height="150dp"
+            android:id="@+id/four"
+            android:layout_gravity="top"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="35dp"
+            android:src="@drawable/four" />
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="175dp"
+            android:id="@+id/five"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="35dp"
+            android:src="@drawable/five" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_selectlevel"
+            android:layout_gravity="center_horizontal"
+           android:background="@drawable/gallery_1245283"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="15dp"
+
+            />
+    </LinearLayout>
+-->
+  <!--  </ScrollView>-->
+
+</RelativeLayout>
