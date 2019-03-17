@@ -63,23 +63,24 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
         imv_selectedimage = (ImageView) findViewById(R.id.imv_result);
 
 
-        String imageimpoted;
+        //String imageimpoted;
+        String imgPath;
 
-        String type = getIntent().getStringExtra("imageselscted");
+
+        int type = getIntent().getIntExtra("type",-1);
 
         int x = getIntent().getIntExtra("gridselected", 0);
+        imgPath = getIntent().getStringExtra("imageselscted");
 
 
-        print("Got intent argument path =" + type + " grid=" + x);
+        print("Got intent argument path =" + imgPath + " grid=" + x);
 
-        imageimpoted = getIntent().getStringExtra("imageselscted");
-        imageimpoted = getIntent().getStringExtra("image");
 
-        if (imageimpoted == type) {
+        if (1 == type) {
             /// convert selected image in to bitmap and print it in to small image view
 
 
-            Bitmap image = BitmapFactory.decodeFile(type);
+            Bitmap image = BitmapFactory.decodeFile(imgPath);
             Log.d("JKS", "width =" + image.getWidth() + " heigh = " + image.getHeight());
             int width = image.getWidth();
             int height = image.getHeight();
@@ -94,24 +95,6 @@ public class PhotoPuzzle_Game extends AppCompatActivity {
             imv_selectedimage.setImageBitmap(image);
 
             ///////    create bit map for the image in drawable
-
-
-            String im = getIntent().getStringExtra("image");
-
-
-                Bitmap ima = BitmapFactory.decodeFile(im);
-                Log.d("JKS", "width =" + image.getWidth() + " heigh = " + image.getHeight());
-                int widt = image.getWidth();
-                int heigh = image.getHeight();
-                if (widt != heigh) {
-                    int lesser;
-                    if (widt < heigh)
-                        lesser = widt;
-                    else
-                        lesser = heigh;
-                    ima = Bitmap.createBitmap(image, 0, 0, lesser, lesser);
-                }
-                imv_selectedimage.setImageBitmap(ima);
 
 
                 print("App start");

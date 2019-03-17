@@ -75,6 +75,7 @@ public class PhotoPuzzle_CustomPuzzle extends AppCompatActivity {
                     Intent i = new Intent(PhotoPuzzle_CustomPuzzle.this, PhotoPuzzle_Game.class);
                     i.putExtra("imageselscted", selectedpath);
                     i.putExtra("gridselected", selectedgrid);
+                    i.putExtra("type",1); // type 1 for custom
                     startActivity(i);
                 }
 
