@@ -90,10 +90,10 @@ public class CookeryData  extends SQLiteOpenHelper {
         print("Get subcatatory of type "+type);
         String query = "SELECT subtype, subtypename FROM tbl_types Where (type & "+type+" != 0)";
 
-     /*   ListSubCatagory subItemAd = new ListSubCatagory(
+        ListSubCatagory subItemAd = new ListSubCatagory(
                 0, 0, "" ,"");
         subItemAd.setType(1);
-*/
+
         // advertisemenet section
         //list.add(subItemAd);
 
@@ -110,7 +110,7 @@ public class CookeryData  extends SQLiteOpenHelper {
             if (subTypeCount % 3 ==0)
             {
                 // set advertisement on every 3rd item
-                subItem.setType(1);
+                list.add(subItemAd);
             }
 
             list.add(subItem);

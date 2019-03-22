@@ -34,6 +34,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
 
     int gloadType = 0;
+    int gSubType = 0;
 
     List<ListItemDishes> listOfDishes;
     AdapterDishGridView  adapterDishList;
@@ -41,7 +42,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int gType = 0;
+        long gType = 0;
         int gIndexFromType;
         AdView mAdView;
 
@@ -121,7 +122,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         if(gloadType == 0) {
             gType = getIntent().getIntExtra("type", -1);
 
-            gIndexFromType = gType;
+            gIndexFromType = getIntent().getIntExtra("type", -1);;
 
             gType = 1 << (gType - 1);
 
@@ -157,7 +158,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
 
             RelativeLayout layout = findViewById(R.id.img_tltle_layout);
-            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, true);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 0, title_image, layout, this, true);
 
             imgFetch.setWidth((int)dpWidth);
             imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
@@ -177,7 +178,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
 
             RelativeLayout layout = findViewById(R.id.img_tltle_layout);
-            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, gType, title_image, layout, this, true);
+            DishImageFetcher imgFetch = new DishImageFetcher(Globals.FETCHTYPE_DISHCATAGORY, 99, title_image, layout, this, true);
 
             imgFetch.setWidth((int)dpWidth);
             imgFetch.setImgListPageLayoutGrad((ImageView)findViewById(R.id.img_title), (CollapsingToolbarLayout) findViewById(R.id.colLayOut));
@@ -192,7 +193,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
         {
             int subtype = getIntent().getIntExtra("subtype", 0);
             String title_image = getIntent().getStringExtra("url");
-            gType = getIntent().getIntExtra("type", -1);
+            gSubType = getIntent().getIntExtra("type", -1);
             getSupportActionBar().setTitle( getIntent().getStringExtra("title"));
 
             float dpWidth = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().density;
@@ -206,7 +207,7 @@ public class CoockeryListPage extends AppCompatActivity implements AdapterDishGr
             new Thread(imgFetch).start();
 
 
-            Globals.sqlData.getDishOfTypeSubType(gType, subtype, listOfDishes);
+            Globals.sqlData.getDishOfTypeSubType(gSubType, subtype, listOfDishes);
             Collections.shuffle(listOfDishes);
 
         }

@@ -371,7 +371,7 @@ public class CookeryMain extends AppCompatActivity {
                             int type = c.getInt("type");
                             String typeName = c.getString("typename");
                             int imgId = getTypeImgId(type);
-                            if (!checksubTypePresent(subCataList, type)) {
+                            if (!checksubTypePresent(subCataList, imgId)) {
                                 String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/title/"+"/" + imgId + ".jpg";
                                 ListCatagory subItem = new ListCatagory(imgId, imgUrl, typeName);
                                 subCataList.add(subItem);
@@ -412,11 +412,14 @@ public class CookeryMain extends AppCompatActivity {
     {
         for (ListCatagory item: list
              ) {
+print("Matching "+type + " and "+item.getType());
             if( item.getType() == type)
             {
+                print("Match found");
                 return  true;
             }
         }
+        print("Match not found");
         return  false;
     }
 

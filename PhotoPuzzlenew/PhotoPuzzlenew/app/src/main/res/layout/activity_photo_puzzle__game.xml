@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_photo_puzzle__game"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:background="#2e2e2d"
+    tools:context="com.ttx.photopuzzle.PhotoPuzzle_Game">
+
+    <TextClock
+        android:id="@+id/textclock"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="25dp"
+        android:layout_alignBottom="@+id/imv_result"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="18dp" />
+
+    <RelativeLayout
+        android:layout_width="332dp"
+        android:layout_height="332dp"
+        android:layout_marginBottom="45dp"
+        android:background="#e2e2e2"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+        <GridView
+            android:id="@+id/gridPuzzle2"
+            android:layout_width="330dp"
+            android:layout_height="330dp"
+            android:overScrollMode="never"
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
+            android:layout_alignParentBottom="true"
+            android:elevation="1dp"
+            android:layout_margin="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_marginTop="34dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imv_result"
+        android:background="#e4e0e0"
+        android:layout_marginLeft="30dp"
+        android:layout_alignParentTop="true"/>
+</RelativeLayout>
