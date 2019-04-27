@@ -13,8 +13,10 @@ import java.util.List;
 public class Globals {
 
 
-    static int g_type = 256;
+    static long g_type = (256 | 262144); /* Chicken and Salad */
     static String g_subcata_img_dir = "chicken/";
+
+    static boolean runFlag = true;
 
 
     static String host="http://tatixtech.com/";
