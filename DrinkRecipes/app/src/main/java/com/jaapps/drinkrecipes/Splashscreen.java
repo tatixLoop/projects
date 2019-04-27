@@ -49,6 +49,8 @@ public class Splashscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
+        Globals.runFlag = true;
+
 
         // initialize the AdMob app
         MobileAds.initialize(this, getString(R.string.admob_app_id));
