@@ -292,7 +292,7 @@ public class CookeryMain extends AppCompatActivity {
                             JSONObject c = dishSubTypeArray.getJSONObject(i);
                             int subtype = c.getInt("subtype");
                             String subTypeName = c.getString("subtypename");
-                            if (!checksubTypePresent(subCataList, subtype)) {
+                            if (!checksubTypePresent(subCataList, subtype) && (subtype <= 30 && subtype >= 16)) {
                                 String imgUrl = Globals.host + Globals.appdir + Globals.img_path + "/a.subtype/"+Globals.g_subcata_img_dir+"/" + subtype + ".jpg";
                                 ListSubCatagory subItem = new ListSubCatagory(
                                         cmtype, subtype, imgUrl, subTypeName);
