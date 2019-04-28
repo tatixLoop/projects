@@ -1,0 +1,6 @@
+./run.sh 256 16 'Baked chicken'
+
+# ./run.sh is the script,
+# 256 is main catagory id
+# 16 is subcatagory id
+# 'Baked chicken is the keyword to search for'
