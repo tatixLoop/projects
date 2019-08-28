@@ -44,20 +44,8 @@ public class Splashscreen extends AppCompatActivity {
 
     List<ListItemDishes> DishList;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splashscreen);
-
-
-        // initialize the AdMob app
-        MobileAds.initialize(this, getString(R.string.admob_app_id));
-
-        updateFlag = -1;
-        //ProgressBar
-        progressBar = findViewById(R.id.splashprogressBar);
-
-
+    void printVersionName()
+    {
         // Get Version
         String versionName = "";
         try {
@@ -68,11 +56,18 @@ public class Splashscreen extends AppCompatActivity {
         TextView versionname = findViewById(R.id.txt_version);
         String versionText = "Version:"+versionName;
         versionname.setText(versionText);
+    }
+
+    void initializeCookery()
+    {
+        // initialize the AdMob app
+        MobileAds.initialize(this, getString(R.string.admob_app_id));
+        updateFlag = -1;
+        //ProgressBar
+        progressBar = findViewById(R.id.splashprogressBar);
 
         // Fill in search data
         DishList = new ArrayList<>();
-
-        //new GetDishesForSearch().execute();
 
         Globals.gContext = getApplicationContext();
         Globals.sqlData = new CookeryData(this);
@@ -84,10 +79,24 @@ public class Splashscreen extends AppCompatActivity {
                 String.format(Locale.US, "fonts/%s", "font.ttf"));
 
         ((TextView) findViewById(R.id.txt_launchstat)).setTypeface(typeface);
-
         String updateCheckString = "Checking for updates";
         ((TextView) findViewById(R.id.txt_launchstat)).setText(updateCheckString);
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splashscreen);
+
+
+        // When splash screen is loaded, it will print the version name and initialize all the things
+        // required for cookery app.
+        printVersionName();
+        initializeCookery();
+
+
+        // Start the thread for getting the last id from remote database
         GetMaxCountThread threadGetCount = new GetMaxCountThread();
         new Thread(threadGetCount).start();
 
@@ -99,7 +108,7 @@ public class Splashscreen extends AppCompatActivity {
 
         private int getUpdateTag()
         {
-            // check if image is present in shared preference cache
+            // check if update tag is present in shared preference cache
             String sharedPrefKey = "SHCache_updateTag";
             SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
             return preferences.getInt(sharedPrefKey, -1);
@@ -107,7 +116,7 @@ public class Splashscreen extends AppCompatActivity {
 
         private void setUpdateTag(int tag)
         {
-            // check if image is present in shared preference cache
+            // set the update tag in shared preference cache
             String sharedPrefKey = "SHCache_updateTag";
             SharedPreferences preferences = getSharedPreferences(sharedPrefKey, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
@@ -122,7 +131,7 @@ public class Splashscreen extends AppCompatActivity {
 
             // getting JSON string from URL
             String apiname;
-            apiname ="getUpdate.php";
+            apiname ="getUpdate.php"; // this api will provide max count and update tag from remote db
 
             JSONObject json = jParser2.makeHttpRequest(Globals.host+Globals.appdir+Globals.apipath+apiname,
                     "GET", "");
@@ -135,21 +144,22 @@ public class Splashscreen extends AppCompatActivity {
                     int success = json.getInt(TAG_SUCCESS);
 
                     if (success == 1) {
+
+                        //max count is maximum value of id, that means last added recipe id
                         maxCountList = json.getJSONArray("maxcount");
-
                         for (int i = 0; i < maxCountList.length(); i++) {
-
                             JSONObject c = maxCountList.getJSONObject(i);
                             lastRemoteId = c.getInt("maxid");
                         }
 
+
+                        // update flag decide what to fetch next from database. it controls the data update
                         flagList = json.getJSONArray("flag");
-
                         for (int i = 0; i < flagList.length(); i++) {
-
                             JSONObject c = flagList.getJSONObject(i);
                             updateFlag = c.getInt("flag");
                         }
+
                     } else {
                         print("No maxId found");
                     }
@@ -170,6 +180,11 @@ public class Splashscreen extends AppCompatActivity {
             print("JKS last remote Id is "+lastRemoteId);
             print("JKS last local Id" + lastLocalId);
             doUpdate = false;
+
+            // update flag conisists of two parts [ updatetag and updateflag]
+            // updateTag is a sequence number which decides whether to update or not. [bit 15 to bit 8]
+            // updateFlag decides what to update [bit 7 to bit 0]
+
             updateTag = updateFlag >> 8;
 
             if ( updateTag > getUpdateTag() ) {
@@ -199,16 +214,15 @@ public class Splashscreen extends AppCompatActivity {
                         finish();
                     }
                 } else if ((updateFlag & 0x2) != 0) {
-                    doUpdate = true;
                     print("UPDATE NEW DISHES ");
                     print("do sync");
 
-                    //Globals.sqlData.getDishList(Globals.FullDishList);
+                    doUpdate = true;
                     fetchData();
 
                 } else if ((updateFlag & 0x1) != 0) {
-                    doUpdate = true;
                     print("UPDATE ENTIRE DATABASE");
+                    doUpdate = true;
                     lastLocalId = 0;
 
                     Globals.sqlData.clearDB();
@@ -217,13 +231,14 @@ public class Splashscreen extends AppCompatActivity {
             }
             else
             {
+                // Nothing to update; check if new data is present
                 if (lastLocalId < lastRemoteId) {
                     print("do sync");
                     fetchData();
                 }
                 else {
+                    // no update required; load next page.
                     print("update tag is same ; no update");
-                    //Globals.sqlData.getDishList(Globals.FullDishList);
 
                     Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
                     mainIntent.putExtra("type", Globals.g_type);
@@ -338,14 +353,15 @@ public class Splashscreen extends AppCompatActivity {
             if (doUpdate){
                 setUpdateTag(updateTag);
             }
+
+            print("Size of Items fetched : "+DishList.size());
+
             Intent mainIntent = new Intent(Splashscreen.this, CookeryMain.class);
             mainIntent.putExtra("loadType", 1);
             mainIntent.putExtra("numCata", subTypeIndex);
             mainIntent.putExtra("type", Globals.g_type);
 
             Splashscreen.this.startActivity(mainIntent);
-
-            print("Size of Items fetched : "+DishList.size());
             finish();
         }
     }

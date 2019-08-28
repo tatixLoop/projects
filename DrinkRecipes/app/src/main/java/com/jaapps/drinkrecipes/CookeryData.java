@@ -3,6 +3,7 @@ package com.jaapps.drinkrecipes;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -38,7 +39,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         String qury = "CREATE TABLE  IF NOT EXISTS  tbl_dishes(id INTEGER NOT NULL,"+
                 "type INTEGER (64) NOT NULL,"+
                 "dishname varchar(56) NOT NULL,"+
@@ -71,10 +72,10 @@ public class CookeryData  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqldb) {
     }
 
-    void instertIntoTypes(int type, int subtype, String typename, String subtypename)
+    void instertIntoTypes(long type, int subtype, String typename, String subtypename)
     {
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         String query = "INSERT into tbl_types (id, type, subtype, typename, subtypename )VALUES (0, "+type+","+subtype+", '"+typename+"','"+subtypename+"')";
         sqldb.execSQL(query);
         sqldb.close();
@@ -85,7 +86,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
         int subTypeCount = 0;
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         print("Get subcatatory of type "+type);
         String query = "SELECT subtype, subtypename FROM tbl_types Where (type & "+type+" != 0)";
@@ -127,7 +128,7 @@ public class CookeryData  extends SQLiteOpenHelper {
 
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         String query = "SELECT * FROM tbl_dishes Where (type & "+inType+" != 0) and (subtype ="+subType+")";
         Cursor data = sqldb.rawQuery(query, null);
@@ -155,7 +156,7 @@ public class CookeryData  extends SQLiteOpenHelper {
 
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         String query = "SELECT * FROM tbl_dishes Where (type & "+inType+" != 0)";
         Cursor data = sqldb.rawQuery(query, null);
@@ -183,7 +184,7 @@ public class CookeryData  extends SQLiteOpenHelper {
 
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         String query = "SELECT * FROM tbl_dishes Where dishname like '%" + text + "%'";
         Cursor data = sqldb.rawQuery(query, null);
@@ -213,7 +214,7 @@ public class CookeryData  extends SQLiteOpenHelper {
         String query ="";
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         Cursor favorite = sqldb.rawQuery("SELECT * FROM tbl_fav", null);
         while (favorite.moveToNext())
@@ -254,7 +255,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         String query = "SELECT * FROM tbl_dishes";
         Cursor data = sqldb.rawQuery(query, null);
@@ -303,7 +304,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         int lastId = 0;
 
         String query = "SELECT max(id) FROM tbl_dishes";
@@ -320,7 +321,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         String query = "DELETE FROM tbl_dishes";
         sqldb.execSQL(query);
@@ -338,7 +339,6 @@ public class CookeryData  extends SQLiteOpenHelper {
         int tid;
         int startCount;
         int dishCount = list.size();
-        SyncThread thread [] = new SyncThread[100];
 
         startCount = 0;
         tid = 0;
@@ -347,42 +347,6 @@ public class CookeryData  extends SQLiteOpenHelper {
         SyncThread threadSync = new SyncThread(tid, startCount, dishCount, list );
         new Thread(threadSync).start();
 
-        /*while (dishCount > 200)
-        {
-            thread[tid] = new SyncThread(tid, startCount, 200, list );
-            new Thread(thread[tid] ).start();
-            tid++;
-            startCount += 200;
-            dishCount -= 200;
-        }
-        if (dishCount != 0)
-        {
-            thread[tid] = new SyncThread(tid, startCount, dishCount, list );
-            new Thread(thread[tid] ).start();
-            tid++;
-        }*/
-
-
-        /*
-        for ( ListItemDishes dish:
-              list) {
-            String name = dish.getName().replace("'","''");
-            String author = dish.getAuthor().replace("'","''");
-            String query="INSERT INTO tbl_dishes (id, type, dishname, img_path, calory, cooktimeinsec, serves, author, rating, numRating, cuktime) VALUES ("+
-                    dish.getId() +", "+
-                    dish.getType() + ", '"+
-                    name +"','"+
-                    dish.getImg_path() +"',"+
-                    dish.getCalory() +","+
-                    dish.getCooktimeinsec() +","+
-                    dish.getServeCount() +",'"+
-                    author + "',"+
-                    dish.getRating() + ","+
-                    dish.getNumRating()+",'"+
-                    dish.getCuktime() +"')";
-            sqldb.execSQL(query);
-        }
-        */
         endTime = Calendar.getInstance().getTimeInMillis();
         print("JKS sync Time = "+(endTime - startTime));
     }
@@ -400,7 +364,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
 
         String query = "SELECT id FROM tbl_fav WHERE id="+id;
         Cursor checkDatax = sqldb.rawQuery(query, null);
@@ -419,7 +383,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         String query = "Delete from tbl_fav where id="+id;
         sqldb.execSQL(query);
         sqldb.close();
@@ -429,7 +393,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         String query = "INSERT into tbl_fav VALUES ("+id+")";
         sqldb.execSQL(query);
         sqldb.close();
@@ -439,7 +403,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         String query = "SELECT id FROM tbl_shopList WHERE id="+id;
         Cursor checkDatax = sqldb.rawQuery(query, null);
         if (checkDatax.getCount() == 0)
@@ -458,7 +422,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         String query = "DELETE from tbl_shopList where id="+id + " AND data like '"+ingredient+"'";
         sqldb.execSQL(query);
 
@@ -477,7 +441,7 @@ public class CookeryData  extends SQLiteOpenHelper {
     public void getShopListData(List<ShoppingListItem> list) {
 
         SQLiteDatabase sqldb;
-        sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
+        sqldb =  getDbInst();
         String query = "SELECT * from tbl_shopList";
         Cursor checkDatax = sqldb.rawQuery(query, null);
 
@@ -490,6 +454,25 @@ public class CookeryData  extends SQLiteOpenHelper {
         }
         checkDatax.close();
         sqldb.close();
+    }
+
+    public SQLiteDatabase getDbInst()
+    {
+        boolean gotDb = true;
+        SQLiteDatabase db = null;
+        do
+        {
+            try
+            {
+                db = mContext.openOrCreateDatabase("CookeryDB_drinks", Context.MODE_PRIVATE, null);
+            }
+            catch (SQLiteDatabaseLockedException ex)
+            {
+                gotDb = false;
+            }
+        } while (gotDb == false);
+
+        return  db;
     }
 
     class SyncThread implements  Runnable
@@ -512,11 +495,11 @@ public class CookeryData  extends SQLiteOpenHelper {
         {
 
             SQLiteDatabase sqldb;
-            sqldb =  mContext.openOrCreateDatabase("CookeryDB", Context.MODE_PRIVATE, null);
-
             print(" ["+id+"] From ["+startCount + " - "+endCount +"]");
-            for (int i = this.startCount ; i < this.endCount  ; i++)
+            for (int i = this.startCount ; i < this.endCount && Globals.runFlag  ; i++)
             {
+                sqldb =  getDbInst();
+
                 ListItemDishes dish = list.get(i);
                 String name = dish.getName().replace("'","''");
                 String author = dish.getAuthor().replace("'","''");
@@ -535,8 +518,8 @@ public class CookeryData  extends SQLiteOpenHelper {
                         dish.getCuktime() +"',"+
                         dish.getSubtype()+")";
                 sqldb.execSQL(query);
+                sqldb.close();
             }
-            sqldb.close();
             endTime = Calendar.getInstance().getTimeInMillis();
             print(" ["+id+"] sync time = "+(endTime - startTime));
 

@@ -3,7 +3,7 @@ package com.jaapps.drinkrecipes;
 import android.view.View;
 
 public class ListSubCatagory {
-    int catagory;
+    long catagory;
     int subcatagory;
     String bgUrl;
     String text;
@@ -26,18 +26,18 @@ public class ListSubCatagory {
         this.type = type;
     }
 
-    public ListSubCatagory(int catagory, int subcatagory, String bgUrl, String text) {
+    public ListSubCatagory(long catagory, int subcatagory, String bgUrl, String text) {
         this.catagory = catagory;
         this.subcatagory = subcatagory;
         this.bgUrl = bgUrl;
         this.text = text;
     }
 
-    public int getCatagory() {
+    public long getCatagory() {
         return catagory;
     }
 
-    public void setCatagory(int catagory) {
+    public void setCatagory(long catagory) {
         this.catagory = catagory;
     }
 

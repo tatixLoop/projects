@@ -13,8 +13,10 @@ import java.util.List;
 public class Globals {
 
 
-    static int g_type = 8;
+    static long g_type = 8 | 512 ; /* juice and coffee */
     static String g_subcata_img_dir = "drinks/";
+
+    static boolean runFlag = true;
 
 
     static String host="http://tatixtech.com/";
